@@ -33,7 +33,7 @@
     <parent>
         <groupId>it.tidalwave.superpom</groupId>
         <artifactId>superpom</artifactId>
-        <version>5.0-ALPHA-9</version>
+        <version>5.0-ALPHA-10</version>
         <relativePath />
     </parent>
 
@@ -42,7 +42,7 @@
     <version>1.1-ALPHA-3-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>SteelBlue</name>
-    <url>http://steelblue.tidalwave.it</url>
+    <url>http://tidalwave.it/projects/solidblue</url>
     <inceptionYear>2015</inceptionYear>
     <description>
         SteelBlue contains the JavaFX implementation of a set of UI-related DCI roles defined in the project
@@ -72,6 +72,8 @@
         <scm.repo.url>git@bitbucket.org:tidalwave/steelblue-src.git</scm.repo.url>
         <scm.repo.readonly.url>https://bitbucket.org/tidalwave/steelblue-src.git</scm.repo.readonly.url>
         <scm.repo.browse.url>https://bitbucket.org/tidalwave/steelblue-src/src</scm.repo.browse.url>
+        <tidalwave.github.readonly.url>https://github.com/tidalwave-it/solidblue-src</tidalwave.github.readonly.url>
+        <tidalwave.github.browse.url>https://github.com/tidalwave-it/solidblue-src</tidalwave.github.browse.url>
     </properties>
 
     <dependencyManagement>
