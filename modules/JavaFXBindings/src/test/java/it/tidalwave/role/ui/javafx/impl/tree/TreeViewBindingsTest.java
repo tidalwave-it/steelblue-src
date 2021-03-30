@@ -1,12 +1,10 @@
 /*
- * #%L
  * *********************************************************************************************************************
  *
- * SteelBlue
- * http://steelblue.tidalwave.it - git clone git@bitbucket.org:tidalwave/steelblue-src.git
- * %%
- * Copyright (C) 2015 - 2015 Tidalwave s.a.s. (http://tidalwave.it)
- * %%
+ * SteelBlue: DCI User Interfaces
+ * http://tidalwave.it/projects/steelblue
+ *
+ * Copyright (C) 2015 - 2021 by Tidalwave s.a.s. (http://tidalwave.it)
  *
  * *********************************************************************************************************************
  *
@@ -21,10 +19,10 @@
  *
  * *********************************************************************************************************************
  *
- *
+ * git clone https://bitbucket.org/tidalwave/steelblue-src
+ * git clone https://github.com/tidalwave-it/steelblue-src
  *
  * *********************************************************************************************************************
- * #L%
  */
 package it.tidalwave.role.ui.javafx.impl.tree;
 
