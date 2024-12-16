@@ -40,6 +40,7 @@ import javafx.scene.Node;
 import javafx.application.Platform;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import it.tidalwave.util.ReflectionUtils;
+import it.tidalwave.role.ui.ToolBarModel;
 import it.tidalwave.role.ui.javafx.JavaFXBinder;
 import it.tidalwave.role.ui.javafx.impl.DefaultJavaFXBinder;
 import it.tidalwave.role.ui.javafx.impl.util.JavaFXSafeProxy;
@@ -142,6 +143,9 @@ public class JavaFXSafeProxyCreator
     @Getter
     private static final JavaFXBinder javaFxBinder = new DefaultJavaFXBinder(executor);
 
+    @Getter
+    private static final ToolBarModel toolBarModel = new JavaFXToolBarModel();
+
     static
       {
         executor.setWaitForTasksToCompleteOnShutdown(false);
@@ -152,6 +156,7 @@ public class JavaFXSafeProxyCreator
         executor.setQueueCapacity(10000);
         BEANS.put(JavaFXBinder.class, javaFxBinder);
         BEANS.put(Executor.class, executor);
+        BEANS.put(ToolBarModel.class, toolBarModel);
       }
 
     private JavaFXSafeProxyCreator () {}
