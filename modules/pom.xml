@@ -53,6 +53,7 @@
         <thesefoolishthings.version>3.2-ALPHA-23</thesefoolishthings.version>
         <tft.javafx.version>11.0.1</tft.javafx.version>
         <tft.spring.version>4.3.30.RELEASE</tft.spring.version>
+        <jmetro.version>11.6.14</jmetro.version>
     </properties>
 
     <dependencyManagement>
@@ -70,6 +71,12 @@
                 <version>${thesefoolishthings.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jfxtras</groupId>
+                <artifactId>jmetro</artifactId>
+                <version>${jmetro.version}</version>
             </dependency>
 
             <!-- Should activate by itself with JDK 11+, but it fails with Jenkins Maven integration. -->

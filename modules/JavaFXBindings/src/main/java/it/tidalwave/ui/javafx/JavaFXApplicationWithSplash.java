@@ -38,6 +38,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.application.Application;
 import javafx.application.Platform;
+import jfxtras.styles.jmetro.JMetro;
+import jfxtras.styles.jmetro.Style;
 import it.tidalwave.ui.javafx.JavaFXSafeProxyCreator.NodeAndDelegate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,9 +74,6 @@ public abstract class JavaFXApplicationWithSplash extends Application
     private boolean fullScreenLocked;
 
     @Getter @Setter
-    private boolean useAquaFxOnMacOsX;
-
-    @Getter @Setter
     protected String applicationFxml = DEFAULT_APPLICATION_FXML;
 
     @Getter @Setter
@@ -89,7 +88,7 @@ public abstract class JavaFXApplicationWithSplash extends Application
     public void init()
       {
         log.info("init()");
-        splash = new Splash(this, splashFxml);
+        splash = new Splash(this, splashFxml, this::createScene);
         splash.init();
       }
 
@@ -123,18 +122,11 @@ public abstract class JavaFXApplicationWithSplash extends Application
                 try
                   {
                     final var applicationNad = createParent();
-                    final var scene = new Scene((Parent)applicationNad.getNode());
-
-                    if (useAquaFxOnMacOsX && isOSX())
-                      {
-                        setMacOSXLookAndFeel(scene);
-                      }
-
+                    final var scene = createScene((Parent)applicationNad.getNode());
                     stage.setOnCloseRequest(event -> onClosing());
                     stage.setScene(scene);
                     onStageCreated(stage, applicationNad);
                     final var preferencesHandler = PreferencesHandler.getInstance();
-
                     stage.setFullScreen(preferencesHandler.getProperty(KEY_FULL_SCREEN).orElse(false));
                     final double scale = preferencesHandler.getProperty(KEY_INITIAL_SIZE).orElse(0.65);
                     final var screenSize = Screen.getPrimary().getBounds();
@@ -202,18 +194,12 @@ public abstract class JavaFXApplicationWithSplash extends Application
      *
      *
      ******************************************************************************************************************/
-    private void setMacOSXLookAndFeel (@Nonnull final Scene scene)
+    protected Scene createScene (@Nonnull final Parent parent)
       {
-      }
-
-    /*******************************************************************************************************************
-     *
-     * TODO: delegate to a provider
-     *
-     ******************************************************************************************************************/
-    public static boolean isOSX()
-      {
-        return System.getProperty("os.name").contains("OS X");
+        final var scene = new Scene(parent);
+        final var jMetro = new JMetro(Style.DARK);
+        jMetro.setScene(scene);
+        return scene;
       }
 
     /*******************************************************************************************************************

@@ -85,7 +85,6 @@ public class Main extends JavaFXSpringApplication
     @Override
     public void init()
       {
-//        setUseAquaFxOnMacOsX(true);
         super.init(); // always call super.init()!!
       }
 

@@ -27,11 +27,13 @@
 package it.tidalwave.ui.javafx;
 
 import javax.annotation.Nonnull;
+import java.util.function.Function;
 import java.io.IOException;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -52,6 +54,9 @@ public class Splash
 
     @Nonnull
     private final String fxml;
+
+    @Nonnull
+    private final Function<Parent, Scene> sceneFactory;
 
     private Pane splashPane;
 
@@ -83,7 +88,7 @@ public class Splash
     public void show (@Nonnull final Stage splashStage)
       {
         this.splashStage = splashStage;
-        final var splashScene = new Scene(splashPane);
+        final var splashScene = sceneFactory.apply(splashPane);
         splashStage.setScene(splashScene);
         splashStage.show();
       }
