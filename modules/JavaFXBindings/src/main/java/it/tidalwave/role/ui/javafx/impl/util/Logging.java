@@ -86,8 +86,19 @@ public class Logging
 
         if (object instanceof Displayable)
           {
-            log.debug(">>>>     {}{}: {}", indent, shortName(object.getClass()),
-                      ((Displayable)object).getDisplayName());
+            var displayableName = "";
+
+            try
+              {
+                displayableName = ((Displayable)object).getDisplayName();
+              }
+            catch (RuntimeException e)
+              {
+                log.error("", e);
+                displayableName = "<ERROR>";
+              }
+
+            log.debug(">>>>     {}{}: {}", indent, shortName(object.getClass()), displayableName);
           }
         else
           {
