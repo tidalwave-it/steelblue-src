@@ -111,6 +111,13 @@
             <artifactId>testng</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>it.tidalwave.thesefoolishthings</groupId>
+            <artifactId>it-tidalwave-util</artifactId>
+            <version>${thesefoolishthings.version}</version> <!-- FIXME -->
+            <classifier>tests</classifier>
+            <scope>test</scope>
+        </dependency>
         <!-- Keep this before the mockito-all dependency - see http://stackoverflow.com/questions/15833015/ -->
         <dependency>
             <groupId>org.hamcrest</groupId>
@@ -122,17 +129,11 @@
             <artifactId>mockito-core</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>it.tidalwave.thesefoolishthings</groupId>
-            <artifactId>it-tidalwave-util-test</artifactId>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <modules>
         <module>JavaFXBindings</module>
-        <module>examples/BackendExample</module>
-        <module>examples/LargeExample</module>
+        <module>examples</module>
     </modules>
 
 </project>

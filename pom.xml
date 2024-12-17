@@ -88,12 +88,17 @@
             </dependency>
             <dependency>
                 <groupId>it.tidalwave.steelblue</groupId>
-                <artifactId>it-tidalwave-steelblue-example-backend</artifactId>
+                <artifactId>it-tidalwave-steelblue-example-model</artifactId>
                 <version>1.1-ALPHA-4-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>it.tidalwave.steelblue</groupId>
-                <artifactId>it-tidalwave-steelblue-example-large</artifactId>
+                <artifactId>it-tidalwave-steelblue-example-presentation</artifactId>
+                <version>1.1-ALPHA-4-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>it.tidalwave.steelblue</groupId>
+                <artifactId>it-tidalwave-steelblue-example-presentation-javafx</artifactId>
                 <version>1.1-ALPHA-4-SNAPSHOT</version>
             </dependency>
         </dependencies>

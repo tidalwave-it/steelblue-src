@@ -49,6 +49,329 @@
 
 ${project.description}
 
+#[[##]]# Table of contents
+
+<!-- MACRO{toc|section=0|fromDepth=1|toDepth=4} -->
+
+#[[##]]# Getting started
+
+The application is partitioned in the following modules:
+
++ **Model**: contains data entities and business controllers to elaborate them.
++ **PresentationModel**: TBD
++ **Presentation**: contains the description of the user's interaction and presentation controllers.
++ **JavaFX implementation**: the only module containing objects from the specific UI technology (JavaFX).
+
+
+#[[###]]# Model
+
+![UML](it-tidalwave-steelblue-modules/it-tidalwave-steelblue-examples/it-tidalwave-steelblue-example-model/apidocs/it/tidalwave/role/ui/example/model/package.svg)
+
+Let's introduce a bunch of model classes. First, a very simple one, a plain POJO with constructor and getters.
+
+<!-- MACRO{snippet|id=entity|file=${project.basedir}/modules/examples/Model/src/main/java/it/tidalwave/role/ui/example/model/SimpleEntity.java} -->
+
+Then a slightly more complex entity, with three attributes and `As` capability and a pre-provided `Displayable` role.
+
+<!-- MACRO{snippet|id=entity|file=${project.basedir}/modules/examples/Model/src/main/java/it/tidalwave/role/ui/example/model/SimpleDciEntity.java} -->
+
+Then a more complex entity, which in addition to attributes also acts as a **dynamic composite**. A composite object is one that contains sub-objects; it can
+be **static** if the capability is wired in the code, that is all instances of that class share the role. A **dynamic** one doesn't have the capability baked
+in the class, but implements it by composition; in this way, some instances can have it, others not. In this case, the condition for being a composite is
+to be a directory.
+
+<!-- MACRO{snippet|id=constructor|file=${project.basedir}/modules/examples/Model/src/main/java/it/tidalwave/role/ui/example/model/FileEntity.java} -->
+
+> TODO: the whole listing of FileEntity is too much; either enumerate methods or just provide an UML diagram.
+
+At last, a DAO provides collections of such objects.
+
+<!-- MACRO{snippet|id=dao|file=${project.basedir}/modules/examples/Model/src/main/java/it/tidalwave/role/ui/example/model/Dao.java} -->
+
+![UML](it-tidalwave-steelblue-modules/it-tidalwave-steelblue-examples/it-tidalwave-steelblue-example-model/apidocs/it/tidalwave/role/ui/example/model/package.svg)
+
+#[[###]]# Presentation
+
+![UML](it-tidalwave-steelblue-modules/it-tidalwave-steelblue-examples/it-tidalwave-steelblue-example-presentation/apidocs/it/tidalwave/role/ui/example/presentation/package.svg)
+
+#[[####]]# DefaultMainPanelPresentation
+
+![UML](it-tidalwave-steelblue-modules/it-tidalwave-steelblue-example-model/apidocs/it/tidalwave/role/ui/example/model/package.svg)
+
+This class is *not implemented* in the backend, but it will in specific implementations related to a UI techology (such as JavaFX). Nevertheless
+it can be mocked and used in tests.
+
+#[[####]]# DefaultMainPanelPresentationControl
+
+![UML](it-tidalwave-steelblue-modules/it-tidalwave-steelblue-examples/it-tidalwave-steelblue-example-presentation/apidocs/it/tidalwave/role/ui/example/presentation/impl/DefaultMainPanelPresentationControl.svg)
+
+First, the control must inject the related presentation and the DAOs:
+
+<!-- MACRO{snippet|id=injections|file=${project.basedir}/modules/examples/Presentation/src/main/java/it/tidalwave/role/ui/example/presentation/impl/DefaultMainPanelPresentationControl.java} -->
+
+Simple interactions with the user are modelled by `UserAction`s. They at least must be related to a callback method and a `Displayable` that provides the label.
+
+<!-- MACRO{snippet|id=userActions|file=${project.basedir}/modules/examples/Presentation/src/main/java/it/tidalwave/role/ui/example/presentation/impl/DefaultMainPanelPresentationControl.java} -->
+
+After all the `UserAction`s have been created, they must be packed together into a `Bindings` object. This is usually an inner class of the presentation (it
+is not a requirement; it can be a standard class as well); it
+is convenient to use the builder pattern for improved code readability (in the code below the `Builder` annotation from Lombok is used).
+Note that it can contain instances of `BoundProperties`: they are values that are rendered by the presentation, and can be just modified by the control;
+thanks to a listener, the presentation will automatically update them. It is an alternate approach to call a `notify()` method on the presentation.
+
+<!-- MACRO{snippet|id=bindings|file=${project.basedir}/modules/examples/Presentation/src/main/java/it/tidalwave/role/ui/example/presentation/MainPanelPresentation.java} -->
+<!-- MACRO{snippet|id=bindings|file=${project.basedir}/modules/examples/Presentation/src/main/java/it/tidalwave/role/ui/example/presentation/impl/DefaultMainPanelPresentationControl.java} -->
+
+Simple actions requiring no further user interaction usually are a call to the presentation for displaying something. In addition, they can change a status
+local to the control (`status`) or modify a `BoundProperty`.
+
+> While `BoundProperty` instances can be of any type, it's advisable they are all `String` and formatted by the control. This favours reuse and facilitates
+testing.
+
+<!-- MACRO{snippet|id=onButtonPressed|file=${project.basedir}/modules/examples/Presentation/src/main/java/it/tidalwave/role/ui/example/presentation/impl/DefaultMainPanelPresentationControl.java} -->
+
+When a confirmation is required from the user, a `notificationWithFeedback()` object can be used. Mandatory attributes are a caption and a text, as well as a
+callback that will be executed when the Ok button is pressed. The callback can be a request to display something in the presentation, or eventually start a
+more complex computation.
+
+<!-- MACRO{snippet|id=onButtonDialogOkPressed|file=${project.basedir}/modules/examples/Presentation/src/main/java/it/tidalwave/role/ui/example/presentation/impl/DefaultMainPanelPresentationControl.java} -->
+
+A variant is allowed when the user might cancel the action, providing an alternate callback.
+
+<!-- MACRO{snippet|id=onButtonDialogOkCancelPressed|file=${project.basedir}/modules/examples/Presentation/src/main/java/it/tidalwave/role/ui/example/presentation/impl/DefaultMainPanelPresentationControl.java} -->
+
+TODO
+
+<!-- MACRO{snippet|id=onButtonPickFilePressed|file=${project.basedir}/modules/examples/Presentation/src/main/java/it/tidalwave/role/ui/example/presentation/impl/DefaultMainPanelPresentationControl.java} -->
+
+TODO
+
+<!-- MACRO{snippet|id=onButtonPickDirectoryPressed|file=${project.basedir}/modules/examples/Presentation/src/main/java/it/tidalwave/role/ui/example/presentation/impl/DefaultMainPanelPresentationControl.java} -->
+
+When the control is initialized, it must call the presentation to pass the bindings, so the presentation implementation can relate them to the actual UI controls.
+
+<!-- MACRO{snippet|id=initialization|file=${project.basedir}/modules/examples/Presentation/src/main/java/it/tidalwave/role/ui/example/presentation/impl/DefaultMainPanelPresentationControl.java} -->
+
+There must be at least one method to activate the presentation, typically populating it with data. Here we see that `entities1`, `entities2` an `files` are
+first retrieved from the DAOs; then presentation models are created and collected into composite presentation models `pm1`, `pm2` and `pm3` . At last,
+the presentation models are passed to the presentation.
+
+<!-- MACRO{snippet|id=populate|file=${project.basedir}/modules/examples/Presentation/src/main/java/it/tidalwave/role/ui/example/presentation/impl/DefaultMainPanelPresentationControl.java} -->
+
+Each data entity that need to interact with a presentation need to have a presentation model. In the example:
+
++ the entity can be selected in a list: a `Selectable` role is provided, which calls back the `onSelected()` method.
++ three context actions are created (they will be presented in a contextual menu).
++ at last, the presentation model will be rendered with the entity name.
+
+The entity can be:
+
++ a simple POJO, such as in this case;
++ an object with associated DCI roles (i.e. it implements the `As` interface): in this case, all the roles such as `UserActionProvider`, `Selectable` etc...
+will be automatically part of the presentation model.
+
+<!-- MACRO{snippet|id=pmSimpleEntity|file=${project.basedir}/modules/examples/Presentation/src/main/java/it/tidalwave/role/ui/example/presentation/impl/DefaultMainPanelPresentationControl.java} -->
+
+Callbacks need one parameter, which is the object the action must be performed on.
+
+<!-- MACRO{snippet|id=onSelected|file=${project.basedir}/modules/examples/Presentation/src/main/java/it/tidalwave/role/ui/example/presentation/impl/DefaultMainPanelPresentationControl.java} -->
+<!-- MACRO{snippet|id=action1|file=${project.basedir}/modules/examples/Presentation/src/main/java/it/tidalwave/role/ui/example/presentation/impl/DefaultMainPanelPresentationControl.java} -->
+
+In this second example, an `Aggregate` role is also provided.
+
+<!-- MACRO{snippet|id=pmSimpleDciEntity|file=${project.basedir}/modules/examples/Presentation/src/main/java/it/tidalwave/role/ui/example/presentation/impl/DefaultMainPanelPresentationControl.java} -->
+
+Presentation models can be created in various way:
+
+1. associated to an entity class already in the model;
+2. explicitly created in a presentation control, as shown above (this works for POJOs);
+3. create in a specific `Presentable` role, that acts as a presentation model factory.
+
+![UML](it-tidalwave-steelblue-modules/it-tidalwave-steelblue-examples/it-tidalwave-steelblue-example-presentation/apidocs/it/tidalwave/role/ui/example/presentation/impl/FileEntityPresentable.svg)
+
+The `Presentable` approach is the recommended one (unless the entity is very simple) since in practice the runtime will ask each entity to create is
+presentation model. In particular this is important for composite entities, unless one wants to write code that recursively navigate the tree of child
+entities; a task that would be cumbersome to implement in case of heterogeneous composites.
+
+For the entity `FileEntity` the `Presentable` approach has been provided. It uses an `Aggregate` role, required when the entity is going to be presented
+in a UI control with columns (such as a table or a tree-table). The aggregate provides multiple presentation model instances, one for each column.
+
+> The `r()` method is a simple utility method that accepts varargs arguments and pack them into a `Collection`, eventually expanding arguments that are
+`Collection`s themselves.
+
+<!-- MACRO{snippet|id=all|file=${project.basedir}/modules/examples/Presentation/src/main/java/it/tidalwave/role/ui/example/presentation/impl/FileEntityPresentable.java} -->
+
+Note that since the owner object is mutable (it represents a file, that can change attributes during its life cycle), **deferred** `Displayable`s are used:
+instead directly calling the getter methods, they use `Supplier`s.
+
+> The `_s()` method is a simple utility method that wraps a method whose functional signature is similar to the one of a `Supplier`, but can throw a checked
+> exception: it returns a `Supplier` with no checked exceptions.
+
+#[[###]]# Testing
+
+Given that this module does not depend on UI technology, testing is easy and can be performed with the usual tools. Below some sketches will be illustrated
+that make use of TestNG and Mockito.
+
+First, mocks are created; they are one or more DAOs (or similar classes) and one presentation.
+
+<!-- MACRO{snippet|id=mocks|file=${project.basedir}/modules/examples/Presentation/src/test/java/it/tidalwave/role/ui/example/presentation/impl/DefaultMainPanelPresentationControlTest.java} -->
+
+Simple button interactions can be tested in a straightforward fashion.
+
+<!-- MACRO{snippet|id=test_buttonAction|file=${project.basedir}/modules/examples/Presentation/src/test/java/it/tidalwave/role/ui/example/presentation/impl/DefaultMainPanelPresentationControlTest.java} -->
+
+Confirmation dialogs can be tested with a few lines of code, also thanks to helper methods such as `confirm()`.
+
+<!-- MACRO{snippet|id=test_actionDialogOk_confirm|file=${project.basedir}/modules/examples/Presentation/src/test/java/it/tidalwave/role/ui/example/presentation/impl/DefaultMainPanelPresentationControlTest.java} -->
+
+Also dialog cancellations can be tested in the same way.
+
+<!-- MACRO{snippet|id=test_actionDialogCancelOk_cancel|file=${project.basedir}/modules/examples/Presentation/src/test/java/it/tidalwave/role/ui/example/presentation/impl/DefaultMainPanelPresentationControlTest.java} -->
+
+More complex interactions such as those with the file picker require a bit more code, but still under the dozen of lines.
+
+<!-- MACRO{snippet|id=test_actionPickFile_confirm|file=${project.basedir}/modules/examples/Presentation/src/test/java/it/tidalwave/role/ui/example/presentation/impl/DefaultMainPanelPresentationControlTest.java} -->
+
+At last, an example of testing an interaction involving DAOs and composite entities. In this case the test is clearly more complex, but it's due to the fact
+that a lot of things are tested, included interactions.
+
+<!-- MACRO{snippet|id=test_start|file=${project.basedir}/modules/examples/Presentation/src/test/java/it/tidalwave/role/ui/example/presentation/impl/DefaultMainPanelPresentationControlTest.java} -->
+
+#[[###]]# JavaFX implementation
+
+The JavaFX implementation of the application must provide:
+
++ implementations of presentation interfaces (presentation controls doesn't need any further code);
++ JavaFX layout resources (`.fxml` files);
++ a `main()` that starts the application.
+
+Actually there are two implementations for each presentation interface:
+
++ the actual implementation, called “presentation delegate”
++ a decorator implementation that takes care of threading issues.
+
+The reason for this duplication is that the former class is instantiated by the JavaFX runtime (the class is declared in a `.fxml` resource),
+while the latter needs to be instantiated by Spring.
+
+> TODO: mention that threading is automatic. Add in the control description that the reason for which notify methods are always called is bacause of threading.
+
+
+#[[####]]# JavaFXMainPanelPresentationDelegate
+
+![UML](it-tidalwave-steelblue-modules/it-tidalwave-steelblue-examples/it-tidalwave-steelblue-example-presentation-javafx/apidocs/it/tidalwave/role/ui/example/presentation/impl/javafx/JavaFXMainPanelPresentationDelegate.svg)
+
+The presentation delegate is the class referred by the `.fxml` resource associated to the presentation (in this case `MainPanel.fxml`).
+
+<!-- MACRO{snippet|file=${project.basedir}/modules/examples/PresentationJavaFX/src/main/resources/it/tidalwave/role/ui/example/presentation/impl/javafx/MainPanel.fxml} -->
+
+This class must first inject the required fields: an instance of the `JavaFXBinder` utility and the references to all the JavaFX widgets in the interface.
+
+<!-- MACRO{snippet|id=fields|file=${project.basedir}/modules/examples/PresentationJavaFX/src/main/java/it/tidalwave/role/ui/example/presentation/impl/javafx/JavaFXMainPanelPresentationDelegate.java} -->
+
+> Unfortunately it's not possible to inject fields by constructor, since this feature is not supported by the JavaFX runtime.
+
+A `bind()` method, called just once, must use the `binder` to create associations between `UserAction` and `BoundProperty` instances and the JavaFX widgets. Bindings are
+by default unidirectional, that is e.g. a button calls a `UserAction`; in some cases, they can be bidirectional, as in the `tfTextField` example, because
+changes can be originated both by the code and from the user's interaction.
+
+<!-- MACRO{snippet|id=bind|file=${project.basedir}/modules/examples/PresentationJavaFX/src/main/java/it/tidalwave/role/ui/example/presentation/impl/javafx/JavaFXMainPanelPresentationDelegate.java} -->
+
+When the control requires to update the rendering of data, it calls a method passing the related presentation models. Again the `binder` makes it possible
+to re-associate the rendering widgets with the new data.
+
+> `bind()` accepts an optional callback, that will be called when the binding operation has been completed. This feature is not trivial, because manipulation
+of JavaFX widgets always happen in the JavaFX thread, while the callback is executed in a regular thread. In this case, callbacks are used for logging purposes.
+
+<!-- MACRO{snippet|id=populate|file=${project.basedir}/modules/examples/PresentationJavaFX/src/main/java/it/tidalwave/role/ui/example/presentation/impl/javafx/JavaFXMainPanelPresentationDelegate.java} -->
+
+Some notification methods are very simple, as they just call methods to manipulate the JavaFX widgets.
+
+<!-- MACRO{snippet|id=notify2|file=${project.basedir}/modules/examples/PresentationJavaFX/src/main/java/it/tidalwave/role/ui/example/presentation/impl/javafx/JavaFXMainPanelPresentationDelegate.java} -->
+
+Notifications and special dialogs are also executed by `binder`.
+
+<!-- MACRO{snippet|id=notify1|file=${project.basedir}/modules/examples/PresentationJavaFX/src/main/java/it/tidalwave/role/ui/example/presentation/impl/javafx/JavaFXMainPanelPresentationDelegate.java} -->
+<!-- MACRO{snippet|id=pickFile|file=${project.basedir}/modules/examples/PresentationJavaFX/src/main/java/it/tidalwave/role/ui/example/presentation/impl/javafx/JavaFXMainPanelPresentationDelegate.java} -->
+<!-- MACRO{snippet|id=pickDirectory|file=${project.basedir}/modules/examples/PresentationJavaFX/src/main/java/it/tidalwave/role/ui/example/presentation/impl/javafx/JavaFXMainPanelPresentationDelegate.java} -->
+
+
+#[[####]]# JavaFXMainPanelPresentation
+
+![UML](it-tidalwave-steelblue-modules/it-tidalwave-steelblue-examples/it-tidalwave-steelblue-example-presentation-javafx/apidocs/it/tidalwave/role/ui/example/presentation/impl/javafx/JavaFXMainPanelPresentation.svg)
+
+The decorator implementation is always created in the same way, as in the following code example. The returned delegate is indeed a dynamic proxy that wraps
+all method calls in JavaFX `Platform.runLater()`, thus the programmer need not to take care of threading issues.
+The use of Lombok `@Delegate` dramatically simplifies the implementation of this class.
+
+<!-- MACRO{snippet|id=all|file=${project.basedir}/modules/examples/PresentationJavaFX/src/main/java/it/tidalwave/role/ui/example/presentation/impl/javafx/JavaFXMainPanelPresentation.java} -->
+
+The `.fxml` resource by default has the same name of the presentation class, with the words `JavaFX` and `Presentation` removed, and must be in the same
+package.
+
+> An overloaded version of the method `createNodeAndDelegate()` allows a second parameter with the full path of the `.fxml` resource
+
+
+#[[####]]# JavaFXApplicationPresentationDelegate
+
+????
+
+> TODO UML diagram
+
+
+
+#[[####]]# Main class
+
+The `main` of the application must perform the following tasks:
+
++ set the `PROP_APP_NAME` with the name of the application;
++ configure the JavaFX `Platform` for explicit exit;
++ sets some default properties.
+
+Optional properties:
+
++ `KEY_INITIAL_SIZE`: the initial size of the window, as a percentage of the screen size.
++ `KEY_FULL_SCREEN`: `true` if the application must start at full screen.
++ `PROP_SUPPRESS_CONSOLE`: TBD.
+
+<!-- MACRO{snippet|id=main|file=${project.basedir}/modules/examples/PresentationJavaFX/src/main/java/it/tidalwave/role/ui/example/presentation/javafx/Main.java} -->
+
+The method `onStageCreated()` must be used to initialize the control beans.
+> There's no other valid way to do that; `@PostConstruct` annotated methods won't work because of threading issues.
+
+<!-- MACRO{snippet|id=onStageCreated|file=${project.basedir}/modules/examples/PresentationJavaFX/src/main/java/it/tidalwave/role/ui/example/presentation/javafx/Main.java} -->
+
+Two `fxml` resources must be provided in the same package of the `Main` class:
+
++ `Application.fxml` describes the layout of the main window
++ `Splash.fxml` describes a splash pop up that will be rendered during the initialisation of the application
+
+It's common to have multiple `.FXML` files, for instance one describing the general layout of the application (e.g. a toolbar at the top, a center
+content pane and a bottom status bar) and one specific for each panel in the application. In this case they must be programmatically assembled together.
+The proper way to do that is to have the main presentation delegate to implement `PresentationAssembler`: the `assemble()` method will be called back with
+the initialized `ApplicationContext`, so the code can retrieve any other presentation and their related `Node`.
+
+<!-- MACRO{snippet|id=all|file=${project.basedir}/modules/examples/PresentationJavaFX/src/main/java/it/tidalwave/role/ui/example/presentation/impl/javafx/JavaFXApplicationPresentationDelegate.java} -->
+
+
+#[[####]]# Assembling all the code
+
+Since Spring is behind the scene, all the classes must be instantiated with a standard Spring approach. The preferred way nowadays is by using annotations; in
+this case the main class must extend `JavaFXSpringAnnotationApplication` and have the following annotations:
+
+<!-- MACRO{snippet|id=annotations|file=${project.basedir}/modules/examples/PresentationJavaFX/src/main/java/it/tidalwave/role/ui/example/presentation/javafx/Main.java} -->
+
+The beans participating in the example need to be instantiated. In the example code, they are auto-scanned thanks to the Spring `@Component` annotation.
+
+It is also possible — while not recommended — to use the old Spring `.xml` configuration approach: in this case the base class to extend is `JavaFXSpringApplication`.
+The classpath is scanned for all the Spring beans files placed under the `META-INF` directory and whose name ends with `AutoBeans.xml`. Furthermore,
+specific operating system configuration files are searched for:
+
++ for Linux, files whose name ends with `AutoLinuxBeans.xml`
++ for macOS, files whose name ends with `AutoMacOSXBeans.xml`
++ for Windows, files whose name ends with `AutoWindowsBeans.xml`
+
+> TODO: required dependencies, profiles, aspects... etc.
+
 #[[##]]# Modules
 
 + [JavaFXBindings](it-tidalwave-steelblue-modules/it-tidalwave-role-ui-javafx/index.html)             [(Javadoc)](it-tidalwave-steelblue-modules/it-tidalwave-role-ui-javafx/apidocs/index.html)
@@ -93,4 +416,5 @@ There are also other **quality analysis tools** available:
 #[[###]]# API documentation
 
 [Aggregate Javadoc](apidocs/index.html)
+
 
