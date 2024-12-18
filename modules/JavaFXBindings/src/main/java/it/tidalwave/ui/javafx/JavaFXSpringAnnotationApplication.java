@@ -27,52 +27,67 @@
 package it.tidalwave.ui.javafx;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import it.tidalwave.util.PreferencesHandler;
+import it.tidalwave.role.impl.DefaultContextManager;
+import it.tidalwave.role.spring.spi.AnnotationSpringSystemRoleFactory;
+import it.tidalwave.role.ui.javafx.StackPaneSelector;
 
 /***********************************************************************************************************************
  *
+ * A base class for JavaFX applications with use Spring annotation scanning.
+ *
  * @author  Fabrizio Giudici
+ * @since   1.1-ALPHA-4
  *
  **********************************************************************************************************************/
-public class JavaFXSpringApplication extends AbstractJavaFXSpringApplication
+@Configuration
+public class JavaFXSpringAnnotationApplication extends AbstractJavaFXSpringApplication
   {
     // Don't use Slf4j and its static logger - give Main a chance to initialize things
     private final Logger log = LoggerFactory.getLogger(JavaFXSpringApplication.class);
 
-    /*******************************************************************************************************************
-     *
-     * Creates the application context.
-     *
-     * @return  the application context
-     *
-     ******************************************************************************************************************/
-    @Nonnull
+    @Override @Nonnull
     protected ConfigurableApplicationContext createApplicationContext()
       {
-        final var springConfigLocations = new ArrayList<String>();
-        final var osName = System.getProperty("os.name", "").toLowerCase();
-        springConfigLocations.add("classpath*:/META-INF/*AutoBeans.xml");
+        final var mainClass = getClass();
+        log.info("Scanning beans from {}", mainClass);
+        return new AnnotationConfigApplicationContext(mainClass);
+      }
 
-        if (osName.contains("os x"))
-          {
-            springConfigLocations.add("classpath*:/META-INF/*AutoMacOSXBeans.xml");
-          }
+    @Bean(name = "javafxBinderExecutor")
+    public ThreadPoolTaskExecutor getJavaFXSafeProxyCreator()
+      {
+        return JavaFXSafeProxyCreator.getExecutor();
+      }
 
-        if (osName.contains("linux"))
-          {
-            springConfigLocations.add("classpath*:/META-INF/*AutoLinuxBeans.xml");
-          }
+    @Bean(name = "stackPaneSelector")
+    public StackPaneSelector getStackPaneSelector()
+      {
+        return new StackPaneSelector();
+      }
 
-        if (osName.contains("windows"))
-          {
-            springConfigLocations.add("classpath*:/META-INF/*AutoWindowsBeans.xml");
-          }
+    @Bean(name = "preferencesHandler")
+    public PreferencesHandler getPreferencesHandler()
+      {
+        return PreferencesHandler.getInstance();
+      }
 
-        log.info("Loading Spring configuration from {} ...", springConfigLocations);
-        return new ClassPathXmlApplicationContext(springConfigLocations.toArray(new String[0]));
+    @Bean(name = "roleManager")
+    public AnnotationSpringSystemRoleFactory getAnnotationSpringSystemRoleFactory()
+      {
+        return new AnnotationSpringSystemRoleFactory();
+      }
+
+    @Bean(name = "contextManager")
+    public DefaultContextManager getDefaultContextManager()
+      {
+        return new DefaultContextManager();
       }
   }
