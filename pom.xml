@@ -67,7 +67,7 @@
     </distributionManagement>
 
     <properties>
-        <tft.maven.requiredJdk>[11, 12)</tft.maven.requiredJdk>
+        <tft.maven.requiredJdk>[21, 22)</tft.maven.requiredJdk>
         <scm.repo.url>ssh://git@bitbucket.org/tidalwave/steelblue-src.git</scm.repo.url>
         <scm.repo.readonly.url>https://bitbucket.org/tidalwave/steelblue-src</scm.repo.readonly.url>
         <scm.repo.browse.url>https://bitbucket.org/tidalwave/steelblue-src/src</scm.repo.browse.url>

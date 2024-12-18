@@ -50,7 +50,6 @@
         <tft.javac.target>11</tft.javac.target>
         <tft.javac.release>11</tft.javac.release>
 
-        <tft.aspectjrt.version>1.9.20.1</tft.aspectjrt.version> <!-- Last not requiring JDK 11 -->
         <thesefoolishthings.version>3.2-ALPHA-24</thesefoolishthings.version>
         <tft.javafx.version>11.0.1</tft.javafx.version>
         <jmetro.version>11.6.14</jmetro.version>
