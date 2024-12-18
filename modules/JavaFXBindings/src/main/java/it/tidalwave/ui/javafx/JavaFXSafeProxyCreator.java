@@ -39,15 +39,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.application.Platform;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import it.tidalwave.util.ReflectionUtils;
 import it.tidalwave.role.ui.ToolBarModel;
 import it.tidalwave.role.ui.javafx.JavaFXBinder;
 import it.tidalwave.role.ui.javafx.impl.DefaultJavaFXBinder;
 import it.tidalwave.role.ui.javafx.impl.util.JavaFXSafeProxy;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import static lombok.AccessLevel.PRIVATE;
 
 /***********************************************************************************************************************
  *
@@ -163,55 +160,6 @@ public class JavaFXSafeProxyCreator
 
     /*******************************************************************************************************************
      *
-     *
-     *
-     ******************************************************************************************************************/
-    @RequiredArgsConstructor(access = PRIVATE)
-    public static final class NodeAndDelegate
-      {
-        @Getter @Nonnull
-        private final Node node;
-
-        @Nonnull
-        private final Object delegate;
-
-        @Nonnull
-        public <T> T getDelegate()
-          {
-            return (T)delegate;
-          }
-
-        @Nonnull
-        public static <T> NodeAndDelegate load (@Nonnull final Class<T> clazz, @Nonnull final String resource)
-          throws IOException
-          {
-            log.debug("NodeAndDelegate({}, {})", clazz, resource);
-            assert Platform.isFxApplicationThread() : "Not in JavaFX UI Thread";
-            final var loader = new FXMLLoader(clazz.getResource(resource), null, null,
-                                                     type -> ReflectionUtils.instantiateWithDependencies(type, BEANS));
-            final Node node = loader.load();
-            final T jfxController = loader.getController();
-            ReflectionUtils.injectDependencies(jfxController, BEANS);
-            final var interfaces = jfxController.getClass().getInterfaces();
-
-            if (interfaces.length == 0)
-              {
-                log.warn("{} has no interface: not creating safe proxy", jfxController.getClass());
-                log.debug(">>>> load({}, {}) completed", clazz, resource);
-                return new NodeAndDelegate(node, jfxController);
-              }
-            else
-              {
-                final var interfaceClass = (Class<T>)interfaces[0]; // FIXME
-                final var safeDelegate = JavaFXSafeProxyCreator.createSafeProxy(jfxController, interfaceClass);
-                log.debug(">>>> load({}, {}) completed", clazz, resource);
-                return new NodeAndDelegate(node, safeDelegate);
-              }
-          }
-      }
-
-    /*******************************************************************************************************************
-     *
      * Creates a {@link NodeAndDelegate} for the given presentation class. The FXML resource name is inferred by
      * default, For instance, is the class is named {@code JavaFXFooBarPresentation}, the resource name is
      * {@code FooBar.fxml} and searched in the same packages as the class.
@@ -224,7 +172,7 @@ public class JavaFXSafeProxyCreator
      *
      ******************************************************************************************************************/
     @Nonnull
-    public static <T> NodeAndDelegate createNodeAndDelegate (@Nonnull final Class<?> presentationClass)
+    public static <T> NodeAndDelegate<? extends T> createNodeAndDelegate (@Nonnull final Class<T> presentationClass)
       {
         final var resource = presentationClass.getSimpleName().replaceAll("^JavaFX", "")
                                               .replaceAll("^JavaFx", "")
@@ -242,13 +190,13 @@ public class JavaFXSafeProxyCreator
      *
      ******************************************************************************************************************/
     @Nonnull
-    public static <T> NodeAndDelegate createNodeAndDelegate (@Nonnull final Class<?> presentationClass,
-                                                             @Nonnull final String fxmlResourcePath)
+    public static <T> NodeAndDelegate<? extends T> createNodeAndDelegate (@Nonnull final Class<T> presentationClass,
+                                                                @Nonnull final String fxmlResourcePath)
       {
         log.debug("createNodeAndDelegate({}, {})", presentationClass, fxmlResourcePath);
 
         final var latch = new CountDownLatch(1);
-        final var nad = new AtomicReference<NodeAndDelegate>();
+        final var nad = new AtomicReference<NodeAndDelegate<T>>();
         final var exception = new AtomicReference<RuntimeException>();
 
         if (Platform.isFxApplicationThread())

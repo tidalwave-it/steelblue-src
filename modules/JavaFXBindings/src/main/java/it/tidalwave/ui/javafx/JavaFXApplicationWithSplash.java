@@ -40,7 +40,6 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
-import it.tidalwave.ui.javafx.JavaFXSafeProxyCreator.NodeAndDelegate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import it.tidalwave.util.PreferencesHandler;
@@ -150,7 +149,7 @@ public abstract class JavaFXApplicationWithSplash extends Application
      *
      *
      ******************************************************************************************************************/
-    protected void onStageCreated (@Nonnull final Stage stage, @Nonnull final NodeAndDelegate applicationNad)
+    protected void onStageCreated (@Nonnull final Stage stage, @Nonnull final NodeAndDelegate<?> applicationNad)
       {
       }
 
@@ -160,7 +159,7 @@ public abstract class JavaFXApplicationWithSplash extends Application
      *
      ******************************************************************************************************************/
     @Nonnull
-    protected abstract NodeAndDelegate createParent()
+    protected abstract NodeAndDelegate<?> createParent()
       throws IOException;
 
     /*******************************************************************************************************************
