@@ -46,7 +46,8 @@ import org.slf4j.LoggerFactory;
 import it.tidalwave.util.PreferencesHandler;
 import lombok.Getter;
 import lombok.Setter;
-import static it.tidalwave.util.PreferencesHandler.*;
+import static it.tidalwave.util.PreferencesHandler.KEY_FULL_SCREEN;
+import static it.tidalwave.util.PreferencesHandler.KEY_INITIAL_SIZE;
 
 /***********************************************************************************************************************
  *

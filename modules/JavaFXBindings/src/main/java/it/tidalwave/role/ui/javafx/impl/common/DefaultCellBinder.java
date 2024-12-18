@@ -30,7 +30,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.concurrent.Executor;
-import java.util.stream.Collectors;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Cell;
 import javafx.scene.control.ContextMenu;
@@ -208,7 +207,7 @@ public class DefaultCellBinder implements CellBinder
         return roles.getMany(_UserActionProvider_).stream()
                     .flatMap(uap -> uap.getActions().stream())
                     .map(this::createMenuItem)
-                    .collect(Collectors.toList());
+                    .collect(toList());
       }
 
     /*******************************************************************************************************************
