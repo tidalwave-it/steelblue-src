@@ -204,8 +204,7 @@ public class DefaultJavaFXBinder implements JavaFXBinder
     @Override
     public void bindToggleButtons (@Nonnull final Pane pane, @Nonnull final PresentationModel pm)
       {
-        assert Platform.isFxApplicationThread();
-
+        assertIsFxApplicationThread();
         final var group = new ToggleGroup();
         final var children = pane.getChildren();
         final var prototypeStyleClass = children.get(0).getStyleClass();
@@ -219,8 +218,7 @@ public class DefaultJavaFXBinder implements JavaFXBinder
     @Override
     public void bindButtonsInPane (@Nonnull final GridPane gridPane, @Nonnull final Collection<UserAction> actions)
       {
-        assert Platform.isFxApplicationThread();
-
+        assertIsFxApplicationThread();
         final var columnConstraints = gridPane.getColumnConstraints();
         final var children = gridPane.getChildren();
 
