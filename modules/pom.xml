@@ -147,6 +147,7 @@
     <modules>
         <module>JavaFXBindings</module>
         <module>examples</module>
+        <module>Core</module>
     </modules>
 
 </project>

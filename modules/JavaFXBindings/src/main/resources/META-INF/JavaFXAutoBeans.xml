@@ -47,7 +47,7 @@
 
     <aop:aspectj-autoproxy/>
 
-    <bean class="it.tidalwave.role.ui.javafx.StackPaneSelector"/>
+    <bean class="it.tidalwave.ui.javafx.StackPaneSelector"/>
 
     <bean id="javafxBinderExecutor" class="it.tidalwave.ui.javafx.JavaFXSafeProxyCreator"
           factory-method="getExecutor"/>

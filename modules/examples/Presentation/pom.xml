@@ -49,6 +49,10 @@
             <groupId>it.tidalwave.steelblue</groupId>
             <artifactId>it-tidalwave-steelblue-example-model</artifactId>
         </dependency>
+        <dependency>
+            <groupId>it.tidalwave.steelblue</groupId>
+            <artifactId>it-tidalwave-ui-core</artifactId>
+        </dependency>
         <dependency> <!-- This is optional, if one wants to use a pubsub architecture. -->
             <groupId>it.tidalwave.thesefoolishthings</groupId>
             <artifactId>it-tidalwave-messagebus</artifactId>
@@ -76,12 +80,6 @@
                     <artifactId>commons-logging</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-
-        <!-- FIXME: remove when ToolBarModel and MenuBarModel are moved to TFT. -->
-        <dependency>
-            <groupId>it.tidalwave.steelblue</groupId>
-            <artifactId>it-tidalwave-role-ui-javafx</artifactId>
         </dependency>
         <!-- end -->
 

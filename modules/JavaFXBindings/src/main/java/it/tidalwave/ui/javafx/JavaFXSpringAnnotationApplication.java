@@ -35,10 +35,9 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import it.tidalwave.util.PreferencesHandler;
-import it.tidalwave.role.ui.MenuBarModel;
-import it.tidalwave.role.ui.ToolBarModel;
-import it.tidalwave.role.ui.annotation.EnableMessageBus;
-import it.tidalwave.role.ui.javafx.StackPaneSelector;
+import it.tidalwave.ui.core.MenuBarModel;
+import it.tidalwave.ui.core.ToolBarModel;
+import it.tidalwave.ui.core.annotation.EnableMessageBus;
 import it.tidalwave.messagebus.MessageBus;
 import it.tidalwave.messagebus.spi.SimpleMessageBus;
 

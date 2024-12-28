@@ -46,6 +46,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>it.tidalwave.steelblue</groupId>
+            <artifactId>it-tidalwave-ui-core</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>it.tidalwave.thesefoolishthings</groupId>
             <artifactId>it-tidalwave-messagebus</artifactId>
         </dependency>
@@ -127,6 +132,12 @@
         </dependency>
 
         <!-- TEST DEPENDENCIES -->
+        <dependency>
+            <groupId>it.tidalwave.steelblue</groupId>
+            <artifactId>it-tidalwave-ui-core</artifactId>
+            <classifier>tests</classifier>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.testfx</groupId>
             <artifactId>testfx-core</artifactId>

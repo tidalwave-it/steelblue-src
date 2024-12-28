@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.control.TreeTableView?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.tidalwave.ui.example.presentation.impl.javafx.JavaFXMainPanelPresentationDelegate">
+    <bottom>
+        <TextArea fx:id="taLog" BorderPane.alignment="CENTER" />
+    </bottom>
+    <center>
+      <BorderPane BorderPane.alignment="CENTER">
+         <left>
+                <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="8.0" BorderPane.alignment="CENTER">
+                    <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="16.0">
+                        <ComboBox fx:id="cbComboBox" />
+                        <ListView fx:id="lvListView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+                    </VBox>
+                    <TableView fx:id="tvTableView" maxWidth="1.7976931348623157E308">
+                        <columns>
+                            <TableColumn prefWidth="100.0" text="C1" />
+                            <TableColumn prefWidth="80.0" text="C2" />
+                            <TableColumn prefWidth="80.0" text="C3" />
+                        </columns>
+                    </TableView>
+                    <TreeView fx:id="tvTreeView" maxWidth="1.7976931348623157E308" minWidth="300" />
+               <BorderPane.margin>
+                  <Insets right="8.0" />
+               </BorderPane.margin>
+                </HBox>
+         </left>
+         <center>
+                 <TreeTableView fx:id="ttvTreeTableView" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
+                     <columns>
+                         <TreeTableColumn prefWidth="300.0" text="name" />
+                         <TreeTableColumn prefWidth="100.0" text="size" />
+                         <TreeTableColumn prefWidth="150.0" text="creationDate" />
+                         <TreeTableColumn prefWidth="150.0" text="latestModificationDate" />
+                     </columns>
+                 </TreeTableView>
+         </center>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <BorderPane.margin>
+            <Insets bottom="16.0" top="16.0" />
+         </BorderPane.margin>
+      </BorderPane>
+    </center>
+    <padding>
+        <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+    </padding>
+   <top>
+         <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="16.0" BorderPane.alignment="CENTER">
+             <HBox alignment="BASELINE_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="8.0" VBox.vgrow="ALWAYS">
+                 <Button fx:id="btButton" mnemonicParsing="false" prefHeight="24.0" text="Button" />
+                 <TextField fx:id="tfTextField" prefHeight="24.0" />
+                 <CheckBox mnemonicParsing="false" text="CheckBox" />
+             </HBox>
+             <HBox spacing="8.0">
+                 <Button fx:id="btDialogOk" mnemonicParsing="false" text="Button" />
+                 <Button fx:id="btDialogOkCancel" mnemonicParsing="false" text="Button" />
+                 <Button fx:id="btPickFile" mnemonicParsing="false" text="Button" />
+                 <Button fx:id="btPickDirectory" mnemonicParsing="false" text="Button" />
+             </HBox>
+         </VBox>
+   </top>
+</BorderPane>

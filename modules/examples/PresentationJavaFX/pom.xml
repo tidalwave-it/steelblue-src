@@ -46,7 +46,7 @@
 
     <properties>
         <tft.javafx.modules>javafx.base,javafx.controls,javafx.fxml,javafx.graphics,javafx.web</tft.javafx.modules>
-        <tft.mainClass>it.tidalwave.role.ui.example.presentation.javafx.Main</tft.mainClass>
+        <tft.mainClass>it.tidalwave.ui.example.presentation.javafx.Main</tft.mainClass>
     </properties>
 
     <dependencies>

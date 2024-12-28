@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.tidalwave.ui.example.presentation.impl.javafx.JavaFXApplicationPresentationDelegate">
+    <center>
+        <BorderPane fx:id="pnMainPane" minHeight="800.0" minWidth="1024.0" style="-fx-background-color: #404040;" />
+    </center>
+    <top>
+        <VBox BorderPane.alignment="CENTER">
+            <children>
+                <MenuBar fx:id="mbMenuBar">
+                </MenuBar>
+                <ToolBar fx:id="tbToolBar" maxHeight="64.0" minHeight="64.0" prefHeight="64.0" prefWidth="1289.0" />
+            </children>
+        </VBox>
+    </top>
+</BorderPane>

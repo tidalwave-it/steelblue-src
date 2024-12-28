@@ -47,8 +47,6 @@ import it.tidalwave.util.Key;
 import it.tidalwave.util.PreferencesHandler;
 import it.tidalwave.util.TypeSafeMap;
 import it.tidalwave.util.annotation.VisibleForTesting;
-import it.tidalwave.role.ui.javafx.ApplicationPresentationAssembler;
-import it.tidalwave.role.ui.javafx.PresentationAssembler;
 import it.tidalwave.messagebus.MessageBus;
 import lombok.AccessLevel;
 import lombok.Getter;
