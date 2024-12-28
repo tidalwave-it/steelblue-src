@@ -40,7 +40,7 @@
 
     <groupId>it.tidalwave.steelblue</groupId>
     <artifactId>steelblue</artifactId>
-    <version>1.1-ALPHA-7-SNAPSHOT</version>
+    <version>2.0-ALPHA-1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>SteelBlue</name>
     <url>http://tidalwave.it/projects/solidblue</url>
@@ -84,33 +84,33 @@
             <dependency>
                 <groupId>it.tidalwave.steelblue</groupId>
                 <artifactId>it-tidalwave-ui-core</artifactId>
-                <version>1.1-ALPHA-7-SNAPSHOT</version>
+                <version>2.0-ALPHA-1-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>it.tidalwave.steelblue</groupId>
                 <artifactId>it-tidalwave-ui-core</artifactId>
                 <classifier>tests</classifier>
-                <version>1.1-ALPHA-7-SNAPSHOT</version>
+                <version>2.0-ALPHA-1-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>it.tidalwave.steelblue</groupId>
-                <artifactId>it-tidalwave-role-ui-javafx</artifactId>
-                <version>1.1-ALPHA-7-SNAPSHOT</version>
+                <artifactId>it-tidalwave-ui-javafx</artifactId>
+                <version>2.0-ALPHA-1-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>it.tidalwave.steelblue</groupId>
-                <artifactId>it-tidalwave-steelblue-example-model</artifactId>
-                <version>1.1-ALPHA-7-SNAPSHOT</version>
+                <artifactId>it-tidalwave-ui-example-model</artifactId>
+                <version>2.0-ALPHA-1-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>it.tidalwave.steelblue</groupId>
-                <artifactId>it-tidalwave-steelblue-example-presentation</artifactId>
-                <version>1.1-ALPHA-7-SNAPSHOT</version>
+                <artifactId>it-tidalwave-ui-example-presentation</artifactId>
+                <version>2.0-ALPHA-1-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>it.tidalwave.steelblue</groupId>
-                <artifactId>it-tidalwave-steelblue-example-presentation-javafx</artifactId>
-                <version>1.1-ALPHA-7-SNAPSHOT</version>
+                <artifactId>it-tidalwave-ui-example-presentation-javafx</artifactId>
+                <version>2.0-ALPHA-1-SNAPSHOT</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

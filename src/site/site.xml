@@ -62,14 +62,17 @@
     <body>
         <menu name="Overview" inherit="top">
             <item name="Introduction" href="index.html"/>
+            <item name="Core" href="it-tidalwave-ui-modules/it-tidalwave-ui-core/index.html"/>
+            <item name="JavaFX" href="it-tidalwave-ui-modules/it-tidalwave-ui-javafx/index.html"/>
         </menu>
 
         <menu name="SpotBugs" inherit="top">
         <!-- It's not possible to have a SpotBugs aggregate: https://spotbugs.github.io/spotbugs-maven-plugin/faq.html#Aggregate_Reporting -->
-            <item name="JavaFX Bindings" href="it-tidalwave-steelblue-modules/it-tidalwave-role-ui-javafx/spotbugs.html"/>
-            <item name="Example Model" href="it-tidalwave-steelblue-modules/it-tidalwave-steelblue-examples/it-tidalwave-steelblue-example-model/spotbugs.html"/>
-            <item name="Example Presentation" href="it-tidalwave-steelblue-modules/it-tidalwave-steelblue-examples/it-tidalwave-steelblue-example-presentation/spotbugs.html"/>
-            <item name="Example JavaFX Presentation" href="it-tidalwave-steelblue-modules/it-tidalwave-steelblue-examples/it-tidalwave-steelblue-example-presentation-javafx/spotbugs.html"/>
+            <item name="Core" href="it-tidalwave-ui-modules/it-tidalwave-ui-core/spotbugs.html"/>
+            <item name="JavaFX Bindings" href="it-tidalwave-ui-modules/it-tidalwave-ui-javafx/spotbugs.html"/>
+            <item name="Example Model" href="it-tidalwave-ui-modules/it-tidalwave-ui-examples/it-tidalwave-ui-example-model/spotbugs.html"/>
+            <item name="Example Presentation" href="it-tidalwave-ui-modules/it-tidalwave-ui-examples/it-tidalwave-ui-example-presentation/spotbugs.html"/>
+            <item name="Example JavaFX Presentation" href="it-tidalwave-ui-modules/it-tidalwave-ui-examples/it-tidalwave-ui-example-presentation-javafx/spotbugs.html"/>
         </menu>
 
         <menu ref="reports" inherit="bottom"/>

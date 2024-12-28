@@ -445,7 +445,7 @@ specific operating system configuration files are searched for:
 
 #[[##]]# Modules
 
-+ [JavaFXBindings](it-tidalwave-steelblue-modules/it-tidalwave-role-ui-javafx/index.html)             [(Javadoc)](it-tidalwave-steelblue-modules/it-tidalwave-role-ui-javafx/apidocs/index.html)
++ [JavaFXBindings](it-tidalwave-steelblue-modules/it-tidalwave-ui-javafx/index.html)             [(Javadoc)](it-tidalwave-steelblue-modules/it-tidalwave-ui-javafx/apidocs/index.html)
 
 
 #[[##]]# General information

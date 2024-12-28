@@ -33,21 +33,21 @@
 
     <parent>
         <groupId>it.tidalwave.steelblue</groupId>
-        <artifactId>it-tidalwave-steelblue-examples</artifactId>
-        <version>1.1-ALPHA-7-SNAPSHOT</version>
+        <artifactId>it-tidalwave-ui-examples</artifactId>
+        <version>2.0-ALPHA-1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>it.tidalwave.steelblue</groupId>
-    <artifactId>it-tidalwave-steelblue-example-presentation</artifactId>
+    <artifactId>it-tidalwave-ui-example-presentation</artifactId>
     <packaging>jar</packaging>
-    <version>1.1-ALPHA-7-SNAPSHOT</version>
-    <name>SteelBlue - Examples - Presentation</name>
+    <version>2.0-ALPHA-1-SNAPSHOT</version>
+    <name>SteelBlue :: Examples :: Presentation</name>
 
     <dependencies>
         <dependency>
             <groupId>it.tidalwave.steelblue</groupId>
-            <artifactId>it-tidalwave-steelblue-example-model</artifactId>
+            <artifactId>it-tidalwave-ui-example-model</artifactId>
         </dependency>
         <dependency>
             <groupId>it.tidalwave.steelblue</groupId>

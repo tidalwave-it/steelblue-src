@@ -33,16 +33,16 @@
 
     <parent>
         <groupId>it.tidalwave.steelblue</groupId>
-        <artifactId>it-tidalwave-steelblue-examples</artifactId>
-        <version>1.1-ALPHA-7-SNAPSHOT</version>
+        <artifactId>it-tidalwave-ui-examples</artifactId>
+        <version>2.0-ALPHA-1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>it.tidalwave.steelblue</groupId>
-    <artifactId>it-tidalwave-steelblue-example-presentation-javafx</artifactId>
+    <artifactId>it-tidalwave-ui-example-presentation-javafx</artifactId>
     <packaging>jar</packaging>
-    <version>1.1-ALPHA-7-SNAPSHOT</version>
-    <name>SteelBlue - Examples - JavaFX presentation</name>
+    <version>2.0-ALPHA-1-SNAPSHOT</version>
+    <name>SteelBlue :: Examples :: JavaFX presentation</name>
 
     <properties>
         <tft.javafx.modules>javafx.base,javafx.controls,javafx.fxml,javafx.graphics,javafx.web</tft.javafx.modules>
@@ -52,16 +52,16 @@
     <dependencies>
         <dependency>
             <groupId>it.tidalwave.steelblue</groupId>
-            <artifactId>it-tidalwave-steelblue-example-presentation</artifactId>
-            <version>1.1-ALPHA-7-SNAPSHOT</version>
+            <artifactId>it-tidalwave-ui-example-presentation</artifactId>
+            <version>2.0-ALPHA-1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>it.tidalwave.steelblue</groupId>
-            <artifactId>it-tidalwave-steelblue-example-model</artifactId>
+            <artifactId>it-tidalwave-ui-example-model</artifactId>
         </dependency>
         <dependency>
             <groupId>it.tidalwave.steelblue</groupId>
-            <artifactId>it-tidalwave-role-ui-javafx</artifactId>
+            <artifactId>it-tidalwave-ui-javafx</artifactId>
         </dependency>
         <!-- This is needed for pubsub. -->
         <!-- START SNIPPET: messagebus -->
