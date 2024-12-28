@@ -26,36 +26,54 @@
 package it.tidalwave.ui.core.spi;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.function.Supplier;
 import it.tidalwave.role.ui.UserAction;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.testng.annotations.Test;
+import static it.tidalwave.role.ui.Displayable._Displayable_;
+import static org.mockito.Mockito.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-class Binder
+class BinderMock2
   {
   }
 
-class Control
+@Getter @RequiredArgsConstructor
+class ToolbarMock
   {
+    @Nonnull
+    private final List<ButtonMock> items = new ArrayList<>();
   }
 
-class Button
+@Getter @RequiredArgsConstructor
+class ButtonMock
   {
+    @Nonnull
+    private final String text;
   }
 
-class UnderTest extends ToolBarModelSupport<Binder, Control>
+class UnderTest extends ToolBarModelSupport<BinderMock2, ToolbarMock, ButtonMock>
   {
     public UnderTest (@Nonnull final Supplier<Collection<? extends UserAction>> userActionsSupplier)
       {
         super(userActionsSupplier);
       }
 
-    @Override
-    protected void populateImpl (@Nonnull final Binder binder, @Nonnull final Control toolBar)
+    @Override @Nonnull
+    protected ButtonMock createButton (@Nonnull final BinderMock2 binder, @Nonnull final UserAction action)
       {
+        return new ButtonMock(action.as(_Displayable_).getDisplayName());
+      }
 
+    @Override
+    protected void addButtonsToToolBar (@Nonnull final ToolbarMock toolBar, @Nonnull final List<ButtonMock> buttons)
+      {
+        toolBar.getItems().addAll(buttons);
       }
   }
 
@@ -71,18 +89,21 @@ public class ToolBarModelSupportTest
     @Test
     public void test_populate()
       {
-//        // when
-//        underTest.populateImpl(binder, control);
-//        // then
-//        final var buttons = control.getItems();
-//        assertThat(buttons.size(), is(3));
-//        final var button1 = (Button)buttons.get(0);
-//        final var button2 = (Button)buttons.get(1);
-//        final var button3 = (Button)buttons.get(2);
-//
-//        verify(binder).bind(button1, actionFileOpen);
-//        verify(binder).bind(button2, actionFileClose);
-//        verify(binder).bind(button3, actionFileCloseAll);
-//        verifyNoMoreInteractions(binder);
+        // given
+        final var underTest = new UnderTest(() -> List.of(a.actionFileOpen, a.actionFileClose, a.actionFileCloseAll));
+        final var binder = mock(BinderMock2.class);
+        final var toolBar = new ToolbarMock();
+        // when
+        underTest.populateImpl(binder, toolBar);
+        // then
+        final var buttons = toolBar.getItems();
+        assertThat(buttons.size(), is(3));
+        final var button1 = buttons.get(0);
+        final var button2 = buttons.get(1);
+        final var button3 = buttons.get(2);
+
+        assertThat(button1.getText(), is("Open"));
+        assertThat(button2.getText(), is("Close"));
+        assertThat(button3.getText(), is("Close all"));
       }
   }

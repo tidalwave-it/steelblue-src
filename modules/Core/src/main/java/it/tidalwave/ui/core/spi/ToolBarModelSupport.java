@@ -27,6 +27,7 @@ package it.tidalwave.ui.core.spi;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
+import java.util.List;
 import java.util.function.Supplier;
 import it.tidalwave.util.As;
 import it.tidalwave.ui.core.ToolBarModel;
@@ -35,7 +36,9 @@ import it.tidalwave.role.ui.UserActionProvider;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
+import lombok.extern.slf4j.Slf4j;
 import static java.util.Collections.emptyList;
+import static java.util.stream.Collectors.*;
 import static it.tidalwave.role.ui.UserActionProvider._UserActionProvider_;
 
 /***************************************************************************************************************************************************************
@@ -44,12 +47,13 @@ import static it.tidalwave.role.ui.UserActionProvider._UserActionProvider_;
  *
  * @param   <B>               the concrete type of the binder
  * @param   <T>               the concrete type of the toolbar
+ * @param   <BT>              the concrete type of the button
  * @since   1.1-ALPHA-6
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class ToolBarModelSupport<B, T> implements ToolBarModel
+@RequiredArgsConstructor(access = AccessLevel.PROTECTED) @Slf4j
+public abstract class ToolBarModelSupport<B, T, BT> implements ToolBarModel
   {
     @Delegate
     private final As as = As.forObject(this);
@@ -80,5 +84,30 @@ public abstract class ToolBarModelSupport<B, T> implements ToolBarModel
      * @param   binder    the binder
      * @param   toolBar   the toolbar
      **********************************************************************************************************************************************************/
-    protected abstract void populateImpl (@Nonnull B binder, @Nonnull T toolBar);
+    protected void populateImpl (@Nonnull final B binder, @Nonnull final T toolBar)
+      {
+        final var actions = userActionsSupplier.get();
+        log.info("Toolbar user actions: {}", actions);
+        final var buttons = actions.stream()
+                                   .map((action) -> createButton(binder, action))
+                                   .collect(toList());
+        addButtonsToToolBar(toolBar, buttons);
+      }
+
+    /***********************************************************************************************************************************************************
+     * Creates a button bound to the given {@link UserAction}.
+     *
+     * @param   binder    the binder
+     * @param   action    the user action
+     * @return            the button
+     **********************************************************************************************************************************************************/
+    @Nonnull
+    protected abstract BT createButton (@Nonnull B binder, @Nonnull UserAction action);
+
+    /***********************************************************************************************************************************************************
+     * Adds buttons to the toolbar.
+     * @param   toolBar   the toolbar
+     * @param   buttons   the button
+     **********************************************************************************************************************************************************/
+    protected abstract void addButtonsToToolBar (@Nonnull T toolBar, @Nonnull List<BT> buttons);
   }
