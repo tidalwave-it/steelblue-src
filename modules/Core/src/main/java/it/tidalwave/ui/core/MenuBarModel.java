@@ -34,11 +34,13 @@ import lombok.RequiredArgsConstructor;
  *
  * A model for the application menubar.
  *
+ * @param   <B>               the type of the binder
+ * @param   <MB>              the type of the menubar
  * @since   1.1-ALPHA-6
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-public interface MenuBarModel
+public interface MenuBarModel<B, MB>
   {
     /** A class describing the standard sequence of typical main menu bar elements. */
     @RequiredArgsConstructor @Getter
@@ -84,5 +86,5 @@ public interface MenuBarModel
      * @param   binder    the binder
      * @param   menuBar   the menu bar
      **********************************************************************************************************************************************************/
-    public void populate (@Nonnull Object binder, @Nonnull Object menuBar);
+    public void populate (@Nonnull B binder, @Nonnull MB menuBar);
   }

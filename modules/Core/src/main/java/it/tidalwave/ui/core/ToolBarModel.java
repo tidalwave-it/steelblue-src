@@ -32,10 +32,12 @@ import it.tidalwave.util.As;
  *
  * A model for the application toolbar.
  *
+ * @param   <B>               the concrete type of the binder
+ * @param   <T>               the concrete type of the toolbar
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-public interface ToolBarModel extends As
+public interface ToolBarModel<B, T> extends As
   {
     /***********************************************************************************************************************************************************
      * Populates the toolbar with buttons.
@@ -43,5 +45,5 @@ public interface ToolBarModel extends As
      * @param   binder    the binder
      * @param   toolBar   the toolbar
      **********************************************************************************************************************************************************/
-    public void populate (@Nonnull Object binder, @Nonnull Object toolBar);
+    public void populate (@Nonnull B binder, @Nonnull T toolBar);
   }

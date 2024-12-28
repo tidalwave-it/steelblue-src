@@ -94,7 +94,7 @@ public class ToolBarModelSupportTest
         final var binder = mock(BinderMock2.class);
         final var toolBar = new ToolbarMock();
         // when
-        underTest.populateImpl(binder, toolBar);
+        underTest.populate(binder, toolBar);
         // then
         final var buttons = toolBar.getItems();
         assertThat(buttons.size(), is(3));

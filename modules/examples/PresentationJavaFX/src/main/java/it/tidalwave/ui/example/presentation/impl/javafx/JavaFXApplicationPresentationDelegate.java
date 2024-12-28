@@ -51,10 +51,10 @@ public class JavaFXApplicationPresentationDelegate implements PresentationAssemb
     private JavaFXBinder binder;
 
     @Inject
-    private ToolBarModel toolBarModel;
+    private ToolBarModel<JavaFXBinder, ToolBar> toolBarModel;
 
     @Inject
-    private MenuBarModel menuBarModel;
+    private MenuBarModel<JavaFXBinder, MenuBar> menuBarModel;
 
     @FXML
     private BorderPane pnMainPane;

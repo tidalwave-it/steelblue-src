@@ -53,7 +53,7 @@ import static it.tidalwave.role.ui.UserActionProvider._UserActionProvider_;
  *
  **************************************************************************************************************************************************************/
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED) @Slf4j
-public abstract class ToolBarModelSupport<B, T, BT> implements ToolBarModel
+public abstract class ToolBarModelSupport<B, T, BT> implements ToolBarModel<B, T>
   {
     @Delegate
     private final As as = As.forObject(this);
@@ -71,20 +71,11 @@ public abstract class ToolBarModelSupport<B, T, BT> implements ToolBarModel
       }
 
     /***********************************************************************************************************************************************************
-     * {@inheritDoc}
-     **********************************************************************************************************************************************************/
-    @SuppressWarnings("unchecked")
-    public final void populate (@Nonnull final Object binder, @Nonnull final Object toolBar)
-      {
-        populateImpl((B)binder, (T)toolBar);
-      }
-
-    /***********************************************************************************************************************************************************
      * Populates the menu bar with menus.
      * @param   binder    the binder
      * @param   toolBar   the toolbar
      **********************************************************************************************************************************************************/
-    protected void populateImpl (@Nonnull final B binder, @Nonnull final T toolBar)
+    public void populate (@Nonnull final B binder, @Nonnull final T toolBar)
       {
         final var actions = userActionsSupplier.get();
         log.info("Toolbar user actions: {}", actions);

@@ -44,21 +44,22 @@ import lombok.extern.slf4j.Slf4j;
  *
  **************************************************************************************************************************************************************/
 @NoArgsConstructor @Slf4j
-public class JavaFXMenuBarModel extends MenuBarModelSupport<JavaFXBinder, MenuBar, Menu, MenuItem>
+public class JavaFXMenuBarModel extends MenuBarModelSupport<JavaFXBinder, MenuBar, Menu>
   {
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
-    protected void populateImpl (@Nonnull final JavaFXBinder binder, @Nonnull final MenuBar menuBar)
+    @Override
+    public void populate (@Nonnull final JavaFXBinder binder, @Nonnull final MenuBar menuBar)
       {
         menuBar.useSystemMenuBarProperty().set(true); // FIXME: only if macOS?
-        super.populateImpl(binder, menuBar);
+        super.populate(binder, menuBar);
       }
 
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
-    @Nonnull
+    @Override @Nonnull
     protected Menu createMenu (@Nonnull final String label)
       {
         return new Menu(label);
@@ -67,6 +68,7 @@ public class JavaFXMenuBarModel extends MenuBarModelSupport<JavaFXBinder, MenuBa
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
+    @Override
     protected void addMenuToMenuBar (@Nonnull final MenuBar menuBar, @Nonnull final Menu menu)
       {
         menuBar.getMenus().add(menu);

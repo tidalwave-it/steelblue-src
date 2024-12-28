@@ -51,13 +51,12 @@ import static it.tidalwave.role.ui.UserActionProvider._UserActionProvider_;
  * @param   <B>               the type of the binder
  * @param   <MB>              the type of the menubar
  * @param   <M>               the type of the menu
- * @param   <MI>              the type of the menu item
  * @since   1.1-ALPHA-6
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED) @Slf4j
-public abstract class MenuBarModelSupport<B, MB, M, MI> implements MenuBarModel
+public abstract class MenuBarModelSupport<B, MB, M> implements MenuBarModel<B, MB>
   {
     @Delegate
     private final As as = As.forObject(this);
@@ -77,18 +76,8 @@ public abstract class MenuBarModelSupport<B, MB, M, MI> implements MenuBarModel
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
-    @SuppressWarnings("unchecked")
-    public final void populate (@Nonnull final Object binder, @Nonnull final Object menuBar)
-      {
-        populateImpl((B)binder, (MB)menuBar);
-      }
-
-    /***********************************************************************************************************************************************************
-     * Populates the menu bar.
-     * @param   binder    the binder
-     * @param   menuBar   the menu bar to populate
-     **********************************************************************************************************************************************************/
-    protected void populateImpl (@Nonnull final B binder, @Nonnull final MB menuBar)
+    @Override
+    public void populate (@Nonnull final B binder, @Nonnull final MB menuBar)
       {
         final var menuMapByLabel = new HashMap<String, M>();
         final var actions = userActionsSupplier.get();
