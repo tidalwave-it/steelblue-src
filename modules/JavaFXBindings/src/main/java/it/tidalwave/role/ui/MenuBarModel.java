@@ -44,7 +44,7 @@ public interface MenuBarModel
     @RequiredArgsConstructor @Getter
     public enum MenuIndex
       {
-        FILE("File", -999),
+        FILE("File", 0),
         EDIT("Edit", 2),
         SELECT("Select", 3),
         HELP("Help", 999);
