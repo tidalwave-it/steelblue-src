@@ -28,8 +28,8 @@ package it.tidalwave.ui.example.presentation.impl;
 import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.List;
-import it.tidalwave.ui.core.MenuBarModel;
-import it.tidalwave.ui.core.ToolBarModel;
+import it.tidalwave.ui.core.MenuBarControl;
+import it.tidalwave.ui.core.ToolBarControl;
 import it.tidalwave.role.ui.UserAction;
 import it.tidalwave.role.ui.spi.DefaultUserActionProvider;
 import it.tidalwave.dci.annotation.DciRole;
@@ -43,7 +43,7 @@ import lombok.RequiredArgsConstructor;
  *
  **************************************************************************************************************************************************************/
 // START SNIPPET: all
-@RequiredArgsConstructor @DciRole(datumType = {ToolBarModel.class, MenuBarModel.class})
+@RequiredArgsConstructor @DciRole(datumType = {ToolBarControl.class, MenuBarControl.class})
 public class MainPanelUserActionProvider extends DefaultUserActionProvider
   {
     @Nonnull

@@ -27,7 +27,7 @@ package it.tidalwave.ui.core.spi;
 
 import javax.annotation.Nonnull;
 import java.util.List;
-import it.tidalwave.ui.core.MenuBarModel;
+import it.tidalwave.ui.core.MenuBarControl;
 import it.tidalwave.util.Callback;
 import it.tidalwave.role.ui.Displayable;
 import it.tidalwave.role.ui.UserAction;
@@ -79,6 +79,6 @@ public class TestUserActions
     @Nonnull
     private static UserAction createAction (@Nonnull final String displayName, @Nonnull final String path)
       {
-        return UserAction.of(mock(Callback.class), List.of(Displayable.of(displayName), MenuBarModel.MenuPlacement.under(path)));
+        return UserAction.of(mock(Callback.class), List.of(Displayable.of(displayName), MenuBarControl.MenuPlacement.under(path)));
       }
   }

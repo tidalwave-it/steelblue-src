@@ -228,7 +228,7 @@ instead directly calling the getter methods, they use `Supplier`s.
 #[[####]]# Action providers
 
 Sometimes actions do not strictly live inside a presentation/control, but must be bound to global facilities such as toolbars and menu bars. On this purpose,
-one or more `UserActionProvider` roles can be instantiated. They can be associated to `ToolBarModel` or `MenuBarModel` or both (as in the example below).
+one or more `UserActionProvider` roles can be instantiated. They can be associated to `ToolBarControl` or `MenuBarControl` or both (as in the example below).
 
 <!-- MACRO{snippet|id=all|file=${project.basedir}/modules/examples/Presentation/src/main/java/it/tidalwave/ui/example/presentation/impl/MainPanelUserActionProvider.java} -->
 

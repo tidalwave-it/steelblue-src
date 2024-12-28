@@ -25,12 +25,6 @@
  */
 package it.tidalwave.ui.javafx.impl;
 
-import javax.annotation.Nonnull;
-import java.util.List;
-import it.tidalwave.util.Callback;
-import it.tidalwave.role.ui.Displayable;
-import it.tidalwave.ui.core.MenuBarModel;
-import it.tidalwave.role.ui.UserAction;
 import it.tidalwave.ui.core.spi.TestUserActions;
 import it.tidalwave.ui.javafx.JavaFXBinder;
 import static org.mockito.Mockito.mock;

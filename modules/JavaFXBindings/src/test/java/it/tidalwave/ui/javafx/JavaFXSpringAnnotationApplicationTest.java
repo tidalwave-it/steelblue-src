@@ -27,8 +27,8 @@ package it.tidalwave.ui.javafx;
 
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import it.tidalwave.util.PreferencesHandler;
-import it.tidalwave.ui.core.MenuBarModel;
-import it.tidalwave.ui.core.ToolBarModel;
+import it.tidalwave.ui.core.MenuBarControl;
+import it.tidalwave.ui.core.ToolBarControl;
 import it.tidalwave.ui.core.annotation.EnableMessageBus;
 import it.tidalwave.messagebus.MessageBus;
 import org.testng.annotations.Test;
@@ -65,8 +65,8 @@ public class JavaFXSpringAnnotationApplicationTest
         assertThat(applicationContext.getBean("javafxBinderExecutor", ThreadPoolTaskExecutor.class), notNullValue());
         assertThat(applicationContext.getBean("stackPaneSelector", StackPaneSelector.class), notNullValue());
         assertThat(applicationContext.getBean("preferencesHandler", PreferencesHandler.class), notNullValue());
-        assertThat(applicationContext.getBean("toolBarModel", ToolBarModel.class), notNullValue());
-        assertThat(applicationContext.getBean("menuBarModel", MenuBarModel.class), notNullValue());
+        assertThat(applicationContext.getBean("toolBarControl", ToolBarControl.class), notNullValue());
+        assertThat(applicationContext.getBean("menuBarControl", MenuBarControl.class), notNullValue());
         assertThat(applicationContext.containsBean(APPLICATION_MESSAGE_BUS_BEAN_NAME), is(false));
       }
 
@@ -83,8 +83,8 @@ public class JavaFXSpringAnnotationApplicationTest
         assertThat(applicationContext.getBean("javafxBinderExecutor", ThreadPoolTaskExecutor.class), notNullValue());
         assertThat(applicationContext.getBean("stackPaneSelector", StackPaneSelector.class), notNullValue());
         assertThat(applicationContext.getBean("preferencesHandler", PreferencesHandler.class), notNullValue());
-        assertThat(applicationContext.getBean("toolBarModel", ToolBarModel.class), notNullValue());
-        assertThat(applicationContext.getBean("menuBarModel", MenuBarModel.class), notNullValue());
+        assertThat(applicationContext.getBean("toolBarControl", ToolBarControl.class), notNullValue());
+        assertThat(applicationContext.getBean("menuBarControl", MenuBarControl.class), notNullValue());
         assertThat(applicationContext.getBean(APPLICATION_MESSAGE_BUS_BEAN_NAME, MessageBus.class), notNullValue());
       }
   }

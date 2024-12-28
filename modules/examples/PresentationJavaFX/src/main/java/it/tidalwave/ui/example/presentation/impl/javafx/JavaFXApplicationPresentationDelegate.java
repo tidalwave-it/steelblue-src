@@ -32,8 +32,8 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.BorderPane;
 import org.springframework.context.ApplicationContext;
-import it.tidalwave.ui.core.MenuBarModel;
-import it.tidalwave.ui.core.ToolBarModel;
+import it.tidalwave.ui.core.MenuBarControl;
+import it.tidalwave.ui.core.ToolBarControl;
 import it.tidalwave.ui.javafx.JavaFXBinder;
 import it.tidalwave.ui.javafx.PresentationAssembler;
 
@@ -51,10 +51,10 @@ public class JavaFXApplicationPresentationDelegate implements PresentationAssemb
     private JavaFXBinder binder;
 
     @Inject
-    private ToolBarModel<JavaFXBinder, ToolBar> toolBarModel;
+    private ToolBarControl<JavaFXBinder, ToolBar> toolBarModel;
 
     @Inject
-    private MenuBarModel<JavaFXBinder, MenuBar> menuBarModel;
+    private MenuBarControl<JavaFXBinder, MenuBar> menuBarModel;
 
     @FXML
     private BorderPane pnMainPane;

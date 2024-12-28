@@ -30,7 +30,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.Supplier;
 import it.tidalwave.util.As;
-import it.tidalwave.ui.core.ToolBarModel;
+import it.tidalwave.ui.core.ToolBarControl;
 import it.tidalwave.role.ui.UserAction;
 import it.tidalwave.role.ui.UserActionProvider;
 import lombok.AccessLevel;
@@ -43,7 +43,7 @@ import static it.tidalwave.role.ui.UserActionProvider._UserActionProvider_;
 
 /***************************************************************************************************************************************************************
  *
- * A support implementation for {@link ToolBarModel}.
+ * A support implementation for {@link ToolBarControl}.
  *
  * @param   <B>               the concrete type of the binder
  * @param   <T>               the concrete type of the toolbar
@@ -53,7 +53,7 @@ import static it.tidalwave.role.ui.UserActionProvider._UserActionProvider_;
  *
  **************************************************************************************************************************************************************/
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED) @Slf4j
-public abstract class ToolBarModelSupport<B, T, BT> implements ToolBarModel<B, T>
+public abstract class ToolBarControlSupport<B, T, BT> implements ToolBarControl<B, T>
   {
     @Delegate
     private final As as = As.forObject(this);
@@ -65,7 +65,7 @@ public abstract class ToolBarModelSupport<B, T, BT> implements ToolBarModel<B, T
     /***********************************************************************************************************************************************************
      * Default constructor.
      **********************************************************************************************************************************************************/
-    protected ToolBarModelSupport()
+    protected ToolBarControlSupport ()
       {
         userActionsSupplier = () -> maybeAs(_UserActionProvider_).map(UserActionProvider::getActions).orElse(emptyList());
       }

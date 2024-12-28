@@ -26,43 +26,63 @@
 package it.tidalwave.ui.javafx.impl;
 
 import javax.annotation.Nonnull;
-import java.util.List;
-import javafx.scene.control.Button;
-import javafx.scene.control.ToolBar;
-import it.tidalwave.ui.core.spi.ToolBarModelSupport;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import it.tidalwave.role.ui.UserAction;
+import it.tidalwave.ui.core.MenuBarControl;
 import it.tidalwave.ui.javafx.JavaFXBinder;
+import it.tidalwave.ui.core.spi.MenuBarControlSupport;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /***************************************************************************************************************************************************************
  *
- * The JavaFX implementation for {@link it.tidalwave.ui.core.ToolBarModel}.
+ * The JavaFX implementation for {@link MenuBarControl}.
  *
+ * @since   1.1-ALPHA-6
  * @author  Fabrizio Giudici
- * @since   1.1-ALPHA-4
  *
  **************************************************************************************************************************************************************/
 @NoArgsConstructor @Slf4j
-public class JavaFXToolBarModel extends ToolBarModelSupport<JavaFXBinder, ToolBar, Button>
+public class JavaFXMenuBarControl extends MenuBarControlSupport<JavaFXBinder, MenuBar, Menu>
   {
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
-    @Override @Nonnull
-    protected Button createButton (@Nonnull final JavaFXBinder binder, @Nonnull final UserAction action)
+    @Override
+    public void populate (@Nonnull final JavaFXBinder binder, @Nonnull final MenuBar menuBar)
       {
-        final var button = new Button();
-        binder.bind(button, action);
-        return button;
+        menuBar.useSystemMenuBarProperty().set(true); // FIXME: only if macOS?
+        super.populate(binder, menuBar);
+      }
+
+    /***********************************************************************************************************************************************************
+     * {@inheritDoc}
+     **********************************************************************************************************************************************************/
+    @Override @Nonnull
+    protected Menu createMenu (@Nonnull final String label)
+      {
+        return new Menu(label);
       }
 
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
     @Override
-    protected void addButtonsToToolBar (@Nonnull final ToolBar toolBar, @Nonnull final List<Button> buttons)
+    protected void addMenuToMenuBar (@Nonnull final MenuBar menuBar, @Nonnull final Menu menu)
       {
-        toolBar.getItems().addAll(buttons);
+        menuBar.getMenus().add(menu);
+      }
+
+    /***********************************************************************************************************************************************************
+     * {@inheritDoc}
+     **********************************************************************************************************************************************************/
+    @Override
+    protected void addMenuItemToMenu (@Nonnull final Menu menu, @Nonnull final JavaFXBinder binder, @Nonnull final UserAction action)
+      {
+        final var menuItem = new MenuItem();
+        binder.bind(menuItem, action);
+        menu.getItems().add(menuItem);
       }
   }

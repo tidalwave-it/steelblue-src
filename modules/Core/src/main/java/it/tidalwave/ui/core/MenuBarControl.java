@@ -26,24 +26,65 @@
 package it.tidalwave.ui.core;
 
 import javax.annotation.Nonnull;
-import it.tidalwave.util.As;
+import java.util.Arrays;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 /***************************************************************************************************************************************************************
  *
- * A model for the application toolbar.
+ * A model for the application menubar.
  *
- * @param   <B>               the concrete type of the binder
- * @param   <T>               the concrete type of the toolbar
+ * @param   <B>               the type of the binder
+ * @param   <MB>              the type of the menubar
+ * @since   1.1-ALPHA-6
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-public interface ToolBarModel<B, T> extends As
+public interface MenuBarControl<B, MB>
   {
+    /** A class describing the standard sequence of typical main menu bar elements. */
+    @RequiredArgsConstructor @Getter
+    public enum MenuIndex
+      {
+        FILE("File", 0),
+        EDIT("Edit", 2),
+        SELECT("Select", 3),
+        HELP("Help", 999);
+
+        /** {@return the position of the menu with the given label}.
+         *  @param label  the label */
+        public static int findPosition (@Nonnull final String label)
+          {
+            return Arrays.stream(values()).filter(i -> i.getLabel().equals(label)).findFirst().map(MenuIndex::getIndex).orElse(-1);
+          }
+
+        @Nonnull
+        private final String label;
+        private final int index;
+      }
+
     /***********************************************************************************************************************************************************
-     * Populates the toolbar with buttons.
      *
-     * @param   binder    the binder
-     * @param   toolBar   the toolbar
+     * A role that describes the placement of a menu item.
+     *
+     * @stereotype  Role
+     * @since       1.1-ALPHA-6
+     * @author      Fabrizio Giudici
+     *
      **********************************************************************************************************************************************************/
-    public void populate (@Nonnull B binder, @Nonnull T toolBar);
+    @RequiredArgsConstructor(staticName = "under") @Getter
+    public static class MenuPlacement
+      {
+        public static final Class<MenuPlacement> _MenuItemPlacement_ = MenuPlacement.class;
+
+        @Nonnull
+        private String path;
+      }
+
+    /***********************************************************************************************************************************************************
+     * Populates the menu bar with menus.
+     * @param   binder    the binder
+     * @param   menuBar   the menu bar
+     **********************************************************************************************************************************************************/
+    public void populate (@Nonnull B binder, @Nonnull MB menuBar);
   }

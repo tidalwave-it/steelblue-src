@@ -57,7 +57,7 @@ class ButtonMock
     private final String text;
   }
 
-class UnderTest extends ToolBarModelSupport<BinderMock2, ToolbarMock, ButtonMock>
+class UnderTest extends ToolBarControlSupport<BinderMock2, ToolbarMock, ButtonMock>
   {
     public UnderTest (@Nonnull final Supplier<Collection<? extends UserAction>> userActionsSupplier)
       {
@@ -82,7 +82,7 @@ class UnderTest extends ToolBarModelSupport<BinderMock2, ToolbarMock, ButtonMock
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-public class ToolBarModelSupportTest
+public class ToolBarControlSupportTest
   {
     private final TestUserActions a = new TestUserActions();
 

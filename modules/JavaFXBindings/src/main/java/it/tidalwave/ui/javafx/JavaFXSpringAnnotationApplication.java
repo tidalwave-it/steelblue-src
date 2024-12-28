@@ -32,11 +32,11 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import it.tidalwave.ui.javafx.impl.JavaFXMenuBarControl;
+import it.tidalwave.ui.javafx.impl.JavaFXToolBarControl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import it.tidalwave.util.PreferencesHandler;
-import it.tidalwave.ui.core.MenuBarModel;
-import it.tidalwave.ui.core.ToolBarModel;
 import it.tidalwave.ui.core.annotation.EnableMessageBus;
 import it.tidalwave.messagebus.MessageBus;
 import it.tidalwave.messagebus.spi.SimpleMessageBus;
@@ -72,15 +72,15 @@ public class JavaFXSpringAnnotationApplication extends AbstractJavaFXSpringAppli
           }
 
         @Bean
-        public ToolBarModel toolBarModel()
+        public JavaFXToolBarControl toolBarControl()
           {
-            return JavaFXSafeProxyCreator.getToolBarModel();
+            return JavaFXSafeProxyCreator.getToolBarControl();
           }
 
         @Bean
-        public MenuBarModel menuBarModel()
+        public JavaFXMenuBarControl menuBarControl()
           {
-            return JavaFXSafeProxyCreator.getMenuBarModel();
+            return JavaFXSafeProxyCreator.getMenuBarControl();
           }
       }
 

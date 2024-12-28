@@ -33,7 +33,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 import it.tidalwave.util.As;
 import it.tidalwave.util.Pair;
-import it.tidalwave.ui.core.MenuBarModel;
+import it.tidalwave.ui.core.MenuBarControl;
 import it.tidalwave.role.ui.UserAction;
 import it.tidalwave.role.ui.UserActionProvider;
 import lombok.AccessLevel;
@@ -41,12 +41,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
 import lombok.extern.slf4j.Slf4j;
 import static java.util.Collections.emptyList;
-import static it.tidalwave.ui.core.MenuBarModel.MenuPlacement._MenuItemPlacement_;
+import static it.tidalwave.ui.core.MenuBarControl.MenuPlacement._MenuItemPlacement_;
 import static it.tidalwave.role.ui.UserActionProvider._UserActionProvider_;
 
 /***************************************************************************************************************************************************************
  *
- * A support implementation for {@link MenuBarModel}.
+ * A support implementation for {@link MenuBarControl}.
  *
  * @param   <B>               the type of the binder
  * @param   <MB>              the type of the menubar
@@ -56,7 +56,7 @@ import static it.tidalwave.role.ui.UserActionProvider._UserActionProvider_;
  *
  **************************************************************************************************************************************************************/
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED) @Slf4j
-public abstract class MenuBarModelSupport<B, MB, M> implements MenuBarModel<B, MB>
+public abstract class MenuBarControlSupport<B, MB, M> implements MenuBarControl<B, MB>
   {
     @Delegate
     private final As as = As.forObject(this);
@@ -68,7 +68,7 @@ public abstract class MenuBarModelSupport<B, MB, M> implements MenuBarModel<B, M
     /***********************************************************************************************************************************************************
      * Default constructor.
      **********************************************************************************************************************************************************/
-    protected MenuBarModelSupport()
+    protected MenuBarControlSupport ()
       {
         userActionsSupplier = () -> maybeAs(_UserActionProvider_).map(UserActionProvider::getActions).orElse(emptyList());
       }

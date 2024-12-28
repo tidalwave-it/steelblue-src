@@ -36,7 +36,7 @@ import it.tidalwave.util.annotation.VisibleForTesting;
 import it.tidalwave.role.Aggregate;
 import it.tidalwave.role.ui.BoundProperty;
 import it.tidalwave.role.ui.Displayable;
-import it.tidalwave.ui.core.MenuBarModel.MenuPlacement;
+import it.tidalwave.ui.core.MenuBarControl.MenuPlacement;
 import it.tidalwave.role.ui.PresentationModel;
 import it.tidalwave.role.ui.PresentationModelAggregate;
 import it.tidalwave.role.ui.Selectable;
