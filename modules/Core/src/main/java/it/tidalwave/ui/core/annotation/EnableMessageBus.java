@@ -36,7 +36,7 @@ import java.lang.annotation.Target;
  * If a {@code Main} class is annotated with {@code EnableMessageBus}, the following things happen:
  *
  * <ul>
- * <li>a messagebus implementing {@link it.tidalwave.messagebus.spi.SimpleMessageBus} is instantiated and made available in the Spring application context
+ * <li>a messagebus implementing {@link it.tidalwave.messagebus.MessageBus} is instantiated and made available in the Spring application context
  *   (so it can be injected);</li>
  * <li>a {@link it.tidalwave.message.PowerOnEvent} is fired when the application is ready to be initialised;</li>
  * <li>a {@link it.tidalwave.message.PowerOffEvent} is fired when the application is going to be closed.</li>
