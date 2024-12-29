@@ -23,11 +23,133 @@
  *
  * *************************************************************************************************************************************************************
  *#
-Introduction
-============
+
+#[[##]]# Introduction
 
 ${project.description}
 
 [Javadoc](apidocs/index.html)
 
+
+#[[##]]# Table of contents
+
+<!-- MACRO{toc|section=0|fromDepth=1|toDepth=4} -->
+
 TBD
+
+#[[###]]# Roles
+
+
+#[[###]]# ActionProvider
+
+![UML](apidocs/it/tidalwave/ui/core/role/ActionProvider.svg)
+TBD
+
+
+#[[###]]# Changeable
+
+![UML](apidocs/it/tidalwave/ui/core/role/Changeable.svg)
+TBD
+
+
+#[[###]]# Displayable
+
+![UML](apidocs/it/tidalwave/ui/core/role/Displayable.svg)
+TBD
+
+
+#[[###]]# HtmlRenderable
+
+![UML](apidocs/it/tidalwave/ui/core/role/HtmlRenderable.svg)
+TBD
+
+
+#[[###]]# IconProvider
+
+![UML](apidocs/it/tidalwave/ui/core/role/IconProvider.svg)
+TBD
+
+
+#[[###]]# LocalizedDisplayable
+
+![UML](apidocs/it/tidalwave/ui/core/role/LocalizedDisplayable.svg)
+TBD
+
+
+#[[###]]# MutableDisplayable
+
+![UML](apidocs/it/tidalwave/ui/core/role/MutableDisplayable.svg)
+TBD
+
+
+#[[###]]# MutableIconProvider
+
+![UML](apidocs/it/tidalwave/ui/core/role/MutableIconProvider.svg)
+TBD
+
+
+#[[###]]# MutableLocalizedDisplayable
+
+![UML](apidocs/it/tidalwave/ui/core/role/MutableLocalizedDisplayable.svg)
+TBD
+
+
+#[[###]]# PlainTextRenderable
+
+![UML](apidocs/it/tidalwave/ui/core/role/PlainTextRenderable.svg)
+TBD
+
+
+#[[###]]# PresentationModel
+
+![UML](apidocs/it/tidalwave/ui/core/role/PresentationModel.svg)
+TBD
+
+
+#[[###]]# PresentationModelAggregate
+
+![UML](apidocs/it/tidalwave/ui/core/role/PresentationModelAggregate.svg)
+TBD
+
+
+#[[###]]# PresentationModelFactory
+
+![UML](apidocs/it/tidalwave/ui/core/role/PresentationModelFactory.svg)
+TBD
+
+
+#[[###]]# Selectable
+
+![UML](apidocs/it/tidalwave/ui/core/role/Selectable.svg)
+TBD
+
+
+#[[###]]# StringRenderable
+
+![UML](apidocs/it/tidalwave/ui/core/role/StringRenderable.svg)
+TBD
+
+
+#[[###]]# Styleable
+
+![UML](apidocs/it/tidalwave/ui/core/role/Styleable.svg)
+TBD
+
+
+#[[###]]# UserAction
+
+![UML](apidocs/it/tidalwave/ui/core/role/UserAction.svg)
+TBD
+
+
+#[[###]]# UserActionProvider
+
+![UML](apidocs/it/tidalwave/ui/core/role/UserActionProvider.svg)
+TBD
+
+
+#[[###]]# Visible
+
+![UML](apidocs/it/tidalwave/ui/core/role/Visible.svg)
+TBD
+
