@@ -110,7 +110,7 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
           }
       }
 
-    protected static final String APPLICATION_MESSAGE_BUS = "applicationMessageBus";
+    public static final String APPLICATION_MESSAGE_BUS_BEAN_NAME = "applicationMessageBus";
 
     // Don't use Slf4j and its static logger - give Main a chance to initialize things
     private final Logger log = LoggerFactory.getLogger(AbstractJavaFXSpringApplication.class);
@@ -184,9 +184,9 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
             applicationContext = createApplicationContext();
             applicationContext.registerShutdownHook(); // this actually seems not working, onClosing() does
 
-            if (applicationContext.getBeanFactory().containsBean(APPLICATION_MESSAGE_BUS))
+            if (applicationContext.getBeanFactory().containsBean(APPLICATION_MESSAGE_BUS_BEAN_NAME))
               {
-                messageBus = Optional.of(applicationContext.getBeanFactory().getBean(APPLICATION_MESSAGE_BUS, MessageBus.class));
+                messageBus = Optional.of(applicationContext.getBeanFactory().getBean(APPLICATION_MESSAGE_BUS_BEAN_NAME, MessageBus.class));
               }
           }
         catch (Throwable t)
