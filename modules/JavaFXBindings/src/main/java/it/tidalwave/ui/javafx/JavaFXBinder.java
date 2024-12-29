@@ -46,7 +46,7 @@ import javafx.stage.Window;
 import it.tidalwave.ui.javafx.role.CustomGraphicProvider;
 import it.tidalwave.util.ui.UserNotification;
 import it.tidalwave.util.ui.UserNotificationWithFeedback;
-import it.tidalwave.ui.core.role.BoundProperty;
+import it.tidalwave.ui.core.BoundProperty;
 import it.tidalwave.ui.core.role.PresentationModel;
 import it.tidalwave.ui.core.role.UserAction;
 

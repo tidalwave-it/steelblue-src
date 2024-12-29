@@ -29,7 +29,7 @@ import javax.annotation.Nonnull;
 import java.util.Collection;
 import it.tidalwave.util.As;
 import it.tidalwave.util.Callback;
-import it.tidalwave.ui.core.role.BoundProperty;
+import it.tidalwave.ui.core.BoundProperty;
 import it.tidalwave.ui.core.role.UserAction;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

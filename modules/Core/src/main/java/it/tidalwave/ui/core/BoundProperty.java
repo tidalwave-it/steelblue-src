@@ -23,10 +23,11 @@
  *
  * *************************************************************************************************************************************************************
  */
-package it.tidalwave.ui.core.role;
+package it.tidalwave.ui.core;
 
 import javax.annotation.Nonnull;
 import java.beans.PropertyChangeSupport;
+import it.tidalwave.ui.core.role.Changeable;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

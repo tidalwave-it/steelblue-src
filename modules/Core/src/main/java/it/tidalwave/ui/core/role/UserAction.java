@@ -32,6 +32,7 @@ import java.util.List;
 import it.tidalwave.util.As;
 import it.tidalwave.util.Callback;
 import it.tidalwave.util.Parameters;
+import it.tidalwave.ui.core.BoundProperty;
 import it.tidalwave.ui.core.role.impl.DefaultUserAction;
 // import javafx.beans.property.BooleanProperty;
 

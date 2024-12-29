@@ -23,7 +23,7 @@
  *
  * *************************************************************************************************************************************************************
  */
-package it.tidalwave.ui.core.role;
+package it.tidalwave.ui.core;
 
 import javax.annotation.Nonnull;
 import java.beans.PropertyChangeListener;

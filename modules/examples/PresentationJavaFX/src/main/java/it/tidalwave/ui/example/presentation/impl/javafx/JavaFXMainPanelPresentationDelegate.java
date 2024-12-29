@@ -37,7 +37,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.control.TreeView;
 import it.tidalwave.util.ui.UserNotificationWithFeedback;
-import it.tidalwave.ui.core.role.BoundProperty;
+import it.tidalwave.ui.core.BoundProperty;
 import it.tidalwave.ui.core.role.PresentationModel;
 import it.tidalwave.ui.javafx.JavaFXBinder;
 import it.tidalwave.ui.example.presentation.MainPanelPresentation;

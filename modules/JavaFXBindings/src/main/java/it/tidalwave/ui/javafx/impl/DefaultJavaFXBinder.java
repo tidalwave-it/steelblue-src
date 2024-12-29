@@ -47,7 +47,7 @@ import javafx.scene.layout.Priority;
 import javafx.stage.Window;
 import javafx.application.Platform;
 import it.tidalwave.role.SimpleComposite;
-import it.tidalwave.ui.core.role.BoundProperty;
+import it.tidalwave.ui.core.BoundProperty;
 import it.tidalwave.ui.core.role.Displayable;
 import it.tidalwave.ui.core.role.PresentationModel;
 import it.tidalwave.ui.core.role.Styleable;

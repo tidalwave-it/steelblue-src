@@ -34,7 +34,7 @@ import org.springframework.stereotype.Component;
 import it.tidalwave.message.PowerOnEvent;
 import it.tidalwave.util.annotation.VisibleForTesting;
 import it.tidalwave.role.Aggregate;
-import it.tidalwave.ui.core.role.BoundProperty;
+import it.tidalwave.ui.core.BoundProperty;
 import it.tidalwave.ui.core.role.Displayable;
 import it.tidalwave.ui.core.MenuBarControl.MenuPlacement;
 import it.tidalwave.ui.core.role.PresentationModel;

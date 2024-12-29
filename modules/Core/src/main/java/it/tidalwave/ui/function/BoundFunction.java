@@ -25,7 +25,7 @@
  */
 package it.tidalwave.ui.function;
 
-import it.tidalwave.ui.core.role.ChangingSource;
+import it.tidalwave.ui.core.ChangingSource;
 
 /***************************************************************************************************************************************************************
  *

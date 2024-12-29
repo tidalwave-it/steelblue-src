@@ -34,7 +34,7 @@ import java.nio.file.Path;
 import it.tidalwave.util.ui.UserNotificationWithFeedback;
 import it.tidalwave.role.Aggregate;
 import it.tidalwave.role.SimpleComposite;
-import it.tidalwave.ui.core.role.BoundProperty;
+import it.tidalwave.ui.core.BoundProperty;
 import it.tidalwave.ui.core.role.PresentationModel;
 import it.tidalwave.ui.example.model.Dao;
 import it.tidalwave.ui.example.model.FileEntity;
