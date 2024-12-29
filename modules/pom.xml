@@ -50,7 +50,7 @@
         <tft.javac.target>11</tft.javac.target>
         <tft.javac.release>11</tft.javac.release>
 
-        <thesefoolishthings.version>3.2-ALPHA-25</thesefoolishthings.version>
+        <thesefoolishthings.version>4.0-ALPHA-1</thesefoolishthings.version>
         <tft.javafx.version>11.0.1</tft.javafx.version>
         <jmetro.version>11.6.14</jmetro.version>
     </properties>
