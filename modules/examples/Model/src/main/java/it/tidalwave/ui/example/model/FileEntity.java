@@ -43,7 +43,7 @@ import java.nio.file.attribute.FileTime;
 import it.tidalwave.util.As;
 import it.tidalwave.util.spi.SimpleFinderSupport;
 import it.tidalwave.role.SimpleComposite;
-import it.tidalwave.role.ui.Displayable;
+import it.tidalwave.ui.core.role.Displayable;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;

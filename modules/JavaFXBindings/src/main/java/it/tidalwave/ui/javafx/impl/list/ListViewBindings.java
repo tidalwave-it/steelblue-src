@@ -35,8 +35,8 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.util.Callback;
-import it.tidalwave.role.ui.PresentationModel;
-import it.tidalwave.role.ui.UserAction;
+import it.tidalwave.ui.core.role.PresentationModel;
+import it.tidalwave.ui.core.role.UserAction;
 import it.tidalwave.ui.javafx.impl.common.CellBinder;
 import it.tidalwave.ui.javafx.impl.common.ChangeListenerSelectableAdapter;
 import it.tidalwave.ui.javafx.impl.common.DelegateSupport;
@@ -45,7 +45,7 @@ import it.tidalwave.ui.javafx.impl.common.RoleBag;
 import lombok.extern.slf4j.Slf4j;
 import static javafx.collections.FXCollections.observableArrayList;
 import static javafx.scene.input.KeyCode.*;
-import static it.tidalwave.role.ui.UserActionProvider._UserActionProvider_;
+import static it.tidalwave.ui.core.role.UserActionProvider._UserActionProvider_;
 import static it.tidalwave.ui.javafx.impl.common.JavaFXWorker.childrenPm;
 
 /***************************************************************************************************************************************************************

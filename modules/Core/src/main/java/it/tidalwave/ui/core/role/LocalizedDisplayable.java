@@ -32,10 +32,11 @@ import java.util.SortedSet;
 
 /***************************************************************************************************************************************************************
  *
- * A specialized {@link it.tidalwave.role.ui.Displayable} which can manage names in multiple {@link Locale}s.
+ * A specialized {@link it.tidalwave.ui.core.role.Displayable} which can manage names in multiple {@link Locale}s.
  *
  * @stereotype Role
  *
+ * @since   2.0-ALPHA-1
  * @author  Fabrizio Giudici
  * @it.tidalwave.javadoc.stable
  *

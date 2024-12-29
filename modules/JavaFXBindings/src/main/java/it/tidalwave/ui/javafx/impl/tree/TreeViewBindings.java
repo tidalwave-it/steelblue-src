@@ -32,7 +32,7 @@ import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeView;
 import javafx.util.Callback;
 import it.tidalwave.util.annotation.VisibleForTesting;
-import it.tidalwave.role.ui.PresentationModel;
+import it.tidalwave.ui.core.role.PresentationModel;
 import it.tidalwave.ui.javafx.impl.common.CellBinder;
 import it.tidalwave.ui.javafx.impl.common.TreeItemDelegateSupport;
 import lombok.extern.slf4j.Slf4j;

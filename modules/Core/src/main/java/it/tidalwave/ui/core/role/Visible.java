@@ -30,8 +30,8 @@ package it.tidalwave.ui.core.role;
  * The role of an object that can be visible or not.
  *
  * @stereotype  Role
+ * @since       2.0-ALPHA-1
  * @author      Fabrizio Giudici
- * @since       3.2-ALPHA-7
  *
  **************************************************************************************************************************************************************/
 @FunctionalInterface

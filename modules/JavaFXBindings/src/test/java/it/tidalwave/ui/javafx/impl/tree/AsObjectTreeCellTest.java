@@ -26,7 +26,7 @@
 package it.tidalwave.ui.javafx.impl.tree;
 
 import it.tidalwave.util.As;
-import it.tidalwave.role.ui.Displayable;
+import it.tidalwave.ui.core.role.Displayable;
 import it.tidalwave.ui.javafx.impl.common.CellBinder;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;

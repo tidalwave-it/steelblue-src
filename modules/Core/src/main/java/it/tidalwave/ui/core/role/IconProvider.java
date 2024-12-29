@@ -37,6 +37,7 @@ import javax.swing.ImageIcon;
  *
  * @stereotype Role
  *
+ * @since   2.0-ALPHA-1
  * @author  Fabrizio Giudici
  * @it.tidalwave.javadoc.draft
  *

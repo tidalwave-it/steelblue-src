@@ -30,7 +30,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import it.tidalwave.role.ui.PresentationModel;
+import it.tidalwave.ui.core.role.PresentationModel;
 import lombok.extern.slf4j.Slf4j;
 
 /***************************************************************************************************************************************************************

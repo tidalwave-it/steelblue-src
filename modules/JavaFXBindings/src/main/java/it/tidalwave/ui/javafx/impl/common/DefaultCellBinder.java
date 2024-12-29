@@ -37,16 +37,16 @@ import javafx.scene.input.KeyCode;
 import it.tidalwave.ui.javafx.role.CustomGraphicProvider;
 import it.tidalwave.util.As;
 import it.tidalwave.util.annotation.VisibleForTesting;
-import it.tidalwave.role.ui.Displayable;
-import it.tidalwave.role.ui.UserAction;
-import it.tidalwave.role.ui.UserActionProvider;
+import it.tidalwave.ui.core.role.Displayable;
+import it.tidalwave.ui.core.role.UserAction;
+import it.tidalwave.ui.core.role.UserActionProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import static it.tidalwave.ui.javafx.role.CustomGraphicProvider._CustomGraphicProvider_;
 import static java.util.stream.Collectors.*;
-import static it.tidalwave.role.ui.Displayable._Displayable_;
-import static it.tidalwave.role.ui.Styleable._Styleable_;
-import static it.tidalwave.role.ui.UserActionProvider._UserActionProvider_;
+import static it.tidalwave.ui.core.role.Displayable._Displayable_;
+import static it.tidalwave.ui.core.role.Styleable._Styleable_;
+import static it.tidalwave.ui.core.role.UserActionProvider._UserActionProvider_;
 
 /***************************************************************************************************************************************************************
  *

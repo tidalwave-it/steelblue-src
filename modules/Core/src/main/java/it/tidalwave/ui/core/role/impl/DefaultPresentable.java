@@ -1,10 +1,10 @@
 /*
  * *************************************************************************************************************************************************************
  *
- * TheseFoolishThings: Miscellaneous utilities
- * http://tidalwave.it/projects/thesefoolishthings
+ * SteelBlue: DCI User Interfaces
+ * http://tidalwave.it/projects/steelblue
  *
- * Copyright (C) 2009 - 2024 by Tidalwave s.a.s. (http://tidalwave.it)
+ * Copyright (C) 2015 - 2024 by Tidalwave s.a.s. (http://tidalwave.it)
  *
  * *************************************************************************************************************************************************************
  *
@@ -18,8 +18,8 @@
  *
  * *************************************************************************************************************************************************************
  *
- * git clone https://bitbucket.org/tidalwave/thesefoolishthings-src
- * git clone https://github.com/tidalwave-it/thesefoolishthings-src
+ * git clone https://bitbucket.org/tidalwave/steelblue-src
+ * git clone https://github.com/tidalwave-it/steelblue-src
  *
  * *************************************************************************************************************************************************************
  */
@@ -27,8 +27,8 @@ package it.tidalwave.ui.core.role.impl;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
-import it.tidalwave.role.ui.Presentable;
-import it.tidalwave.role.ui.PresentationModel;
+import it.tidalwave.ui.core.role.Presentable;
+import it.tidalwave.ui.core.role.PresentationModel;
 import lombok.RequiredArgsConstructor;
 
 /***************************************************************************************************************************************************************

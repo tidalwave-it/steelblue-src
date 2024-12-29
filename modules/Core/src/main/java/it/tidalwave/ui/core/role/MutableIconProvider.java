@@ -31,10 +31,11 @@ import javax.swing.Icon;
 
 /***************************************************************************************************************************************************************
  *
- * A specialized {@link it.tidalwave.role.ui.IconProvider} which is mutable and fires {@code PropertyChangeEvent}s.
+ * A specialized {@link it.tidalwave.ui.core.role.IconProvider} which is mutable and fires {@code PropertyChangeEvent}s.
  *
  * @stereotype Role
  *
+ * @since   2.0-ALPHA-1
  * @author  Fabrizio Giudici
  * @it.tidalwave.javadoc.draft
  *

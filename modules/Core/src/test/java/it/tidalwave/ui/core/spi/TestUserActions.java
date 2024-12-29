@@ -29,8 +29,8 @@ import javax.annotation.Nonnull;
 import java.util.List;
 import it.tidalwave.ui.core.MenuBarControl;
 import it.tidalwave.util.Callback;
-import it.tidalwave.role.ui.Displayable;
-import it.tidalwave.role.ui.UserAction;
+import it.tidalwave.ui.core.role.Displayable;
+import it.tidalwave.ui.core.role.UserAction;
 import static org.mockito.Mockito.*;
 
 /***************************************************************************************************************************************************************

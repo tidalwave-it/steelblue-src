@@ -32,11 +32,12 @@ import java.util.List;
 import it.tidalwave.util.As;
 import it.tidalwave.util.Callback;
 import it.tidalwave.util.Parameters;
-import it.tidalwave.role.ui.impl.DefaultUserAction;
+import it.tidalwave.ui.core.role.impl.DefaultUserAction;
 // import javafx.beans.property.BooleanProperty;
 
 /***************************************************************************************************************************************************************
  *
+ * @since   2.0-ALPHA-1
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/

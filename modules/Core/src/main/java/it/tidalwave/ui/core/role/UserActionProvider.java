@@ -35,6 +35,7 @@ import it.tidalwave.util.NotFoundException;
  *
  * A role that provides {@link UserAction}s.
  *
+ * @since   2.0-ALPHA-1
  * @stereotype role
  *
  * @author  Fabrizio Giudici

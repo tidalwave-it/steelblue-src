@@ -27,14 +27,15 @@ package it.tidalwave.ui.core.role;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
-import it.tidalwave.role.ui.impl.DefaultStyleable;
+import it.tidalwave.ui.core.role.impl.DefaultStyleable;
 
 /***************************************************************************************************************************************************************
  *
  * A role which declares a set of styles for rendering.
  * 
  * @stereotype Role
- * 
+ *
+ * @since   2.0-ALPHA-1
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/

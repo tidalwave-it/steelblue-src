@@ -35,9 +35,9 @@ import it.tidalwave.util.Task;
 import it.tidalwave.util.spi.SimpleFinderSupport;
 import it.tidalwave.role.SimpleComposite;
 import it.tidalwave.role.impl.ContextSnapshot;
-import it.tidalwave.role.ui.Presentable;
-import it.tidalwave.role.ui.PresentationModel;
-import it.tidalwave.role.ui.PresentationModelFactory;
+import it.tidalwave.ui.core.role.Presentable;
+import it.tidalwave.ui.core.role.PresentationModel;
+import it.tidalwave.ui.core.role.PresentationModelFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import static java.util.Collections.emptyList;
@@ -50,7 +50,7 @@ import static it.tidalwave.role.SimpleComposite._SimpleComposite_;
  * An implementation of {@link Presentable} for datum instances having the {@link SimpleComposite} role.
  *
  * @stereotype Role
- *
+ * @since   2.0-ALPHA-1
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/

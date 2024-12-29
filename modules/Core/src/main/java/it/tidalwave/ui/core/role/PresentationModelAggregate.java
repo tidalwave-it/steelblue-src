@@ -39,8 +39,8 @@ import lombok.ToString;
  * A specialisation of {@link Aggregate}{@code <PresentationModel>} which offers a convenience method for aggregating
  * its contained objects.
  *
+ * @since   2.0-ALPHA-1
  * @author  Fabrizio Giudici
- * @since 3.2-ALPHA-3
  *
  **************************************************************************************************************************************************************/
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE) @ToString

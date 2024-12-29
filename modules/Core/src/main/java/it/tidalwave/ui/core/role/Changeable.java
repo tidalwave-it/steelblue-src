@@ -29,6 +29,7 @@ package it.tidalwave.ui.core.role;
  *
  * The role of an object that can change its value.
  *
+ * @since   2.0-ALPHA-1
  * @author  Fabrizio Giudici
  * @stereotype role
  *

@@ -29,7 +29,7 @@ import javax.annotation.Nonnull;
 import java.util.Comparator;
 import java.util.List;
 import it.tidalwave.util.As;
-import it.tidalwave.role.ui.Displayable;
+import it.tidalwave.ui.core.role.Displayable;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import static it.tidalwave.util.mock.MockAsFactory.mockWithAs;

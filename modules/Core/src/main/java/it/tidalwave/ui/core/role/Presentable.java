@@ -29,7 +29,7 @@ import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Collections;
 import it.tidalwave.util.Parameters;
-import it.tidalwave.role.ui.impl.DefaultPresentable;
+import it.tidalwave.ui.core.role.impl.DefaultPresentable;
 import static it.tidalwave.util.Parameters.r;
 
 /***************************************************************************************************************************************************************
@@ -38,6 +38,7 @@ import static it.tidalwave.util.Parameters.r;
  *
  * @stereotype Role
  *
+ * @since   2.0-ALPHA-1
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/

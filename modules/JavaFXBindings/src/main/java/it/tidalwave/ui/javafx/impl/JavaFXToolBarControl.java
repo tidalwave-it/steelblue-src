@@ -31,7 +31,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ToolBar;
 import it.tidalwave.ui.core.ToolBarControl;
 import it.tidalwave.ui.core.spi.ToolBarControlSupport;
-import it.tidalwave.role.ui.UserAction;
+import it.tidalwave.ui.core.role.UserAction;
 import it.tidalwave.ui.javafx.JavaFXBinder;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

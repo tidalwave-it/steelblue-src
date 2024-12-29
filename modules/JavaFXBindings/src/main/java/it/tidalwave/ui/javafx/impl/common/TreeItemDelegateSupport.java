@@ -33,13 +33,13 @@ import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.scene.control.TreeItem;
 import javafx.application.Platform;
 import it.tidalwave.util.annotation.VisibleForTesting;
-import it.tidalwave.role.ui.PresentationModel;
-import it.tidalwave.role.ui.Visible;
+import it.tidalwave.ui.core.role.PresentationModel;
+import it.tidalwave.ui.core.role.Visible;
 import it.tidalwave.ui.javafx.impl.tree.ObsoletePresentationModelDisposer;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import static java.util.stream.Collectors.*;
-import static it.tidalwave.role.ui.Visible._Visible_;
+import static it.tidalwave.ui.core.role.Visible._Visible_;
 import static it.tidalwave.ui.javafx.impl.common.JavaFXWorker.childrenPm;
 
 /***************************************************************************************************************************************************************

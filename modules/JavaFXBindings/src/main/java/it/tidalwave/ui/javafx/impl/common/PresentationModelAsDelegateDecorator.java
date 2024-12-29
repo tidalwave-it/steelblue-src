@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.Optional;
 import it.tidalwave.util.As;
 import it.tidalwave.util.AsException;
-import it.tidalwave.role.ui.PresentationModel;
+import it.tidalwave.ui.core.role.PresentationModel;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;

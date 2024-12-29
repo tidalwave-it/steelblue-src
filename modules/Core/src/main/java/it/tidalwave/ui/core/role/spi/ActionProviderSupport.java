@@ -30,12 +30,13 @@ import java.util.Collection;
 import java.util.Collections;
 import javax.swing.Action;
 import it.tidalwave.util.NotFoundException;
-import it.tidalwave.role.ui.ActionProvider;
+import it.tidalwave.ui.core.role.ActionProvider;
 
 /***************************************************************************************************************************************************************
  *
  * @stereotype Role
  *
+ * @since   2.0-ALPHA-1
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/

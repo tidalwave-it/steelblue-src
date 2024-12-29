@@ -29,12 +29,13 @@ import javax.annotation.Nonnull;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import javax.swing.Icon;
-import it.tidalwave.role.ui.MutableIconProvider;
+import it.tidalwave.ui.core.role.MutableIconProvider;
 
 /***************************************************************************************************************************************************************
  *
- * A convenient support for implementing a {@link it.tidalwave.role.ui.MutableIconProvider}.
+ * A convenient support for implementing a {@link it.tidalwave.ui.core.role.MutableIconProvider}.
  *
+ * @since   2.0-ALPHA-1
  * @author  Fabrizio Giudici
  * @it.tidalwave.javadoc.draft
  *

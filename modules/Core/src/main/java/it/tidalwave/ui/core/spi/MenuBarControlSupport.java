@@ -34,15 +34,15 @@ import java.util.function.Supplier;
 import it.tidalwave.util.As;
 import it.tidalwave.util.Pair;
 import it.tidalwave.ui.core.MenuBarControl;
-import it.tidalwave.role.ui.UserAction;
-import it.tidalwave.role.ui.UserActionProvider;
+import it.tidalwave.ui.core.role.UserAction;
+import it.tidalwave.ui.core.role.UserActionProvider;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
 import lombok.extern.slf4j.Slf4j;
 import static java.util.Collections.emptyList;
 import static it.tidalwave.ui.core.MenuBarControl.MenuPlacement._MenuItemPlacement_;
-import static it.tidalwave.role.ui.UserActionProvider._UserActionProvider_;
+import static it.tidalwave.ui.core.role.UserActionProvider._UserActionProvider_;
 
 /***************************************************************************************************************************************************************
  *

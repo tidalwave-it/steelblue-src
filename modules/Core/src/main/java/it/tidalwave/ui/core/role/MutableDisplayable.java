@@ -29,15 +29,16 @@ import javax.annotation.Nonnull;
 import java.beans.PropertyChangeListener;
 import java.util.Locale;
 import java.util.Map;
-import it.tidalwave.role.ui.impl.DefaultMutableDisplayable;
+import it.tidalwave.ui.core.role.impl.DefaultMutableDisplayable;
 
 /***************************************************************************************************************************************************************
  *
- * A specialized {@link it.tidalwave.role.ui.Displayable} which is mutable (that is, its display name can be changed)
+ * A specialized {@link it.tidalwave.ui.core.role.Displayable} which is mutable (that is, its display name can be changed)
  * and fires {@code PropertyChangeEvent}s.
  *
  * @stereotype Role
  *
+ * @since   2.0-ALPHA-1
  * @author  Fabrizio Giudici
  * @it.tidalwave.javadoc.stable
  *

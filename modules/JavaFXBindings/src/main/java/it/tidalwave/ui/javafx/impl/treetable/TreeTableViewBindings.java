@@ -33,7 +33,7 @@ import javafx.scene.control.TreeTableCell;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
 import javafx.util.Callback;
-import it.tidalwave.role.ui.PresentationModel;
+import it.tidalwave.ui.core.role.PresentationModel;
 import it.tidalwave.ui.javafx.impl.common.CellBinder;
 import it.tidalwave.ui.javafx.impl.common.PresentationModelObservable;
 import it.tidalwave.ui.javafx.impl.common.TreeItemDelegateSupport;

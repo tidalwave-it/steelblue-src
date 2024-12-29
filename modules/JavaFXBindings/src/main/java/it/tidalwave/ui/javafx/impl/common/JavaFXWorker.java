@@ -36,7 +36,7 @@ import java.util.function.Supplier;
 import javafx.collections.ObservableList;
 import javafx.application.Platform;
 import it.tidalwave.util.annotation.VisibleForTesting;
-import it.tidalwave.role.ui.PresentationModel;
+import it.tidalwave.ui.core.role.PresentationModel;
 import it.tidalwave.ui.javafx.impl.util.Logging;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;

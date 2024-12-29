@@ -29,7 +29,7 @@ import javax.annotation.Nonnull;
 import java.util.concurrent.Executor;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import it.tidalwave.role.ui.UserAction;
+import it.tidalwave.ui.core.role.UserAction;
 import lombok.RequiredArgsConstructor;
 
 /***************************************************************************************************************************************************************

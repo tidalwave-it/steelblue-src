@@ -33,9 +33,9 @@ import it.tidalwave.util.As;
 import it.tidalwave.util.NamedCallback;
 import it.tidalwave.util.Parameters;
 import it.tidalwave.role.SimpleComposite;
-import it.tidalwave.role.ui.impl.DefaultPresentationModel;
+import it.tidalwave.ui.core.role.impl.DefaultPresentationModel;
 import static it.tidalwave.util.Parameters.r;
-import static it.tidalwave.role.ui.Presentable._Presentable_;
+import static it.tidalwave.ui.core.role.Presentable._Presentable_;
 
 /***************************************************************************************************************************************************************
  *
@@ -44,6 +44,7 @@ import static it.tidalwave.role.ui.Presentable._Presentable_;
  *
  * @stereotype Role
  *
+ * @since   2.0-ALPHA-1
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/

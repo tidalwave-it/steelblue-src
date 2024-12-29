@@ -33,7 +33,7 @@ import it.tidalwave.role.spi.SystemRoleFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import static it.tidalwave.util.test.MoreAnswers.CALLS_DEFAULT_METHODS;
-import static it.tidalwave.role.ui.Presentable._Presentable_;
+import static it.tidalwave.ui.core.role.Presentable._Presentable_;
 import static org.mockito.Mockito.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;

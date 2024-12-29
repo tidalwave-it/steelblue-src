@@ -27,7 +27,7 @@ package it.tidalwave.ui.core.role.impl;
 
 import java.util.List;
 import it.tidalwave.util.Callback;
-import it.tidalwave.role.ui.Displayable;
+import it.tidalwave.ui.core.role.Displayable;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
 import static org.mockito.Mockito.*;

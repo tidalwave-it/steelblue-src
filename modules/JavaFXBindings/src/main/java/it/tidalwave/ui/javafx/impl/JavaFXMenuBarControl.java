@@ -29,7 +29,7 @@ import javax.annotation.Nonnull;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import it.tidalwave.role.ui.UserAction;
+import it.tidalwave.ui.core.role.UserAction;
 import it.tidalwave.ui.core.MenuBarControl;
 import it.tidalwave.ui.javafx.JavaFXBinder;
 import it.tidalwave.ui.core.spi.MenuBarControlSupport;

@@ -33,11 +33,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import it.tidalwave.util.As;
-import it.tidalwave.role.ui.UserAction;
+import it.tidalwave.ui.core.role.UserAction;
 import lombok.Getter;
 import lombok.ToString;
 import static java.util.Collections.*;
-import static it.tidalwave.role.ui.UserActionProvider._UserActionProvider_;
+import static it.tidalwave.ui.core.role.UserActionProvider._UserActionProvider_;
 
 /***************************************************************************************************************************************************************
  *
@@ -49,7 +49,7 @@ public class RoleBag
   {
     private final Map<Class<?>, List<Object>> map = new HashMap<>();
 
-    /** The default user action, which is the first action of the first {@link it.tidalwave.role.ui.UserActionProvider}. */
+    /** The default user action, which is the first action of the first {@link it.tidalwave.ui.core.role.UserActionProvider}. */
     @Getter
     private final Optional<UserAction> defaultUserAction;
 

@@ -47,12 +47,12 @@ import javafx.scene.layout.Priority;
 import javafx.stage.Window;
 import javafx.application.Platform;
 import it.tidalwave.role.SimpleComposite;
-import it.tidalwave.role.ui.BoundProperty;
-import it.tidalwave.role.ui.Displayable;
-import it.tidalwave.role.ui.PresentationModel;
-import it.tidalwave.role.ui.Styleable;
-import it.tidalwave.role.ui.UserAction;
-import it.tidalwave.role.ui.UserActionProvider;
+import it.tidalwave.ui.core.role.BoundProperty;
+import it.tidalwave.ui.core.role.Displayable;
+import it.tidalwave.ui.core.role.PresentationModel;
+import it.tidalwave.ui.core.role.Styleable;
+import it.tidalwave.ui.core.role.UserAction;
+import it.tidalwave.ui.core.role.UserActionProvider;
 import it.tidalwave.ui.javafx.JavaFXBinder;
 import it.tidalwave.ui.javafx.impl.combobox.ComboBoxBindings;
 import it.tidalwave.ui.javafx.impl.common.CellBinder;
@@ -71,9 +71,9 @@ import static java.util.Collections.emptyList;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.*;
 import static it.tidalwave.role.SimpleComposite._SimpleComposite_;
-import static it.tidalwave.role.ui.Displayable._Displayable_;
-import static it.tidalwave.role.ui.Styleable._Styleable_;
-import static it.tidalwave.role.ui.UserActionProvider._UserActionProvider_;
+import static it.tidalwave.ui.core.role.Displayable._Displayable_;
+import static it.tidalwave.ui.core.role.Styleable._Styleable_;
+import static it.tidalwave.ui.core.role.UserActionProvider._UserActionProvider_;
 
 /***************************************************************************************************************************************************************
  *

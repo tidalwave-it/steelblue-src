@@ -1,10 +1,10 @@
 /*
  * *************************************************************************************************************************************************************
  *
- * TheseFoolishThings: Miscellaneous utilities
- * http://tidalwave.it/projects/thesefoolishthings
+ * SteelBlue: DCI User Interfaces
+ * http://tidalwave.it/projects/steelblue
  *
- * Copyright (C) 2009 - 2024 by Tidalwave s.a.s. (http://tidalwave.it)
+ * Copyright (C) 2015 - 2024 by Tidalwave s.a.s. (http://tidalwave.it)
  *
  * *************************************************************************************************************************************************************
  *
@@ -18,8 +18,8 @@
  *
  * *************************************************************************************************************************************************************
  *
- * git clone https://bitbucket.org/tidalwave/thesefoolishthings-src
- * git clone https://github.com/tidalwave-it/thesefoolishthings-src
+ * git clone https://bitbucket.org/tidalwave/steelblue-src
+ * git clone https://github.com/tidalwave-it/steelblue-src
  *
  * *************************************************************************************************************************************************************
  */
@@ -33,14 +33,14 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.io.Serializable;
-import it.tidalwave.role.ui.LocalizedDisplayable;
+import it.tidalwave.ui.core.role.LocalizedDisplayable;
 
 /***************************************************************************************************************************************************************
  *
  * A default implementation of {@link LocalizedDisplayable} which a single, immutable display name in
  * {@code Locale.ENGLISH} language.
  *
- * This is no more a public class; use {@link it.tidalwave.role.ui.Displayable#of(String)} or
+ * This is no more a public class; use {@link it.tidalwave.ui.core.role.Displayable#of(String)} or
  * {@link LocalizedDisplayable#fromBundle(Class, String)}}
  *
  * @author Fabrizio Giudici

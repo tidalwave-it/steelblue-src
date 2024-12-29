@@ -32,11 +32,11 @@ import java.util.concurrent.Executor;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TreeItem;
-import it.tidalwave.role.ui.PresentationModel;
-import it.tidalwave.role.ui.Selectable;
+import it.tidalwave.ui.core.role.PresentationModel;
+import it.tidalwave.ui.core.role.Selectable;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import static it.tidalwave.role.ui.Selectable._Selectable_;
+import static it.tidalwave.ui.core.role.Selectable._Selectable_;
 
 /***************************************************************************************************************************************************************
  *

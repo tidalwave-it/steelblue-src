@@ -26,12 +26,13 @@
 package it.tidalwave.ui.function;
 
 import javax.annotation.Nonnull;
-import it.tidalwave.role.ui.Changeable;
-import it.tidalwave.role.ui.ChangingSource;
+import it.tidalwave.ui.core.role.Changeable;
+import it.tidalwave.ui.core.role.ChangingSource;
 import lombok.extern.slf4j.Slf4j;
 
 /***************************************************************************************************************************************************************
  *
+ * @since   2.0-ALPHA-1
  * Changes the destination only at a certain condition in function of the target.
  *
  * @author  Fabrizio Giudici

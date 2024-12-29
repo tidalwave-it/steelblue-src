@@ -30,7 +30,7 @@ import java.util.Collection;
 import it.tidalwave.util.As;
 import it.tidalwave.role.Aggregate;
 import it.tidalwave.role.Composite;
-import it.tidalwave.role.ui.Displayable;
+import it.tidalwave.ui.core.role.Displayable;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import static java.util.stream.Collectors.*;

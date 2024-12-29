@@ -23,92 +23,45 @@
  *
  * *************************************************************************************************************************************************************
  */
-package it.tidalwave.ui.core.role.impl;
+package it.tidalwave.ui.core.role;
 
 import javax.annotation.Nonnull;
-import java.util.Collection;
-import it.tidalwave.util.As;
-import it.tidalwave.util.Callback;
-import it.tidalwave.ui.core.role.BoundProperty;
-import it.tidalwave.ui.core.role.UserAction;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.Accessors;
-import lombok.experimental.Delegate;
-import lombok.extern.slf4j.Slf4j;
-import static it.tidalwave.ui.core.role.Displayable._Displayable_;
+import java.io.PrintWriter;
 
 /***************************************************************************************************************************************************************
  *
+ * The role of an object that can be rendered into a {@link String} as plain text. Note that while it has a method
+ * with the same signature as {@link StringRenderable}, it has modified semantics since it guarantees that the returned
+ * string is a plain text.
+ *
+ * @stereotype Role
+ *
+ * @since   2.0-ALPHA-1
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-@RequiredArgsConstructor(staticName = "withCallback") @Slf4j
-public class DefaultUserAction implements UserAction
+@FunctionalInterface
+public interface PlainTextRenderable extends StringRenderable
   {
-    @Getter @Accessors(fluent = true)
-    private final BoundProperty<Boolean> enabled = new BoundProperty<>(true);
-
-    @Delegate @Nonnull
-    private final As as;
-
-    @Nonnull
-    private final Callback callback;
+    public static final Class<PlainTextRenderable> _PlainTextRenderable_ = PlainTextRenderable.class;
 
     /***********************************************************************************************************************************************************
-     * @since 3.2-ALPHA-1 (was previously in {@code UserAction8}
-     * @since  3.2-ALPHA-3 (refactored)
+     *
+     * @since 3.2-ALPHA-1 (was previously on {@code Feedback8}
      **********************************************************************************************************************************************************/
-    public DefaultUserAction (@Nonnull final Callback callback, @Nonnull final Collection<Object> roles)
+    public default void renderTo (@Nonnull final StringBuilder stringBuilder,
+                                  @Nonnull final Object ... args)
       {
-        this.callback = callback;
-        this.as = As.forObject(this, roles);
+        stringBuilder.append(render(args));
       }
 
     /***********************************************************************************************************************************************************
-     * @since 3.2-ALPHA-1 (was previously in {@code UserAction8}
-     * @since  3.2-ALPHA-3 (refactored)
+     *
+     * @since 3.2-ALPHA-1 (was previously on {@code Feedback8}
      **********************************************************************************************************************************************************/
-    @Nonnull
-    public DefaultUserAction withRoles (@Nonnull final Collection<Object> roles)
+    public default void renderTo (@Nonnull final PrintWriter printWriter,
+                                  @Nonnull final Object ... args)
       {
-        return new DefaultUserAction(callback, roles);
-      }
-
-    @Override
-    public void actionPerformed() // FIXME: change with composition
-      {
-        try
-          {
-            callback.call();
-          }
-        catch (Throwable e)
-          {
-            log.error("", e);
-          }
-      }
-
-    /***********************************************************************************************************************************************************
-     * {@inheritDoc}
-     **********************************************************************************************************************************************************/
-    @Override @Nonnull
-    public String toString ()
-      {
-        final var id = "@" + Integer.toHexString(System.identityHashCode(this));
-        var details = id;
-
-        try
-          {
-            details = this.maybeAs(_Displayable_)
-                          .map(d -> String.format("[\"%s\"]", d.getDisplayName()))
-                          .orElse(id);
-          }
-        catch (RuntimeException e)
-          {
-            details += ",broken";
-            log.error("In DefaultDisplayable.toString()", e);
-          }
-
-        return String.format("DefaultUserAction%s", details);
+        printWriter.print(render(args));
       }
   }

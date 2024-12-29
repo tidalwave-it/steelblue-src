@@ -27,7 +27,7 @@ package it.tidalwave.ui.example.model;
 
 import javax.annotation.Nonnull;
 import it.tidalwave.util.As;
-import it.tidalwave.role.ui.Displayable;
+import it.tidalwave.ui.core.role.Displayable;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.Delegate;

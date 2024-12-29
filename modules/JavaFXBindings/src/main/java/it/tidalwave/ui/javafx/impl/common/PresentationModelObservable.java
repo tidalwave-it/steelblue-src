@@ -32,7 +32,7 @@ import javafx.beans.value.ObservableValueBase;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TreeTableColumn;
 import it.tidalwave.role.Aggregate;
-import it.tidalwave.role.ui.PresentationModel;
+import it.tidalwave.ui.core.role.PresentationModel;
 import lombok.RequiredArgsConstructor;
 
 /***************************************************************************************************************************************************************

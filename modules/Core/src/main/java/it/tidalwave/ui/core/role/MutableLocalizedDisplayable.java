@@ -26,14 +26,15 @@
 package it.tidalwave.ui.core.role;
 
 import javax.annotation.Nonnull;
-import it.tidalwave.role.ui.impl.DefaultMutableDisplayable;
+import it.tidalwave.ui.core.role.impl.DefaultMutableDisplayable;
 
 /***************************************************************************************************************************************************************
  *
- * A specialized {@link it.tidalwave.role.ui.LocalizedDisplayable} which is mutable.
+ * A specialized {@link it.tidalwave.ui.core.role.LocalizedDisplayable} which is mutable.
  *
  * @stereotype Role
  *
+ * @since   2.0-ALPHA-1
  * @author  Fabrizio Giudici
  * @it.tidalwave.javadoc.stable
  *

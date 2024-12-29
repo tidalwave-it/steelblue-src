@@ -30,12 +30,12 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.Collection;
 import java.util.Locale;
-import it.tidalwave.role.ui.Displayable;
-import it.tidalwave.role.ui.PresentationModel;
-import it.tidalwave.role.ui.PresentationModelAggregate;
-import it.tidalwave.role.ui.Styleable;
+import it.tidalwave.ui.core.role.Displayable;
+import it.tidalwave.ui.core.role.PresentationModel;
+import it.tidalwave.ui.core.role.PresentationModelAggregate;
+import it.tidalwave.ui.core.role.Styleable;
 import it.tidalwave.ui.example.model.FileEntity;
-import it.tidalwave.role.ui.spi.SimpleCompositePresentable;
+import it.tidalwave.ui.core.role.spi.SimpleCompositePresentable;
 import it.tidalwave.dci.annotation.DciRole;
 import lombok.extern.slf4j.Slf4j;
 import static it.tidalwave.util.FunctionalCheckedExceptionWrappers.*;
@@ -44,7 +44,7 @@ import static it.tidalwave.util.Parameters.r;
 
 /***************************************************************************************************************************************************************
  *
- * A {@link it.tidalwave.role.ui.Presentable} implementation for {@link FileEntity}, creates a {@link PresentationModel}
+ * A {@link it.tidalwave.ui.core.role.Presentable} implementation for {@link FileEntity}, creates a {@link PresentationModel}
  * for a tabular rendering with four columns: name, size, creationDate and latestModificationDate.
  *
  * @author  Fabrizio Giudici

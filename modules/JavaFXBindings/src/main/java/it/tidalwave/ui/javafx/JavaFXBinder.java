@@ -46,9 +46,9 @@ import javafx.stage.Window;
 import it.tidalwave.ui.javafx.role.CustomGraphicProvider;
 import it.tidalwave.util.ui.UserNotification;
 import it.tidalwave.util.ui.UserNotificationWithFeedback;
-import it.tidalwave.role.ui.BoundProperty;
-import it.tidalwave.role.ui.PresentationModel;
-import it.tidalwave.role.ui.UserAction;
+import it.tidalwave.ui.core.role.BoundProperty;
+import it.tidalwave.ui.core.role.PresentationModel;
+import it.tidalwave.ui.core.role.UserAction;
 
 /***************************************************************************************************************************************************************
  *
@@ -106,10 +106,10 @@ public interface JavaFXBinder
      * <li>A {@link it.tidalwave.role.SimpleComposite} provides children {@code PresentationModel}s for each row.</li>
      * <li>In each row, an {@link it.tidalwave.role.Aggregate<PresentationModel>} is used to provide the {@code PresentationModel}s for
      *     each column.</li>
-     * <li>A {@link it.tidalwave.role.ui.Displayable} (optional) is used to provide the text to render for each item.</li>
+     * <li>A {@link it.tidalwave.ui.core.role.Displayable} (optional) is used to provide the text to render for each item.</li>
      * <li>A {@link CustomGraphicProvider} (optional) is used to provide the graphics to render for each item.</li>
-     * <li>A {@link it.tidalwave.role.ui.Styleable} (optional) is used to provide the rendering style for each item.</li>
-     * <li>A {@link it.tidalwave.role.ui.UserActionProvider} (optional) is used to provide the actions for creating a context menu;
+     * <li>A {@link it.tidalwave.ui.core.role.Styleable} (optional) is used to provide the rendering style for each item.</li>
+     * <li>A {@link it.tidalwave.ui.core.role.UserActionProvider} (optional) is used to provide the actions for creating a context menu;
      *     the default action is also bound to the double click or SPACE gesture.</li>
      * </ul>
      *
@@ -128,7 +128,7 @@ public interface JavaFXBinder
 
     /***********************************************************************************************************************************************************
      * Binds a {@link TableView} to a {@link PresentationModel} and a callback.
-     * See {@link #bind(javafx.scene.control.TableView, it.tidalwave.role.ui.PresentationModel, java.util.Optional)}.
+     * See {@link #bind(javafx.scene.control.TableView, it.tidalwave.ui.core.role.PresentationModel, java.util.Optional)}.
      *
      * The process of populating data is performed in background threads, so this method quickly returns also in case
      * of large amount of data.
@@ -147,7 +147,7 @@ public interface JavaFXBinder
 
     /***********************************************************************************************************************************************************
      * Binds a {@link TableView} to a {@link PresentationModel}.
-     * See {@link #bind(javafx.scene.control.TableView, it.tidalwave.role.ui.PresentationModel, java.util.Optional)}.
+     * See {@link #bind(javafx.scene.control.TableView, it.tidalwave.ui.core.role.PresentationModel, java.util.Optional)}.
      *
      * @since   1.0-ALPHA-13
      * @param   tableView       the {@code TablewView}
@@ -168,12 +168,12 @@ public interface JavaFXBinder
      * <li>A {@link it.tidalwave.role.SimpleComposite} provides children {@code PresentationModel}s for each row.</li>
      * <li>In each row, an {@link it.tidalwave.role.Aggregate<PresentationModel>} is used to provide the {@code PresentationModel}s for
      *     each column.</li>
-     * <li>A {@link it.tidalwave.role.ui.Displayable} (optional) is used to provide the text to render for each item.</li>
+     * <li>A {@link it.tidalwave.ui.core.role.Displayable} (optional) is used to provide the text to render for each item.</li>
      * <li>A {@link CustomGraphicProvider} (optional) is used to provide the graphics to render for each item.</li>
-     * <li>A {@link it.tidalwave.role.ui.Styleable} (optional) is used to provide the rendering style for each item.</li>
-     * <li>A {@link it.tidalwave.role.ui.UserActionProvider} (optional) is used to provide the actions for creating a context menu;
+     * <li>A {@link it.tidalwave.ui.core.role.Styleable} (optional) is used to provide the rendering style for each item.</li>
+     * <li>A {@link it.tidalwave.ui.core.role.UserActionProvider} (optional) is used to provide the actions for creating a context menu;
      *     the default action is also bound to the double click or SPACE gesture.</li>
-     * <li>A {@link it.tidalwave.role.ui.Visible} (optional) is used to decide whether the root node should be visible or not.</li>
+     * <li>A {@link it.tidalwave.ui.core.role.Visible} (optional) is used to decide whether the root node should be visible or not.</li>
      * </ul>
      *
      * The process of populating data is performed in background threads, so this method quickly returns also in case
@@ -190,7 +190,7 @@ public interface JavaFXBinder
 
     /***********************************************************************************************************************************************************
      * Binds a {@link TableView} to a {@link PresentationModel} and a callback.
-     * See {@link #bind(javafx.scene.control.TreeView, it.tidalwave.role.ui.PresentationModel, java.util.Optional)}.
+     * See {@link #bind(javafx.scene.control.TreeView, it.tidalwave.ui.core.role.PresentationModel, java.util.Optional)}.
      *
      * @since   1.0-ALPHA-13
      * @param   treeView        the {@code TreeView}
@@ -206,7 +206,7 @@ public interface JavaFXBinder
 
     /***********************************************************************************************************************************************************
      * Binds a {@link TableView} to a {@link PresentationModel}.
-     * See {@link #bind(javafx.scene.control.TableView, it.tidalwave.role.ui.PresentationModel, java.util.Optional)}
+     * See {@link #bind(javafx.scene.control.TableView, it.tidalwave.ui.core.role.PresentationModel, java.util.Optional)}
      *
      * @since   1.0-ALPHA-13
      * @param   treeView        the {@code TreeView}
@@ -227,12 +227,12 @@ public interface JavaFXBinder
      * <li>A {@link it.tidalwave.role.SimpleComposite} provides children {@code PresentationModel}s for each row.</li>
      * <li>In each row, an {@link it.tidalwave.role.Aggregate<PresentationModel>} is used to provide the {@code PresentationModel}s for
      *     each column.</li>
-     * <li>A {@link it.tidalwave.role.ui.Displayable} (optional) is used to provide the text to render for each item.</li>
+     * <li>A {@link it.tidalwave.ui.core.role.Displayable} (optional) is used to provide the text to render for each item.</li>
      * <li>A {@link CustomGraphicProvider} (optional) is used to provide the graphics to render for each item.</li>
-     * <li>A {@link it.tidalwave.role.ui.Styleable} (optional) is used to provide the rendering style for each item.</li>
-     * <li>A {@link it.tidalwave.role.ui.UserActionProvider} (optional) is used to provide the actions for creating a context menu;
+     * <li>A {@link it.tidalwave.ui.core.role.Styleable} (optional) is used to provide the rendering style for each item.</li>
+     * <li>A {@link it.tidalwave.ui.core.role.UserActionProvider} (optional) is used to provide the actions for creating a context menu;
      *     the default action is also bound to the double click or SPACE gesture.</li>
-     * <li>A {@link it.tidalwave.role.ui.Visible} (optional) is used to decide whether the root node should be visible or not.</li>
+     * <li>A {@link it.tidalwave.ui.core.role.Visible} (optional) is used to decide whether the root node should be visible or not.</li>
      * </ul>
      *
      * The process of populating data is performed in background threads, so this method quickly returns also in case
@@ -249,7 +249,7 @@ public interface JavaFXBinder
 
     /***********************************************************************************************************************************************************
      * Binds a {@link TreeTableView} to a {@link PresentationModel} and a callback.
-     * See {@link #bind(javafx.scene.control.TreeTableView, it.tidalwave.role.ui.PresentationModel, java.util.Optional)}.
+     * See {@link #bind(javafx.scene.control.TreeTableView, it.tidalwave.ui.core.role.PresentationModel, java.util.Optional)}.
      *
      * @since   1.0-ALPHA-13
      * @param   treeTableView   the {@code TreeTableView}
@@ -265,7 +265,7 @@ public interface JavaFXBinder
 
     /***********************************************************************************************************************************************************
      * Binds a {@link TreeTableView} to a {@link PresentationModel}.
-     * See {@link #bind(javafx.scene.control.TreeTableView, it.tidalwave.role.ui.PresentationModel, java.util.Optional)}.
+     * See {@link #bind(javafx.scene.control.TreeTableView, it.tidalwave.ui.core.role.PresentationModel, java.util.Optional)}.
      *
      * @since   1.0-ALPHA-13
      * @param   treeTableView   the {@code TreeTableView}
@@ -286,10 +286,10 @@ public interface JavaFXBinder
      * <li>A {@link it.tidalwave.role.SimpleComposite} provides children {@code PresentationModel}s for each row.</li>
      * <li>In each row, an {@link it.tidalwave.role.Aggregate<PresentationModel>} is used to provide the {@code PresentationModel}s for
      *     each column.</li>
-     * <li>A {@link it.tidalwave.role.ui.Displayable} (optional) is used to provide the text to render for each item.</li>
+     * <li>A {@link it.tidalwave.ui.core.role.Displayable} (optional) is used to provide the text to render for each item.</li>
      * <li>A {@link CustomGraphicProvider} (optional) is used to provide the graphics to render for each item.</li>
-     * <li>A {@link it.tidalwave.role.ui.Styleable} (optional) is used to provide the rendering style for each item.</li>
-     * <li>A {@link it.tidalwave.role.ui.UserActionProvider} (optional) is used to provide the actions for creating a context menu;
+     * <li>A {@link it.tidalwave.ui.core.role.Styleable} (optional) is used to provide the rendering style for each item.</li>
+     * <li>A {@link it.tidalwave.ui.core.role.UserActionProvider} (optional) is used to provide the actions for creating a context menu;
      *     the default action is also bound to the double click or SPACE gesture.</li>
      * </ul>
      *
@@ -307,7 +307,7 @@ public interface JavaFXBinder
 
     /***********************************************************************************************************************************************************
      * Binds a {@link ListView} to a {@link PresentationModel} and a callback.
-     * See {@link #bind(javafx.scene.control.ListView, it.tidalwave.role.ui.PresentationModel, java.util.Optional)}.
+     * See {@link #bind(javafx.scene.control.ListView, it.tidalwave.ui.core.role.PresentationModel, java.util.Optional)}.
      *
      * @since   1.0-ALPHA-13
      * @param   listView        the {@code ListView}
@@ -323,7 +323,7 @@ public interface JavaFXBinder
 
     /***********************************************************************************************************************************************************
      * Binds a {@link ComboBox} to a {@link PresentationModel}.
-     * See {@link #bind(javafx.scene.control.ListView, it.tidalwave.role.ui.PresentationModel, java.util.Optional)}.
+     * See {@link #bind(javafx.scene.control.ListView, it.tidalwave.ui.core.role.PresentationModel, java.util.Optional)}.
      *
      * @since   1.0-ALPHA-13
      * @param   listView        the {@code ListView}
@@ -344,10 +344,10 @@ public interface JavaFXBinder
      * <li>A {@link it.tidalwave.role.SimpleComposite} provides children {@code PresentationModel}s for each row.</li>
      * <li>In each row, an {@link it.tidalwave.role.Aggregate<PresentationModel>} is used to provide the {@code PresentationModel}s for
      *     each column.</li>
-     * <li>A {@link it.tidalwave.role.ui.Displayable} (optional) is used to provide the text to render for each item.</li>
+     * <li>A {@link it.tidalwave.ui.core.role.Displayable} (optional) is used to provide the text to render for each item.</li>
      * <li>A {@link CustomGraphicProvider} (optional) is used to provide the graphics to render for each item.</li>
-     * <li>A {@link it.tidalwave.role.ui.Styleable} (optional) is used to provide the rendering style for each item.</li>
-     * <li>A {@link it.tidalwave.role.ui.UserActionProvider} (optional) is used to provide the actions for creating a context menu;
+     * <li>A {@link it.tidalwave.ui.core.role.Styleable} (optional) is used to provide the rendering style for each item.</li>
+     * <li>A {@link it.tidalwave.ui.core.role.UserActionProvider} (optional) is used to provide the actions for creating a context menu;
      *     the default action is also bound to the double click or SPACE gesture.</li>
      * </ul>
      *
@@ -365,7 +365,7 @@ public interface JavaFXBinder
 
     /***********************************************************************************************************************************************************
      * Binds a {@link ComboBox} to a {@link PresentationModel} and a callback.
-     * See {@link #bind(javafx.scene.control.ComboBox, it.tidalwave.role.ui.PresentationModel, java.util.Optional)}.
+     * See {@link #bind(javafx.scene.control.ComboBox, it.tidalwave.ui.core.role.PresentationModel, java.util.Optional)}.
      *
      * @since   1.0-ALPHA-13
      * @param   comboBox        the {@code ComboBox}
@@ -381,7 +381,7 @@ public interface JavaFXBinder
 
     /***********************************************************************************************************************************************************
      * Binds a {@link ComboBox} to a {@link PresentationModel}.
-     * See {@link #bind(javafx.scene.control.ComboBox, it.tidalwave.role.ui.PresentationModel, java.util.Optional)}.
+     * See {@link #bind(javafx.scene.control.ComboBox, it.tidalwave.ui.core.role.PresentationModel, java.util.Optional)}.
      *
      * @since   1.0-ALPHA-13
      * @param   comboBox        the {@code ComboBox}
@@ -399,9 +399,9 @@ public interface JavaFXBinder
      * following roles:
      *
      * <ul>
-     * <li>{@link it.tidalwave.role.ui.UserActionProvider} (mandatory) to provide a callback for the button</li>
-     * <li>{@link it.tidalwave.role.ui.Displayable} to provide a text for the button</li>
-     * <li>{@link it.tidalwave.role.ui.Styleable} to provide a CSS style for the button</li>
+     * <li>{@link it.tidalwave.ui.core.role.UserActionProvider} (mandatory) to provide a callback for the button</li>
+     * <li>{@link it.tidalwave.ui.core.role.Displayable} to provide a text for the button</li>
+     * <li>{@link it.tidalwave.ui.core.role.Styleable} to provide a CSS style for the button</li>
      * </ul>
      *
      * The pane must be pre-populated with at least one button, which will be queried for the CSS style.

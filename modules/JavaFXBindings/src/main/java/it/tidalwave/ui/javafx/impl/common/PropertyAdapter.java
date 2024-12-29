@@ -36,7 +36,7 @@ import javafx.beans.property.Property;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.application.Platform;
-import it.tidalwave.role.ui.BoundProperty;
+import it.tidalwave.ui.core.role.BoundProperty;
 import lombok.extern.slf4j.Slf4j;
 
 /***************************************************************************************************************************************************************

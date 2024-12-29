@@ -26,7 +26,7 @@
 package it.tidalwave.ui.core.role.impl;
 
 import javax.annotation.Nonnull;
-import it.tidalwave.role.ui.Displayable;
+import it.tidalwave.ui.core.role.Displayable;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import static org.hamcrest.CoreMatchers.is;

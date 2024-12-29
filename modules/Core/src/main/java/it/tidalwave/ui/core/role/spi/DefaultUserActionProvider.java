@@ -29,13 +29,14 @@ import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Collections;
 import it.tidalwave.util.NotFoundException;
-import it.tidalwave.role.ui.UserAction;
-import it.tidalwave.role.ui.UserActionProvider;
+import it.tidalwave.ui.core.role.UserAction;
+import it.tidalwave.ui.core.role.UserActionProvider;
 
 /***************************************************************************************************************************************************************
  *
  * A default implementation of {@link UserActionProvider} which returns no actions.
  *
+ * @since   2.0-ALPHA-1
  * @stereotype role
  *
  * @author  Fabrizio Giudici

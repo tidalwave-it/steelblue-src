@@ -34,6 +34,7 @@ import it.tidalwave.util.RoleFactory;
  *
  * A factory that creates a default {@link PresentationModel}.
  *
+ * @since   2.0-ALPHA-1
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/

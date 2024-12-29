@@ -25,11 +25,12 @@
  */
 package it.tidalwave.ui.function;
 
-import it.tidalwave.role.ui.ChangingSource;
+import it.tidalwave.ui.core.role.ChangingSource;
 
 /***************************************************************************************************************************************************************
  *
- * @author  fritz
+ * @since   2.0-ALPHA-1
+ * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
 public interface BoundFunction<DOMAIN_TYPE, CODOMAIN_TYPE> extends ChangingSource<CODOMAIN_TYPE>

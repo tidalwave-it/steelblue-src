@@ -30,8 +30,8 @@ import java.util.Collection;
 import java.util.List;
 import it.tidalwave.ui.core.MenuBarControl;
 import it.tidalwave.ui.core.ToolBarControl;
-import it.tidalwave.role.ui.UserAction;
-import it.tidalwave.role.ui.spi.DefaultUserActionProvider;
+import it.tidalwave.ui.core.role.UserAction;
+import it.tidalwave.ui.core.role.spi.DefaultUserActionProvider;
 import it.tidalwave.dci.annotation.DciRole;
 import lombok.RequiredArgsConstructor;
 

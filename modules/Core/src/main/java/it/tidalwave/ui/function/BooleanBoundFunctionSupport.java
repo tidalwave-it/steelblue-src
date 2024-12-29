@@ -28,10 +28,11 @@ package it.tidalwave.ui.function;
 import javax.annotation.Nonnull;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import it.tidalwave.role.ui.ChangingSource;
+import it.tidalwave.ui.core.role.ChangingSource;
 
 /***************************************************************************************************************************************************************
  *
+ * @since   2.0-ALPHA-1
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/

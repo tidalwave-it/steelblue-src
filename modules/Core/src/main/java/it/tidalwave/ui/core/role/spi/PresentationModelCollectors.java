@@ -37,15 +37,16 @@ import it.tidalwave.util.As;
 import it.tidalwave.util.spi.ArrayListCollectorSupport;
 import it.tidalwave.role.Composite;
 import it.tidalwave.role.SimpleComposite;
-import it.tidalwave.role.ui.PresentationModel;
+import it.tidalwave.ui.core.role.PresentationModel;
 import static it.tidalwave.util.Parameters.r;
-import static it.tidalwave.role.ui.Presentable._Presentable_;
+import static it.tidalwave.ui.core.role.Presentable._Presentable_;
 
 /***************************************************************************************************************************************************************
  *
  * A {@link java.util.stream.Collector} which collects a {@link Stream} of {@link PresentationModel}s into a single
  * {@code PresentationModel} with a {@code Composite&lt;PresentationModel&gt;} role containing them.
- * 
+ *
+ * @since   2.0-ALPHA-1
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
@@ -84,7 +85,7 @@ public class PresentationModelCollectors extends ArrayListCollectorSupport<Prese
     /***********************************************************************************************************************************************************
      * A facility method that creates a composite {@link PresentationModel} out of an iterable (which means an array,
      * a collection or a stream) of objects implementing {@link As}. For each  object in the iterable, its {@code
-     * PresentationModel} is created by means of invoking its {@link it.tidalwave.role.ui.Presentable} role. Then all
+     * PresentationModel} is created by means of invoking its {@link it.tidalwave.ui.core.role.Presentable} role. Then all
      * the {@code PresentationModel}s are aggregated into the composite.
      * 
      * A function which creates specific roles for each {@code PresentationModel} can be specified. The function can

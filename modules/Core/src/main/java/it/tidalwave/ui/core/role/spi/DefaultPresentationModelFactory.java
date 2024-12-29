@@ -27,14 +27,15 @@ package it.tidalwave.ui.core.role.spi;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
-import it.tidalwave.role.ui.PresentationModel;
-import it.tidalwave.role.ui.PresentationModelFactory;
-import it.tidalwave.role.ui.impl.DefaultPresentationModel;
+import it.tidalwave.ui.core.role.PresentationModel;
+import it.tidalwave.ui.core.role.PresentationModelFactory;
+import it.tidalwave.ui.core.role.impl.DefaultPresentationModel;
 
 /***************************************************************************************************************************************************************
  *
  * An implementation of {@link PresentationModelFactory} that creates instances of {@link DefaultPresentationModel}.
  *
+ * @since   2.0-ALPHA-1
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/

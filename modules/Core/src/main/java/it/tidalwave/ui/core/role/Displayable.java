@@ -31,9 +31,9 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import it.tidalwave.util.As;
-import it.tidalwave.role.ui.impl.AsDisplayableComparator;
-import it.tidalwave.role.ui.impl.DefaultDisplayable;
-import it.tidalwave.role.ui.impl.DisplayableComparator;
+import it.tidalwave.ui.core.role.impl.AsDisplayableComparator;
+import it.tidalwave.ui.core.role.impl.DefaultDisplayable;
+import it.tidalwave.ui.core.role.impl.DisplayableComparator;
 import static it.tidalwave.util.BundleUtilities.getMessage;
 
 /***************************************************************************************************************************************************************
@@ -42,6 +42,7 @@ import static it.tidalwave.util.BundleUtilities.getMessage;
  *
  * @stereotype Role
  *
+ * @since   2.0-ALPHA-1
  * @author  Fabrizio Giudici
  * @it.tidalwave.javadoc.stable
  *

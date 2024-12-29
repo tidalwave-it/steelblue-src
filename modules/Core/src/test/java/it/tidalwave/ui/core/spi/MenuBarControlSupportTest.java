@@ -30,11 +30,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Supplier;
-import it.tidalwave.role.ui.UserAction;
+import it.tidalwave.ui.core.role.UserAction;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.testng.annotations.Test;
-import static it.tidalwave.role.ui.Displayable._Displayable_;
+import static it.tidalwave.ui.core.role.Displayable._Displayable_;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
