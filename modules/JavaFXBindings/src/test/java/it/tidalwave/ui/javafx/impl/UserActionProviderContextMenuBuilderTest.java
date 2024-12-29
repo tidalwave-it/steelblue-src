@@ -62,15 +62,10 @@ public class UserActionProviderContextMenuBuilderTest
     @RequiredArgsConstructor
     static class TestExecutorService implements ExecutorService
       {
-        public final List<AssertionError> assertionErrors = new ArrayList<>();
-
-        static interface Exclusions
-          {
-            public Future<?> submit (Runnable runnable);
-          }
-
-        @Delegate(excludes = Exclusions.class)
+        @Nonnull @Delegate
         private final ExecutorService delegate;
+
+        public final List<AssertionError> assertionErrors = new ArrayList<>();
 
         @Override @Nonnull
         public Future<?> submit (final Runnable task)
