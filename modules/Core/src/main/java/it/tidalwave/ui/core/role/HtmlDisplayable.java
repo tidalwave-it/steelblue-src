@@ -25,43 +25,18 @@
  */
 package it.tidalwave.ui.core.role;
 
-import jakarta.annotation.Nonnull;
-import java.io.PrintWriter;
-
 /***************************************************************************************************************************************************************
  *
- * The role of an object that can be rendered into a {@link String} as plain text. Note that while it has a method
- * with the same signature as {@link StringRenderable}, it has modified semantics since it guarantees that the returned
- * string is a plain text.
+ * The role of an object that can be rendered into a {@link String} as HTML markup.
  *
  * @stereotype Role
  *
- * @since   2.0-ALPHA-1
+ * @since   2.0-ALPHA-2
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
 @FunctionalInterface
-public interface PlainTextRenderable extends StringRenderable
+public interface HtmlDisplayable extends Displayable
   {
-    public static final Class<PlainTextRenderable> _PlainTextRenderable_ = PlainTextRenderable.class;
-
-    /***********************************************************************************************************************************************************
-     *
-     * @since 3.2-ALPHA-1 (was previously on {@code Feedback8}
-     **********************************************************************************************************************************************************/
-    public default void renderTo (@Nonnull final StringBuilder stringBuilder,
-                                  @Nonnull final Object ... args)
-      {
-        stringBuilder.append(render(args));
-      }
-
-    /***********************************************************************************************************************************************************
-     *
-     * @since 3.2-ALPHA-1 (was previously on {@code Feedback8}
-     **********************************************************************************************************************************************************/
-    public default void renderTo (@Nonnull final PrintWriter printWriter,
-                                  @Nonnull final Object ... args)
-      {
-        printWriter.print(render(args));
-      }
+    public static final Class<HtmlDisplayable> _HtmlDisplayable_ = HtmlDisplayable.class;
   }

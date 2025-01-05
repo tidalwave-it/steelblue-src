@@ -27,18 +27,16 @@ package it.tidalwave.ui.core.role;
 
 /***************************************************************************************************************************************************************
  *
- * The role of an object that can be rendered into a {@link String} as HTML markup. While this class has the same
- * method signature as {@link StringRenderable}, its semantics are different, as it is expected to return an HTML
- * fragment.
+ * The role of an object that can be rendered into a {@link String} as plain text.
  *
  * @stereotype Role
  *
- * @since   2.0-ALPHA-1
+ * @since   2.0-ALPHA-2
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
 @FunctionalInterface
-public interface HtmlRenderable extends StringRenderable
+public interface PlainTextDisplayable extends Displayable
   {
-    public static final Class<HtmlRenderable> _HtmlRenderable_ = HtmlRenderable.class;
+    public static final Class<PlainTextDisplayable> _PlainTextDisplayable_ = PlainTextDisplayable.class;
   }

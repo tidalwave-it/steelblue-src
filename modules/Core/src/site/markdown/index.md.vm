@@ -58,25 +58,18 @@ This role models something that can be displayed as a text.
 This is mutable a variant of `Displayable`, that is the related property can be changed and change listeners are supported.
 
 
-#[[####]]# StringRenderable
+#[[####]]# PlainTextDisplayable
 
-![UML](apidocs/it/tidalwave/ui/core/role/StringRenderable.svg)
+![UML](apidocs/it/tidalwave/ui/core/role/PlainTextDisplayable.svg)
 
-This roles models something that can be rendered to a string. The concept is very similar to the one of `Displayable`, only the exposed API is different.
-
-
-#[[####]]# PlainTextRenderable
-
-![UML](apidocs/it/tidalwave/ui/core/role/PlainTextRenderable.svg)
-
-This specialisation of `StringRenderable` makes it clear that the rendered string is a plain text.
+This specialisation of `Displayable` makes it clear that the rendered string is a plain text.
 
 
-#[[####]]# HtmlRenderable
+#[[####]]# HtmlDisplayable
 
-![UML](apidocs/it/tidalwave/ui/core/role/HtmlRenderable.svg)
+![UML](apidocs/it/tidalwave/ui/core/role/HtmlDisplayable.svg)
 
-This specialisation of `StringRenderable` makes it clear that the rendered string is a HTML text.
+This specialisation of `Displayable` makes it clear that the rendered string is a HTML text.
 
 
 

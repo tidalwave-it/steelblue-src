@@ -175,4 +175,27 @@ public interface Displayable
       {
         return AsDisplayableComparator.getInstance();
       }
+
+    /***********************************************************************************************************************************************************
+     * Renders the attached object into a {@link String}. The method accepts optional parameters that can be used to control the format of the rendering; they
+     * are usually specific of the object attached to this role.
+     * @param  args  optional rendering parameters
+     * @return       the string
+     **********************************************************************************************************************************************************/
+    @Nonnull
+    public default String render (@Nonnull final Object ... args)
+      {
+        return getDisplayName();
+      }
+
+    /***********************************************************************************************************************************************************
+     * Renders the attached object providing the string tu a {@link Consumer}. The method accepts optional parameters that can be used to control the format of
+     * the rendering; they are usually specific of the object attached to this role.
+     * @param  consumer        the {@code Consumer} to append to
+     * @param  args            optional rendering parameters
+     **********************************************************************************************************************************************************/
+    public default void renderTo (@Nonnull final Consumer<? super String> consumer, @Nonnull final Object ... args)
+      {
+        consumer.accept(render(args));
+      }
   }
