@@ -27,7 +27,6 @@ package it.tidalwave.ui.javafx;
 
 import jakarta.annotation.Nonnull;
 import java.io.IOException;
-import java.net.URL;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.application.Platform;
