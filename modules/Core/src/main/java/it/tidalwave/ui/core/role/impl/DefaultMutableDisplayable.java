@@ -34,11 +34,11 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import it.tidalwave.ui.core.role.MutableLocalizedDisplayable;
+import it.tidalwave.ui.core.role.MutableDisplayable;
 
 /***************************************************************************************************************************************************************
  *
- * A default implementation of {@link MutableLocalizedDisplayable} starting which a single display name in
+ * A default implementation of {@link MutableDisplayable} starting which a single display name in
  * {@code Locale.ENGLISH} language.
  *
  * This is no more a public class; use
@@ -47,7 +47,7 @@ import it.tidalwave.ui.core.role.MutableLocalizedDisplayable;
  * @it.tidalwave.javadoc.stable
  *
  **************************************************************************************************************************************************************/
-public class DefaultMutableDisplayable implements MutableLocalizedDisplayable
+public class DefaultMutableDisplayable implements MutableDisplayable
   {
     // private static final long serialVersionUID = 45345436345634734L;
 

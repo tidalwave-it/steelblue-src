@@ -26,7 +26,6 @@
 package it.tidalwave.ui.core.role;
 
 import jakarta.annotation.Nonnull;
-import java.beans.PropertyChangeListener;
 import java.util.Locale;
 import java.util.Map;
 import it.tidalwave.ui.core.role.impl.DefaultMutableDisplayable;

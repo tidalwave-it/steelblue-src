@@ -42,18 +42,16 @@ ${project.description}
 TBD
 
 
-#[[####]]# Displayable, LocalizedDisplayable
+#[[####]]# Displayable
 
 ![UML](apidocs/it/tidalwave/ui/core/role/Displayable.svg)
-![UML](apidocs/it/tidalwave/ui/core/role/LocalizedDisplayable.svg)
 
 This role models something that can be displayed as a text.
 
 
-#[[####]]# MutableDisplayable, MutableLocalizedDisplayable
+#[[####]]# MutableDisplayable
 
 ![UML](apidocs/it/tidalwave/ui/core/role/MutableDisplayable.svg)
-![UML](apidocs/it/tidalwave/ui/core/role/MutableLocalizedDisplayable.svg)
 
 This is mutable a variant of `Displayable`, that is the related property can be changed and change listeners are supported.
 

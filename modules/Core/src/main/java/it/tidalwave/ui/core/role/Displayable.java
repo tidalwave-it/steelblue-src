@@ -27,6 +27,10 @@ package it.tidalwave.ui.core.role;
 
 import jakarta.annotation.Nonnull;
 import java.util.Comparator;
+import java.util.Locale;
+import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -64,6 +68,40 @@ public interface Displayable
      **********************************************************************************************************************************************************/
     @Nonnull
     public String getDisplayName();
+
+    /***********************************************************************************************************************************************************
+     * Returns the display name in the given {@link Locale}.
+     * @param    locale       the {@code Locale}
+     * @since                 2.0-ALPHA-2
+     * @return                the display name
+     **********************************************************************************************************************************************************/
+    @Nonnull
+    public default String getDisplayName (@Nonnull final Locale locale)
+      {
+        return getDisplayName();
+      }
+
+    /***********************************************************************************************************************************************************
+     * Returns all the display names in {@link Map} where they are indexed by {@code Locale}.
+     * @since                 2.0-ALPHA-2
+     * @return                the display names
+     **********************************************************************************************************************************************************/
+    @Nonnull
+    public default Map<Locale, String> getDisplayNames()
+      {
+        return Map.of();
+      }
+
+    /***********************************************************************************************************************************************************
+     * Returns the supported {@code Locale}s.
+     * @since                 2.0-ALPHA-2
+     * @return                the available {@code Locale}s
+     **********************************************************************************************************************************************************/
+    @Nonnull
+    public default SortedSet<Locale> getLocales()
+      {
+        return new TreeSet<>();
+      }
 
     /***********************************************************************************************************************************************************
      * Sends the display name in the current {@link java.util.Locale} to a given customer.
@@ -137,16 +175,15 @@ public interface Displayable
       }
 
     /***********************************************************************************************************************************************************
-     * Creates a {@link LocalizedDisplayable} from a resource bundle. The bundle resource file is named
-     * {@code Bundle.properties} and it should be placed in the same package as the owner class.
-     *
+     * Creates a {@link Displayable} from a resource bundle. The bundle resource file is named {@code Bundle.properties} and it should be placed in the same
+     * package as the owner class.
      * @param   ownerClass    the class that owns the bundle
      * @param   key           the resource key
+     * @since                 2.0-ALPHA-2
      * @return                the new instance
-     * @since                 3.2-ALPHA-1 (was previously in {@code Displayable8}
      **********************************************************************************************************************************************************/
     @Nonnull
-    public static LocalizedDisplayable fromBundle (@Nonnull final Class<?> ownerClass, @Nonnull final String key)
+    public static Displayable fromBundle (@Nonnull final Class<?> ownerClass, @Nonnull final String key)
       {
         return new DefaultDisplayable(getMessage(ownerClass, key));
       }

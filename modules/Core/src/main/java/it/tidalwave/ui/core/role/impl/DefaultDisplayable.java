@@ -33,21 +33,19 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.io.Serializable;
-import it.tidalwave.ui.core.role.LocalizedDisplayable;
+import it.tidalwave.ui.core.role.Displayable;
 
 /***************************************************************************************************************************************************************
  *
- * A default implementation of {@link LocalizedDisplayable} which a single, immutable display name in
- * {@code Locale.ENGLISH} language.
+ * A default implementation of {@link Displayable} which a single, immutable display name in {@code Locale.ENGLISH} language.
  *
- * This is no more a public class; use {@link it.tidalwave.ui.core.role.Displayable#of(String)} or
- * {@link LocalizedDisplayable#fromBundle(Class, String)}}
+ * This is no more a public class; use {@link it.tidalwave.ui.core.role.Displayable#of(String)} or {@link Displayable#fromBundle(Class, String)}}
  *
  * @author Fabrizio Giudici
  * @it.tidalwave.javadoc.stable
  *
  **************************************************************************************************************************************************************/
-public class DefaultDisplayable implements LocalizedDisplayable, Serializable
+public class DefaultDisplayable implements Displayable, Serializable
   {
     private static final long serialVersionUID = 45345436345634734L;
 
