@@ -26,35 +26,15 @@
 package it.tidalwave.ui.javafx.impl;
 
 import jakarta.annotation.Nonnull;
-import java.util.Collection;
-import java.util.List;
 import java.util.concurrent.Executor;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.Property;
-import javafx.geometry.HPos;
-import javafx.geometry.VPos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBase;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
 import javafx.stage.Window;
 import javafx.application.Platform;
-import it.tidalwave.role.SimpleComposite;
 import it.tidalwave.ui.core.BoundProperty;
-import it.tidalwave.ui.core.role.Displayable;
-import it.tidalwave.ui.core.role.PresentationModel;
-import it.tidalwave.ui.core.role.Styleable;
-import it.tidalwave.ui.core.role.UserAction;
-import it.tidalwave.ui.core.role.UserActionProvider;
 import it.tidalwave.ui.javafx.JavaFXBinder;
+import it.tidalwave.ui.javafx.impl.button.ButtonBindings;
 import it.tidalwave.ui.javafx.impl.combobox.ComboBoxBindings;
 import it.tidalwave.ui.javafx.impl.common.CellBinder;
 import it.tidalwave.ui.javafx.impl.common.DefaultCellBinder;
@@ -65,15 +45,9 @@ import it.tidalwave.ui.javafx.impl.list.ListViewBindings;
 import it.tidalwave.ui.javafx.impl.tableview.TableViewBindings;
 import it.tidalwave.ui.javafx.impl.tree.TreeViewBindings;
 import it.tidalwave.ui.javafx.impl.treetable.TreeTableViewBindings;
-import it.tidalwave.util.As;
 import lombok.experimental.Delegate;
 import lombok.extern.slf4j.Slf4j;
-import static java.util.Collections.emptyList;
 import static java.util.Objects.requireNonNull;
-import static java.util.stream.Collectors.*;
-import static it.tidalwave.ui.core.role.Displayable._Displayable_;
-import static it.tidalwave.ui.core.role.Styleable._Styleable_;
-import static it.tidalwave.ui.core.role.UserActionProvider._UserActionProvider_;
 
 /***************************************************************************************************************************************************************
  *
@@ -83,11 +57,12 @@ import static it.tidalwave.ui.core.role.UserActionProvider._UserActionProvider_;
 @Slf4j
 public class DefaultJavaFXBinder implements JavaFXBinder
   {
-    private static final As.Type<SimpleComposite<PresentationModel>>  _SimpleCompositePresentationModel_ = new As.Type<>(SimpleComposite.class);
-
     private final Executor executor;
 
     private final String invalidTextFieldStyle = "-fx-background-color: pink";
+
+    @Delegate
+    private final ButtonBindings buttonBindings;
 
     @Delegate
     private final TreeViewBindings treeItemBindings;
@@ -119,6 +94,7 @@ public class DefaultJavaFXBinder implements JavaFXBinder
       {
         this.executor = executor;
         cellBinder = new DefaultCellBinder(executor);
+        buttonBindings = new ButtonBindings(executor);
         comboBoxBindings = new ComboBoxBindings(executor, cellBinder);
         treeItemBindings = new TreeViewBindings(executor, cellBinder);
         tableViewBindings = new TableViewBindings(executor, cellBinder);
@@ -144,33 +120,7 @@ public class DefaultJavaFXBinder implements JavaFXBinder
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
     @Override
-    public void bind (@Nonnull final ButtonBase button, @Nonnull final UserAction action)
-      {
-        enforceFxApplicationThread();
-        action.maybeAs(_Displayable_).ifPresent(d -> button.setText(d.getDisplayName()));
-        button.setOnAction(__ -> executor.execute(action::actionPerformed));
-        bindEnableProperty(button.disableProperty(), action.enabled());
-      }
-
-    /***********************************************************************************************************************************************************
-     * {@inheritDoc}
-     **********************************************************************************************************************************************************/
-    @Override
-    public void bind (@Nonnull final MenuItem menuItem, @Nonnull final UserAction action)
-      {
-        enforceFxApplicationThread();
-        menuItem.setText(action.maybeAs(_Displayable_).map(Displayable::getDisplayName).orElse(""));
-        menuItem.setOnAction(__ -> executor.execute(action::actionPerformed));
-        bindEnableProperty(menuItem.disableProperty(), action.enabled());
-      }
-
-    /***********************************************************************************************************************************************************
-     * {@inheritDoc}
-     **********************************************************************************************************************************************************/
-    @Override
-    public <T, S> void bind (@Nonnull final BoundProperty<? super T> target,
-                             @Nonnull final Property<? extends S> source,
-                             @Nonnull final Function<S, T> adapter)
+    public <T, S> void bind (@Nonnull final BoundProperty<? super T> target, @Nonnull final Property<? extends S> source, @Nonnull final Function<S, T> adapter)
       {
         enforceFxApplicationThread();
         source.addListener((_1, _2, newValue) -> executor.execute(() -> target.set(adapter.apply(newValue))));
@@ -210,85 +160,6 @@ public class DefaultJavaFXBinder implements JavaFXBinder
       }
 
     /***********************************************************************************************************************************************************
-     * {@inheritDoc}
-     **********************************************************************************************************************************************************/
-    @Override
-    public void bindToggleButtons (@Nonnull final Pane pane, @Nonnull final PresentationModel pm)
-      {
-        enforceFxApplicationThread();
-        final var group = new ToggleGroup();
-        final var children = pane.getChildren();
-        final var prototypeStyleClass = children.get(0).getStyleClass();
-        final SimpleComposite<PresentationModel> pmc = pm.as(_SimpleCompositePresentationModel_);
-        children.setAll(pmc.findChildren().stream().map(cpm -> createToggleButton(cpm, prototypeStyleClass, group)).collect(toList()));
-      }
-
-    /***********************************************************************************************************************************************************
-     *
-     **********************************************************************************************************************************************************/
-    @Override
-    public void bindButtonsInPane (@Nonnull final GridPane gridPane, @Nonnull final Collection<UserAction> actions)
-      {
-        enforceFxApplicationThread();
-        final var columnConstraints = gridPane.getColumnConstraints();
-        final var children = gridPane.getChildren();
-
-        columnConstraints.clear();
-        children.clear();
-        final var columnIndex = new AtomicInteger(0);
-
-        actions.forEach(menuAction ->
-          {
-            final var column = new ColumnConstraints();
-            column.setPercentWidth(100.0 / actions.size());
-            columnConstraints.add(column);
-            final var button = createButton();
-            GridPane.setConstraints(button, columnIndex.getAndIncrement(), 0);
-            bind(button, menuAction);
-            children.add(button);
-          });
-      }
-
-    /***********************************************************************************************************************************************************
-     * {@return a new {@code Button}} for the menu bar.
-     **********************************************************************************************************************************************************/
-    @Nonnull
-    private Button createButton()
-      {
-        final var button = new Button();
-        GridPane.setHgrow(button, Priority.ALWAYS);
-        GridPane.setVgrow(button, Priority.ALWAYS);
-        GridPane.setHalignment(button, HPos.CENTER);
-        GridPane.setValignment(button, VPos.CENTER);
-        button.setPrefSize(999, 999); // fill
-        button.getStyleClass().add("mainMenuButton");
-
-        return button;
-      }
-
-    /***********************************************************************************************************************************************************
-     *
-     **********************************************************************************************************************************************************/
-    @Nonnull
-    private ToggleButton createToggleButton (@Nonnull final PresentationModel pm, @Nonnull final List<String> baseStyleClass, @Nonnull final ToggleGroup group)
-      {
-        final var button = new ToggleButton();
-        button.setToggleGroup(group);
-        button.setText(pm.maybeAs(_Displayable_).map(Displayable::getDisplayName).orElse(""));
-        button.getStyleClass().addAll(baseStyleClass);
-        button.getStyleClass().addAll(pm.maybeAs(_Styleable_).map(Styleable::getStyles).orElse(emptyList()));
-        pm.maybeAs(_UserActionProvider_).flatMap(UserActionProvider::getOptionalDefaultAction)
-                                        .ifPresent(action -> bind(button, action));
-
-        if (group.getSelectedToggle() == null)
-          {
-            group.selectToggle(button);
-          }
-
-        return button;
-      }
-
-    /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
     public static void enforceFxApplicationThread()
@@ -297,15 +168,5 @@ public class DefaultJavaFXBinder implements JavaFXBinder
           {
             throw new IllegalStateException("Must run in the JavaFX Application Thread");
           }
-      }
-
-    /***********************************************************************************************************************************************************
-     *
-     **********************************************************************************************************************************************************/
-    private void bindEnableProperty (@Nonnull final BooleanProperty property1, @Nonnull final BoundProperty<Boolean> property2)
-      {
-        property1.setValue(!property2.get());
-        property1.addListener((_1, _2, newValue) -> executor.execute(() -> property2.set(!newValue)));
-        property2.addPropertyChangeListener(evt -> Platform.runLater(() -> property1.setValue(!(boolean)evt.getNewValue())));
       }
   }

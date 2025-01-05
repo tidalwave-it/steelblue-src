@@ -23,7 +23,7 @@
  *
  * *************************************************************************************************************************************************************
  */
-package it.tidalwave.ui.javafx.impl;
+package it.tidalwave.ui.javafx.impl.button;
 
 import jakarta.annotation.Nonnull;
 import java.util.List;
@@ -38,6 +38,8 @@ import javafx.stage.Stage;
 import javafx.application.Platform;
 import it.tidalwave.ui.core.role.Displayable;
 import it.tidalwave.ui.core.role.UserAction;
+import it.tidalwave.ui.javafx.impl.DefaultJavaFXBinder;
+import it.tidalwave.ui.javafx.impl.TestNGApplicationTest;
 import it.tidalwave.util.Callback;
 import it.tidalwave.role.spi.SystemRoleFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -62,7 +64,7 @@ import static org.mockito.Mockito.*;
  *
  **************************************************************************************************************************************************************/
 @Test(groups = "no-ci") @Slf4j
-public class DefaultJavaFXBinderTest extends TestNGApplicationTest
+public class ButtonBindingsTest extends TestNGApplicationTest
   {
     private Button button;
 

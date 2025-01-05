@@ -41,7 +41,7 @@ import org.testng.annotations.BeforeMethod;
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-abstract class TestNGApplicationTest extends FxRobot implements ApplicationFixture
+public abstract class TestNGApplicationTest extends FxRobot implements ApplicationFixture
   {
     public static Application launch(Class<? extends Application> appClass, String... appArgs)
             throws Exception
