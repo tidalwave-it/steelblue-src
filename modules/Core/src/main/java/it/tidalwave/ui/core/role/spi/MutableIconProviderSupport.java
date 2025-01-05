@@ -25,11 +25,11 @@
  */
 package it.tidalwave.ui.core.role.spi;
 
-import jakarta.annotation.Nonnull;
-import java.beans.PropertyChangeListener;
+import jakarta.annotation.Nonnull;;
 import java.beans.PropertyChangeSupport;
 import javax.swing.Icon;
 import it.tidalwave.ui.core.role.MutableIconProvider;
+import lombok.experimental.Delegate;
 
 /***************************************************************************************************************************************************************
  *
@@ -37,30 +37,12 @@ import it.tidalwave.ui.core.role.MutableIconProvider;
  *
  * @since   2.0-ALPHA-1
  * @author  Fabrizio Giudici
- * @it.tidalwave.javadoc.draft
  *
  **************************************************************************************************************************************************************/
 public abstract class MutableIconProviderSupport implements MutableIconProvider
   {
+    @Delegate
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-
-    /***********************************************************************************************************************************************************
-     * {@inheritDoc}
-     **********************************************************************************************************************************************************/
-    @Override
-    public void addPropertyChangeListener (@Nonnull final PropertyChangeListener listener)
-      {
-        pcs.addPropertyChangeListener(listener);
-      }
-
-    /***********************************************************************************************************************************************************
-     * {@inheritDoc}
-     **********************************************************************************************************************************************************/
-    @Override
-    public void removePropertyChangeListener (@Nonnull final PropertyChangeListener listener)
-      {
-        pcs.removePropertyChangeListener(listener);
-      }
 
     /***********************************************************************************************************************************************************
      * {@inheritDoc}

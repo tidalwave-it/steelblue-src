@@ -26,7 +26,6 @@
 package it.tidalwave.ui.core.role.impl;
 
 import jakarta.annotation.Nonnull;
-import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.Collections;
 import java.util.HashMap;
@@ -35,6 +34,7 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import it.tidalwave.ui.core.role.MutableDisplayable;
+import lombok.experimental.Delegate;
 
 /***************************************************************************************************************************************************************
  *
@@ -55,8 +55,9 @@ public class DefaultMutableDisplayable implements MutableDisplayable
     private final String toStringName;
 
     @Nonnull
-    private  final Map<Locale, String> displayNameMap = new HashMap<>();
+    private final Map<Locale, String> displayNameMap = new HashMap<>();
 
+    @Delegate
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
     private final Locale defaultLocale = Locale.ENGLISH;
@@ -151,24 +152,6 @@ public class DefaultMutableDisplayable implements MutableDisplayable
         final Map<Locale, String> oldDisplayNameMap = new HashMap<>(displayNameMap);
         displayNameMap.putAll(displayNames);
         pcs.firePropertyChange(PROP_DISPLAY_NAMES, oldDisplayNameMap, displayNameMap);
-      }
-
-    /***********************************************************************************************************************************************************
-     * {@inheritDoc}
-     **********************************************************************************************************************************************************/
-    @Override
-    public void addPropertyChangeListener (@Nonnull final PropertyChangeListener listener)
-      {
-        pcs.addPropertyChangeListener(listener);
-      }
-
-    /***********************************************************************************************************************************************************
-     * {@inheritDoc}
-     **********************************************************************************************************************************************************/
-    @Override
-    public void removePropertyChangeListener (@Nonnull final PropertyChangeListener listener)
-      {
-        pcs.removePropertyChangeListener(listener);
       }
 
     /***********************************************************************************************************************************************************
