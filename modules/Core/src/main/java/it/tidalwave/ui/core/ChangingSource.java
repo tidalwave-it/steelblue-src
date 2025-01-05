@@ -34,14 +34,10 @@ import java.beans.PropertyChangeListener;
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-public interface ChangingSource<T>
+public interface ChangingSource<T> extends Mutable
   {
     @Nonnull
     public PropertyChangeListener[] getPropertyChangeListeners();
-
-    public void addPropertyChangeListener (@Nonnull PropertyChangeListener listener);
-
-    public void removePropertyChangeListener (@Nonnull PropertyChangeListener listener);
 
     /***********************************************************************************************************************************************************
      * Removes all the bindings of this object.

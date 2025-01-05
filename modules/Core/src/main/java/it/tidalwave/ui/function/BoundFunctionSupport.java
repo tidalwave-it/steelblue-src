@@ -26,6 +26,7 @@
 package it.tidalwave.ui.function;
 
 import java.beans.PropertyChangeSupport;
+import it.tidalwave.ui.core.role.impl.MutableListenerSupport;
 import lombok.experimental.Delegate;
 
 /***************************************************************************************************************************************************************
@@ -39,6 +40,9 @@ public abstract class BoundFunctionSupport<DOMAIN_TYPE, CODOMAIN_TYPE>
   {
     @Delegate // FIXME: weak
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+
+    @Delegate
+    private final MutableListenerSupport mls = new MutableListenerSupport(pcs);
 
     /***********************************************************************************************************************************************************
      * {@inheritDoc}

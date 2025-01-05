@@ -26,9 +26,9 @@
 package it.tidalwave.ui.core.role;
 
 import jakarta.annotation.Nonnull;
-import java.beans.PropertyChangeListener;
 import java.util.Locale;
 import java.util.Map;
+import it.tidalwave.ui.core.Mutable;
 import it.tidalwave.ui.core.role.impl.DefaultMutableDisplayable;
 
 /***************************************************************************************************************************************************************
@@ -43,7 +43,7 @@ import it.tidalwave.ui.core.role.impl.DefaultMutableDisplayable;
  * @it.tidalwave.javadoc.stable
  *
  **************************************************************************************************************************************************************/
-public interface MutableDisplayable extends Displayable
+public interface MutableDisplayable extends Displayable, Mutable
   {
     public static final Class<MutableDisplayable> _MutableDisplayable_ = MutableDisplayable.class;
 
@@ -74,20 +74,6 @@ public interface MutableDisplayable extends Displayable
      * @param  displayNames  the display names
      **********************************************************************************************************************************************************/
     public void setDisplayNames (@Nonnull Map<Locale, String> displayNames);
-
-    /***********************************************************************************************************************************************************
-     * Registers a {@link PropertyChangeListener}.
-     *
-     * @param  listener   the listener
-     **********************************************************************************************************************************************************/
-    public void addPropertyChangeListener (@Nonnull PropertyChangeListener listener);
-
-    /***********************************************************************************************************************************************************
-     * Unregisters a {@link PropertyChangeListener}.
-     *
-     * @param  listener   the listener
-     **********************************************************************************************************************************************************/
-    public void removePropertyChangeListener (@Nonnull PropertyChangeListener listener);
 
     /***********************************************************************************************************************************************************
      * Creates an instance with an initial given display name in {@code Locale.ENGLISH}.

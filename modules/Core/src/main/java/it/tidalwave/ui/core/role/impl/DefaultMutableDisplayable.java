@@ -60,6 +60,9 @@ public class DefaultMutableDisplayable implements MutableDisplayable
     @Delegate
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
+    @Delegate
+    private final MutableListenerSupport mls = new MutableListenerSupport(pcs);
+
     private final Locale defaultLocale = Locale.ENGLISH;
 
     /***********************************************************************************************************************************************************

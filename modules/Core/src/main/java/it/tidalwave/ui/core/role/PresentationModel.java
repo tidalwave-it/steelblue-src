@@ -26,13 +26,13 @@
 package it.tidalwave.ui.core.role;
 
 import jakarta.annotation.Nonnull;
-import java.beans.PropertyChangeListener;
 import java.util.Collection;
 import java.util.Collections;
 import it.tidalwave.util.As;
 import it.tidalwave.util.NamedCallback;
 import it.tidalwave.util.Parameters;
 import it.tidalwave.role.SimpleComposite;
+import it.tidalwave.ui.core.Mutable;
 import it.tidalwave.ui.core.role.impl.DefaultPresentationModel;
 import org.apiguardian.api.API;
 import static it.tidalwave.util.Parameters.r;
@@ -49,7 +49,7 @@ import static org.apiguardian.api.API.Status.EXPERIMENTAL;
  * @author      Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-public interface PresentationModel extends As
+public interface PresentationModel extends As, Mutable
   {
     public static final Class<PresentationModel> _PresentationModel_ = PresentationModel.class;
 
@@ -65,54 +65,6 @@ public interface PresentationModel extends As
      * Disposes this object.
      **********************************************************************************************************************************************************/
     public void dispose();
-
-    /***********************************************************************************************************************************************************
-     * Adds a {@link PropertyChangeListener}.
-     * @param listener    the listener
-     **********************************************************************************************************************************************************/
-    public void addPropertyChangeListener (@Nonnull PropertyChangeListener listener);
-
-    /***********************************************************************************************************************************************************
-     * Adds a {@link PropertyChangeListener} for the given property.
-     * @param propertyName  the name of the property
-     * @param listener      the listener
-     **********************************************************************************************************************************************************/
-    public void addPropertyChangeListener (@Nonnull String propertyName, @Nonnull PropertyChangeListener listener);
-
-    /***********************************************************************************************************************************************************
-     * Removes a {@link PropertyChangeListener}.
-     * @param listener    the listener
-     **********************************************************************************************************************************************************/
-    public void removePropertyChangeListener (@Nonnull PropertyChangeListener listener);
-
-    /***********************************************************************************************************************************************************
-     * Removes a {@link PropertyChangeListener} for the given property.
-     * @param propertyName  the name of the property
-     * @param listener      the listener
-     **********************************************************************************************************************************************************/
-    public void removePropertyChangeListener (@Nonnull String propertyName, @Nonnull PropertyChangeListener listener);
-
-    /***********************************************************************************************************************************************************
-     * Checks whether the given property has been bound to listeners.
-     * @param propertyName  the name of the property
-     * @return              {@code true} if the property is bound
-     **********************************************************************************************************************************************************/
-    public boolean hasListeners (@Nonnull String propertyName);
-
-    /***********************************************************************************************************************************************************
-     * Returns all the bound {@link PropertyChangeListener}s.
-     * @return              the listeners
-     **********************************************************************************************************************************************************/
-    @Nonnull
-    public PropertyChangeListener[] getPropertyChangeListeners();
-
-    /***********************************************************************************************************************************************************
-     * Returns the bound {@link PropertyChangeListener}s for the given property.
-     * @param propertyName  the name of the property
-     * @return              the listeners
-     **********************************************************************************************************************************************************/
-    @Nonnull
-    public PropertyChangeListener[] getPropertyChangeListeners (@Nonnull String propertyName);
 
     /***********************************************************************************************************************************************************
      * {@return a new instance given an owner and no roles}.

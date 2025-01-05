@@ -45,7 +45,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-@ToString(exclude = {"as", "pcs"}) @Slf4j
+@ToString(exclude = {"as", "pcs", "mls"}) @Slf4j
 public class DefaultPresentationModel implements PresentationModel
   {
     @Nonnull
@@ -53,6 +53,9 @@ public class DefaultPresentationModel implements PresentationModel
 
     @Delegate
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+
+    @Delegate
+    private final MutableListenerSupport mls = new MutableListenerSupport(pcs);
 
     private final As as;
 
@@ -148,6 +151,7 @@ public class DefaultPresentationModel implements PresentationModel
             pcs.removePropertyChangeListener(listener);
           }
 
+        mls.removeAllListeners();
         asMany(NamedCallback.class).stream()
                                    .filter(c -> c.getName().equals(CALLBACK_DISPOSE))
                                    .forEach(callback -> wrap(callback, "While calling 'dispose' callbacks"));

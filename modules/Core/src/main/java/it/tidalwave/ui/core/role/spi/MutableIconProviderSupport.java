@@ -25,8 +25,9 @@
  */
 package it.tidalwave.ui.core.role.spi;
 
-import jakarta.annotation.Nonnull;;
+import jakarta.annotation.Nonnull;
 import java.beans.PropertyChangeSupport;
+import it.tidalwave.ui.core.role.impl.MutableListenerSupport;
 import javax.swing.Icon;
 import it.tidalwave.ui.core.role.MutableIconProvider;
 import lombok.experimental.Delegate;
@@ -43,6 +44,9 @@ public abstract class MutableIconProviderSupport implements MutableIconProvider
   {
     @Delegate
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+
+    @Delegate
+    private final MutableListenerSupport mls = new MutableListenerSupport(pcs);
 
     /***********************************************************************************************************************************************************
      * {@inheritDoc}

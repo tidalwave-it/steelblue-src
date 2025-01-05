@@ -28,6 +28,7 @@ package it.tidalwave.ui.core;
 import jakarta.annotation.Nonnull;
 import java.beans.PropertyChangeSupport;
 import it.tidalwave.ui.core.role.Changeable;
+import it.tidalwave.ui.core.role.impl.MutableListenerSupport;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -41,11 +42,14 @@ import lombok.experimental.Delegate;
  *
  **************************************************************************************************************************************************************/
 // FIXME: weak listeners
-@AllArgsConstructor @NoArgsConstructor @EqualsAndHashCode(exclude="pcs") @ToString(exclude="pcs")
+@AllArgsConstructor @NoArgsConstructor @EqualsAndHashCode(exclude={"pcs", "mls"}) @ToString(exclude={"pcs", "mls"})
 public class BoundProperty<T> implements ChangingSource<T>, Changeable<T>
   {
     @Delegate
     private final transient PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+
+    @Delegate
+    private final transient MutableListenerSupport mls = new MutableListenerSupport(pcs);
 
     public static final String PROP_VALUE = "value";
 
@@ -115,5 +119,7 @@ public class BoundProperty<T> implements ChangingSource<T>, Changeable<T>
           {
             pcs.removePropertyChangeListener(listener);
           }
+
+        mls.removeAllListeners();
       }
   }

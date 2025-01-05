@@ -26,7 +26,7 @@
 package it.tidalwave.ui.core.role;
 
 import jakarta.annotation.Nonnull;
-import java.beans.PropertyChangeListener;
+import it.tidalwave.ui.core.Mutable;
 import javax.swing.Icon;
 
 /***************************************************************************************************************************************************************
@@ -40,7 +40,7 @@ import javax.swing.Icon;
  * @it.tidalwave.javadoc.draft
  *
  **************************************************************************************************************************************************************/
-public interface MutableIconProvider extends IconProvider
+public interface MutableIconProvider extends IconProvider, Mutable
   {
     public static final Class<MutableIconProvider> _MutableIconProvider_ = MutableIconProvider.class;
 
@@ -56,18 +56,4 @@ public interface MutableIconProvider extends IconProvider
      **********************************************************************************************************************************************************/
     @SuppressWarnings("EmptyMethod")
     public void setIcon (@Nonnull Icon icon);
-
-    /***********************************************************************************************************************************************************
-     * Registers a {@link PropertyChangeListener}.
-     *
-     * @param  listener   the listener
-     **********************************************************************************************************************************************************/
-    public void addPropertyChangeListener (@Nonnull PropertyChangeListener listener);
-
-    /***********************************************************************************************************************************************************
-     * Unregisters a {@link PropertyChangeListener}.
-     *
-     * @param  listener   the listener
-     **********************************************************************************************************************************************************/
-    public void removePropertyChangeListener (@Nonnull PropertyChangeListener listener);
   }
