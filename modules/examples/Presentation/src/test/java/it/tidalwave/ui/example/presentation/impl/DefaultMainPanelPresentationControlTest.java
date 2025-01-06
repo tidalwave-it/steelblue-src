@@ -41,11 +41,9 @@ import it.tidalwave.ui.example.model.FileEntity;
 import it.tidalwave.ui.example.model.SimpleDciEntity;
 import it.tidalwave.ui.example.model.SimpleEntity;
 import it.tidalwave.ui.example.presentation.MainPanelPresentation;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.mockito.ArgumentMatcher;
+import org.mockito.ArgumentCaptor;
 import static it.tidalwave.util.FunctionalCheckedExceptionWrappers.*;
 import static it.tidalwave.util.ui.UserNotificationWithFeedbackTestHelper.*;
 import static it.tidalwave.ui.core.role.Displayable._Displayable_;
@@ -63,19 +61,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
  **************************************************************************************************************************************************************/
 public class DefaultMainPanelPresentationControlTest
   {
-    @Getter @RequiredArgsConstructor
-    static class CapturerMatcher<T> implements ArgumentMatcher<T>
-      {
-        private T captured;
-
-        @Override
-        public boolean matches (final T t)
-          {
-            captured = t;
-            return true;
-          }
-      }
-
     private static final As.Type<Aggregate<PresentationModel>> _PresentationModelAggregate_ = new As.Type<>(Aggregate.class);
 
     private static final As.Type<SimpleComposite<PresentationModel>> _PresentationModelComposite_ = new As.Type<>(SimpleComposite.class);
@@ -95,11 +80,11 @@ public class DefaultMainPanelPresentationControlTest
         dao = mock(Dao.class);
         presentation = mock(MainPanelPresentation.class);
         // A capturer matcher intercepts the method call and stores the argument for later retrieval, by calling getCapture().
-        final var captureBindings = new CapturerMatcher<MainPanelPresentation.Bindings>();
+        final var captureBindings = ArgumentCaptor.forClass(MainPanelPresentation.Bindings.class);
         underTest = new DefaultMainPanelPresentationControl(dao, presentation);
         underTest.initialize();
-        verify(presentation).bind(argThat(captureBindings));
-        bindings = captureBindings.getCaptured();
+        verify(presentation).bind(captureBindings.capture());
+        bindings = captureBindings.getValue();
       }
     // END SNIPPET: mocks
 
@@ -262,22 +247,22 @@ public class DefaultMainPanelPresentationControlTest
         verify(dao).getDciEntities();
         verify(dao).getFiles();
         verifyNoMoreInteractions(dao);
-        final var cpm1 = new CapturerMatcher<PresentationModel>();
-        final var cpm2 = new CapturerMatcher<PresentationModel>();
-        final var cpm3 = new CapturerMatcher<PresentationModel>();
-        verify(presentation).populate(argThat(cpm1), argThat(cpm2), argThat(cpm3));
+        final var cpm1 = ArgumentCaptor.forClass(PresentationModel.class);
+        final var cpm2 = ArgumentCaptor.forClass(PresentationModel.class);
+        final var cpm3 = ArgumentCaptor.forClass(PresentationModel.class);
+        verify(presentation).populate(cpm1.capture(), cpm2.capture(), cpm3.capture());
 
-        final var pmList1 = toPmList(cpm1.getCaptured());
+        final var pmList1 = toPmList(cpm1.getValue());
         assertThat(pmList1.size(), is(1));
         pmList1.forEach(pm -> assertPresentationModel(pm, "Item #simple entity", "SimpleEntity(simple entity)"));
 
-        final var pmList2 = toPmList(cpm2.getCaptured());
+        final var pmList2 = toPmList(cpm2.getValue());
         assertThat(pmList2.size(), is(1));
         pmList2.forEach(pm ->
           {
             assertPresentationModel(pm, simpleDciEntity.getName(), simpleDciEntity.toString());
 
-            final Aggregate<PresentationModel> aggregate = pm.as(_PresentationModelAggregate_);
+            final var aggregate = pm.as(_PresentationModelAggregate_);
             assertThat(aggregate.getNames(), is(Set.of("C1", "C2", "C3")));
             final var pmc1 = aggregate.getByName("C1").orElseThrow();
             final var pmc2 = aggregate.getByName("C2").orElseThrow();
@@ -287,7 +272,7 @@ public class DefaultMainPanelPresentationControlTest
             assertThat(pmc3.as(_Displayable_).getDisplayName(), is("" + simpleDciEntity.getAttribute2()));
           });
 
-        final var pmList3 = toPmList(cpm3.getCaptured());
+        final var pmList3 = toPmList(cpm3.getValue());
         assertThat(pmList3.size(), is(1));
         pmList3.forEach(_c(pm ->
           {
