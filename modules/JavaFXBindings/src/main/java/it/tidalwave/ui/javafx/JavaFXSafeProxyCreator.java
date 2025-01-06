@@ -44,6 +44,7 @@ import it.tidalwave.ui.javafx.impl.DefaultJavaFXToolBarControl;
 import it.tidalwave.ui.javafx.impl.util.JavaFXSafeProxy;
 import it.tidalwave.util.PreferencesHandler;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 /***************************************************************************************************************************************************************
@@ -145,6 +146,9 @@ public class JavaFXSafeProxyCreator
 
     @Getter
     private static final JavaFXMenuBarControl menuBarControl = new DefaultJavaFXMenuBarControl();
+
+    @Getter @Setter
+    private static boolean logDelegateInvocations = false;
 
     static
       {
@@ -261,6 +265,6 @@ public class JavaFXSafeProxyCreator
     @Nonnull
     public static <T> T createSafeProxy (@Nonnull final T target, final Class<?>[] interfaces)
       {
-        return (T)Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), interfaces, new JavaFXSafeProxy<>(target));
+        return (T)Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), interfaces, new JavaFXSafeProxy<>(target, logDelegateInvocations));
       }
   }

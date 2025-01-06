@@ -73,6 +73,9 @@ public abstract class JavaFXApplicationWithSplash extends Application
     /** The minimum duration of the splash screen. */
     public static final Key<Duration> K_MIN_SPLASH_DURATION = Key.of(K_BASE_NAME + ".minSplashDuration", Duration.class);
 
+    /** Whether invocations to presentation delegate methods should be logged at debug level. */
+    public static final Key<Boolean> K_LOG_DELEGATE_INVOCATIONS = Key.of(K_BASE_NAME + ".logDelegateInvocations", Boolean.class);
+
     private static final String DEFAULT_APPLICATION_FXML = "Application.fxml";
 
     private static final String DEFAULT_SPLASH_FXML = "Splash.fxml";

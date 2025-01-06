@@ -124,7 +124,7 @@ public final class JavaFXSafeComponentBuilder<I, T extends I>
 
             presentation = (T)Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(),
                                                      new Class[] { interfaceClass },
-                                                     new JavaFXSafeProxy<>(presentation));
+                                                     new JavaFXSafeProxy<>(presentation, JavaFXSafeProxyCreator.isLogDelegateInvocations()));
             presentationRef = new WeakReference<>(presentation);
           }
 

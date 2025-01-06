@@ -138,6 +138,7 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
             final var preferencesHandler = PreferencesHandler.getInstance();
             initParameters.propertyMap.forEach(preferencesHandler::setProperty);
             System.setProperty(initParameters.logFolderPropertyName, preferencesHandler.getLogFolder().toAbsolutePath().toString());
+            JavaFXSafeProxyCreator.setLogDelegateInvocations(initParameters.propertyMap.getOptional(K_LOG_DELEGATE_INVOCATIONS).orElse(false));
             Application.launch(appClass, initParameters.args);
           }
         catch (Throwable t)

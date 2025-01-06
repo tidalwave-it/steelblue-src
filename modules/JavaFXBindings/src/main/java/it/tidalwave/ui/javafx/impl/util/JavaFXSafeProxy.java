@@ -32,6 +32,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
 import javafx.application.Platform;
 import it.tidalwave.ui.javafx.JavaFXSafeProxyCreator;
+import org.slf4j.LoggerFactory;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -56,6 +57,8 @@ public class JavaFXSafeProxy<T> implements InvocationHandler
     @Nonnull @Getter @Setter
     private T delegate;
 
+    private final boolean logDelegateInvocations;
+
     @Override
     public Object invoke (@Nonnull final Object proxy, @Nonnull final Method method, @Nonnull final Object[] args)
       throws Throwable
@@ -68,7 +71,11 @@ public class JavaFXSafeProxy<T> implements InvocationHandler
           {
             try
               {
-                log.trace(">>>> safely invoking {}", method);
+                if (logDelegateInvocations)
+                  {
+                    logInvocation(delegate.getClass(), method, args);
+                  }
+
                 result.set(method.invoke(delegate, args));
               }
             catch (Throwable t)
@@ -93,5 +100,32 @@ public class JavaFXSafeProxy<T> implements InvocationHandler
 
         return method.getReturnType().equals(void.class) ? null : result.get();
       }
+
+    /***********************************************************************************************************************************************************
+     *
+     **********************************************************************************************************************************************************/
+    private static void logInvocation (@Nonnull final Class<?> clazz, @Nonnull final Method method, @Nonnull final Object[] args)
+      {
+        final var logger = LoggerFactory.getLogger(clazz);
+
+        if (logger.isDebugEnabled())
+          {
+            final var builder = new StringBuilder();
+            builder.append(method.getName());
+            builder.append("(");
+            var separator = "";
+
+            for (final Object arg : args)
+              {
+                builder.append(separator);
+                builder.append(arg != null ? arg.toString() : null);
+                separator = ", ";
+              }
+
+            builder.append(")");
+            logger.debug(builder.toString());
+          }
+      }
+
   }
 
