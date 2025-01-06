@@ -44,7 +44,7 @@ import javafx.scene.web.WebView;
 import javafx.application.Platform;
 import it.tidalwave.util.BundleUtilities;
 import it.tidalwave.util.Callback;
-import it.tidalwave.util.ui.UserNotificationWithFeedback;
+import it.tidalwave.ui.core.UserNotificationWithFeedback;
 import it.tidalwave.ui.javafx.impl.common.DelegateSupport;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;

@@ -33,7 +33,7 @@ import java.nio.file.Path;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.application.Platform;
-import it.tidalwave.util.ui.UserNotificationWithFeedback;
+import it.tidalwave.ui.core.UserNotificationWithFeedback;
 import it.tidalwave.ui.core.BoundProperty;
 import it.tidalwave.ui.javafx.impl.common.DelegateSupport;
 import lombok.extern.slf4j.Slf4j;

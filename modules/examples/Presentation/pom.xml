@@ -87,6 +87,14 @@
         </dependency>
         <!-- end -->
 
+        <!-- Test dependencies. -->
+        <dependency>
+            <groupId>it.tidalwave.steelblue</groupId>
+            <artifactId>it-tidalwave-ui-core</artifactId>
+            <classifier>tests</classifier>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
 </project>

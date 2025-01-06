@@ -53,7 +53,7 @@ import it.tidalwave.messagebus.annotation.ListensTo;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import static it.tidalwave.util.Parameters.r;
-import static it.tidalwave.util.ui.UserNotificationWithFeedback.*;
+import static it.tidalwave.ui.core.UserNotificationWithFeedback.*;
 import static it.tidalwave.ui.core.role.Presentable._Presentable_;
 import static it.tidalwave.ui.core.role.spi.PresentationModelCollectors.toCompositePresentationModel;
 
