@@ -242,8 +242,8 @@ be related to a different module in the system.
 
 #[[###]]# Testing
 
-Given that this module does not depend on UI technology, testing is easy and can be performed with the usual tools. Below some sketches will be illustrated
-that make use of TestNG and Mockito.
+Given that this module does not depend on UI technology, testing is easy and can be performed with the usual tools. Below some sketches are illustrated,
+which make use of TestNG and Mockito.
 
 First, mocks are created; they are one or more DAOs (or similar classes) and one presentation.
 

@@ -38,8 +38,8 @@ import java.lang.annotation.Target;
  * <ul>
  * <li>a messagebus implementing {@link it.tidalwave.messagebus.MessageBus} is instantiated and made available in the Spring application context
  *   (so it can be injected);</li>
- * <li>a {@link it.tidalwave.message.PowerOnEvent} is fired when the application is ready to be initialised;</li>
- * <li>a {@link it.tidalwave.message.PowerOffEvent} is fired when the application is going to be closed.</li>
+ * <li>a {@link it.tidalwave.ui.core.message.PowerOnEvent} is fired when the application is ready to be initialised;</li>
+ * <li>a {@link it.tidalwave.ui.core.message.PowerOffEvent} is fired when the application is going to be closed.</li>
  * </ul>
  *
  * @since   1.1-ALPHA-6
