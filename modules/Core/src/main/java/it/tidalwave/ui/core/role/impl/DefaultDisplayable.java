@@ -58,8 +58,6 @@ public class DefaultDisplayable implements Displayable, Serializable
     @Nonnull
     private final Map<Locale, String> displayNameMap = new HashMap<>();
 
-    private final Locale defaultLocale = Locale.ENGLISH;
-
     /***********************************************************************************************************************************************************
      * Creates an instance with a given display name.
      *
@@ -81,7 +79,7 @@ public class DefaultDisplayable implements Displayable, Serializable
       {
         this.displayName = displayName;
         this.toStringName = toStringName;
-        displayNameMap.put(defaultLocale, displayName);
+        displayNameMap.put(Locale.getDefault(), displayName);
       }
 
     /***********************************************************************************************************************************************************
