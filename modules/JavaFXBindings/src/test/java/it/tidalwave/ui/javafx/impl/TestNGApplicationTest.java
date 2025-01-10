@@ -33,6 +33,7 @@ import org.testfx.api.FxRobot;
 import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit5.ApplicationAdapter;
 import org.testfx.framework.junit5.ApplicationFixture;
+import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
@@ -41,6 +42,7 @@ import org.testng.annotations.BeforeMethod;
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
+@Slf4j
 public abstract class TestNGApplicationTest extends FxRobot implements ApplicationFixture
   {
     public static Application launch(Class<? extends Application> appClass, String... appArgs)

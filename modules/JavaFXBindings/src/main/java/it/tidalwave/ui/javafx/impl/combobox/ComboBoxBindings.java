@@ -33,7 +33,6 @@ import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -53,6 +52,8 @@ import static it.tidalwave.ui.javafx.impl.common.JavaFXWorker.childrenPm;
 
 /***************************************************************************************************************************************************************
  *
+ * This class takes care of bindings related to {@link ComboBox}.
+ *
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
@@ -67,18 +68,6 @@ public class ComboBoxBindings extends DelegateSupport
     private final ChangeListener<PresentationModel> changeListener = new ChangeListenerSelectableAdapter(executor);
 
     /***********************************************************************************************************************************************************
-     * Event handler that executes the default action bound to the given combobox item.
-     **********************************************************************************************************************************************************/
-    private final EventHandler<ActionEvent> eventHandler = event ->
-      {
-        final var comboBox = (ComboBox<PresentationModel>)event.getSource();
-        final var selectedPm = comboBox.getSelectionModel().getSelectedItem();
-        selectedPm.maybeAs(_UserActionProvider_)
-                  .flatMap(UserActionProvider::getOptionalDefaultAction)
-                  .ifPresent(UserAction::actionPerformed);
-      };
-
-    /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
     public ComboBoxBindings (@Nonnull final Executor executor, @Nonnull final CellBinder cellBinder)
@@ -89,20 +78,17 @@ public class ComboBoxBindings extends DelegateSupport
       }
 
     /***********************************************************************************************************************************************************
-     * {@inheritDoc}
+     * Binds a combobox.
+     * @param   comboBox            the {@link ComboBox}
+     * @param   pm                  the {@link PresentationModel}
+     * @param   callback            an optional callback to invoke at the end of the binding
      **********************************************************************************************************************************************************/
-    public void bind (@Nonnull final ComboBox<PresentationModel> comboBox,
-                      @Nonnull final PresentationModel pm,
-                      @Nonnull final Optional<Runnable> callback)
+    public void bind (@Nonnull final ComboBox<PresentationModel> comboBox, @Nonnull final PresentationModel pm, @Nonnull final Optional<Runnable> callback)
       {
+        log.debug("bind({}, {}, {})", comboBox, pm, callback);
         comboBox.setCellFactory(cellFactory);
         comboBox.setButtonCell(new AsObjectListCell<>(cellBinder));
-        comboBox.setOnAction(eventHandler);
-
-        // FIXME: WEAK LISTENERS
-
-        // FIXME: this won't work with any external navigation system, such as CEC menus
-        // TODO: try by having CEC selection emulating RETURN and optionally accepting RETURN here
+        comboBox.setOnAction(this::onActionEvent);
         comboBox.setOnKeyPressed(event ->
           {
             if (List.of(SPACE, ENTER).contains(event.getCode()))
@@ -115,16 +101,33 @@ public class ComboBoxBindings extends DelegateSupport
         selectedProperty.removeListener(changeListener);
         JavaFXWorker.run(executor,
                          () -> childrenPm(pm),
-                         items -> finalize(comboBox, items, selectedProperty, callback));
+                         items -> finalizeBinding(comboBox, items, selectedProperty, callback));
       }
 
     /***********************************************************************************************************************************************************
-     *
+     * Event handler that calls back the default action bound to the given combobox item.
      **********************************************************************************************************************************************************/
-    private void finalize (@Nonnull final ComboBox<PresentationModel> comboBox,
-                           @Nonnull final ObservableList<PresentationModel> items,
-                           @Nonnull final ReadOnlyObjectProperty<PresentationModel> selectedProperty,
-                           @Nonnull final Optional<Runnable> callback)
+    @SuppressWarnings("unchecked")
+    private void onActionEvent (@Nonnull final ActionEvent event)
+      {
+        final var comboBox = (ComboBox<PresentationModel>)event.getSource();
+        final var selectedPm = comboBox.getSelectionModel().getSelectedItem();
+        selectedPm.maybeAs(_UserActionProvider_)
+                  .flatMap(UserActionProvider::getOptionalDefaultAction)
+                  .ifPresent(UserAction::actionPerformed);
+      }
+
+    /***********************************************************************************************************************************************************
+     * Finalizes binding in the JavaFX thread and eventually invokes a callback.
+     * @param   comboBox            the {@link ComboBox}
+     * @param   items               the items of the combo box
+     * @param   selectedProperty    the 'selected' property
+     * @param   callback            an optional callback to invoke at the end
+     **********************************************************************************************************************************************************/
+    private void finalizeBinding (@Nonnull final ComboBox<PresentationModel> comboBox,
+                                  @Nonnull final ObservableList<PresentationModel> items,
+                                  @Nonnull final ReadOnlyObjectProperty<PresentationModel> selectedProperty,
+                                  @Nonnull final Optional<Runnable> callback)
       {
         comboBox.setItems(items);
 

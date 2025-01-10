@@ -60,6 +60,8 @@ public interface PresentationModel extends As, Mutable
     /** This is an undocumented feature. If you add a {@link NamedCallback} with this name as a role in this object, it will be called back when
         {@link #dispose()} is called. */
     public static final String CALLBACK_DISPOSE = "dispose";
+    public static final String PARAM_OWNER = "owner";
+    public static final String PARAM_ROLE = "role";
 
     /***********************************************************************************************************************************************************
      * Disposes this object.
@@ -74,7 +76,7 @@ public interface PresentationModel extends As, Mutable
     @Nonnull
     public static PresentationModel of (@Nonnull final Object owner)
       {
-        Parameters.mustNotBeArrayOrCollection(owner, "owner");
+        Parameters.mustNotBeArrayOrCollection(owner, PARAM_OWNER);
         return of(owner, Collections.emptyList());
       }
 
@@ -87,8 +89,8 @@ public interface PresentationModel extends As, Mutable
     @Nonnull
     public static PresentationModel of (@Nonnull final Object owner, @Nonnull final Object role)
       {
-        Parameters.mustNotBeArrayOrCollection(owner, "owner");
-        Parameters.mustNotBeArrayOrCollection(role, "role");
+        Parameters.mustNotBeArrayOrCollection(owner, PARAM_OWNER);
+        Parameters.mustNotBeArrayOrCollection(role, PARAM_ROLE);
         return of(owner, r(role));
       }
 
@@ -102,7 +104,7 @@ public interface PresentationModel extends As, Mutable
     @Nonnull
     public static PresentationModel of (@Nonnull final Object owner, @Nonnull final Collection<Object> roles)
       {
-        Parameters.mustNotBeArrayOrCollection(owner, "owner");
+        Parameters.mustNotBeArrayOrCollection(owner, PARAM_OWNER);
         return new DefaultPresentationModel(owner, roles);
       }
 
@@ -128,7 +130,7 @@ public interface PresentationModel extends As, Mutable
     @Nonnull
     public static PresentationModel ofMaybePresentable (@Nonnull final As owner, @Nonnull final Collection<Object> roles)
       {
-        Parameters.mustNotBeArrayOrCollection(owner, "owner");
+        Parameters.mustNotBeArrayOrCollection(owner, PARAM_OWNER);
         return owner.maybeAs(_Presentable_)
                     .map(p -> p.createPresentationModel(roles))
                     .orElseGet(() -> of(owner, roles));

@@ -1,0 +1,3 @@
+<included>
+    <logger name="it.tidalwave.role" level="INFO"/>
+</included>

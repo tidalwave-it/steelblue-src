@@ -25,7 +25,6 @@
  */
 package it.tidalwave.ui.javafx.impl.common;
 
-import javax.annotation.CheckForNull;
 import jakarta.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.concurrent.Executor;
@@ -49,25 +48,30 @@ public class ChangeListenerSelectableAdapter implements ChangeListener<Presentat
     @Nonnull
     protected final Executor executor;
 
-    private final ChangeListener<TreeItem<PresentationModel>> treeItemChangeListener =
-            // FIXME: test null oldValue, newValue?
-            (observable, oldValue, newValue) -> changed(null, safe(oldValue), safe(newValue));
+    @Nonnull
+    public ChangeListener<TreeItem<PresentationModel>> asTreeItemChangeListener()
+      {
+        return this::onTreeItemChanged;
+      }
+
+    private void onTreeItemChanged (@Nullable final ObservableValue<? extends TreeItem<PresentationModel>> observable,
+                                    @Nullable final TreeItem<PresentationModel> oldValue,
+                                    @Nullable final TreeItem<PresentationModel> newValue)
+      {
+        changed(null, safe(oldValue), safe(newValue));
+      }
 
     @Override
-    public void changed (@Nonnull final ObservableValue<? extends PresentationModel> ov,
-                         @Nonnull final PresentationModel oldPm,
-                         @CheckForNull final PresentationModel newPm)
+    public void changed (@Nullable final ObservableValue<? extends PresentationModel> ov,
+                         @Nullable final PresentationModel oldPm,
+                         @Nullable final PresentationModel newPm)
       {
+        log.trace("changed({}, {}, {})", ov, oldPm, newPm);
+
         if (newPm != null) // no selection
           {
             executor.execute(() -> newPm.maybeAs(_Selectable_).ifPresent(Selectable::select));
           }
-      }
-
-    @Nonnull
-    public ChangeListener<TreeItem<PresentationModel>> asTreeItemChangeListener()
-      {
-        return treeItemChangeListener;
       }
 
     @Nullable

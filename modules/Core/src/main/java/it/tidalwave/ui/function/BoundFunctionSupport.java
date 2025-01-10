@@ -35,8 +35,8 @@ import lombok.experimental.Delegate;
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-public abstract class BoundFunctionSupport<DOMAIN_TYPE, CODOMAIN_TYPE>
-                  implements BoundFunction<DOMAIN_TYPE, CODOMAIN_TYPE>
+@SuppressWarnings("this-escape")
+public abstract class BoundFunctionSupport<T, R> implements BoundFunction<T, R>
   {
     @Delegate // FIXME: weak
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
@@ -56,7 +56,7 @@ public abstract class BoundFunctionSupport<DOMAIN_TYPE, CODOMAIN_TYPE>
           }
       }
 
-    protected void fireValueChanged (final CODOMAIN_TYPE oldValue, final CODOMAIN_TYPE newValue)
+    protected void fireValueChanged (final R oldValue, final R newValue)
       {
         pcs.firePropertyChange("value", oldValue, newValue);
       }

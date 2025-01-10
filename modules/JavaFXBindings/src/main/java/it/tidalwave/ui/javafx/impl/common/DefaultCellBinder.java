@@ -59,8 +59,7 @@ import static it.tidalwave.ui.core.role.UserActionProvider._UserActionProvider_;
 public class DefaultCellBinder implements CellBinder
   {
     /** Roles to preload, so they are computed in the background thread. */
-    private static final List<Class<?>> PRELOADING_ROLE_TYPES = List.of(
-            _Displayable_, _UserActionProvider_, _Styleable_, _CustomGraphicProvider_);
+    private static final List<Class<?>> PRELOADING_ROLE_TYPES = List.of(_Displayable_, _UserActionProvider_, _Styleable_, _CustomGraphicProvider_);
 
     private static final String ROLE_STYLE_PREFIX = "-rs-";
 
@@ -74,23 +73,30 @@ public class DefaultCellBinder implements CellBinder
     public void bind (@Nonnull final Cell<?> cell, @Nullable final As item, final boolean empty)
       {
         log.trace("bind({}, {}, {})", cell, item, empty);
-        clearBindings(cell);
 
         if (!empty && (item != null))
           {
             JavaFXWorker.run(executor,
-                             () -> new RoleBag(item, PRELOADING_ROLE_TYPES),
+                             () -> new RoleCollector(item, PRELOADING_ROLE_TYPES),
                              roles -> bindAll(cell, roles));
+          }
+        else
+          {
+            cell.setGraphic(null);
+            cell.setText("");
+            cell.setOnKeyPressed(null);
+            cell.setOnMouseClicked(null);
+            cell.setContextMenu(null);
+            // cell.getStyleClass().clear();
           }
       }
 
     /***********************************************************************************************************************************************************
-     * Binds everything provided by the given {@link RoleBag} to the given {@link Cell}.
-     *
+     * Binds everything provided by the given {@link RoleCollector} to the given {@link Cell}.
      * @param     cell            the {@code Cell}
      * @param     roles           the role bag
      **********************************************************************************************************************************************************/
-    private void bindAll (@Nonnull final Cell<?> cell, @Nonnull final RoleBag roles)
+    private void bindAll (@Nonnull final Cell<?> cell, @Nonnull final RoleCollector roles)
       {
         bindTextAndGraphic(cell, roles);
         bindDefaultAction(cell, roles);
@@ -99,27 +105,27 @@ public class DefaultCellBinder implements CellBinder
       }
 
     /***********************************************************************************************************************************************************
-     * Binds the text and eventual custom {@link javafx.scene.Node} provided by the given {@link RoleBag} to the given
-     * {@link Cell}.
-     *
+     * Binds the text and eventual custom {@link javafx.scene.Node} provided by the given {@link RoleCollector} to the given {@link Cell}.
      * @param     cell            the {@code Cell}
      * @param     roles           the role bag
      **********************************************************************************************************************************************************/
-    private void bindTextAndGraphic (@Nonnull final Cell<?> cell, @Nonnull final RoleBag roles)
+    private void bindTextAndGraphic (@Nonnull final Cell<?> cell, @Nonnull final RoleCollector roles)
       {
         final var cgp = roles.get(_CustomGraphicProvider_);
-        cell.setGraphic(cgp.map(CustomGraphicProvider::getGraphic).orElse(null));
-        cell.setText(cgp.map(c -> "").orElse(roles.get(_Displayable_).map(Displayable::getDisplayName).orElse("")));
+        final var graphic = cgp.map(CustomGraphicProvider::getGraphic).orElse(null);
+        final var text = cgp.map(c -> "").orElse(roles.get(_Displayable_).map(Displayable::getDisplayName).orElse(""));
+        log.trace("bindTextAndGraphic({}, {}) - graphic: {}, text: {}", cell, roles, graphic, text);
+        cell.setGraphic(graphic);
+        cell.setText(text);
       }
 
     /***********************************************************************************************************************************************************
-     * Binds the default {@link UserAction}s provided by the given {@link RoleBag} as the default action of the given
-     * {@link Cell} (activated by double click or key pressure).
-     *
+     * Binds the default {@link UserAction}s provided by the given {@link RoleCollector} as the default action of the given {@link Cell} (activated by double
+     * click or key pressure).
      * @param     cell            the {@code Cell}
      * @param     roles           the role bag
      **********************************************************************************************************************************************************/
-    private void bindDefaultAction (@Nonnull final Cell<?> cell, @Nonnull final RoleBag roles)
+    private void bindDefaultAction (@Nonnull final Cell<?> cell, @Nonnull final RoleCollector roles)
       {
         roles.getDefaultUserAction().ifPresent(defaultAction ->
           {
@@ -146,26 +152,23 @@ public class DefaultCellBinder implements CellBinder
       }
 
     /***********************************************************************************************************************************************************
-     * Binds the {@link UserAction}s provided by the given {@link RoleBag} as items of the contextual menu of a
-     * {@link Cell}.
-     *
+     * Binds the {@link UserAction}s provided by the given {@link RoleCollector} as items of the contextual menu of a {@link Cell}.
      * @param     cell            the {@code Cell}
      * @param     roles           the role bag
      **********************************************************************************************************************************************************/
-    private void bindContextMenu (@Nonnull final Cell<?> cell, @Nonnull final RoleBag roles)
+    private void bindContextMenu (@Nonnull final Cell<?> cell, @Nonnull final RoleCollector roles)
       {
         final var menuItems = createMenuItems(roles);
         cell.setContextMenu(menuItems.isEmpty() ? null : new ContextMenu(menuItems.toArray(new MenuItem[0])));
       }
 
     /***********************************************************************************************************************************************************
-     * Adds all the styles provided by the given {@link RoleBag} to a {@link ObservableList} of styles.
-     *
+     * Adds all the styles provided by the given {@link RoleCollector} to a {@link ObservableList} of styles.
      * @param     styleClasses    the destination where to add styles
      * @param     roles           the role bag
      **********************************************************************************************************************************************************/
     @Nonnull
-    private void bindStyles (@Nonnull final ObservableList<String> styleClasses, @Nonnull final RoleBag roles)
+    private void bindStyles (@Nonnull final ObservableList<String> styleClasses, @Nonnull final RoleCollector roles)
       {
         final var styles = styleClasses.stream()
                                        .filter(s -> !s.startsWith(ROLE_STYLE_PREFIX))
@@ -180,14 +183,13 @@ public class DefaultCellBinder implements CellBinder
       }
 
     /***********************************************************************************************************************************************************
-     * Create a list of {@link MenuItem}s for each action provided by the given {@link RoleBag}.
-     * Don't directly return a ContextMenu otherwise it will be untestable.
-     *
+     * Create a list of {@link MenuItem}s for each action provided by the given {@link RoleCollector}. Don't directly return a ContextMenu otherwise it will be
+     * untestable.
      * @param     roles           the role bag
-     * @return                    the list of {@MenuItem}s
+     * @return                    the list of {@link MenuItem}s
      **********************************************************************************************************************************************************/
     @Nonnull
-    @VisibleForTesting public List<MenuItem> createMenuItems (@Nonnull final RoleBag roles)
+    @VisibleForTesting public List<MenuItem> createMenuItems (@Nonnull final RoleCollector roles)
       {
         return roles.getMany(_UserActionProvider_).stream()
                     .flatMap(uap -> uap.getActions().stream())
@@ -196,20 +198,7 @@ public class DefaultCellBinder implements CellBinder
       }
 
     /***********************************************************************************************************************************************************
-     *
-     **********************************************************************************************************************************************************/
-    private void clearBindings (@Nonnull final Cell<?> cell)
-      {
-        cell.setText("");
-        cell.setGraphic(null);
-        cell.setContextMenu(null);
-        cell.setOnKeyPressed(null);
-        cell.setOnMouseClicked(null);
-      }
-
-    /***********************************************************************************************************************************************************
      * Creates a {@link MenuItem} bound to the given action.
-     *
      * @param     action          the action
      * @return                    the bound {@code MenuItem}
      **********************************************************************************************************************************************************/

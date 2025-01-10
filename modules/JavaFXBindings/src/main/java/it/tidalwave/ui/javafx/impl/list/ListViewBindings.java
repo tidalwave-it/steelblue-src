@@ -41,7 +41,7 @@ import it.tidalwave.ui.javafx.impl.common.CellBinder;
 import it.tidalwave.ui.javafx.impl.common.ChangeListenerSelectableAdapter;
 import it.tidalwave.ui.javafx.impl.common.DelegateSupport;
 import it.tidalwave.ui.javafx.impl.common.JavaFXWorker;
-import it.tidalwave.ui.javafx.impl.common.RoleBag;
+import it.tidalwave.ui.javafx.impl.common.RoleCollector;
 import lombok.extern.slf4j.Slf4j;
 import static javafx.collections.FXCollections.observableArrayList;
 import static javafx.scene.input.KeyCode.*;
@@ -50,12 +50,15 @@ import static it.tidalwave.ui.javafx.impl.common.JavaFXWorker.childrenPm;
 
 /***************************************************************************************************************************************************************
  *
+ * This class takes care of bindings related to {@link ListView}.
+ *
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
 @Slf4j
 public class ListViewBindings extends DelegateSupport
   {
+    @Nonnull
     private final Callback<ListView<PresentationModel>, ListCell<PresentationModel>> cellFactory;
 
     private final ChangeListener<PresentationModel> changeListener = new ChangeListenerSelectableAdapter(executor);
@@ -70,18 +73,14 @@ public class ListViewBindings extends DelegateSupport
       }
 
     /***********************************************************************************************************************************************************
-     * {@inheritDoc}
+     * Binds a {@link ListView}.
+     * @param   listView            the {@code ListView}
+     * @param   pm                  the {@link PresentationModel}
+     * @param   callback            an optional callback to invoke at the end of the binding
      **********************************************************************************************************************************************************/
-    public void bind (@Nonnull final ListView<PresentationModel> listView,
-                      @Nonnull final PresentationModel pm,
-                      @Nonnull final Optional<Runnable> callback)
+    public void bind (@Nonnull final ListView<PresentationModel> listView, @Nonnull final PresentationModel pm, @Nonnull final Optional<Runnable> callback)
       {
         listView.setCellFactory(cellFactory);
-
-        // FIXME: WEAK LISTENERS
-
-        // FIXME: this won't work with any external navigation system, such as CEC menus
-        // TODO: try by having CEC selection emulating RETURN and optionally accepting RETURN here
         listView.setOnKeyPressed(event ->
           {
             if (List.of(SPACE, ENTER).contains(event.getCode()))
@@ -89,12 +88,12 @@ public class ListViewBindings extends DelegateSupport
                 final var selectedPm = listView.getSelectionModel().getSelectedItem();
                 // TODO: must call the default action - but should we look up it again?
                 // Otherwise emulate mouse double click on the cell
-                ListViewBindings.log.debug("ListView onKeyPressed: {}", selectedPm);
+                log.debug("ListView onKeyPressed: {}", selectedPm);
 
                 executor.execute(() ->
                   {
-                    // FIXME: it would be nicer to retrieve the cell and its associated RoleBag?
-                    final var roles = new RoleBag(selectedPm, List.of(_UserActionProvider_));
+                    // TODO: it would be nicer to retrieve the cell and its associated RoleCollector?
+                    final var roles = new RoleCollector(selectedPm, List.of(_UserActionProvider_));
                     roles.getDefaultUserAction().ifPresent(UserAction::actionPerformed);
                   });
               }
@@ -105,16 +104,20 @@ public class ListViewBindings extends DelegateSupport
         listView.setItems(observableArrayList()); // quick clear in case of long operations FIXME doesn't work
         JavaFXWorker.run(executor,
                          () -> childrenPm(pm),
-                         items -> finalize(listView, items, selectedProperty, callback));
+                         items -> finalizeBinding(listView, items, selectedProperty, callback));
       }
 
     /***********************************************************************************************************************************************************
-     *
+     * Finalizes binding in the JavaFX thread and eventually invokes a callback.
+     * @param   listView            the {@link ListView}
+     * @param   items               the items of the table
+     * @param   selectedProperty    the 'selected' property
+     * @param   callback            an optional callback to invoke at the end
      **********************************************************************************************************************************************************/
-    private void finalize (@Nonnull final ListView<PresentationModel> listView,
-                           @Nonnull final ObservableList<PresentationModel> items,
-                           @Nonnull final ReadOnlyObjectProperty<PresentationModel> selectedProperty,
-                           @Nonnull final Optional<Runnable> callback)
+    private void finalizeBinding (@Nonnull final ListView<PresentationModel> listView,
+                                  @Nonnull final ObservableList<PresentationModel> items,
+                                  @Nonnull final ReadOnlyObjectProperty<PresentationModel> selectedProperty,
+                                  @Nonnull final Optional<Runnable> callback)
       {
         listView.setItems(items);
         selectedProperty.addListener(changeListener);

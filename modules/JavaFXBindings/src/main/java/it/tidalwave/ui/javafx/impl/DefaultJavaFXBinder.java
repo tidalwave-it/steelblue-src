@@ -36,7 +36,6 @@ import it.tidalwave.ui.core.BoundProperty;
 import it.tidalwave.ui.javafx.JavaFXBinder;
 import it.tidalwave.ui.javafx.impl.button.ButtonBindings;
 import it.tidalwave.ui.javafx.impl.combobox.ComboBoxBindings;
-import it.tidalwave.ui.javafx.impl.common.CellBinder;
 import it.tidalwave.ui.javafx.impl.common.DefaultCellBinder;
 import it.tidalwave.ui.javafx.impl.common.PropertyAdapter;
 import it.tidalwave.ui.javafx.impl.dialog.DialogBindings;
@@ -85,15 +84,13 @@ public class DefaultJavaFXBinder implements JavaFXBinder
     @Delegate
     private final FileChooserBindings fileChooserBindings;
 
-    private final CellBinder cellBinder;
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
     public DefaultJavaFXBinder (@Nonnull final Executor executor)
       {
         this.executor = executor;
-        cellBinder = new DefaultCellBinder(executor);
+        final var cellBinder = new DefaultCellBinder(executor);
         buttonBindings = new ButtonBindings(executor);
         comboBoxBindings = new ComboBoxBindings(executor, cellBinder);
         treeItemBindings = new TreeViewBindings(executor, cellBinder);

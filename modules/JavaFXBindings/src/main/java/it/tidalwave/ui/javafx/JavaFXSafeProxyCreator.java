@@ -131,7 +131,7 @@ import lombok.extern.slf4j.Slf4j;
 public class JavaFXSafeProxyCreator
   {
     private static final String P_TIMEOUT = JavaFXSafeProxyCreator.class.getName() + ".initTimeout";
-    private static final int initializerTimeout = Integer.getInteger(P_TIMEOUT, 10);
+    private static final int INITIALIZER_TIMEOUT = Integer.getInteger(P_TIMEOUT, 10);
 
     public static final Map<Class<?>, Object> BEANS = new HashMap<>();
 
@@ -236,8 +236,8 @@ public class JavaFXSafeProxyCreator
         try
           {
             log.debug("Waiting for NodeAndDelegate initialisation in JavaFX thread...");
-            log.debug("If deadlocks and you need longer time with the debugger, set {} (current value: {})", P_TIMEOUT, initializerTimeout);
-            latch.await(initializerTimeout, TimeUnit.SECONDS); // FIXME
+            log.debug("If deadlocks and you need longer time with the debugger, set {} (current value: {})", P_TIMEOUT, INITIALIZER_TIMEOUT);
+            latch.await(INITIALIZER_TIMEOUT, TimeUnit.SECONDS); // FIXME
           }
         catch (InterruptedException e)
           {

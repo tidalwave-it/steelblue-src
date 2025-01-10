@@ -27,7 +27,6 @@ package it.tidalwave.ui.javafx.impl.button;
 
 import jakarta.annotation.Nonnull;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -39,7 +38,7 @@ import javafx.application.Platform;
 import it.tidalwave.ui.core.role.Displayable;
 import it.tidalwave.ui.core.role.UserAction;
 import it.tidalwave.ui.javafx.impl.DefaultJavaFXBinder;
-import it.tidalwave.ui.javafx.impl.TestNGApplicationTest;
+import it.tidalwave.ui.javafx.impl.JavaFXTestSupport;
 import it.tidalwave.util.Callback;
 import it.tidalwave.role.spi.SystemRoleFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -63,8 +62,8 @@ import static org.mockito.Mockito.*;
  * @author Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-@Test(groups = "no-ci") @Slf4j
-public class ButtonBindingsTest extends TestNGApplicationTest
+@Slf4j
+public class ButtonBindingsTest extends JavaFXTestSupport
   {
     private Button button;
 
@@ -83,7 +82,7 @@ public class ButtonBindingsTest extends TestNGApplicationTest
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
-    @BeforeMethod
+    @BeforeMethod(groups = "display")
     public void setup()
             throws Throwable
       {
@@ -123,43 +122,43 @@ public class ButtonBindingsTest extends TestNGApplicationTest
       }
 
     /**********************************************************************************************************************************************************/
-    @Test(expectedExceptions = IllegalStateException.class)
+    @Test(groups="display", expectedExceptions = IllegalStateException.class)
     public void bind_button_must_throw_exception_when_invoked_in_the_wrong_thread()
       {
         underTest.bind(button, userAction);
       }
 
     /**********************************************************************************************************************************************************/
-    @Test
+    @Test(groups = "display")
     public void bind_button_to_Displayable_action_must_assign_label()
             throws Throwable
       {
         // when
-        runLaterAndWait(() -> underTest.bind(button, userAction));
+        runSafelyAndWait("bind", () -> underTest.bind(button, userAction));
         // then
         assertThat(button).hasText("new label");
       }
 
     /**********************************************************************************************************************************************************/
-    @Test
+    @Test(groups = "display")
     public void bind_button_to_not_Displayable_action_must_not_assign_label()
             throws Throwable
       {
         // when
-        runLaterAndWait(() -> underTest.bind(button, userActionWithoutDisplayable));
+        runSafelyAndWait("bind", () -> underTest.bind(button, userActionWithoutDisplayable));
         // then
         assertThat(button).hasText("original label");
       }
 
     /**********************************************************************************************************************************************************/
-    @Test(dataProvider = "falseTrue")
+    @Test(groups="display", dataProvider = "falseTrue")
     public void bind_button_must_assign_correct_initial_enablement (final boolean enabled)
             throws Throwable
       {
         // given
         userAction.enabled().set(enabled);
         // when
-        runLaterAndWait(() -> underTest.bind(button, userAction));
+        runSafelyAndWait("bind", () -> underTest.bind(button, userAction));
         // then
         if (enabled)
           {
@@ -172,12 +171,12 @@ public class ButtonBindingsTest extends TestNGApplicationTest
       }
 
     /**********************************************************************************************************************************************************/
-    @Test
+    @Test(groups = "display")
     public void button_enablement_must_be_bound_to_UserAction_enablement()
             throws Throwable
       {
         // when
-        runLaterAndWait(() -> underTest.bind(button, userAction));
+        runSafelyAndWait("bind", () -> underTest.bind(button, userAction));
         final var enabled1 = !button.isDisabled();
         userAction.enabled().set(false);
         Thread.sleep(100);
@@ -192,35 +191,17 @@ public class ButtonBindingsTest extends TestNGApplicationTest
       }
 
     /**********************************************************************************************************************************************************/
-    @Test
+    @Test(groups = "display")
     public void bound_button_must_invoke_callback()
             throws Throwable
       {
         // given
-        runLaterAndWait(() -> underTest.bind(button, userAction));
+        runSafelyAndWait("bind", () -> underTest.bind(button, userAction));
         // when
         clickOn(button);
         // then
         waitForThread();
         verify(callback).call();
-      }
-
-    /***********************************************************************************************************************************************************
-     *
-     **********************************************************************************************************************************************************/
-    protected void runLaterAndWait (@Nonnull final Runnable runnable)
-            throws InterruptedException
-      {
-        log.info("runLaterAndWait()...");
-        final var latch = new CountDownLatch(1);
-        Platform.runLater(() ->
-          {
-            runnable.run();
-            latch.countDown();
-          });
-
-        log.info(">>>> waiting for latch...");
-        latch.await();
       }
 
     /***********************************************************************************************************************************************************

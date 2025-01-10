@@ -47,6 +47,7 @@ import lombok.experimental.Delegate;
  * @it.tidalwave.javadoc.stable
  *
  **************************************************************************************************************************************************************/
+@SuppressWarnings("this-escape")
 public class DefaultMutableDisplayable implements MutableDisplayable
   {
     // private static final long serialVersionUID = 45345436345634734L;

@@ -55,7 +55,7 @@ import static it.tidalwave.ui.core.role.UserActionProvider._UserActionProvider_;
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-@RequiredArgsConstructor(access = AccessLevel.PROTECTED) @Slf4j
+@RequiredArgsConstructor(access = AccessLevel.PROTECTED) @Slf4j @SuppressWarnings("this-escape")
 public abstract class MenuBarControlSupport<B, MB, M> implements MenuBarControl<B, MB>
   {
     @Delegate

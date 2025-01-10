@@ -42,7 +42,7 @@ import it.tidalwave.ui.core.role.Displayable;
 import it.tidalwave.ui.core.role.UserAction;
 import it.tidalwave.ui.core.role.UserActionProvider;
 import it.tidalwave.ui.javafx.impl.common.DefaultCellBinder;
-import it.tidalwave.ui.javafx.impl.common.RoleBag;
+import it.tidalwave.ui.javafx.impl.common.RoleCollector;
 import it.tidalwave.ui.core.role.spi.DefaultUserActionProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
@@ -88,9 +88,9 @@ public class UserActionProviderContextMenuBuilderTest
 
     private List<UserAction> actions;
 
-    private RoleBag roleMapWithoutUserActionProvider;
+    private RoleCollector roleMapWithoutUserActionProvider;
 
-    private RoleBag roleMapWithUserActionProvider;
+    private RoleCollector roleMapWithUserActionProvider;
 
     private TestExecutorService executorService;
 
@@ -123,8 +123,8 @@ public class UserActionProviderContextMenuBuilderTest
               }
           };
 
-        roleMapWithoutUserActionProvider = new RoleBag();
-        roleMapWithUserActionProvider = new RoleBag();
+        roleMapWithoutUserActionProvider = new RoleCollector();
+        roleMapWithUserActionProvider = new RoleCollector();
         roleMapWithUserActionProvider.put(UserActionProvider.class, userActionProvider);
 
         executorService = new TestExecutorService(Executors.newSingleThreadExecutor());

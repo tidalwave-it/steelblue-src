@@ -34,22 +34,22 @@ import it.tidalwave.ui.core.ChangingSource;
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-public abstract class UnaryBoundFunctionSupport<DOMAIN_TYPE, CODOMAIN_TYPE>
-                   extends BoundFunctionSupport<DOMAIN_TYPE, CODOMAIN_TYPE>
+@SuppressWarnings("this-escape")
+public abstract class UnaryBoundFunctionSupport<T, R> extends BoundFunctionSupport<T, R>
   {
     @Nonnull
-    protected final ChangingSource<DOMAIN_TYPE> source;
+    protected final ChangingSource<T> source;
 
-    protected CODOMAIN_TYPE value;
+    protected R value;
 
-    protected UnaryBoundFunctionSupport (@Nonnull final ChangingSource<DOMAIN_TYPE> source)
+    @SuppressWarnings("unchecked")
+    protected UnaryBoundFunctionSupport (@Nonnull final ChangingSource<T> source)
       {
         this.source = source;
-        source.addPropertyChangeListener(event ->
-                onSourceChange((DOMAIN_TYPE)event.getOldValue(), (DOMAIN_TYPE)event.getNewValue()));
+        source.addPropertyChangeListener(event -> onSourceChange((T)event.getOldValue(), (T)event.getNewValue()));
       }
 
-    protected void onSourceChange (@Nonnull final DOMAIN_TYPE oldSourceValue, @Nonnull final DOMAIN_TYPE newSourceValue)
+    protected void onSourceChange (@Nonnull final T oldSourceValue, @Nonnull final T newSourceValue)
       {
         final var oldValue = function(oldSourceValue);
         value = function(newSourceValue);
@@ -57,10 +57,10 @@ public abstract class UnaryBoundFunctionSupport<DOMAIN_TYPE, CODOMAIN_TYPE>
       }
 
     @Nonnull
-    protected abstract CODOMAIN_TYPE function (final DOMAIN_TYPE value);
+    protected abstract R function (final T value);
 
     @Override @Nonnull
-    public final CODOMAIN_TYPE get()
+    public final R get()
       {
         return value;
       }

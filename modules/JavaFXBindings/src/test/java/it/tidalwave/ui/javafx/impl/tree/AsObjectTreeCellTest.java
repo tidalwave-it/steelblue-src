@@ -25,9 +25,18 @@
  */
 package it.tidalwave.ui.javafx.impl.tree;
 
+import jakarta.annotation.Nonnull;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import it.tidalwave.util.As;
 import it.tidalwave.ui.core.role.Displayable;
-import it.tidalwave.ui.javafx.impl.common.CellBinder;
+import it.tidalwave.ui.javafx.impl.JavaFXTestSupport;
+import it.tidalwave.ui.javafx.impl.common.DefaultCellBinder;
+import it.tidalwave.role.spi.SystemRoleFactory;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import static org.mockito.Mockito.*;
@@ -39,48 +48,53 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-public class AsObjectTreeCellTest
+public class AsObjectTreeCellTest extends JavaFXTestSupport
   {
     private AsObjectTreeCell<As> underTest;
 
-    private CellBinder cellBinder;
+    private ExecutorService executorService;
 
-    /***********************************************************************************************************************************************************
-     *
-     **********************************************************************************************************************************************************/
-    @BeforeMethod(groups = "no-ci")
-    public void setup()
+    /**********************************************************************************************************************************************************/
+    @Override
+    public void start (@Nonnull final Stage stage)
       {
-        cellBinder = mock(CellBinder.class);
+        executorService = Executors.newSingleThreadExecutor();
+        final var cellBinder = new DefaultCellBinder(executorService);
         underTest = new AsObjectTreeCell<>(cellBinder);
+        stage.setScene(new Scene(new StackPane(underTest), 100, 100));
+        stage.show();
+        stage.setAlwaysOnTop(true);
       }
 
-    /***********************************************************************************************************************************************************
-     *
-     **********************************************************************************************************************************************************/
-    @Test(groups = "no-ci")
+    /**********************************************************************************************************************************************************/
+    @BeforeMethod(groups = "display")
+    public void setup()
+      {
+        SystemRoleFactory.reset();
+      }
+
+    /**********************************************************************************************************************************************************/
+    @Test(groups = "display")
     public void must_set_text_from_Displayable_when_non_empty()
       {
         // given
         final var asObject = mock(As.class);
-        when(asObject.as(Displayable.class)).thenReturn(Displayable.of("foo"));
+        when(asObject.asMany(Displayable.class)).thenReturn(List.of(Displayable.of("foo")));
         // when
-        underTest.updateItem(asObject, false);
+        runSafelyAndWait("updateItem", executorService, () -> underTest.updateItem(asObject, false));
         // then
         assertThat(underTest.getText(), is("foo"));
       }
 
-    /***********************************************************************************************************************************************************
-     *
-     **********************************************************************************************************************************************************/
-    @Test(groups = "no-ci")
-    public void must_set_empty_test_when_empty()
+    /**********************************************************************************************************************************************************/
+    @Test(groups = "display")
+    public void must_set_empty_text_when_empty()
       {
         // given
         final var asObject = mock(As.class);
-        when(asObject.as(Displayable.class)).thenReturn(Displayable.of("foo"));
-        // when
-        underTest.updateItem(asObject, true);
+        when(asObject.asMany(Displayable.class)).thenReturn(List.of(Displayable.of("foo")));
+         // when
+        runSafelyAndWait("updateItem", executorService, () -> underTest.updateItem(asObject, true));
         // then
         assertThat(underTest.getText(), is(""));
       }

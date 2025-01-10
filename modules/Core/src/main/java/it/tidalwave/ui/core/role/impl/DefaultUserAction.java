@@ -43,7 +43,7 @@ import static it.tidalwave.ui.core.role.Displayable._Displayable_;
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-@RequiredArgsConstructor(staticName = "withCallback") @Slf4j
+@RequiredArgsConstructor(staticName = "withCallback") @Slf4j @SuppressWarnings("this-escape")
 public class DefaultUserAction implements UserAction
   {
     @Getter @Accessors(fluent = true)

@@ -57,6 +57,7 @@ import static it.tidalwave.util.Parameters.r;
 public class FileEntityPresentable extends SimpleCompositePresentable
   {
     private static final DateTimeFormatter FORMATTER = getDateTimeFormatterFor(FormatStyle.SHORT, Locale.getDefault());
+    private static final String RIGHT_ALIGNED = "right-aligned";
 
     @Nonnull
     private final FileEntity owner;
@@ -75,13 +76,13 @@ public class FileEntityPresentable extends SimpleCompositePresentable
                      r(owner))  // owner is a Displayable itself
            .withPmOf("size",
                      r(Displayable.of(_s(() -> "" + owner.getSize())),
-                       Styleable.of("right-aligned")))
+                       Styleable.of(RIGHT_ALIGNED)))
            .withPmOf("creationDate",
                      r(Displayable.of(_s(() -> FORMATTER.format(owner.getCreationDateTime()))),
-                       Styleable.of("right-aligned")))
+                       Styleable.of(RIGHT_ALIGNED)))
            .withPmOf("latestModificationDate",
                      r(Displayable.of(_s(() -> FORMATTER.format(owner.getLastModifiedDateTime()))),
-                       Styleable.of("right-aligned")));
+                       Styleable.of(RIGHT_ALIGNED)));
         return super.createPresentationModel(r(aggregate, roles));
       }
   }

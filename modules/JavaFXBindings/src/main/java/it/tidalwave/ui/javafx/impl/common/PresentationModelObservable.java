@@ -26,13 +26,13 @@
 package it.tidalwave.ui.javafx.impl.common;
 
 import jakarta.annotation.Nonnull;
-import java.util.Optional;
 import java.util.function.Supplier;
 import javafx.beans.value.ObservableValueBase;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TreeTableColumn;
 import it.tidalwave.role.Aggregate;
 import it.tidalwave.ui.core.role.PresentationModel;
+import it.tidalwave.util.As;
 import lombok.RequiredArgsConstructor;
 
 /***************************************************************************************************************************************************************
@@ -41,8 +41,10 @@ import lombok.RequiredArgsConstructor;
  *
  **************************************************************************************************************************************************************/
 @RequiredArgsConstructor
-public final class PresentationModelObservable extends ObservableValueBase
+public final class PresentationModelObservable extends ObservableValueBase<PresentationModel>
   {
+    private static final As.Type<Aggregate<PresentationModel>> _PresentationModelAggregate_ = As.type(Aggregate.class);
+
     @Nonnull
     private final Supplier<PresentationModel> rowPresentationModelSupplier;
 
@@ -53,8 +55,7 @@ public final class PresentationModelObservable extends ObservableValueBase
     public PresentationModel getValue()
       {
         final var rowPm = rowPresentationModelSupplier.get();
-        final var aggregate =
-                (Optional<Aggregate<PresentationModel>>)(Object)rowPm.maybeAs(Aggregate.class);
+        final var aggregate = rowPm.maybeAs(_PresentationModelAggregate_);
         // FIXME: uses the column header names, should be an internal id instead
         return aggregate.flatMap(a -> a.getByName(columnKeySupplier.get()))
                         .map(columnPm -> PresentationModelAsDelegateDecorator.decorating(columnPm, rowPm))
@@ -62,20 +63,14 @@ public final class PresentationModelObservable extends ObservableValueBase
       }
 
     @Nonnull
-    public static PresentationModelObservable of (
-            @Nonnull final TableColumn.CellDataFeatures<PresentationModel, PresentationModel> cell)
+    public static PresentationModelObservable of (@Nonnull final TableColumn.CellDataFeatures<PresentationModel, ?> cell)
       {
-        return new PresentationModelObservable(
-                () -> cell.getValue(),
-                () -> cell.getTableColumn().getText());
+        return new PresentationModelObservable(cell::getValue, () -> cell.getTableColumn().getText());
       }
 
     @Nonnull
-    public static PresentationModelObservable of (
-            @Nonnull final TreeTableColumn.CellDataFeatures<PresentationModel, PresentationModel> cell)
+    public static PresentationModelObservable of (@Nonnull final TreeTableColumn.CellDataFeatures<PresentationModel, ?> cell)
       {
-        return new PresentationModelObservable(
-                () -> cell.getValue().getValue(),
-                () -> cell.getTreeTableColumn().getText());
+        return new PresentationModelObservable(() -> cell.getValue().getValue(), () -> cell.getTreeTableColumn().getText());
       }
   }

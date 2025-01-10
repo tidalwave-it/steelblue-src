@@ -34,7 +34,7 @@ import static org.mockito.Mockito.mock;
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-public class UserActionsTestSupport<T, C> extends TestNGApplicationTest
+public class UserActionsTestSupport<T, C> extends JavaFXTestSupport
   {
     protected final TestUserActions a = new TestUserActions();
 

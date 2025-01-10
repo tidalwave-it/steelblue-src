@@ -36,7 +36,6 @@ import it.tidalwave.ui.core.role.PresentationModel;
 import it.tidalwave.ui.javafx.impl.common.CellBinder;
 import it.tidalwave.ui.javafx.impl.common.TreeItemDelegateSupport;
 import lombok.extern.slf4j.Slf4j;
-import static it.tidalwave.ui.javafx.impl.DefaultJavaFXBinder.enforceFxApplicationThread;
 
 /***************************************************************************************************************************************************************
  *
@@ -54,23 +53,19 @@ public class TreeViewBindings extends TreeItemDelegateSupport
     public TreeViewBindings (@Nonnull final Executor executor, @Nonnull final CellBinder cellBinder)
       {
         super(executor);
-        cellFactory = __ -> new AsObjectTreeCell<>(cellBinder);
+        cellFactory = ignored -> new AsObjectTreeCell<>(cellBinder);
       }
 
     /***********************************************************************************************************************************************************
-     * {@inheritDoc}
+     *
      **********************************************************************************************************************************************************/
-    public void bind (@Nonnull final TreeView<PresentationModel> treeView,
-                      @Nonnull final PresentationModel pm,
-                      @Nonnull final Optional<Runnable> callback)
+    public void bind (@Nonnull final TreeView<PresentationModel> treeView, @Nonnull final PresentationModel pm, @Nonnull final Optional<Runnable> callback)
       {
-        enforceFxApplicationThread();
         log.debug("bind({}, {}, {})", treeView, pm, callback);
-
         setRootProperty(pm, treeView.rootProperty());
         treeView.setCellFactory(cellFactory);
         treeView.setShowRoot(shouldShowRoot(pm));
         bindSelectionListener(treeView.getSelectionModel().selectedItemProperty());
-        callback.ifPresent(Runnable::run); // FIXME: thread?
+        callback.ifPresent(Runnable::run);
       }
   }

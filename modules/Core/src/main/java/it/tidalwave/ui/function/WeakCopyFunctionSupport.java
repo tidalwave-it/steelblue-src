@@ -32,9 +32,9 @@ import lombok.extern.slf4j.Slf4j;
 
 /***************************************************************************************************************************************************************
  *
- * @since   2.0-ALPHA-1
  * Changes the destination only at a certain condition in function of the target.
  *
+ * @since   2.0-ALPHA-1
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
@@ -44,7 +44,7 @@ public abstract class WeakCopyFunctionSupport<T> extends UnaryBoundFunctionSuppo
     @Nonnull
     protected T targetValue;
 
-    public WeakCopyFunctionSupport (@Nonnull final ChangingSource<T> source)
+    protected WeakCopyFunctionSupport (@Nonnull final ChangingSource<T> source)
       {
         super(source);
       }

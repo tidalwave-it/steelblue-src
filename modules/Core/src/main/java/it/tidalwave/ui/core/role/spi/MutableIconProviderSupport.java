@@ -40,6 +40,7 @@ import lombok.experimental.Delegate;
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
+@SuppressWarnings("this-escape")
 public abstract class MutableIconProviderSupport implements MutableIconProvider
   {
     @Delegate

@@ -25,7 +25,8 @@
  */
 package it.tidalwave.ui.javafx.impl.tableview;
 
-import javax.annotation.CheckForNull;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import javafx.scene.control.cell.TextFieldTableCell;
 import it.tidalwave.util.As;
 import it.tidalwave.util.annotation.VisibleForTesting;
@@ -42,10 +43,11 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor(staticName = "of")
 public class AsObjectTableCell<T extends As> extends TextFieldTableCell<T, T>
   {
+    @Nonnull
     @VisibleForTesting final CellBinder cellBinder;
 
     @Override
-    public void updateItem (@CheckForNull final T item, final boolean empty)
+    public void updateItem (@Nullable final T item, final boolean empty)
       {
         super.updateItem(item, empty);
         cellBinder.bind(this, item, empty);

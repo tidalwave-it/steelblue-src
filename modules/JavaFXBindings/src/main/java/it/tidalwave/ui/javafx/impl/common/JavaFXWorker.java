@@ -35,14 +35,16 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import javafx.collections.ObservableList;
 import javafx.application.Platform;
+import it.tidalwave.util.As;
 import it.tidalwave.util.annotation.VisibleForTesting;
 import it.tidalwave.ui.core.role.PresentationModel;
 import it.tidalwave.ui.javafx.impl.util.Logging;
+import it.tidalwave.role.Composite;
+import it.tidalwave.role.SimpleComposite;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import static java.util.Collections.emptyList;
 import static javafx.collections.FXCollections.*;
-import static it.tidalwave.role.SimpleComposite._SimpleComposite_;
 import static it.tidalwave.ui.javafx.impl.util.Logging.INDENT;
 
 /***************************************************************************************************************************************************************
@@ -53,9 +55,9 @@ import static it.tidalwave.ui.javafx.impl.util.Logging.INDENT;
 @UtilityClass @Slf4j
 public class JavaFXWorker
   {
-    public static <T> void run (@Nonnull final Executor executor,
-                                @Nonnull Supplier<T> backgroundSupplier,
-                                @Nonnull Consumer<T> javaFxFinalizer)
+    private static final As.Type<SimpleComposite<PresentationModel>> _PresentationModel_Composite_ = As.type(Composite.class);
+
+    public static <T> void run (@Nonnull final Executor executor,  @Nonnull final Supplier<T> backgroundSupplier, @Nonnull final Consumer<T> javaFxFinalizer)
       {
         try
           {
@@ -63,6 +65,7 @@ public class JavaFXWorker
               {
                 final var value = backgroundSupplier.get();
                 Platform.runLater(() -> javaFxFinalizer.accept(value));
+                log.trace("JavaFX finalizer submitted");
               });
           }
         catch (RejectedExecutionException e)
@@ -78,13 +81,12 @@ public class JavaFXWorker
       }
 
     @Nonnull
-    public static ObservableList<PresentationModel> childrenPm (@Nonnull final PresentationModel pm,
-                                                                @Nonnegative int depth)
+    public static ObservableList<PresentationModel> childrenPm (@Nonnull final PresentationModel pm, @Nonnegative final int depth)
       {
         final var indent = INDENT.substring(0, depth * 8);
-        final var composite = pm.maybeAs(_SimpleComposite_);
+        final var composite = pm.maybeAs(_PresentationModel_Composite_);
         composite.ifPresent(c -> Logging.logObject(indent, composite));
-        final List<PresentationModel> items = composite.map(c -> c.findChildren().results()).orElse(emptyList());
+        final var items = composite.map(c -> c.findChildren().results()).orElse(emptyList());
         final var badItems = extractBadItems(items);
 
         if (!badItems.isEmpty()) // defensive

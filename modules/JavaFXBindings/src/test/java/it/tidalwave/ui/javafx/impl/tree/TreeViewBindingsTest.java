@@ -25,19 +25,21 @@
  */
 package it.tidalwave.ui.javafx.impl.tree;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import jakarta.annotation.Nonnull;
+import java.util.List;
+import java.util.Optional;
 import javafx.scene.control.TreeItem;
-import it.tidalwave.util.ContextManager;
-import it.tidalwave.role.impl.DefaultContextManagerProvider;
-import it.tidalwave.role.spi.SystemRoleFactory;
+import javafx.scene.control.TreeView;
 import it.tidalwave.ui.core.role.PresentationModel;
 import it.tidalwave.ui.core.role.Selectable;
-import it.tidalwave.ui.javafx.impl.common.CellBinder;
+import it.tidalwave.ui.javafx.impl.BindingTestSupport;
 import it.tidalwave.ui.javafx.impl.common.DefaultCellBinder;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import static it.tidalwave.ui.core.role.PresentationModel._SimpleCompositeOfPresentationModel_;
+import static it.tidalwave.ui.core.role.Selectable._Selectable_;
+import static java.util.stream.Collectors.*;
+import static java.util.stream.IntStream.rangeClosed;
+import static org.testng.Assert.*;
 import static org.mockito.Mockito.*;
 
 /***************************************************************************************************************************************************************
@@ -45,42 +47,114 @@ import static org.mockito.Mockito.*;
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-public class TreeViewBindingsTest
+public class TreeViewBindingsTest extends BindingTestSupport<TreeView<PresentationModel>>
   {
     private TreeViewBindings underTest;
 
-    private ExecutorService executor;
-
-    /***********************************************************************************************************************************************************
-     *
-     **********************************************************************************************************************************************************/
-    @BeforeMethod
-    public void setup()
+    /**********************************************************************************************************************************************************/
+    public TreeViewBindingsTest()
       {
-        SystemRoleFactory.reset();
-        ContextManager.set(new DefaultContextManagerProvider());
-        executor = Executors.newSingleThreadExecutor();
-        final CellBinder cellBinder = new DefaultCellBinder(executor);
+        super(TreeView::new);
+      }
+
+    /**********************************************************************************************************************************************************/
+    @Override
+    protected void setup (@Nonnull final DefaultCellBinder cellBinder)
+      {
         underTest = new TreeViewBindings(executor, cellBinder);
+      }
+
+    /**********************************************************************************************************************************************************/
+    @Test(groups = "display")
+    public void must_have_the_proper_presentation_models_when_not_expanded()
+      {
+        // when
+        runSafelyAndWait("bind", executor, () -> underTest.bind(control, pm, Optional.of(callBack)));
+        // then
+        final var actual = control.getRoot().getChildren().stream().map(TreeItem::getValue).collect(toList());
+        assertEquals(actual, List.of());
+      }
+
+    /**********************************************************************************************************************************************************/
+    @Test(groups = "display")
+    public void must_have_the_proper_presentation_models_when_expanded()
+      {
+        // when
+        runSafelyAndWait("bind", executor, () -> underTest.bind(control, pm, Optional.of(callBack)));
+        runSafelyAndWait("expand root", executor, () -> control.getRoot().setExpanded(true));
+        // then
+        final var actual = control.getRoot().getChildren().stream().map(TreeItem::getValue).collect(toList());
+        assertEquals(actual, pm.as(_SimpleCompositeOfPresentationModel_).findChildren().results());
       }
 
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
-    @Test
+    @Test(groups = "display")
+    public void must_have_the_proper_cell_texts_when_not_expanded()
+      {
+        // given
+        runSafelyAndWait("bind", executor, () -> underTest.bind(control, pm, Optional.of(callBack)));
+        // then
+        // TODO: assertFalse(control.isShowRoot()); // TODO test variant when Visibility.INVISIBLE is passed in the parent PM
+        final var texts = findTextsFrom(control.getSkin(), s -> !s.isEmpty());
+        assertEquals(texts, List.of());
+      }
+
+    /***********************************************************************************************************************************************************
+     *
+     **********************************************************************************************************************************************************/
+    @Test(groups = "display")
+    public void must_have_the_proper_cell_texts_when_expanded()
+      {
+        // given
+        runSafelyAndWait("bind", executor, () -> underTest.bind(control, pm, Optional.of(callBack)));
+        runSafelyAndWait("expand root", executor, () -> control.getRoot().setExpanded(true));
+        // then
+        assertTrue(control.isShowRoot()); // TODO test variant when Visibility.INVISIBLE is passed in the parent PM
+        final var texts = findTextsFrom(control.getSkin(), s -> !s.isEmpty());
+        final var expected = rangeClosed(1, 10).mapToObj(i -> "Item #" + i).collect(toList());
+        assertEquals(texts, expected);
+      }
+
+    /***********************************************************************************************************************************************************
+     *
+     **********************************************************************************************************************************************************/
+    @Test(groups = "display")
+    public void must_have_the_proper_selection()
+      {
+        // given
+        runSafelyAndWait("bind", executor, () -> underTest.bind(control, pm, Optional.of(callBack)));
+        runSafelyAndWait("expand root", executor, () -> control.getRoot().setExpanded(true));
+        // when
+        runSafelyAndWait("select", executor, () -> control.getSelectionModel().select(3 + 1)); // plus 1 because #0 is the root
+        // then
+        final var selectables = control.getRoot()
+                                       .getChildren()
+                                       .stream()
+                                       .map(i -> i.getValue().as(_Selectable_))
+                                       .toArray(Selectable[]::new);
+        verify(selectables[3]).select();
+        rangeClosed(0, 9).filter(i -> i != 3).forEach(i -> verifyNoInteractions(selectables[i]));
+      }
+
+    /***********************************************************************************************************************************************************
+     *
+     **********************************************************************************************************************************************************/
+    @Test(groups = "display")
     public void treeItemChangeListener_must_callback_a_Selectable_on_selection_change()
       throws InterruptedException
       {
         // given
         final var selectable = mock(Selectable.class);
-        final var datum = new Object();
+        final var datum = new Datum("datum");
         final var oldPm = PresentationModel.of(datum, selectable);
         final var pm = PresentationModel.of(datum, selectable);
         // when
-        underTest.getSelectionListener().asTreeItemChangeListener().changed(null, new TreeItem<>(oldPm), new TreeItem<>(pm));
+        runSafelyAndWait("changed", executor, () -> underTest.getSelectionListener().asTreeItemChangeListener().changed(null, new TreeItem<>(oldPm), new TreeItem<>(pm)));
         // then
-        executor.shutdown();
-        executor.awaitTermination(5, TimeUnit.SECONDS);
+//        executor.shutdown();
+//        executor.awaitTermination(5, TimeUnit.SECONDS);
         verify(selectable, times(1)).select();
         verifyNoMoreInteractions(selectable);
       }
@@ -88,15 +162,15 @@ public class TreeViewBindingsTest
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
-    @Test
+    @Test(groups = "display")
     public void treeItemChangeListener_must_do_nothing_when_there_is_no_Selectable_role()
       {
         // given
-        final var datum = new Object();
+        final var datum = new Datum("datum");
         final var oldPm = PresentationModel.of(datum);
         final var pm = PresentationModel.of(datum);
         // when
-        underTest.getSelectionListener().asTreeItemChangeListener().changed(null, new TreeItem<>(oldPm), new TreeItem<>(pm));
+        runSafelyAndWait("changed", executor, () -> underTest.getSelectionListener().asTreeItemChangeListener().changed(null, new TreeItem<>(oldPm), new TreeItem<>(pm)));
         // then
         // no exceptions are thrown
       }

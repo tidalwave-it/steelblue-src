@@ -27,12 +27,13 @@ package it.tidalwave.ui.javafx.impl.common;
 
 import jakarta.annotation.Nonnull;
 import java.beans.PropertyChangeListener;
+import java.util.List;
 import java.util.concurrent.Executor;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 import javafx.application.Platform;
-import it.tidalwave.util.annotation.VisibleForTesting;
 import it.tidalwave.ui.core.role.PresentationModel;
 import it.tidalwave.ui.core.role.Visibility;
 import it.tidalwave.ui.javafx.impl.tree.ObsoletePresentationModelDisposer;
@@ -53,7 +54,7 @@ import static it.tidalwave.ui.javafx.impl.common.JavaFXWorker.childrenPm;
 @Slf4j
 public class TreeItemDelegateSupport extends DelegateSupport
   {
-    @VisibleForTesting @Getter()
+    @Getter // for testing
     private final ChangeListenerSelectableAdapter selectionListener = new ChangeListenerSelectableAdapter(executor);
 
     private final ObsoletePresentationModelDisposer presentationModelDisposer = new ObsoletePresentationModelDisposer();
@@ -68,7 +69,6 @@ public class TreeItemDelegateSupport extends DelegateSupport
 
     /***********************************************************************************************************************************************************
      * Sets the children for a {@link TreeItem}.
-     *
      * @param   parentItem  the {@code TreeItem}
      * @param   depth       the depth level (used only for logging)
      **********************************************************************************************************************************************************/
@@ -76,18 +76,26 @@ public class TreeItemDelegateSupport extends DelegateSupport
       {
         JavaFXWorker.run(executor,
                          () -> childrenPm(parentItem.getValue(), depth),
-                         items -> parentItem.getChildren().setAll(items.stream()
-                                                                       .map(childPm -> createTreeItem(childPm, depth))
-                                                                       .collect(toList())));
+                         items -> parentItem.getChildren().setAll(createTreeItems(items, depth)));
       }
 
     /***********************************************************************************************************************************************************
-     * Creates a single {@link TreeItem} for the given the {@link PresentationModel}. When the {@code PresentationModel}
-     * fires the {@link PresentationModel#PROPERTY_CHILDREN} property change event, children are recreated.
-     *
-     * @param   pm        the {@code PresentationModel}
-     * @param   depth     the depth level (used only for logging)
-     * @return            the
+     * {@return a list of {@link TreeItem}s populated with the given items}.
+     * @param   depth       the depth level (used only for logging)
+     **********************************************************************************************************************************************************/
+    @Nonnull
+    private List<TreeItem<PresentationModel>> createTreeItems (@Nonnull final ObservableList<PresentationModel> items, final int depth)
+      {
+        enforceFxApplicationThread();
+        return items.stream().map(childPm -> createTreeItem(childPm, depth)).collect(toList());
+      }
+
+    /***********************************************************************************************************************************************************
+     * Creates a single {@link TreeItem} for the given the {@link PresentationModel}. When the {@code PresentationModel} fires the
+     * {@link PresentationModel#PROPERTY_CHILDREN} property change event, children are recreated.
+     * @param   pm          the {@code PresentationModel}
+     * @param   depth       the depth level (used only for logging)
+     * @return              the
      **********************************************************************************************************************************************************/
     @Nonnull
     protected TreeItem<PresentationModel> createTreeItem (@Nonnull final PresentationModel pm, final int depth)
@@ -95,8 +103,7 @@ public class TreeItemDelegateSupport extends DelegateSupport
         enforceFxApplicationThread();
         final TreeItem<PresentationModel> item = new PresentationModelTreeItem(pm);
 
-        final PropertyChangeListener recreateChildrenOnUpdateListener = __ ->
-                Platform.runLater(() ->
+        final PropertyChangeListener recreateChildrenOnUpdateListener = ignored -> Platform.runLater(() ->
           {
             log.debug("On recreateChildrenOnUpdateListener");
             setChildren(item, depth + 1);
@@ -119,8 +126,7 @@ public class TreeItemDelegateSupport extends DelegateSupport
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
-    protected void setRootProperty (@Nonnull final PresentationModel pm,
-                                    @Nonnull final ObjectProperty<TreeItem<PresentationModel>> rootProperty)
+    protected void setRootProperty (@Nonnull final PresentationModel pm, @Nonnull final ObjectProperty<TreeItem<PresentationModel>> rootProperty)
       {
         rootProperty.removeListener(presentationModelDisposer);
         rootProperty.addListener(presentationModelDisposer);

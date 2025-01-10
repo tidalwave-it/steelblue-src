@@ -42,10 +42,11 @@ import it.tidalwave.ui.javafx.impl.common.DelegateSupport;
 import it.tidalwave.ui.javafx.impl.common.JavaFXWorker;
 import it.tidalwave.ui.javafx.impl.common.PresentationModelObservable;
 import lombok.extern.slf4j.Slf4j;
-import static it.tidalwave.ui.javafx.impl.DefaultJavaFXBinder.enforceFxApplicationThread;
 import static it.tidalwave.ui.javafx.impl.common.JavaFXWorker.childrenPm;
 
 /***************************************************************************************************************************************************************
+ *
+ * This class takes care of bindings related to {@link TableView}.
  *
  * @author  Fabrizio Giudici
  *
@@ -53,8 +54,7 @@ import static it.tidalwave.ui.javafx.impl.common.JavaFXWorker.childrenPm;
 @Slf4j
 public class TableViewBindings extends DelegateSupport
   {
-    private final Callback<TableColumn<PresentationModel, PresentationModel>,
-                     TableCell<PresentationModel, PresentationModel>> cellFactory;
+    private final Callback<TableColumn<PresentationModel, PresentationModel>, TableCell<PresentationModel, PresentationModel>> cellFactory;
 
     private final ChangeListener<PresentationModel> changeListener = new ChangeListenerSelectableAdapter(executor);
 
@@ -64,40 +64,44 @@ public class TableViewBindings extends DelegateSupport
     public TableViewBindings (@Nonnull final Executor executor, @Nonnull final CellBinder cellBinder)
       {
         super(executor);
-        cellFactory = __ -> AsObjectTableCell.of(cellBinder);
+        cellFactory = ignored -> AsObjectTableCell.of(cellBinder);
       }
 
     /***********************************************************************************************************************************************************
-     * {@inheritDoc}
+     * Binds a {@link TableView}.
+     * @param   tableView           the {@code TableView}
+     * @param   pm                  the {@link PresentationModel}
+     * @param   callback            an optional callback to invoke at the end of the binding
      **********************************************************************************************************************************************************/
-    public void bind (@Nonnull final TableView<PresentationModel> tableView,
-                      @Nonnull final PresentationModel pm,
-                      @Nonnull final Optional<Runnable> callback)
+    public void bind (@Nonnull final TableView<PresentationModel> tableView, @Nonnull final PresentationModel pm, @Nonnull final Optional<Runnable> callback)
       {
-        enforceFxApplicationThread();
         log.debug("bind({}, {}, {})", tableView, pm, callback);
-
         final var selectedProperty = tableView.getSelectionModel().selectedItemProperty();
         selectedProperty.removeListener(changeListener);
         JavaFXWorker.run(executor,
                          () -> childrenPm(pm),
-                         items -> finalize(tableView, items, selectedProperty, callback));
+                         items -> finalizeBinding(tableView, items, selectedProperty, callback));
       }
 
     /***********************************************************************************************************************************************************
-     *
+     * Finalizes binding in the JavaFX thread and eventually invokes a callback.
+     * @param   tableView           the {@link TableView}
+     * @param   items               the items of the table
+     * @param   selectedProperty    the 'selected' property
+     * @param   callback            an optional callback to invoke at the end
      **********************************************************************************************************************************************************/
-    private void finalize (@Nonnull final TableView<PresentationModel> tableView,
-                           @Nonnull final ObservableList<PresentationModel> items,
-                           @Nonnull final ReadOnlyObjectProperty<PresentationModel> selectedProperty,
-                           @Nonnull final Optional<Runnable> callback)
+    @SuppressWarnings("unchecked")
+    private void finalizeBinding (@Nonnull final TableView<PresentationModel> tableView,
+                                  @Nonnull final ObservableList<PresentationModel> items,
+                                  @Nonnull final ReadOnlyObjectProperty<PresentationModel> selectedProperty,
+                                  @Nonnull final Optional<Runnable> callback)
       {
         tableView.setItems(items);
         selectedProperty.addListener(changeListener);
-
-        final ObservableList rawColumns = tableView.getColumns(); // FIXME cast
-
-        ((ObservableList<TableColumn<PresentationModel, PresentationModel>>)rawColumns).forEach(column ->
+        tableView.getColumns()
+                 .stream()
+                 .map(c -> (TableColumn<PresentationModel, PresentationModel>)c)
+                 .forEach(column ->
           {
             column.setCellValueFactory(PresentationModelObservable::of);
             column.setCellFactory(cellFactory);

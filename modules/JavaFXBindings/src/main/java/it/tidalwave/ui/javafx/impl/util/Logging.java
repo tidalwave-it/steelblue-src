@@ -46,9 +46,9 @@ public class Logging
   {
     public static final String INDENT = " ".repeat(100);
 
-    public static final String P_LOG_CHILDREN = Logging.class.getName() + ".logCompositeChildren";
+    private static final String P_LOG_CHILDREN = Logging.class.getName() + ".logCompositeChildren";
 
-    public static final boolean logChildren = Boolean.getBoolean(P_LOG_CHILDREN);
+    private static final boolean LOG_CHILDREN = Boolean.getBoolean(P_LOG_CHILDREN);
 
     /***********************************************************************************************************************************************************
      *
@@ -116,7 +116,7 @@ public class Logging
             final var finder = ((Composite<?, ?>)object).findChildren();
 
             // this is optional because it would jeopardize incremental loading of tress and probably cause troubles
-            if (!logChildren)
+            if (!LOG_CHILDREN)
               {
                 log.debug(">>>>     {}    to see children, set system property to true: " + P_LOG_CHILDREN, indent);
               }

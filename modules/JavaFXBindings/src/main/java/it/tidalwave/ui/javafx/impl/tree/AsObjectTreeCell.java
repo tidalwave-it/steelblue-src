@@ -26,10 +26,11 @@
 package it.tidalwave.ui.javafx.impl.tree;
 
 import javax.annotation.CheckForNull;
+import jakarta.annotation.Nonnull;
 import javafx.scene.control.cell.TextFieldTreeCell;
 import it.tidalwave.util.As;
 import it.tidalwave.ui.javafx.impl.common.CellBinder;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 /***************************************************************************************************************************************************************
  *
@@ -38,9 +39,10 @@ import lombok.AllArgsConstructor;
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AsObjectTreeCell<T extends As> extends TextFieldTreeCell<T>
   {
+    @Nonnull
     private final CellBinder cellBinder;
 
     @Override

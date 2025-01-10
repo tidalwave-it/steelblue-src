@@ -45,7 +45,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-@ToString(exclude = {"as", "pcs", "mls"}) @Slf4j
+@ToString(exclude = {"as", "pcs", "mls"}) @Slf4j @SuppressWarnings("this-escape")
 public class DefaultPresentationModel implements PresentationModel
   {
     @Nonnull

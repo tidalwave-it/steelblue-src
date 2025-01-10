@@ -36,6 +36,7 @@ import it.tidalwave.ui.core.ChangingSource;
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
+@SuppressWarnings("this-escape")
 public abstract class BooleanBoundFunctionSupport extends BoundFunctionSupport<Boolean, Boolean>
   {
     protected final ChangingSource<Boolean>[] sources;
