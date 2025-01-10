@@ -34,31 +34,31 @@ import it.tidalwave.util.NamedCallback;
 import it.tidalwave.util.Parameters;
 import it.tidalwave.role.SimpleComposite;
 import it.tidalwave.ui.core.role.impl.DefaultPresentationModel;
+import org.apiguardian.api.API;
 import static it.tidalwave.util.Parameters.r;
 import static it.tidalwave.ui.core.role.Presentable._Presentable_;
+import static org.apiguardian.api.API.Status.EXPERIMENTAL;
 
 /***************************************************************************************************************************************************************
  *
  * TODO: As the NetBeans Node, it should allow children, have event listeners for children added/removed/changed.
  * This class so becomes the true M in MVC.
  *
- * @stereotype Role
- *
- * @since   2.0-ALPHA-1
- * @author  Fabrizio Giudici
+ * @stereotype  Role
+ * @since       2.0-ALPHA-1
+ * @author      Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
 public interface PresentationModel extends As
   {
-    public static final Class<PresentationModel> PresentationModel = PresentationModel.class;
+    public static final Class<PresentationModel> _PresentationModel_ = PresentationModel.class;
 
-    public static final As.Type<SimpleComposite<PresentationModel>> _SimpleCompositeOfPresentationModel_ =
-            As.type(SimpleComposite.class);
+    public static final As.Type<SimpleComposite<PresentationModel>> _SimpleCompositeOfPresentationModel_ = As.type(SimpleComposite.class);
 
     public static final String PROPERTY_CHILDREN = "children";
 
-    /** This is an undocumented feature. If you add a {@link NamedCallback} with this name as a role in this object, it
-     * will be called back when {@link #dispose()} is called. */
+    /** This is an undocumented feature. If you add a {@link NamedCallback} with this name as a role in this object, it will be called back when
+        {@link #dispose()} is called. */
     public static final String CALLBACK_DISPOSE = "dispose";
 
     /***********************************************************************************************************************************************************
@@ -68,14 +68,12 @@ public interface PresentationModel extends As
 
     /***********************************************************************************************************************************************************
      * Adds a {@link PropertyChangeListener}.
-     *
      * @param listener    the listener
      **********************************************************************************************************************************************************/
     public void addPropertyChangeListener (@Nonnull PropertyChangeListener listener);
 
     /***********************************************************************************************************************************************************
      * Adds a {@link PropertyChangeListener} for the given property.
-     *
      * @param propertyName  the name of the property
      * @param listener      the listener
      **********************************************************************************************************************************************************/
@@ -83,14 +81,12 @@ public interface PresentationModel extends As
 
     /***********************************************************************************************************************************************************
      * Removes a {@link PropertyChangeListener}.
-     *
      * @param listener    the listener
      **********************************************************************************************************************************************************/
     public void removePropertyChangeListener (@Nonnull PropertyChangeListener listener);
 
     /***********************************************************************************************************************************************************
      * Removes a {@link PropertyChangeListener} for the given property.
-     *
      * @param propertyName  the name of the property
      * @param listener      the listener
      **********************************************************************************************************************************************************/
@@ -98,7 +94,6 @@ public interface PresentationModel extends As
 
     /***********************************************************************************************************************************************************
      * Checks whether the given property has been bound to listeners.
-     *
      * @param propertyName  the name of the property
      * @return              {@code true} if the property is bound
      **********************************************************************************************************************************************************/
@@ -106,7 +101,6 @@ public interface PresentationModel extends As
 
     /***********************************************************************************************************************************************************
      * Returns all the bound {@link PropertyChangeListener}s.
-     *
      * @return              the listeners
      **********************************************************************************************************************************************************/
     @Nonnull
@@ -114,7 +108,6 @@ public interface PresentationModel extends As
 
     /***********************************************************************************************************************************************************
      * Returns the bound {@link PropertyChangeListener}s for the given property.
-     *
      * @param propertyName  the name of the property
      * @return              the listeners
      **********************************************************************************************************************************************************/
@@ -122,10 +115,8 @@ public interface PresentationModel extends As
     public PropertyChangeListener[] getPropertyChangeListeners (@Nonnull String propertyName);
 
     /***********************************************************************************************************************************************************
-     * Creates an instance given an owner and no roles.
-     *
+     * {@return a new instance given an owner and no roles}.
      * @param   owner   the owner
-     * @return          the new instance
      * @since           3.2-ALPHA-3
      **********************************************************************************************************************************************************/
     @Nonnull
@@ -136,11 +127,9 @@ public interface PresentationModel extends As
       }
 
     /***********************************************************************************************************************************************************
-     * Creates an instance given an owner and a single role.
-     *
+     * {@return a new instance given an owner and a single role}.
      * @param   owner   the owner
      * @param   role    the role (or a {@link it.tidalwave.util.RoleFactory})
-     * @return          the new instance
      * @since           3.2-ALPHA-3
      **********************************************************************************************************************************************************/
     @Nonnull
@@ -152,11 +141,9 @@ public interface PresentationModel extends As
       }
 
     /***********************************************************************************************************************************************************
-     * Creates an instance given an owner and multiple roles.
-     *
+     * {@return a new instance given an owner and multiple roles}.
      * @param   owner   the owner
      * @param   roles   roles or {@link it.tidalwave.util.RoleFactory} instances
-     * @return          the new instance
      * @since           3.2-ALPHA-1
      * @since           3.2-ALPHA-3 (refactored)
      **********************************************************************************************************************************************************/
@@ -168,29 +155,24 @@ public interface PresentationModel extends As
       }
 
     /***********************************************************************************************************************************************************
-     * Returns an empty instance (no roles, with the exception of a dummy {@link Displayable}).
-     *
-     * @return          the empty instance
+     * {@return an empty instance (no roles, with the exception of a dummy {@link Displayable})}.
      * @since           3.2-ALPHA-3
      **********************************************************************************************************************************************************/
     @Nonnull
     public static PresentationModel empty()
       {
-        // TODO: cache a singleton, but don't do eager initialization (e.g. a final static), as it would deadlock with
-        // SteelBlue.
+        // TODO: cache a singleton, but don't do eager initialization (e.g. a final static), as it would deadlock
         return of("", Displayable.of("<empty presentation model>"));
       }
 
     /***********************************************************************************************************************************************************
-     * Creates an instance from an owner which might have the {@link Presentable} role. If it is present, it is called
-     * to create the {@code PresentationModel}; otherwise a default one is created. Additional roles are added.
-     *
+     * {@return a new instance from an owner which might have the {@link Presentable} role}. If it is present, it is called to create the
+     * {@code PresentationModel}; otherwise a default one is created. Additional roles are added.
      * @param   owner   the owner
      * @param   roles   roles or {@link it.tidalwave.util.RoleFactory} instances
-     * @return          the new instance
      * @since           3.2-ALPHA-8
-     * @it.tidalwave.javadoc.experimental TODO: perhaps it could be merged to of().
      **********************************************************************************************************************************************************/
+    @API(status = EXPERIMENTAL) // TODO: perhaps it could be merged to of().
     @Nonnull
     public static PresentationModel ofMaybePresentable (@Nonnull final As owner, @Nonnull final Collection<Object> roles)
       {
@@ -201,14 +183,12 @@ public interface PresentationModel extends As
       }
 
     /***********************************************************************************************************************************************************
-     * Creates an instance from an owner which might have the {@link Presentable} role. If it is present, it is called
-     * to create the {@code PresentationModel}; otherwise a default one is created.
-     *
+     * {@return a new instance from an owner which might have the {@link Presentable} role}. If it is present, it is called to create the
+     * {@code PresentationModel}; otherwise a default one is created.
      * @param   owner   the owner
-     * @return          the new instance
      * @since           3.2-ALPHA-8
-     * @it.tidalwave.javadoc.experimental TODO: perhaps it could be merged to of().
      **********************************************************************************************************************************************************/
+    @API(status = EXPERIMENTAL) // TODO: perhaps it could be merged to of().
     @Nonnull
     public static PresentationModel ofMaybePresentable (@Nonnull final As owner)
       {
