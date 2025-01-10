@@ -15,6 +15,7 @@ pipelines:
             - maven
             - sonar
           script:
-            - mvn -B -Pit.tidalwave-metrics-v2 -Dtft.profile.metrics.checkstyleGoal= -Dtft.owasp.skip=true
+            - apt update && apt install -y libpango-1.0-0 libpangocairo-1.0-0 libpangoft2-1.0-0
+            - mvn -B -Pit.tidalwave-metrics-v2,it.tidalwave-ci-v1,monocle -Dtft.profile.metrics.checkstyleGoal= -Dtft.owasp.skip=true -Dtft.test.excludedGroups=no-ci
           artifacts:
             - '**/target/**'

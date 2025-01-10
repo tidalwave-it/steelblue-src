@@ -52,6 +52,7 @@
 
         <thesefoolishthings.version>4.0-ALPHA-3</thesefoolishthings.version>
         <tft.javafx.version>11.0.1</tft.javafx.version>
+        <tft.openjfx-monocle.version>11.0.2</tft.openjfx-monocle.version>
         <jmetro.version>11.6.14</jmetro.version>
     </properties>
 
@@ -153,5 +154,22 @@
         <module>examples</module>
         <module>Core</module>
     </modules>
+
+    <profiles>
+        <profile>
+            <id>monocle</id>
+            <properties>
+                <tft.test.vmOptions>-Dtestfx.robot=glass -Dtestfx.headless=true -Dprism.order=sw</tft.test.vmOptions>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>org.testfx</groupId>
+                    <artifactId>openjfx-monocle</artifactId>
+                    <version>${tft.openjfx-monocle.version}</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 
 </project>
