@@ -46,9 +46,8 @@
     <url>http://tidalwave.it/projects/solidblue</url>
     <inceptionYear>2015</inceptionYear>
     <description>
-        SteelBlue contains the JavaFX implementation of a set of UI-related DCI roles defined in the project
-        TheseFoolishThings. It allows to design rich client applications in a fashion that is mostly independent of the
-        UI technology so the code depending on it is segregated in a confined section.
+SteelBlue contains a set of UI abstractions based on DCI roles and JavaFX bindings. It allows to create rich client applications in a way
+that is mostly independent of the UI technology; so testing is easie, and it is possible to create applications with multiple user interfaces.
     </description>
 
     <!-- Repeated because of http://jira.codehaus.org/browse/SCM-442 -->
@@ -71,7 +70,7 @@
         <scm.repo.url>ssh://git@bitbucket.org/tidalwave/steelblue-src.git</scm.repo.url>
         <scm.repo.readonly.url>https://bitbucket.org/tidalwave/steelblue-src</scm.repo.readonly.url>
         <scm.repo.browse.url>https://bitbucket.org/tidalwave/steelblue-src/src</scm.repo.browse.url>
-        <tidalwave.project.url>http://tidalwave.it/projects/steelblue</tidalwave.project.url>
+        <tidalwave.project.url>https://tidalwave.bitbucket.io/steelblue</tidalwave.project.url>
         <tidalwave.slogan>SteelBlue: DCI User Interfaces</tidalwave.slogan>
         <tidalwave.ci.view>SteelBlue</tidalwave.ci.view>
         <tidalwave.issues>STB</tidalwave.issues>
