@@ -7,7 +7,7 @@ SteelBlue
 ================================
 
 SteelBlue contains a set of UI abstractions based on DCI roles and JavaFX bindings. It allows to create rich client applications in a way
-that is mostly independent of the UI technology; so testing is easie, and it is possible to create applications with multiple user interfaces.
+that is mostly independent of the UI technology; so testing is easier, and it is possible to create applications with multiple user interfaces.
 
 SteelBlue requires and is tested with JDKs in the range [21, 22) and targets JDK 11.
 It is released under the [Apache Licence v2](https://www.apache.org/licenses/LICENSE-2.0.txt).

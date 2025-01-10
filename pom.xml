@@ -47,7 +47,7 @@
     <inceptionYear>2015</inceptionYear>
     <description>
 SteelBlue contains a set of UI abstractions based on DCI roles and JavaFX bindings. It allows to create rich client applications in a way
-that is mostly independent of the UI technology; so testing is easie, and it is possible to create applications with multiple user interfaces.
+that is mostly independent of the UI technology; so testing is easier, and it is possible to create applications with multiple user interfaces.
     </description>
 
     <!-- Repeated because of http://jira.codehaus.org/browse/SCM-442 -->
