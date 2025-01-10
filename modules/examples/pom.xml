@@ -36,6 +36,7 @@
         <tft.javafx.version>21.0.1</tft.javafx.version>
         <!-- Generate all javadocs and UML diagrams. -->
         <tft.javadoc.excludePackageNames />
+        <tft.revapi.skip>true</tft.revapi.skip>
     </properties>
     <modules>
         <module>Model</module>
