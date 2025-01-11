@@ -44,7 +44,7 @@ import it.tidalwave.ui.javafx.impl.common.CellBinder;
 import it.tidalwave.ui.javafx.impl.common.ChangeListenerSelectableAdapter;
 import it.tidalwave.ui.javafx.impl.common.DelegateSupport;
 import it.tidalwave.ui.javafx.impl.common.JavaFXWorker;
-import it.tidalwave.ui.javafx.impl.list.AsObjectListCell;
+import it.tidalwave.ui.javafx.impl.common.AsObjectListCell;
 import lombok.extern.slf4j.Slf4j;
 import static javafx.scene.input.KeyCode.*;
 import static it.tidalwave.ui.core.role.UserActionProvider._UserActionProvider_;

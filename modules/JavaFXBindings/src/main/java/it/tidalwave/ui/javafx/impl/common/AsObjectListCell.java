@@ -23,13 +23,12 @@
  *
  * *************************************************************************************************************************************************************
  */
-package it.tidalwave.ui.javafx.impl.list;
+package it.tidalwave.ui.javafx.impl.common;
 
 import javax.annotation.CheckForNull;
 import jakarta.annotation.Nonnull;
 import javafx.scene.control.cell.TextFieldListCell;
 import it.tidalwave.util.As;
-import it.tidalwave.ui.javafx.impl.common.CellBinder;
 import lombok.AllArgsConstructor;
 
 /***************************************************************************************************************************************************************

@@ -37,6 +37,7 @@ import javafx.scene.control.ListView;
 import javafx.util.Callback;
 import it.tidalwave.ui.core.role.PresentationModel;
 import it.tidalwave.ui.core.role.UserAction;
+import it.tidalwave.ui.javafx.impl.common.AsObjectListCell;
 import it.tidalwave.ui.javafx.impl.common.CellBinder;
 import it.tidalwave.ui.javafx.impl.common.ChangeListenerSelectableAdapter;
 import it.tidalwave.ui.javafx.impl.common.DelegateSupport;
