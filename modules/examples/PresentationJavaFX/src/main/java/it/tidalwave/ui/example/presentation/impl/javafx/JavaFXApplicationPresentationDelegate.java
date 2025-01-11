@@ -26,14 +26,13 @@
 package it.tidalwave.ui.example.presentation.impl.javafx;
 
 import jakarta.annotation.Nonnull;
-import jakarta.inject.Inject;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.ToolBar;
 import javafx.scene.layout.BorderPane;
-import org.springframework.context.ApplicationContext;
+import it.tidalwave.ui.core.annotation.PresentationAssembler;
+import it.tidalwave.ui.core.annotation.Assemble;
 import it.tidalwave.ui.javafx.JavaFXBinder;
-import it.tidalwave.ui.javafx.PresentationAssembler;
 import it.tidalwave.ui.javafx.JavaFXMenuBarControl;
 import it.tidalwave.ui.javafx.JavaFXToolBarControl;
 
@@ -45,17 +44,9 @@ import it.tidalwave.ui.javafx.JavaFXToolBarControl;
  *
  **************************************************************************************************************************************************************/
 // START SNIPPET: all
-public class JavaFXApplicationPresentationDelegate implements PresentationAssembler
+@PresentationAssembler
+public class JavaFXApplicationPresentationDelegate
   {
-    @Inject
-    private JavaFXBinder binder;
-
-    @Inject
-    private JavaFXToolBarControl toolBarModel;
-
-    @Inject
-    private JavaFXMenuBarControl menuBarModel;
-
     @FXML
     private BorderPane pnMainPane;
 
@@ -65,12 +56,14 @@ public class JavaFXApplicationPresentationDelegate implements PresentationAssemb
     @FXML
     private MenuBar mbMenuBar;
 
-    @Override
-    public void assemble (@Nonnull final ApplicationContext applicationContext)
+    @Assemble
+    public void assemble (@Nonnull final JavaFXBinder binder,
+                          @Nonnull final JavaFXToolBarControl toolBarModel,
+                          @Nonnull final JavaFXMenuBarControl menuBarModel,
+                          @Nonnull final JavaFXMainPanelPresentation mainPanelPresentation)
       {
         toolBarModel.populate(binder, tbToolBar);
         menuBarModel.populate(binder, mbMenuBar);
-        final var mainPanelPresentation = applicationContext.getBean(JavaFXMainPanelPresentation.class);
         pnMainPane.setCenter(mainPanelPresentation.getNad().getNode());
       }
   }

@@ -350,11 +350,33 @@ package.
 
 #[[####]]# JavaFXApplicationPresentationDelegate
 
-TBD
-
 ![UML](it-tidalwave-ui-modules/it-tidalwave-ui-examples/it-tidalwave-ui-example-presentation-javafx/apidocs/it/tidalwave/ui/example/presentation/impl/javafx/JavaFXApplicationPresentationDelegate.svg)
 
+The application presentation delegate is the class referred by the `.fxml` resource associated to the application (in this case `Application.fxml`).
+
+<!-- MACRO{snippet|file=${project.basedir}/modules/examples/PresentationJavaFX/src/main/resources/it/tidalwave/ui/example/presentation/javafx/Application.fxml} -->
+
+While having multiple `.fxml` resources is not strictly necessary, it is advisable to do so for decomposing applications that are beyond the simplest level
+of complexity. The "application" resource would set up the general layout of the window (for instance with the classic “left”, “center” and “bottom” boxes,
+a toolbar and a global menu), while the Java code has the responsibility to assemble everything together. On this purpose, the class must be annotated with
+`@PresentationAssembler` and must have at least one method annotated with `@Assemble` that does the job.
+
 <!-- MACRO{snippet|id=all|file=${project.basedir}/modules/examples/PresentationJavaFX/src/main/java/it/tidalwave/ui/example/presentation/impl/javafx/JavaFXApplicationPresentationDelegate.java} -->
+
+The method must return `void` and may have a
+variable number of parameters referencing SteelBlue facilities or Spring beans, that will be injected. Among others, some classic SteelBlue facilities are:
+
++ `JavaFXBinder`: already seen above, for binding JavaFX controls to presentation models;
++ `JavaFXToolBarControl`: a facility capable to populate a toolbar;
++ `JavaFXMenuBarControl`: a facility capable to populate a global menu.
+
+In the example, the toolbar and menu bar are populated, and the `Node` related to the `MainPanelPresentation` is added to the `pnMainPane` resource, in
+the “center” position. The method is executed in the JavaFX thread, so it can freely manipulate JavaFX resources.
+
+Beyond this minimum level, the application presentation delegate can also play other roles, as any other presentation delegate; in this case, it would be
+implementing an interface and supported by a control, as previously seen.
+
+While usually not needed, also Spring components may have the `@PresentationAssembler` and `@Assemble` annotations.
 
 
 #[[####]]# Main class
@@ -385,18 +407,6 @@ The method `onStageCreated()` can be used to initialize the control beans.
 <!-- MACRO{snippet|id=onStageCreated|file=${project.basedir}/modules/examples/PresentationJavaFX/src/main/java/it/tidalwave/ui/example/presentation/javafx/Main.java} -->
 
 An alternate way is by using a pubsub facility, as explained in the next section.
-
-Two `fxml` resources must be provided in the same package of the `Main` class:
-
-+ `Application.fxml` describes the layout of the main window
-+ `Splash.fxml` describes a splash pop up that will be rendered during the initialisation of the application
-
-It's common to have multiple `.FXML` files, for instance one describing the general layout of the application (e.g. a toolbar at the top, a center
-content pane and a bottom status bar) and one specific for each panel in the application. In this case they must be programmatically assembled together.
-The proper way to do that is to have the main presentation delegate to implement `PresentationAssembler`: the `assemble()` method will be called back with
-the initialized `ApplicationContext`, so the code can retrieve any other presentation and their related `Node`.
-
-<!-- MACRO{snippet|id=all|file=${project.basedir}/modules/examples/PresentationJavaFX/src/main/java/it/tidalwave/ui/example/presentation/impl/javafx/JavaFXApplicationPresentationDelegate.java} -->
 
 
 #[[#####]]# Pubsub architecture

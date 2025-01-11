@@ -25,13 +25,18 @@
  */
 package it.tidalwave.ui.javafx.spi;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import javax.annotation.CheckForNull;
 import jakarta.annotation.Nonnull;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.function.Function;
 import java.io.IOException;
 import javafx.stage.Stage;
 import javafx.application.Application;
@@ -39,13 +44,14 @@ import javafx.application.Platform;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.tidalwave.ui.core.annotation.PresentationAssembler;
+import it.tidalwave.ui.core.annotation.Assemble;
 import it.tidalwave.ui.core.message.PowerOffEvent;
 import it.tidalwave.ui.core.message.PowerOnEvent;
-import it.tidalwave.ui.javafx.ApplicationPresentationAssembler;
 import it.tidalwave.ui.javafx.JavaFXApplicationWithSplash;
-import it.tidalwave.ui.javafx.JavaFXSafeProxyCreator;
 import it.tidalwave.ui.javafx.NodeAndDelegate;
-import it.tidalwave.ui.javafx.PresentationAssembler;
+import it.tidalwave.ui.javafx.impl.DefaultNodeAndDelegate;
+import it.tidalwave.ui.javafx.impl.util.JavaFXSafeProxy.Proxied;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import it.tidalwave.util.Key;
@@ -57,6 +63,9 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.With;
+import static java.util.stream.Collectors.*;
+import static it.tidalwave.util.FunctionalCheckedExceptionWrappers.*;
+import static it.tidalwave.util.ShortNames.*;
 import static lombok.AccessLevel.PRIVATE;
 
 /***************************************************************************************************************************************************************
@@ -138,13 +147,13 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
             final var preferencesHandler = PreferencesHandler.getInstance();
             initParameters.propertyMap.forEach(preferencesHandler::setProperty);
             System.setProperty(initParameters.logFolderPropertyName, preferencesHandler.getLogFolder().toAbsolutePath().toString());
-            JavaFXSafeProxyCreator.setLogDelegateInvocations(initParameters.propertyMap.getOptional(K_LOG_DELEGATE_INVOCATIONS).orElse(false));
+            DefaultNodeAndDelegate.setLogDelegateInvocations(initParameters.propertyMap.getOptional(K_LOG_DELEGATE_INVOCATIONS).orElse(false));
             Application.launch(appClass, initParameters.args);
           }
         catch (Throwable t)
           {
             // Don't use logging facilities here, they could be not initialized
-            t.printStackTrace();
+            t.  printStackTrace();
             System.exit(-1);
           }
       }
@@ -185,9 +194,9 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
             applicationContext = createApplicationContext();
             applicationContext.registerShutdownHook(); // this actually seems not working, onClosing() does
 
-            if (applicationContext.getBeanFactory().containsBean(APPLICATION_MESSAGE_BUS_BEAN_NAME))
+            if (applicationContext.containsBean(APPLICATION_MESSAGE_BUS_BEAN_NAME))
               {
-                messageBus = Optional.of(applicationContext.getBeanFactory().getBean(APPLICATION_MESSAGE_BUS_BEAN_NAME, MessageBus.class));
+                messageBus = Optional.of(applicationContext.getBean(APPLICATION_MESSAGE_BUS_BEAN_NAME, MessageBus.class));
               }
           }
         catch (Throwable t)
@@ -209,7 +218,7 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
     protected final void onStageCreated (@Nonnull final Stage stage, @Nonnull final NodeAndDelegate<?> applicationNad)
       {
         assert Platform.isFxApplicationThread();
-        JavaFXSafeProxyCreator.getJavaFxBinder().setMainWindow(stage);
+        DefaultNodeAndDelegate.getJavaFxBinder().setMainWindow(stage);
         onStageCreated2(applicationNad);
       }
 
@@ -219,14 +228,22 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
      **********************************************************************************************************************************************************/
     @VisibleForTesting final void onStageCreated2 (@Nonnull final NodeAndDelegate<?> applicationNad)
       {
+        Objects.requireNonNull(applicationContext, "applicationContext is null");
         final var delegate = applicationNad.getDelegate();
+        final var actualClass = getActualClass(delegate);
+        log.info("Application presentation delegate: {}", delegate);
 
-        if (PresentationAssembler.class.isAssignableFrom(delegate.getClass()))
+        if (!actualClass.equals(delegate.getClass()))
           {
-            ((PresentationAssembler)delegate).assemble(applicationContext);
+            log.info(">>>> delegate class {} is a proxy of {}", delegate.getClass().getName(), actualClass.getName());
           }
 
-        runApplicationAssemblers(applicationNad);
+        if (actualClass.getAnnotation(PresentationAssembler.class) != null)
+          {
+            callAssemble(delegate);
+          }
+
+        callPresentationAssemblers();
         executorService.execute(() ->
           {
             onStageCreated(applicationContext);
@@ -254,12 +271,64 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
       }
 
     /***********************************************************************************************************************************************************
+     * Finds all classes annotated with {@link PresentationAssembler} and invokes methods annotated with {@link Assemble}.
+     **********************************************************************************************************************************************************/
+    private void callPresentationAssemblers()
+      {
+        applicationContext.getBeansWithAnnotation(PresentationAssembler.class).values().forEach(this::callAssemble);
+      }
+
+    /***********************************************************************************************************************************************************
+     * Call a method annotated with {@link Assemble} in the given object. Since the object is likely to be a dynamic proxy, and proxies don't carry the
+     * annotation of proxied classes, the proxied class is the one being probed for the annotation.
+     * @param     delegate          the presentation delegate
+     **********************************************************************************************************************************************************/
+    private void callAssemble (@Nonnull final Object delegate)
+      {
+        log.info("Calling presentation assembler: {}", delegate);
+        final var actualClass = getActualClass(delegate);
+        Arrays.stream(actualClass.getDeclaredMethods())
+              .filter(_p(m -> m.getDeclaredAnnotation(Assemble.class) != null))
+              .forEach(_c(m -> invokeInjecting(delegate.getClass().getDeclaredMethod(m.getName(), m.getParameterTypes()), delegate, this::resolveBean)));
+      }
+
+    /***********************************************************************************************************************************************************
+     * Instantiates an object of the given class performing dependency injections through the constructor.
+     * TODO: possibly replace with a Spring utility doing method injection.
+     * @throws        RuntimeException if something fails
+     **********************************************************************************************************************************************************/
+    private void invokeInjecting (@Nonnull final Method method, @Nonnull final Object object, @Nonnull final Function<Class<?>, Object> beanFactory)
+      {
+        try
+          {
+            final var parameters = Arrays.stream(method.getParameterTypes()).map(beanFactory).collect(toList());
+            log.info(">>>> calling {}({})", method.getName(), shortIds(parameters));
+            method.invoke(object, parameters.toArray());
+          }
+        catch (IllegalAccessException | InvocationTargetException e)
+          {
+            throw new RuntimeException(e);
+          }
+      }
+
+    /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
-    private void runApplicationAssemblers (@Nonnull final NodeAndDelegate applicationNad)
+    @Nonnull
+    private <T> T resolveBean (@Nonnull final Class<T> type)
       {
-        Objects.requireNonNull(applicationContext, "applicationContext is null");
-        applicationContext.getBeansOfType(ApplicationPresentationAssembler.class).values().forEach(a -> a.assemble(applicationNad.getDelegate()));
+        return type.cast(Optional.ofNullable(DefaultNodeAndDelegate.BEANS.get(type)).orElseGet(() -> applicationContext.getBean(type)));
+      }
+
+    /***********************************************************************************************************************************************************
+     * {@return the class of the given object or its proxied class if it's a proxy}.
+     * @param   object      the object
+     **********************************************************************************************************************************************************/
+    @Nonnull
+    private Class<?> getActualClass (@Nonnull final Object object)
+      {
+        final var clazz = object.getClass();
+        return !Proxy.isProxyClass(clazz) ? clazz : ((Proxied)object).__getProxiedClass();
       }
 
     /***********************************************************************************************************************************************************

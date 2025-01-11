@@ -26,14 +26,21 @@
 package it.tidalwave.ui.javafx.spi;
 
 import jakarta.annotation.Nonnull;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ConfigurableApplicationContext;
+import it.tidalwave.ui.core.annotation.Assemble;
+import it.tidalwave.ui.core.annotation.PresentationAssembler;
 import it.tidalwave.ui.core.message.PowerOffEvent;
 import it.tidalwave.ui.core.message.PowerOnEvent;
+import it.tidalwave.ui.javafx.JavaFXBinder;
+import it.tidalwave.ui.javafx.JavaFXMenuBarControl;
+import it.tidalwave.ui.javafx.JavaFXPanelGroupControl;
+import it.tidalwave.ui.javafx.JavaFXToolBarControl;
 import it.tidalwave.ui.javafx.NodeAndDelegate;
+import it.tidalwave.util.PreferencesHandler;
 import it.tidalwave.messagebus.MessageBus;
 import lombok.RequiredArgsConstructor;
 import org.testng.annotations.BeforeMethod;
@@ -49,7 +56,7 @@ import static org.mockito.Mockito.*;
 public class AbstractJavaFXSpringApplicationTest
   {
     @RequiredArgsConstructor
-    static class UnderTest extends AbstractJavaFXSpringApplication
+    static class Fixture extends AbstractJavaFXSpringApplication
       {
         @Nonnull
         private final ConfigurableApplicationContext mockApplicationContext;
@@ -65,11 +72,9 @@ public class AbstractJavaFXSpringApplicationTest
       {
       }
 
-    private UnderTest underTest;
+    private Fixture underTest;
 
     private ConfigurableApplicationContext applicationContext;
-
-    private ConfigurableListableBeanFactory beanFactory;
 
     private MessageBus messageBus;
 
@@ -78,18 +83,16 @@ public class AbstractJavaFXSpringApplicationTest
     private ExecutorService executorService;
 
     /**********************************************************************************************************************************************************/
-    @BeforeMethod
+    @BeforeMethod @SuppressWarnings("unchecked")
     public void setup()
       {
-        beanFactory = mock(ConfigurableListableBeanFactory.class);
         applicationContext = mock(ConfigurableApplicationContext.class);
-        when(applicationContext.getBeanFactory()).thenReturn(beanFactory);
         messageBus = mock(MessageBus.class);
-        when(beanFactory.containsBean(eq(APPLICATION_MESSAGE_BUS_BEAN_NAME))).thenReturn(false);
-        when(beanFactory.getBean(eq(APPLICATION_MESSAGE_BUS_BEAN_NAME), eq(MessageBus.class))).thenThrow(new NoSuchBeanDefinitionException(MessageBus.class));
+        when(applicationContext.containsBean(eq(APPLICATION_MESSAGE_BUS_BEAN_NAME))).thenReturn(false);
+        when(applicationContext.getBean(eq(APPLICATION_MESSAGE_BUS_BEAN_NAME), eq(MessageBus.class))).thenThrow(new NoSuchBeanDefinitionException(MessageBus.class));
         nad = mock(NodeAndDelegate.class);
         when(nad.getDelegate()).thenReturn(new MockPresentationDelegate());
-        underTest = new UnderTest(applicationContext);
+        underTest = new Fixture(applicationContext);
         executorService = underTest.getExecutorService();
       }
 
@@ -114,8 +117,8 @@ public class AbstractJavaFXSpringApplicationTest
             throws InterruptedException
       {
         // given
-        when(beanFactory.containsBean(eq(APPLICATION_MESSAGE_BUS_BEAN_NAME))).thenReturn(true);
-        when(beanFactory.getBean(eq(APPLICATION_MESSAGE_BUS_BEAN_NAME), eq(MessageBus.class))).thenReturn(messageBus);
+        when(applicationContext.containsBean(eq(APPLICATION_MESSAGE_BUS_BEAN_NAME))).thenReturn(true);
+        when(applicationContext.getBean(eq(APPLICATION_MESSAGE_BUS_BEAN_NAME), eq(MessageBus.class))).thenReturn(messageBus);
         underTest.initializeInBackground();
         // when
         underTest.onStageCreated2(nad);
@@ -143,13 +146,76 @@ public class AbstractJavaFXSpringApplicationTest
     public void must_fire_PowerOffEvent_when_MessageBus_present()
       {
         // given
-        when(beanFactory.containsBean(eq(APPLICATION_MESSAGE_BUS_BEAN_NAME))).thenReturn(true);
-        when(beanFactory.getBean(eq(APPLICATION_MESSAGE_BUS_BEAN_NAME), eq(MessageBus.class))).thenReturn(messageBus);
+        when(applicationContext.containsBean(eq(APPLICATION_MESSAGE_BUS_BEAN_NAME))).thenReturn(true);
+        when(applicationContext.getBean(eq(APPLICATION_MESSAGE_BUS_BEAN_NAME), eq(MessageBus.class))).thenReturn(messageBus);
         underTest.initializeInBackground();
         // when
         underTest.onClosing();
         // then
         verify(messageBus).publish(any(PowerOffEvent.class));
         verifyNoMoreInteractions(messageBus);
+      }
+
+    /**********************************************************************************************************************************************************/
+    static class Bean1 {}
+    static class Bean2 {}
+
+    @PresentationAssembler
+    static class PresentationDelegateAssembler extends MockPresentationDelegate
+      {
+        @Assemble
+        public void assemble(@Nonnull final JavaFXBinder javaFXBinder,
+                             @Nonnull final JavaFXToolBarControl javaFXToolBarControl,
+                             @Nonnull final JavaFXMenuBarControl menuBarControl,
+                             @Nonnull final JavaFXPanelGroupControl javaFXPanelGroupControl,
+                             @Nonnull final Bean1 bean1,
+                             @Nonnull final Bean2 bean2)
+          {
+            // body not needed for tests
+          }
+      }
+
+    @PresentationAssembler
+    static class SpringComponentAssembler
+      {
+        @Assemble
+        public void assemble(@Nonnull final JavaFXBinder javaFXBinder,
+                             @Nonnull final JavaFXToolBarControl javaFXToolBarControl,
+                             @Nonnull final JavaFXMenuBarControl menuBarControl,
+                             @Nonnull final JavaFXPanelGroupControl javaFXPanelGroupControl,
+                             @Nonnull final Bean1 bean1,
+                             @Nonnull final Bean2 bean2)
+          {
+            // body not needed for tests
+          }
+      }
+
+    @Test
+    public void musts_call_assembler_methods()
+      {
+        final var presentationDelegateAssembler = spy(new PresentationDelegateAssembler());
+        final var springComponentAssembler = spy(new SpringComponentAssembler());
+        when(applicationContext.getBean(eq(Bean1.class))).thenReturn(new Bean1());
+        when(applicationContext.getBean(eq(Bean2.class))).thenReturn(new Bean2());
+        when(applicationContext.getBean(eq(JavaFXPanelGroupControl.class))).thenReturn(mock(JavaFXPanelGroupControl.class));
+        when(applicationContext.getBeansWithAnnotation(eq(PresentationAssembler.class))).thenReturn(Map.of("foo", springComponentAssembler));
+        when(nad.getDelegate()).thenReturn(presentationDelegateAssembler);
+        PreferencesHandler.setAppName("test-" + getClass().getName());
+        underTest.initializeInBackground();
+        // when
+        underTest.onStageCreated2(nad);
+        // then
+        verify(presentationDelegateAssembler).assemble(any(JavaFXBinder.class),
+                                                           any(JavaFXToolBarControl.class),
+                                                           any(JavaFXMenuBarControl.class),
+                                                           any(JavaFXPanelGroupControl.class),
+                                                           any(Bean1.class),
+                                                           any(Bean2.class));
+        verify(springComponentAssembler).assemble(any(JavaFXBinder.class),
+                                                  any(JavaFXToolBarControl.class),
+                                                  any(JavaFXMenuBarControl.class),
+                                                  any(JavaFXPanelGroupControl.class),
+                                                  any(Bean1.class),
+                                                  any(Bean2.class));
       }
   }

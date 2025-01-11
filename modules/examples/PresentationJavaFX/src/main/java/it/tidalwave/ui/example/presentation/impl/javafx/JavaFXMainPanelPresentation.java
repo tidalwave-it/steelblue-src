@@ -30,7 +30,6 @@ import it.tidalwave.ui.javafx.NodeAndDelegate;
 import it.tidalwave.ui.example.presentation.MainPanelPresentation;
 import lombok.Getter;
 import lombok.experimental.Delegate;
-import static it.tidalwave.ui.javafx.JavaFXSafeProxyCreator.createNodeAndDelegate;
 
 /***************************************************************************************************************************************************************
  *
@@ -51,7 +50,7 @@ import static it.tidalwave.ui.javafx.JavaFXSafeProxyCreator.createNodeAndDelegat
 public class JavaFXMainPanelPresentation implements MainPanelPresentation
   {
     @Getter
-    private final NodeAndDelegate<? extends MainPanelPresentation> nad = createNodeAndDelegate(getClass());
+    private final NodeAndDelegate<? extends MainPanelPresentation> nad = NodeAndDelegate.of(getClass());
 
     @Delegate
     private final MainPanelPresentation delegate = nad.getDelegate();

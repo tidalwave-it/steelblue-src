@@ -23,26 +23,28 @@
  *
  * *************************************************************************************************************************************************************
  */
-package it.tidalwave.ui.javafx;
+package it.tidalwave.ui.core.annotation;
 
-import jakarta.annotation.Nonnull;
-import org.springframework.context.ApplicationContext;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /***************************************************************************************************************************************************************
  *
- * This interface can be implemented by the application main presentation. In this case, it will called back with the
- * related method to be able to programmatically assemble parts of the UI — typically a toolbar and a main panel.
+ * This annotation marks methods in presentation assembler classes (see {@link PresentationAssembler}). The class it belongs to must be annotated with
+ * {@code PresentationAssembler}, it must return `void` and may have a variable number of parameters, referencing Spring bean classes and SteelBlue
+ * facilities, that will be automatically injected. It will be always executed in the JavaFX thread.
  *
- * @since   1.1-ALPHA-4
- * @author  Fabrizio Giudici
+ * @since       2.0-ALPHA-3
+ * @see         PresentationAssembler
+ * @author      Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-public interface PresentationAssembler
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface Assemble
   {
-    /***********************************************************************************************************************************************************
-     * Assemble the application presentation. This method is called in the JavaFX thread.
-     *
-     * @param   applicationContext    the application context
-     **********************************************************************************************************************************************************/
-    public void assemble (@Nonnull ApplicationContext applicationContext);
   }

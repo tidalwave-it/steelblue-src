@@ -27,16 +27,19 @@ package it.tidalwave.ui.javafx.impl.util;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import jakarta.annotation.Nonnull;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
 import javafx.application.Platform;
-import it.tidalwave.ui.javafx.JavaFXSafeProxyCreator;
+import it.tidalwave.ui.javafx.impl.DefaultNodeAndDelegate;
 import org.slf4j.LoggerFactory;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import static java.util.Arrays.asList;
+import static it.tidalwave.util.CollectionUtils.concat;
 
 /***************************************************************************************************************************************************************
  *
@@ -44,7 +47,7 @@ import lombok.extern.slf4j.Slf4j;
  * is not blocked if the method is declared as {@code void}; it is blocked otherwise, so it can immediately retrieve
  * the result.
  *
- * This behaviour is required by {@link JavaFXSafeProxyCreator#createNodeAndDelegate(Class)} ()}.
+ * This behaviour is required by {@link it.tidalwave.ui.javafx.NodeAndDelegate#of(Class)} ()}.
  *
  * TODO: add support for aysnc returning a Future.
  *
@@ -52,17 +55,44 @@ import lombok.extern.slf4j.Slf4j;
  *
  **************************************************************************************************************************************************************/
 @RequiredArgsConstructor @Slf4j
-public class JavaFXSafeProxy<T> implements InvocationHandler
+public class JavaFXSafeProxy implements InvocationHandler
   {
+    /***********************************************************************************************************************************************************
+     * An auxiliary interface that is always injected to the proxy, allowing to retrive the class of the proxied object.
+     **********************************************************************************************************************************************************/
+    public interface Proxied
+      {
+        /** {@return the class of the proxied object}. */
+        @Nonnull
+        public Class<?> __getProxiedClass();
+      }
+
     @Nonnull @Getter @Setter
-    private T delegate;
+    private Object delegate;
 
-    private final boolean logDelegateInvocations;
+    /***********************************************************************************************************************************************************
+     *
+     **********************************************************************************************************************************************************/
+    @Nonnull @SuppressWarnings("unchecked")
+    public static <T> T of (@Nonnull final T target, @Nonnull final Class<?>[] interfaces)
+      {
+        final var augmentedInterfaces = concat(asList(interfaces), Proxied.class).toArray(Class<?>[]::new);
+        final var contextClassLoader = Thread.currentThread().getContextClassLoader();
+        return (T)Proxy.newProxyInstance(contextClassLoader, augmentedInterfaces, new JavaFXSafeProxy(target));
+      }
 
+    /***********************************************************************************************************************************************************
+     * {@inheritDoc}
+     **********************************************************************************************************************************************************/
     @Override
     public Object invoke (@Nonnull final Object proxy, @Nonnull final Method method, @Nonnull final Object[] args)
       throws Throwable
       {
+        if ("__getProxiedClass".equals(method.getName()))
+          {
+            return delegate.getClass();
+          }
+
         final var result = new AtomicReference<>();
         final var throwable = new AtomicReference<Throwable>();
         final var waitForReturn = new CountDownLatch(1);
@@ -71,7 +101,7 @@ public class JavaFXSafeProxy<T> implements InvocationHandler
           {
             try
               {
-                if (logDelegateInvocations)
+                if (DefaultNodeAndDelegate.isLogDelegateInvocations())
                   {
                     logInvocation(delegate.getClass(), method, args);
                   }
@@ -126,6 +156,5 @@ public class JavaFXSafeProxy<T> implements InvocationHandler
             logger.debug(builder.toString());
           }
       }
-
   }
 

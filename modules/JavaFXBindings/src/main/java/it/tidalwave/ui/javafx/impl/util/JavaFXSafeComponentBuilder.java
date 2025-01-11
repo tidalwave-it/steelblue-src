@@ -36,7 +36,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.application.Platform;
-import it.tidalwave.ui.javafx.JavaFXSafeProxyCreator;
+import it.tidalwave.ui.javafx.impl.DefaultNodeAndDelegate;
 import it.tidalwave.util.ReflectionUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -124,7 +124,7 @@ public final class JavaFXSafeComponentBuilder<I, T extends I>
 
             presentation = (T)Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(),
                                                      new Class[] { interfaceClass },
-                                                     new JavaFXSafeProxy<>(presentation, JavaFXSafeProxyCreator.isLogDelegateInvocations()));
+                                                     new JavaFXSafeProxy(presentation));
             presentationRef = new WeakReference<>(presentation);
           }
 
@@ -137,7 +137,7 @@ public final class JavaFXSafeComponentBuilder<I, T extends I>
     @Nonnull
     private T createComponentInstance()
       {
-        return ReflectionUtils.instantiateWithDependencies(componentClass, JavaFXSafeProxyCreator.BEANS);
+        return ReflectionUtils.instantiateWithDependencies(componentClass, DefaultNodeAndDelegate.BEANS);
       }
 
     /***********************************************************************************************************************************************************
@@ -226,6 +226,6 @@ public final class JavaFXSafeComponentBuilder<I, T extends I>
               }
           }
 
-          ReflectionUtils.injectDependencies(target, JavaFXSafeProxyCreator.BEANS);
+          ReflectionUtils.injectDependencies(target, DefaultNodeAndDelegate.BEANS);
       }
   }

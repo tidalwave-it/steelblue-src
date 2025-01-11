@@ -23,27 +23,28 @@
  *
  * *************************************************************************************************************************************************************
  */
-package it.tidalwave.ui.javafx;
+package it.tidalwave.ui.core.annotation;
 
-import jakarta.annotation.Nonnull;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /***************************************************************************************************************************************************************
  *
- * Implementation of this interface are called after Spring and JavaFX have been initialised. The purpose of those
- * implementations is to assemble the parts of the application presentation that might have been separately created.
+ * This annotation marks presentation delegate classes to designate them as "application assemblers", that is portions of code that takes previously build
+ * pieces of the user interface and assemble them together in a window. On that purpose, these classes must have at least a method annotated with
+ * {@link Assemble}.
  *
- * @param <DELEGATE>
- *
- * @since   1.0-ALPHA-13
- * @author  Fabrizio Giudici
+ * @since       2.0-ALPHA-3
+ * @see         Assemble
+ * @author      Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-public interface ApplicationPresentationAssembler<DELEGATE>
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface PresentationAssembler
   {
-    /***********************************************************************************************************************************************************
-     * Assemble the application presentation. This method is called in the JavaFX thread.
-     *
-     * @param   delegate    the JavaFX delegate of the main UI
-     **********************************************************************************************************************************************************/
-    public void assemble (@Nonnull DELEGATE delegate);
   }

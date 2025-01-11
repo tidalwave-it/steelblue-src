@@ -23,9 +23,8 @@
  *
  * *************************************************************************************************************************************************************
  */
-package it.tidalwave.ui.javafx;
+package it.tidalwave.ui.javafx.impl;
 
-import java.lang.reflect.Proxy;
 import jakarta.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,100 +37,30 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.application.Platform;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import it.tidalwave.ui.javafx.impl.DefaultJavaFXBinder;
-import it.tidalwave.ui.javafx.impl.DefaultJavaFXMenuBarControl;
-import it.tidalwave.ui.javafx.impl.DefaultJavaFXPanelGroupControl;
-import it.tidalwave.ui.javafx.impl.DefaultJavaFXToolBarControl;
+import it.tidalwave.ui.javafx.JavaFXBinder;
+import it.tidalwave.ui.javafx.JavaFXMenuBarControl;
+import it.tidalwave.ui.javafx.JavaFXToolBarControl;
+import it.tidalwave.ui.javafx.NodeAndDelegate;
 import it.tidalwave.ui.javafx.impl.util.JavaFXSafeProxy;
+import org.slf4j.LoggerFactory;
 import it.tidalwave.util.PreferencesHandler;
+import it.tidalwave.util.ReflectionUtils;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 /***************************************************************************************************************************************************************
  *
- * This facility class create a thread-safe proxy for the JavaFX delegate (controller). Thread-safe means that it can
- * be called by any thread and the JavaFX UI related stuff will be safely invoked in the JavaFX UI Thread.
- * It is usually used in this way:
- *
- * <pre>
- * // This is a Spring bean
- * public class JavaFxFooBarPresentation implements FooBarPresentation
- *   {
- *     private static final String FXML_URL = "/my/package/javafx/FooBar.fxml";
- *
- *     {@literal @}Inject
- *     private FlowController flowController;
- *
- *     private final NodeAndDelegate nad = createNodeAndDelegate(getClass(), FXML_URL);
- *
- *     private final FooBarPresentation delegate = nad.getDelegate();
- *
- *     public void showUp()
- *       {
- *         flowController.doSomething(nad.getNode());
- *       }
- *
- *     public void showData (final String data)
- *       {
- *         delegate.showData(data);
- *       }
- *   }
- * </pre>
- *
- * The method {@link #createNodeAndDelegate(java.lang.Class, java.lang.String)} safely invokes the {@link FXMLLoader}
- * and returns a {@link NodeAndDelegate} that contains both the visual {@link Node} and its delegate (controller).
- *
- * The latter is wrapped by a safe proxy that makes sure that any method invocation (such as {@code showData()} in the
- * example is again executed in the JavaFX UI Thread. This means that the Presentation object methods can be invoked
- * in any thread.
- *
- * For method returning {@code void}, the method invocation is asynchronous; that is, the caller is not blocked waiting
- * for the method execution completion. If a return value is provided, the invocation is synchronous, and the caller
- * will correctly wait the completion of the execution in order to get the result value.
- *
- * A typical JavaFX delegate (controller) looks like:
- *
- * <pre>
- * // This is not a Spring bean - created by the FXMLLoader
- * public class JavaFxFooBarPresentationDelegate implements FooBarPresentation
- *   {
- *     {@literal @}FXML
- *     private Label label;
- *
- *     {@literal @}FXML
- *     private Button button;
- *
- *     {@literal @}Inject // the only thing that can be injected, by means of JavaFXSafeProxyCreator
- *     private JavaFxBinder binder;
- *
- *     {@literal @}Override
- *     public void bind (final UserAction action)
- *       {
- *         binder.bind(button, action);
- *       }
- *
- *     {@literal @}Override
- *     public void showData (final String data)
- *       {
- *         label.setText(data);
- *       }
- *  }
- * </pre>
- *
- * Not only all the methods invoked on the delegate are guaranteed to run in the JavaFX UI thread, but also its
- * constructor, as per JavaFX requirements.
- *
- * A Presentation Delegate must not try to have dependency injection from Spring (for instance, by means of AOP),
- * otherwise a deadlock could be triggered. Injection in constructors is safe.
+ * The implementation of {@link NodeAndDelegate}.
  *
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-@Slf4j
-public class JavaFXSafeProxyCreator
+@RequiredArgsConstructor @Getter @Slf4j
+public class DefaultNodeAndDelegate<T> implements NodeAndDelegate<T>
   {
-    private static final String P_TIMEOUT = JavaFXSafeProxyCreator.class.getName() + ".initTimeout";
+    private static final String P_TIMEOUT = DefaultNodeAndDelegate.class.getName() + ".initTimeout";
     private static final int INITIALIZER_TIMEOUT = Integer.getInteger(P_TIMEOUT, 10);
 
     public static final Map<Class<?>, Object> BEANS = new HashMap<>();
@@ -170,27 +99,31 @@ public class JavaFXSafeProxyCreator
         BEANS.put(PreferencesHandler.class, PreferencesHandler.getInstance());
       }
 
-    private JavaFXSafeProxyCreator () {}
+    @Nonnull
+    private final Node node;
+
+    @Nonnull
+    private final T delegate;
 
     /***********************************************************************************************************************************************************
      * Creates a {@link NodeAndDelegate} for the given presentation class. The FXML resource name is inferred by
      * default, For instance, is the class is named {@code JavaFXFooBarPresentation}, the resource name is
      * {@code FooBar.fxml} and searched in the same packages as the class.
      *
-     * @see #createNodeAndDelegate(java.lang.Class, java.lang.String)
+     * @see #of(java.lang.Class, java.lang.String)
      *
      * @since 1.0-ALPHA-13
      *
      * @param   presentationClass   the class of the presentation for which the resources must be created.
      **********************************************************************************************************************************************************/
     @Nonnull
-    public static <T> NodeAndDelegate<T> createNodeAndDelegate (@Nonnull final Class<T> presentationClass)
+    public static <T> NodeAndDelegate<T> of (@Nonnull final Class<T> presentationClass)
       {
         final var resource = presentationClass.getSimpleName().replaceAll("^JavaFX", "")
                                               .replaceAll("^JavaFx", "")
                                               .replaceAll("Presentation$", "")
                              + ".fxml";
-        return createNodeAndDelegate(presentationClass, resource);
+        return of(presentationClass, resource);
       }
 
     /***********************************************************************************************************************************************************
@@ -200,9 +133,10 @@ public class JavaFXSafeProxyCreator
      * @param   fxmlResourcePath    the path of the FXML resource
      **********************************************************************************************************************************************************/
     @Nonnull
-    public static <T> NodeAndDelegate<T> createNodeAndDelegate (@Nonnull final Class<T> presentationClass, @Nonnull final String fxmlResourcePath)
+    public static <T> NodeAndDelegate<T> of (@Nonnull final Class<T> presentationClass, @Nonnull final String fxmlResourcePath)
       {
-        log.debug("createNodeAndDelegate({}, {})", presentationClass, fxmlResourcePath);
+        final var log = LoggerFactory.getLogger(NodeAndDelegate.class);
+        log.debug("of({}, {})", presentationClass, fxmlResourcePath);
 
         final var latch = new CountDownLatch(1);
         final var nad = new AtomicReference<NodeAndDelegate<T>>();
@@ -212,7 +146,7 @@ public class JavaFXSafeProxyCreator
           {
             try
               {
-                return NodeAndDelegate.load(presentationClass, fxmlResourcePath);
+                return load(presentationClass, fxmlResourcePath);
               }
             catch (IOException e)
               {
@@ -224,7 +158,7 @@ public class JavaFXSafeProxyCreator
           {
             try
               {
-                nad.set(NodeAndDelegate.load(presentationClass, fxmlResourcePath));
+                nad.set(load(presentationClass, fxmlResourcePath));
               }
             catch (RuntimeException e)
               {
@@ -264,12 +198,40 @@ public class JavaFXSafeProxyCreator
         return nad.get();
       }
 
-    /***********************************************************************************************************************************************************
-     *
-     **********************************************************************************************************************************************************/
     @Nonnull
-    public static <T> T createSafeProxy (@Nonnull final T target, final Class<?>[] interfaces)
+    public static <T> NodeAndDelegate<T> load (@Nonnull final Class<T> clazz, @Nonnull final String resource)
+            throws IOException
       {
-        return (T)Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), interfaces, new JavaFXSafeProxy<>(target, logDelegateInvocations));
+        final var log = LoggerFactory.getLogger(NodeAndDelegate.class);
+        log.debug("NodeAndDelegate({}, {})", clazz, resource);
+        assert Platform.isFxApplicationThread() : "Not in JavaFX UI Thread";
+        final var loader = new FXMLLoader(clazz.getResource(resource), null, null,
+                                          type -> ReflectionUtils.instantiateWithDependencies(type, BEANS));
+        try
+          {
+            final Node node = loader.load();
+            final T jfxController = loader.getController();
+            ReflectionUtils.injectDependencies(jfxController, BEANS);
+            final var interfaces = jfxController.getClass().getInterfaces();
+
+            if (interfaces.length == 0)
+              {
+                log.warn("{} has no interface: not creating safe proxy", jfxController.getClass());
+                log.debug(">>>> load({}, {}) completed", clazz, resource);
+                return new DefaultNodeAndDelegate<>(node, jfxController);
+              }
+            else
+              {
+                final var safeDelegate = JavaFXSafeProxy.of(jfxController, interfaces);
+                log.debug(">>>> load({}, {}) completed", clazz, resource);
+                return new DefaultNodeAndDelegate<>(node, safeDelegate);
+              }
+          }
+        catch (IllegalStateException e)
+          {
+            final var message = String.format("ERROR: Cannot find resource: %s/%s", clazz.getPackageName().replace('.','/'), resource);
+            log.error("ERROR: Cannot find resource: {}", message);
+            throw new IllegalStateException(message);
+          }
       }
   }
