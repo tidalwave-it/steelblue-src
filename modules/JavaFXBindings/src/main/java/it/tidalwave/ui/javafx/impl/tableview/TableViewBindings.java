@@ -42,6 +42,7 @@ import it.tidalwave.ui.javafx.impl.common.DelegateSupport;
 import it.tidalwave.ui.javafx.impl.common.JavaFXWorker;
 import it.tidalwave.ui.javafx.impl.common.PresentationModelObservable;
 import lombok.extern.slf4j.Slf4j;
+import static it.tidalwave.ui.javafx.impl.DefaultJavaFXBinder.enforceFxApplicationThread;
 import static it.tidalwave.ui.javafx.impl.common.JavaFXWorker.childrenPm;
 
 /***************************************************************************************************************************************************************
@@ -75,6 +76,7 @@ public class TableViewBindings extends DelegateSupport
      **********************************************************************************************************************************************************/
     public void bind (@Nonnull final TableView<PresentationModel> tableView, @Nonnull final PresentationModel pm, @Nonnull final Optional<Runnable> callback)
       {
+        enforceFxApplicationThread();
         log.debug("bind({}, {}, {})", tableView, pm, callback);
         final var selectedProperty = tableView.getSelectionModel().selectedItemProperty();
         selectedProperty.removeListener(changeListener);

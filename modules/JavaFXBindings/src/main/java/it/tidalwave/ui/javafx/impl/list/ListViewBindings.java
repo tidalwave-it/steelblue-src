@@ -47,6 +47,7 @@ import lombok.extern.slf4j.Slf4j;
 import static javafx.collections.FXCollections.observableArrayList;
 import static javafx.scene.input.KeyCode.*;
 import static it.tidalwave.ui.core.role.UserActionProvider._UserActionProvider_;
+import static it.tidalwave.ui.javafx.impl.DefaultJavaFXBinder.enforceFxApplicationThread;
 import static it.tidalwave.ui.javafx.impl.common.JavaFXWorker.childrenPm;
 
 /***************************************************************************************************************************************************************
@@ -81,6 +82,7 @@ public class ListViewBindings extends DelegateSupport
      **********************************************************************************************************************************************************/
     public void bind (@Nonnull final ListView<PresentationModel> listView, @Nonnull final PresentationModel pm, @Nonnull final Optional<Runnable> callback)
       {
+        enforceFxApplicationThread();
         listView.setCellFactory(cellFactory);
         listView.setOnKeyPressed(event ->
           {
