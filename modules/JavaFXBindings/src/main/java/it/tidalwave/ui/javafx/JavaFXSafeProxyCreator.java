@@ -40,6 +40,7 @@ import javafx.application.Platform;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import it.tidalwave.ui.javafx.impl.DefaultJavaFXBinder;
 import it.tidalwave.ui.javafx.impl.DefaultJavaFXMenuBarControl;
+import it.tidalwave.ui.javafx.impl.DefaultJavaFXPanelGroupControl;
 import it.tidalwave.ui.javafx.impl.DefaultJavaFXToolBarControl;
 import it.tidalwave.ui.javafx.impl.util.JavaFXSafeProxy;
 import it.tidalwave.util.PreferencesHandler;
@@ -147,6 +148,9 @@ public class JavaFXSafeProxyCreator
     @Getter
     private static final JavaFXMenuBarControl menuBarControl = new DefaultJavaFXMenuBarControl();
 
+    // @Getter
+    // private static final JavaFXPanelGroupControl panelGroupControl = new DefaultJavaFXPanelGroupControl();
+
     @Getter @Setter
     private static boolean logDelegateInvocations = false;
 
@@ -162,6 +166,7 @@ public class JavaFXSafeProxyCreator
         BEANS.put(Executor.class, executor);
         BEANS.put(JavaFXToolBarControl.class, toolBarControl);
         BEANS.put(JavaFXMenuBarControl.class, menuBarControl);
+        // BEANS.put(JavaFXPanelGroupControl.class, panelGroupControl);
         BEANS.put(PreferencesHandler.class, PreferencesHandler.getInstance());
       }
 

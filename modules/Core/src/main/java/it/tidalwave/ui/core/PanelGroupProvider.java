@@ -23,89 +23,41 @@
  *
  * *************************************************************************************************************************************************************
  */
-package it.tidalwave.ui.javafx;
+package it.tidalwave.ui.core;
 
 import jakarta.annotation.Nonnull;
-import java.util.WeakHashMap;
-import javafx.scene.Node;
-import javafx.scene.layout.StackPane;
-import lombok.extern.slf4j.Slf4j;
+import org.apiguardian.api.API;
+import static org.apiguardian.api.API.Status.EXPERIMENTAL;
 
 /***************************************************************************************************************************************************************
  *
- * A facility that is used to manage areas in the UI where multiple contents should appear in a mutually exclusive
- * way.
+ * A service that provides a piece of he User Interface together with the definition of the group in the main window where it should be made visible (left,
+ * right, center or bottom). Instances of this class are looked up and managed by {@link PanelGroupControl}.
  *
- * @author Fabrizio Giudici
+ * @see         PanelGroupControl
+ * @since       2.0-ALPHA-3
+ * @author      Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-@Slf4j
-public class StackPaneSelector // FIXME: rename, introduce interface
+@API(status = EXPERIMENTAL)
+public interface PanelGroupProvider<T>
   {
-    private final WeakHashMap<String, StackPane> stackPaneMapByArea = new WeakHashMap<>();
 
     /***********************************************************************************************************************************************************
-     * Register a new area associated to a {@link StackPane}.
-     *
-     * @param   area        the area name
-     * @param   stackPane   the {@code StackPane}
-     **********************************************************************************************************************************************************/
-    public void registerArea (@Nonnull final String area, @Nonnull final StackPane stackPane)
-      {
-        log.debug("registerArea({}, {})", area, stackPane);
-        stackPaneMapByArea.put(area, stackPane);
-      }
-
-    /***********************************************************************************************************************************************************
-     * Add a {@link Node} to a previously registered area.
-     *
-     * @param   area        the area name
-     * @param   node        the {@code Node}
-     **********************************************************************************************************************************************************/
-    public void add (@Nonnull final String area, @Nonnull final Node node)
-      {
-        node.setVisible(false);
-        findStackPaneFor(area).getChildren().add(node);
-      }
-
-    /***********************************************************************************************************************************************************
-     * Sets the given {@link Node} as the shown one in the area where it is contained.
-     *
-     * @param   node        the {@code Node}
-     **********************************************************************************************************************************************************/
-    public void setShownNode (@Nonnull final Node node)
-      {
-        log.info("setShownNode({})", node);
-
-        for (final var stackPane : stackPaneMapByArea.values())
-          {
-            final var children = stackPane.getChildren();
-
-            if (children.contains(node))
-              {
-                children.forEach(child -> child.setVisible(false));
-                node.setVisible(true); // at last
-                return;
-              }
-          }
-
-        throw new IllegalArgumentException("Node not in a managed StackPange: " + node);
-
-      }
-
-    /***********************************************************************************************************************************************************
-     *
+     * {@return the label associated to this User Interface piece}.
      **********************************************************************************************************************************************************/
     @Nonnull
-    private StackPane findStackPaneFor (@Nonnull final String area)
-      {
-        final var stackPane = stackPaneMapByArea.get(area);
+    public String getLabel();
 
-        if (stackPane == null)
-          {
-            throw new IllegalArgumentException("Area not handled: " + area);
-          }
+    /***********************************************************************************************************************************************************
+     * {@return the concrete UI component associated to this provider}.
+     **********************************************************************************************************************************************************/
+    @Nonnull
+    public T getComponent();
 
-        return stackPane;
-      }
- }
+    /***********************************************************************************************************************************************************
+     * {@return the placement of this piece of the User Interface}.
+     **********************************************************************************************************************************************************/
+    @Nonnull
+    public PanelGroupControl.Group getGroup();
+  }

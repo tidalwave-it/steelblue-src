@@ -61,7 +61,6 @@ public class JavaFXSpringAnnotationApplicationTest
         final var applicationContext = underTest.createApplicationContext();
         // then
         assertThat(applicationContext.getBean("javafxBinderExecutor", ThreadPoolTaskExecutor.class), notNullValue());
-        assertThat(applicationContext.getBean("stackPaneSelector", StackPaneSelector.class), notNullValue());
         assertThat(applicationContext.getBean("preferencesHandler", PreferencesHandler.class), notNullValue());
         assertThat(applicationContext.getBean("toolBarControl", JavaFXToolBarControl.class), notNullValue());
         assertThat(applicationContext.getBean("menuBarControl", JavaFXMenuBarControl.class), notNullValue());
@@ -79,7 +78,6 @@ public class JavaFXSpringAnnotationApplicationTest
         final var applicationContext = underTest.createApplicationContext();
         // then
         assertThat(applicationContext.getBean("javafxBinderExecutor", ThreadPoolTaskExecutor.class), notNullValue());
-        assertThat(applicationContext.getBean("stackPaneSelector", StackPaneSelector.class), notNullValue());
         assertThat(applicationContext.getBean("preferencesHandler", PreferencesHandler.class), notNullValue());
         assertThat(applicationContext.getBean("toolBarControl", JavaFXToolBarControl.class), notNullValue());
         assertThat(applicationContext.getBean("menuBarControl", JavaFXMenuBarControl.class), notNullValue());

@@ -28,10 +28,12 @@ package it.tidalwave.ui.javafx;
 import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import it.tidalwave.ui.javafx.impl.DefaultJavaFXPanelGroupControl;
 import it.tidalwave.ui.javafx.spi.AbstractJavaFXSpringApplication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,12 +61,6 @@ public class JavaFXSpringAnnotationApplication extends AbstractJavaFXSpringAppli
           }
 
         @Bean
-        public StackPaneSelector stackPaneSelector()
-          {
-            return new StackPaneSelector();
-          }
-
-        @Bean
         public PreferencesHandler preferencesHandler()
           {
             return PreferencesHandler.getInstance();
@@ -80,6 +76,12 @@ public class JavaFXSpringAnnotationApplication extends AbstractJavaFXSpringAppli
         public JavaFXMenuBarControl menuBarControl()
           {
             return JavaFXSafeProxyCreator.getMenuBarControl();
+          }
+
+        @Bean
+        public JavaFXPanelGroupControl panelGroupControl (@Nonnull final BeanFactory beanFactory)
+          {
+            return new DefaultJavaFXPanelGroupControl(beanFactory);
           }
       }
 
