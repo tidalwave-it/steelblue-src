@@ -28,7 +28,6 @@ package it.tidalwave.ui.core.test;
 import jakarta.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.function.Consumer;
-import java.awt.EventQueue;
 import it.tidalwave.ui.core.UserNotification;
 import it.tidalwave.ui.core.UserNotificationWithFeedback;
 import lombok.NoArgsConstructor;
@@ -110,21 +109,9 @@ public final class UserNotificationWithFeedbackTestHelper
      **********************************************************************************************************************************************************/
     private static final Answer<Void> CONFIRM = invocation ->
       {
-        // FIXME: use Platform.runLater() and wait
-        EventQueue.invokeAndWait(() ->
-          {
-            try
-              {
-                final var notification = findNotification(invocation);
-                log.info(">>>> mock UI confirming {}...", notification);
-                notification.confirm();
-              }
-            catch (Exception e)
-              {
-                log.debug("", e);
-              }
-          });
-
+        final var notification = findNotification(invocation);
+        log.info(">>>> mock UI confirming {}...", notification);
+        notification.confirm();
         return null;
       };
 
@@ -133,21 +120,9 @@ public final class UserNotificationWithFeedbackTestHelper
      **********************************************************************************************************************************************************/
     private static final Answer<Void> CANCEL = invocation ->
       {
-        // FIXME: use Platform.runLater() and wait
-        EventQueue.invokeAndWait(() ->
-          {
-            try
-              {
-                final var notification = findNotification(invocation);
-                log.info(">>>> mock UI cancelling {}...", notification);
-                notification.cancel();
-              }
-            catch (Exception e)
-              {
-                log.debug("", e);
-              }
-          });
-
+        final var notification = findNotification(invocation);
+        log.info(">>>> mock UI cancelling {}...", notification);
+        notification.cancel();
         return null;
       };
 
