@@ -43,6 +43,9 @@
     <packaging>jar</packaging>
     <version>2.0-ALPHA-3-SNAPSHOT</version>
     <name>SteelBlue :: Examples :: JavaFX presentation</name>
+    <description>
+        Run with example with `mvn -Pjavafx-run`
+    </description>
 
     <properties>
         <tft.javafx.modules>javafx.base,javafx.controls,javafx.fxml,javafx.graphics,javafx.web</tft.javafx.modules>

@@ -68,6 +68,12 @@ TBD
 
 #[[##]]# Getting started
 
+The best way to start with SteelBlue is by looking at a simple example. You can run it with:
+
+```shell
+mvn -f modules/examples/PresentationJavaFX/pom.xml -Pjavafx-run
+```
+
 The application is partitioned in the following modules:
 
 + **Model**: contains data entities and business controllers to elaborate them.
