@@ -105,12 +105,14 @@ public interface Mutable
 
     /***********************************************************************************************************************************************************
      * Registers a {@link MutableListener}.
+     * @param  <T>        the type of the listener
      * @param  listener   the listener
      **********************************************************************************************************************************************************/
     public <T> void addListener (@Nonnull final MutableListener<T> listener);
 
     /***********************************************************************************************************************************************************
      * Registers a {@link MutableListener}. This method is needed to allow the compiler to infer the correct type of lambdas.
+     * @param  <T>        the type of the listener
      * @param  listener   the listener
      **********************************************************************************************************************************************************/
     public default <T> void addListener1 (@Nonnull final MutableListener1<T> listener)
@@ -120,6 +122,7 @@ public interface Mutable
 
     /***********************************************************************************************************************************************************
      * Registers a {@link MutableListener}. This method is needed to allow the compiler to infer the correct type of lambdas.
+     * @param  <T>        the type of the listener
      * @param  listener   the listener
      **********************************************************************************************************************************************************/
     public default <T> void addListener2 (@Nonnull final MutableListener2<T> listener)
@@ -129,6 +132,7 @@ public interface Mutable
 
     /***********************************************************************************************************************************************************
      * Unregisters a {@link MutableListener}.
+     * @param  <T>        the type of the listener
      * @param  listener   the listener
      **********************************************************************************************************************************************************/
     public <T> void removeListener (@Nonnull final MutableListener<T> listener);
