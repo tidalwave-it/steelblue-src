@@ -37,7 +37,7 @@ package it.tidalwave.ui.core.role;
 @FunctionalInterface
 public interface Visibility
   {
-    public static final Class<Visibility> _Visible_ = Visibility.class;
+    public static final Class<Visibility> _Visibility_ = Visibility.class;
 
     /***********************************************************************************************************************************************************
      * A role that is always visible.

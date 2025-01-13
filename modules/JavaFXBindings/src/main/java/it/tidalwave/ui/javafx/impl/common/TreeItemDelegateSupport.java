@@ -40,7 +40,7 @@ import it.tidalwave.ui.javafx.impl.tree.ObsoletePresentationModelDisposer;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import static java.util.stream.Collectors.*;
-import static it.tidalwave.ui.core.role.Visibility._Visible_;
+import static it.tidalwave.ui.core.role.Visibility._Visibility_;
 import static it.tidalwave.ui.javafx.impl.DefaultJavaFXBinder.enforceFxApplicationThread;
 import static it.tidalwave.ui.javafx.impl.common.JavaFXWorker.childrenPm;
 
@@ -147,6 +147,6 @@ public class TreeItemDelegateSupport extends DelegateSupport
      **********************************************************************************************************************************************************/
     protected static Boolean shouldShowRoot (@Nonnull final PresentationModel pm)
       {
-        return pm.maybeAs(_Visible_).map(Visibility::isVisible).orElse(true);
+        return pm.maybeAs(_Visibility_).map(Visibility::isVisible).orElse(true);
       }
   }
