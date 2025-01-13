@@ -23,9 +23,11 @@
  *
  * *************************************************************************************************************************************************************
  */
-package it.tidalwave.ui.function;
+package it.tidalwave.ui.core.function;
 
-import it.tidalwave.ui.core.ChangingSource;
+import java.beans.PropertyChangeSupport;
+import it.tidalwave.ui.core.role.impl.MutableListenerSupport;
+import lombok.experimental.Delegate;
 
 /***************************************************************************************************************************************************************
  *
@@ -33,6 +35,34 @@ import it.tidalwave.ui.core.ChangingSource;
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-public interface BoundFunction<DOMAIN_TYPE, CODOMAIN_TYPE> extends ChangingSource<CODOMAIN_TYPE>
+@SuppressWarnings("this-escape")
+public abstract class BoundFunctionSupport<T, R> implements BoundFunction<T, R>
   {
+    @Delegate // FIXME: weak
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+
+    @Delegate
+    private final MutableListenerSupport mls = new MutableListenerSupport(pcs);
+
+    /***********************************************************************************************************************************************************
+     * {@inheritDoc}
+     **********************************************************************************************************************************************************/
+    @Override
+    public void unbindAll()
+      {
+        for (final var listener : pcs.getPropertyChangeListeners().clone())
+          {
+            pcs.removePropertyChangeListener(listener);
+          }
+      }
+
+    protected void fireValueChanged (final R oldValue, final R newValue)
+      {
+        pcs.firePropertyChange("value", oldValue, newValue);
+      }
+
+    protected void fireValueChanged (final boolean oldValue, final boolean newValue)
+      {
+        pcs.firePropertyChange("value", oldValue, newValue);
+      }
   }

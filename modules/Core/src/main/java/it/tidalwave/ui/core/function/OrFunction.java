@@ -23,7 +23,7 @@
  *
  * *************************************************************************************************************************************************************
  */
-package it.tidalwave.ui.function;
+package it.tidalwave.ui.core.function;
 
 import jakarta.annotation.Nonnull;
 import it.tidalwave.ui.core.ChangingSource;
@@ -34,22 +34,30 @@ import it.tidalwave.ui.core.ChangingSource;
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-public class CopyIfEmptyOrConform extends WeakCopyFunctionSupport<String>
+public class OrFunction extends BooleanBoundFunctionSupport
   {
     @Nonnull
-    public static CopyIfEmptyOrConform copyIfEmptyOrConform (@Nonnull final ChangingSource<String> source)
+    public static OrFunction or (@Nonnull final ChangingSource<Boolean> ... sources)
       {
-        return new CopyIfEmptyOrConform(source);
+        return new OrFunction(sources);
       }
 
-    public CopyIfEmptyOrConform (@Nonnull final ChangingSource<String> sourceProperty)
+    public OrFunction (@Nonnull final ChangingSource<Boolean> ... sources)
       {
-        super(sourceProperty);
+        super(sources);
       }
 
     @Override
-    protected boolean shouldChange (@Nonnull final String oldValue, @Nonnull final String newValue)
+    protected final boolean function()
       {
-        return oldValue.equals(targetValue) || targetValue.isEmpty();
+        for (final var source : sources)
+          {
+            if (source.get())
+              {
+                return true;
+              }
+          }
+
+        return false;
       }
   }

@@ -23,7 +23,7 @@
  *
  * *************************************************************************************************************************************************************
  */
-package it.tidalwave.ui.function;
+package it.tidalwave.ui.core.function;
 
 import jakarta.annotation.Nonnull;
 import it.tidalwave.ui.core.ChangingSource;
@@ -34,34 +34,22 @@ import it.tidalwave.ui.core.ChangingSource;
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-@SuppressWarnings("this-escape")
-public abstract class UnaryBoundFunctionSupport<T, R> extends BoundFunctionSupport<T, R>
+public class CopyIfEmptyOrConform extends WeakCopyFunctionSupport<String>
   {
     @Nonnull
-    protected final ChangingSource<T> source;
-
-    protected R value;
-
-    @SuppressWarnings("unchecked")
-    protected UnaryBoundFunctionSupport (@Nonnull final ChangingSource<T> source)
+    public static CopyIfEmptyOrConform copyIfEmptyOrConform (@Nonnull final ChangingSource<String> source)
       {
-        this.source = source;
-        source.addPropertyChangeListener(event -> onSourceChange((T)event.getOldValue(), (T)event.getNewValue()));
+        return new CopyIfEmptyOrConform(source);
       }
 
-    protected void onSourceChange (@Nonnull final T oldSourceValue, @Nonnull final T newSourceValue)
+    public CopyIfEmptyOrConform (@Nonnull final ChangingSource<String> sourceProperty)
       {
-        final var oldValue = function(oldSourceValue);
-        value = function(newSourceValue);
-        fireValueChanged(oldValue, value);
+        super(sourceProperty);
       }
 
-    @Nonnull
-    protected abstract R function (final T value);
-
-    @Override @Nonnull
-    public final R get()
+    @Override
+    protected boolean shouldChange (@Nonnull final String oldValue, @Nonnull final String newValue)
       {
-        return value;
+        return oldValue.equals(targetValue) || targetValue.isEmpty();
       }
   }

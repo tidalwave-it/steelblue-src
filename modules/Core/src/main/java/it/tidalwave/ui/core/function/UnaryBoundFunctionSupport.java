@@ -23,11 +23,10 @@
  *
  * *************************************************************************************************************************************************************
  */
-package it.tidalwave.ui.function;
+package it.tidalwave.ui.core.function;
 
-import java.beans.PropertyChangeSupport;
-import it.tidalwave.ui.core.role.impl.MutableListenerSupport;
-import lombok.experimental.Delegate;
+import jakarta.annotation.Nonnull;
+import it.tidalwave.ui.core.ChangingSource;
 
 /***************************************************************************************************************************************************************
  *
@@ -36,33 +35,33 @@ import lombok.experimental.Delegate;
  *
  **************************************************************************************************************************************************************/
 @SuppressWarnings("this-escape")
-public abstract class BoundFunctionSupport<T, R> implements BoundFunction<T, R>
+public abstract class UnaryBoundFunctionSupport<T, R> extends BoundFunctionSupport<T, R>
   {
-    @Delegate // FIXME: weak
-    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+    @Nonnull
+    protected final ChangingSource<T> source;
 
-    @Delegate
-    private final MutableListenerSupport mls = new MutableListenerSupport(pcs);
+    protected R value;
 
-    /***********************************************************************************************************************************************************
-     * {@inheritDoc}
-     **********************************************************************************************************************************************************/
-    @Override
-    public void unbindAll()
+    @SuppressWarnings("unchecked")
+    protected UnaryBoundFunctionSupport (@Nonnull final ChangingSource<T> source)
       {
-        for (final var listener : pcs.getPropertyChangeListeners().clone())
-          {
-            pcs.removePropertyChangeListener(listener);
-          }
+        this.source = source;
+        source.addPropertyChangeListener(event -> onSourceChange((T)event.getOldValue(), (T)event.getNewValue()));
       }
 
-    protected void fireValueChanged (final R oldValue, final R newValue)
+    protected void onSourceChange (@Nonnull final T oldSourceValue, @Nonnull final T newSourceValue)
       {
-        pcs.firePropertyChange("value", oldValue, newValue);
+        final var oldValue = function(oldSourceValue);
+        value = function(newSourceValue);
+        fireValueChanged(oldValue, value);
       }
 
-    protected void fireValueChanged (final boolean oldValue, final boolean newValue)
+    @Nonnull
+    protected abstract R function (final T value);
+
+    @Override @Nonnull
+    public final R get()
       {
-        pcs.firePropertyChange("value", oldValue, newValue);
+        return value;
       }
   }

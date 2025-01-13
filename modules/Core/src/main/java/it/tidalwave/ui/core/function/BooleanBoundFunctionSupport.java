@@ -23,9 +23,11 @@
  *
  * *************************************************************************************************************************************************************
  */
-package it.tidalwave.ui.function;
+package it.tidalwave.ui.core.function;
 
 import jakarta.annotation.Nonnull;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import it.tidalwave.ui.core.ChangingSource;
 
 /***************************************************************************************************************************************************************
@@ -34,30 +36,43 @@ import it.tidalwave.ui.core.ChangingSource;
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-public class NonEmptyFunction extends UnaryBoundFunctionSupport<String, Boolean>
+@SuppressWarnings("this-escape")
+public abstract class BooleanBoundFunctionSupport extends BoundFunctionSupport<Boolean, Boolean>
   {
-    @Nonnull
-    public static NonEmptyFunction nonEmpty (@Nonnull final ChangingSource<String> source)
+    protected final ChangingSource<Boolean>[] sources;
+
+    private boolean oldValue;
+
+    private boolean newValue;
+
+    private final PropertyChangeListener pcl = new PropertyChangeListener()
       {
-        return new NonEmptyFunction(source);
+        @Override
+        public void propertyChange (@Nonnull final PropertyChangeEvent event)
+          {
+            newValue = function();
+            fireValueChanged(oldValue, newValue);
+            oldValue = newValue;
+          }
+      };
+
+    public BooleanBoundFunctionSupport (@Nonnull final ChangingSource<Boolean> ... sources)
+      {
+        this.sources = sources;
+
+        for (final var source : sources)
+          {
+            source.addPropertyChangeListener(pcl);
+          }
+
+        oldValue = function();
       }
 
-    public NonEmptyFunction (@Nonnull final ChangingSource<String> source)
-      {
-        super(source);
-      }
-
-    @Override
-    protected void onSourceChange (@Nonnull final String oldSourceValue, @Nonnull final String newSourceValue)
-      {
-        final boolean oldValue = function(oldSourceValue);
-        value = function(newSourceValue);
-        fireValueChanged(oldValue, (boolean)value);
-      }
+    protected abstract boolean function();
 
     @Override @Nonnull
-    protected Boolean function (final String value)
+    public final Boolean get()
       {
-        return (value != null) && !value.trim().isEmpty();
+        return newValue;
       }
   }

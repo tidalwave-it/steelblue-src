@@ -23,56 +23,41 @@
  *
  * *************************************************************************************************************************************************************
  */
-package it.tidalwave.ui.function;
+package it.tidalwave.ui.core.function;
 
 import jakarta.annotation.Nonnull;
-import it.tidalwave.ui.core.role.Changeable;
 import it.tidalwave.ui.core.ChangingSource;
-import lombok.extern.slf4j.Slf4j;
 
 /***************************************************************************************************************************************************************
- *
- * Changes the destination only at a certain condition in function of the target.
  *
  * @since   2.0-ALPHA-1
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-@Slf4j
-public abstract class WeakCopyFunctionSupport<T> extends UnaryBoundFunctionSupport<T, T> implements Changeable<T>
+public class NonEmptyFunction extends UnaryBoundFunctionSupport<String, Boolean>
   {
     @Nonnull
-    protected T targetValue;
+    public static NonEmptyFunction nonEmpty (@Nonnull final ChangingSource<String> source)
+      {
+        return new NonEmptyFunction(source);
+      }
 
-    protected WeakCopyFunctionSupport (@Nonnull final ChangingSource<T> source)
+    public NonEmptyFunction (@Nonnull final ChangingSource<String> source)
       {
         super(source);
       }
 
     @Override
-    protected void onSourceChange (@Nonnull final T oldSourceValue, @Nonnull final T newSourceValue)
+    protected void onSourceChange (@Nonnull final String oldSourceValue, @Nonnull final String newSourceValue)
       {
-        final var oldValue = function(oldSourceValue);
-        final var newValue = function(newSourceValue);
-
-        if (shouldChange(oldValue, newValue))
-          {
-            value = newValue;
-            fireValueChanged(oldValue, newValue);
-          }
+        final boolean oldValue = function(oldSourceValue);
+        value = function(newSourceValue);
+        fireValueChanged(oldValue, (boolean)value);
       }
-
-    @Override
-    public void set (final T value)
-      {
-        this.targetValue = value;
-      }
-
-    protected abstract boolean shouldChange (T oldValue, T newValue);
 
     @Override @Nonnull
-    protected T function (@Nonnull final T value)
+    protected Boolean function (final String value)
       {
-        return value;
+        return (value != null) && !value.trim().isEmpty();
       }
   }

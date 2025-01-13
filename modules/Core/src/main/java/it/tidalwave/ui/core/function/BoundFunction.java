@@ -23,11 +23,8 @@
  *
  * *************************************************************************************************************************************************************
  */
-package it.tidalwave.ui.function;
+package it.tidalwave.ui.core.function;
 
-import jakarta.annotation.Nonnull;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import it.tidalwave.ui.core.ChangingSource;
 
 /***************************************************************************************************************************************************************
@@ -36,43 +33,6 @@ import it.tidalwave.ui.core.ChangingSource;
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-@SuppressWarnings("this-escape")
-public abstract class BooleanBoundFunctionSupport extends BoundFunctionSupport<Boolean, Boolean>
+public interface BoundFunction<DOMAIN_TYPE, CODOMAIN_TYPE> extends ChangingSource<CODOMAIN_TYPE>
   {
-    protected final ChangingSource<Boolean>[] sources;
-
-    private boolean oldValue;
-
-    private boolean newValue;
-
-    private final PropertyChangeListener pcl = new PropertyChangeListener()
-      {
-        @Override
-        public void propertyChange (@Nonnull final PropertyChangeEvent event)
-          {
-            newValue = function();
-            fireValueChanged(oldValue, newValue);
-            oldValue = newValue;
-          }
-      };
-
-    public BooleanBoundFunctionSupport (@Nonnull final ChangingSource<Boolean> ... sources)
-      {
-        this.sources = sources;
-
-        for (final var source : sources)
-          {
-            source.addPropertyChangeListener(pcl);
-          }
-
-        oldValue = function();
-      }
-
-    protected abstract boolean function();
-
-    @Override @Nonnull
-    public final Boolean get()
-      {
-        return newValue;
-      }
   }
