@@ -58,7 +58,7 @@ public class DefaultJavaFXBinder implements JavaFXBinder
   {
     private final Executor executor;
 
-    private final String invalidTextFieldStyle = "-fx-background-color: pink";
+    private static final String FX_BACKGROUND_COLOR_PINK = "-fx-background-color: pink";
 
     @Delegate
     private final ButtonBindings buttonBindings;
@@ -153,7 +153,7 @@ public class DefaultJavaFXBinder implements JavaFXBinder
         textField.textProperty().bindBidirectional(new PropertyAdapter<>(executor, textProperty));
 
         // FIXME: weak listener
-        validProperty.addPropertyChangeListener(__ -> textField.setStyle(validProperty.get() ? "" : invalidTextFieldStyle));
+        validProperty.addPropertyChangeListener(ignored -> textField.setStyle(validProperty.get() ? "" : FX_BACKGROUND_COLOR_PINK));
       }
 
     /***********************************************************************************************************************************************************

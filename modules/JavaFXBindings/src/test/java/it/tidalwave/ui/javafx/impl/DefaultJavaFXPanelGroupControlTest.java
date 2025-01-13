@@ -129,7 +129,7 @@ public class DefaultJavaFXPanelGroupControlTest extends JavaFXTestSupport
         final var accordion = topContainer.getChildren().get(0);
         assertThat(accordion).isInstanceOf(Accordion.class);
         final var panes = ((Accordion)accordion).getPanes();
-        assertThat(panes.size()).isEqualTo(1);
+        assertThat(panes).hasSize(1);
         final var tp1 = panes.get(0);
         assertThat(tp1.getText()).isEqualTo("Panel 1");
         assertThat(tp1.getContent()).isSameAs(provider1.getComponent());
@@ -169,7 +169,7 @@ public class DefaultJavaFXPanelGroupControlTest extends JavaFXTestSupport
         final var accordion = topContainer.getChildren().get(0);
         assertThat(accordion).isInstanceOf(Accordion.class);
         final var panes = ((Accordion)accordion).getPanes();
-        assertThat(panes.size()).isEqualTo(2);
+        assertThat(panes).hasSize(2);
         final var tp1 = panes.get(0);
         final var tp2 = panes.get(1);
         assertThat(tp1.getText()).isEqualTo("Panel 1");

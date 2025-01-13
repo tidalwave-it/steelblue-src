@@ -133,7 +133,7 @@ public final class UserNotificationWithFeedbackTestHelper
     private static UserNotificationWithFeedback findNotification (@Nonnull final InvocationOnMock invocation)
       {
         return (UserNotificationWithFeedback)Arrays.stream(invocation.getArguments())
-                     .filter(a -> a instanceof UserNotificationWithFeedback)
+                     .filter(UserNotificationWithFeedback.class::isInstance)
                      .findFirst()
                      .orElseThrow();
       }

@@ -120,7 +120,7 @@ public interface PanelGroupControl<T>
      * @see   Configuration#withGroup(Group, Object, Options...) 
      * @see   Configuration#withOptions(Options...)
      **********************************************************************************************************************************************************/
-    public static enum Options
+    public enum Options
       {
         /** Use a wrapper container even when there is a single element in a group. */
         ALWAYS_WRAP,

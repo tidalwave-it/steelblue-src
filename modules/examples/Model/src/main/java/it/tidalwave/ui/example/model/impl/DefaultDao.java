@@ -62,7 +62,7 @@ public class DefaultDao implements Dao // FIXME: rename to Model
             final var attr2 = sequence.getAndIncrement();
             final var name = String.format("(%d ; %d)", attr1, attr2);
             return new SimpleDciEntity(name, attr1, attr2);
-          }).collect(toList());
+          }).toList();
       }
 
     @Override @Nonnull

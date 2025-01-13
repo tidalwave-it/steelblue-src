@@ -67,7 +67,7 @@ public class PropertyAdapter<T> implements Property<T>
 
     private T boundValue;
 
-    private final PropertyChangeListener propertyChangeListener = (event) -> 
+    private final PropertyChangeListener propertyChangeListener = event ->
       {
         log.trace("propertyChange({}) - bound value: {}", event, boundValue);
         

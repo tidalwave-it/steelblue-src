@@ -56,8 +56,6 @@ import static it.tidalwave.role.SimpleComposite._SimpleComposite_;
 @Slf4j
 public class SimpleCompositePresentable implements Presentable
   {
-    private static final As.Type<SimpleComposite<As>> _SimpleCompositeOfAs_ = As.type(_SimpleComposite_);
-
     @RequiredArgsConstructor
     static class SCPFinder extends SimpleFinderSupport<PresentationModel>
       {

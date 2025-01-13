@@ -80,7 +80,7 @@ public abstract class ToolBarControlSupport<B, T, BT> implements ToolBarControl<
         final var actions = userActionsSupplier.get();
         log.info("Toolbar user actions: {}", actions);
         final var buttons = actions.stream()
-                                   .map((action) -> createButton(binder, action))
+                                   .map(action -> createButton(binder, action))
                                    .collect(toList());
         addButtonsToToolBar(toolBar, buttons);
       }

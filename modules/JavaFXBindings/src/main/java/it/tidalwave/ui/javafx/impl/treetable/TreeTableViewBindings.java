@@ -57,7 +57,7 @@ public class TreeTableViewBindings extends TreeItemDelegateSupport
     public TreeTableViewBindings (@Nonnull final Executor executor, @Nonnull final CellBinder cellBinder)
       {
         super(executor);
-        cellFactory = __ -> AsObjectTreeTableCell.of(cellBinder);
+        cellFactory = ignored -> AsObjectTreeTableCell.of(cellBinder);
       }
 
     /***********************************************************************************************************************************************************

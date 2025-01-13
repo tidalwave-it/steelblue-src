@@ -99,7 +99,6 @@ public abstract class BindingTestSupport<T extends Node> extends JavaFXTestSuppo
         control = supplier.get();
         stage.setScene(new Scene(stackPane = new StackPane(), 400, 400));
         stage.show();
-        //stage.setAlwaysOnTop(true);
         executor = Executors.newSingleThreadExecutor();
         runSafelyAndWait("start", executor, () -> {}); // wait for tasks completed
         callBack = mock(Runnable.class);

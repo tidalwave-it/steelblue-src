@@ -83,7 +83,7 @@ public class PanelGroupControlSupportTest
         final var panelRight  = mock(MockPanel.class);
         final var ppLeft1   = createMock(LEFT,   "Left 1");
         final var ppLeft2   = createMock(LEFT,   "Left 2");
-        final var ppRight1  = createMock(RIGHT,  "Right 1");;
+        final var ppRight1  = createMock(RIGHT,  "Right 1");
         final var ppRight2  = createMock(RIGHT,  "Right 2");
         final var ppCenter1 = createMock(CENTER, "Center 1");
         final var ppCenter2 = createMock(CENTER, "Center 2");

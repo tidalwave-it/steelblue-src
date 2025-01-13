@@ -120,7 +120,7 @@ public class DialogBindings extends DelegateSupport
             if (!text.startsWith("<html>"))
               {
                 dialog.setContentText(text);
-                node.ifPresent(n -> dialogPane.setContent(n));
+                node.ifPresent(dialogPane::setContent);
               }
             else
               {

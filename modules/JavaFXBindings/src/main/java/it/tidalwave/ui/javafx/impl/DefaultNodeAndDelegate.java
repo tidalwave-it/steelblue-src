@@ -77,9 +77,6 @@ public class DefaultNodeAndDelegate<T> implements NodeAndDelegate<T>
     @Getter
     private static final JavaFXMenuBarControl menuBarControl = new DefaultJavaFXMenuBarControl();
 
-    // @Getter
-    // private static final JavaFXPanelGroupControl panelGroupControl = new DefaultJavaFXPanelGroupControl();
-
     @Getter @Setter
     private static boolean logDelegateInvocations = false;
 
@@ -95,7 +92,6 @@ public class DefaultNodeAndDelegate<T> implements NodeAndDelegate<T>
         BEANS.put(Executor.class, executor);
         BEANS.put(JavaFXToolBarControl.class, toolBarControl);
         BEANS.put(JavaFXMenuBarControl.class, menuBarControl);
-        // BEANS.put(JavaFXPanelGroupControl.class, panelGroupControl);
         BEANS.put(PreferencesHandler.class, PreferencesHandler.getInstance());
       }
 
@@ -141,6 +137,8 @@ public class DefaultNodeAndDelegate<T> implements NodeAndDelegate<T>
         final var latch = new CountDownLatch(1);
         final var nad = new AtomicReference<NodeAndDelegate<T>>();
         final var exception = new AtomicReference<RuntimeException>();
+        final var message = String.format("Likely deadlock in the JavaFX Thread: couldn't create NodeAndDelegate: %s, %s",
+                                          presentationClass, fxmlResourcePath);
 
         if (Platform.isFxApplicationThread())
           {
@@ -176,7 +174,11 @@ public class DefaultNodeAndDelegate<T> implements NodeAndDelegate<T>
           {
             log.debug("Waiting for NodeAndDelegate initialisation in JavaFX thread...");
             log.debug("If deadlocks and you need longer time with the debugger, set {} (current value: {})", P_TIMEOUT, INITIALIZER_TIMEOUT);
-            latch.await(INITIALIZER_TIMEOUT, TimeUnit.SECONDS); // FIXME
+
+            if (!latch.await(INITIALIZER_TIMEOUT, TimeUnit.SECONDS))
+              {
+                throw new RuntimeException(message);
+              }
           }
         catch (InterruptedException e)
           {
@@ -190,8 +192,6 @@ public class DefaultNodeAndDelegate<T> implements NodeAndDelegate<T>
 
         if (nad.get() == null)
           {
-            final var message = String.format("Likely deadlock in the JavaFX Thread: couldn't create NodeAndDelegate: %s, %s",
-                                              presentationClass, fxmlResourcePath);
             throw new RuntimeException(message);
           }
 

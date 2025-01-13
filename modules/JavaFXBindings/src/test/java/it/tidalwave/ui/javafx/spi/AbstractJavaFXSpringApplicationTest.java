@@ -88,7 +88,7 @@ public class AbstractJavaFXSpringApplicationTest
       {
         applicationContext = mock(ConfigurableApplicationContext.class);
         messageBus = mock(MessageBus.class);
-        when(applicationContext.containsBean(eq(APPLICATION_MESSAGE_BUS_BEAN_NAME))).thenReturn(false);
+        when(applicationContext.containsBean(APPLICATION_MESSAGE_BUS_BEAN_NAME)).thenReturn(false);
         when(applicationContext.getBean(eq(APPLICATION_MESSAGE_BUS_BEAN_NAME), eq(MessageBus.class))).thenThrow(new NoSuchBeanDefinitionException(MessageBus.class));
         nad = mock(NodeAndDelegate.class);
         when(nad.getDelegate()).thenReturn(new MockPresentationDelegate());
@@ -117,7 +117,7 @@ public class AbstractJavaFXSpringApplicationTest
             throws InterruptedException
       {
         // given
-        when(applicationContext.containsBean(eq(APPLICATION_MESSAGE_BUS_BEAN_NAME))).thenReturn(true);
+        when(applicationContext.containsBean(APPLICATION_MESSAGE_BUS_BEAN_NAME)).thenReturn(true);
         when(applicationContext.getBean(eq(APPLICATION_MESSAGE_BUS_BEAN_NAME), eq(MessageBus.class))).thenReturn(messageBus);
         underTest.initializeInBackground();
         // when
@@ -146,7 +146,7 @@ public class AbstractJavaFXSpringApplicationTest
     public void must_fire_PowerOffEvent_when_MessageBus_present()
       {
         // given
-        when(applicationContext.containsBean(eq(APPLICATION_MESSAGE_BUS_BEAN_NAME))).thenReturn(true);
+        when(applicationContext.containsBean(APPLICATION_MESSAGE_BUS_BEAN_NAME)).thenReturn(true);
         when(applicationContext.getBean(eq(APPLICATION_MESSAGE_BUS_BEAN_NAME), eq(MessageBus.class))).thenReturn(messageBus);
         underTest.initializeInBackground();
         // when
@@ -195,10 +195,10 @@ public class AbstractJavaFXSpringApplicationTest
       {
         final var presentationDelegateAssembler = spy(new PresentationDelegateAssembler());
         final var springComponentAssembler = spy(new SpringComponentAssembler());
-        when(applicationContext.getBean(eq(Bean1.class))).thenReturn(new Bean1());
-        when(applicationContext.getBean(eq(Bean2.class))).thenReturn(new Bean2());
-        when(applicationContext.getBean(eq(JavaFXPanelGroupControl.class))).thenReturn(mock(JavaFXPanelGroupControl.class));
-        when(applicationContext.getBeansWithAnnotation(eq(PresentationAssembler.class))).thenReturn(Map.of("foo", springComponentAssembler));
+        when(applicationContext.getBean(Bean1.class)).thenReturn(new Bean1());
+        when(applicationContext.getBean(Bean2.class)).thenReturn(new Bean2());
+        when(applicationContext.getBean(JavaFXPanelGroupControl.class)).thenReturn(mock(JavaFXPanelGroupControl.class));
+        when(applicationContext.getBeansWithAnnotation(PresentationAssembler.class)).thenReturn(Map.of("foo", springComponentAssembler));
         when(nad.getDelegate()).thenReturn(presentationDelegateAssembler);
         PreferencesHandler.setAppName("test-" + getClass().getName());
         underTest.initializeInBackground();

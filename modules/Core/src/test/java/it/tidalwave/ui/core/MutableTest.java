@@ -69,8 +69,8 @@ public class MutableTest
         // when
         mutable.firePropertyChange("property name", "old value", "new value");
         // then
-        verify(consumer1).accept(eq("new value"));
-        verify(consumer2).accept(eq("old value"), eq("new value"));
+        verify(consumer1).accept("new value");
+        verify(consumer2).accept("old value", "new value");
         verify(consumer3).accept(same(mutable), eq("old value"), eq("new value"));
       }
   }

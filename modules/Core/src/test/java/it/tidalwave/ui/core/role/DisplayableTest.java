@@ -98,7 +98,7 @@ public class DisplayableTest
         // when
         underTest.renderTo(consumer);
         // then
-        verify(consumer).accept(eq("foo bar"));
+        verify(consumer).accept("foo bar");
       }
 
     /**********************************************************************************************************************************************************/

@@ -83,7 +83,7 @@ public class ButtonBindings extends DelegateSupport
       {
         enforceFxApplicationThread();
         action.maybeAs(_Displayable_).ifPresent(d -> button.setText(d.getDisplayName()));
-        button.setOnAction(__ -> executor.execute(action::actionPerformed));
+        button.setOnAction(ignored -> executor.execute(action::actionPerformed));
         bindEnableProperty(button.disableProperty(), action.enabled());
       }
 
@@ -94,7 +94,7 @@ public class ButtonBindings extends DelegateSupport
       {
         enforceFxApplicationThread();
         menuItem.setText(action.maybeAs(_Displayable_).map(Displayable::getDisplayName).orElse(""));
-        menuItem.setOnAction(__ -> executor.execute(action::actionPerformed));
+        menuItem.setOnAction(ignored -> executor.execute(action::actionPerformed));
         bindEnableProperty(menuItem.disableProperty(), action.enabled());
       }
 

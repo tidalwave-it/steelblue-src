@@ -54,7 +54,7 @@ import static java.util.stream.Collectors.*;
  *
  **************************************************************************************************************************************************************/
 @API(status = EXPERIMENTAL)
-@RequiredArgsConstructor @Slf4j
+@RequiredArgsConstructor @Slf4j @SuppressWarnings("this-escape")
 public abstract class PanelGroupControlSupport<T, S> implements As, PanelGroupControl<T>
   {
     @Delegate @Nonnull

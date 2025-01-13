@@ -39,7 +39,7 @@ public abstract class JavaFXPresentationBuilder<I, T extends I>
     @Nonnull
     private final JavaFXSafeComponentBuilder<I, T> builder;
 
-    public JavaFXPresentationBuilder()
+    protected JavaFXPresentationBuilder()
       {
         final var t = ReflectionUtils.getTypeArguments(JavaFXPresentationBuilder.class, getClass());
         builder = builderFor((Class<I>)t.get(0), (Class<T>)t.get(1));

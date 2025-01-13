@@ -106,7 +106,7 @@ public class JavaFXWorker
     @VisibleForTesting static List<Object> extractBadItems (@Nonnull final List<PresentationModel> items)
       {
         final List<Object> badItems = new ArrayList<>(items);
-        badItems.removeIf(item -> item instanceof PresentationModel);
+        badItems.removeIf(PresentationModel.class::isInstance);
         return badItems;
 //        return items.stream()
 //                    .map(item -> (Object)item)

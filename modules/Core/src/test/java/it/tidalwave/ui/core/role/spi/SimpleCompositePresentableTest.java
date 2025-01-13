@@ -188,7 +188,7 @@ public class SimpleCompositePresentableTest
                                                 @Nonnull final MockDatum datum)
       {
         log.debug("assertProperPresentationModel() - {} {}, {}", indent, pm, datum);
-        pm.as(MockRole1.class);                        // must not throw AsException
+        pm.as(MockRole1.class);                   // must not throw AsException
         final var role = pm.as(MockRole2.class); // must not throw AsException
 
         assertThat(role.getDatum(), is(sameInstance(datum)));
@@ -197,7 +197,7 @@ public class SimpleCompositePresentableTest
                                  .map(c -> c.findChildren().results())
                                  .orElse(emptyList());
         final var notPMs = new ArrayList<>(childrenPm);
-        notPMs.removeIf(object -> object instanceof PresentationModel);
+        notPMs.removeIf(PresentationModel.class::isInstance); // required defensive
 
         if (!notPMs.isEmpty())
           {
