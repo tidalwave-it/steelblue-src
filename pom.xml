@@ -43,7 +43,7 @@
     <version>2.0-ALPHA-3-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>SteelBlue</name>
-    <url>http://tidalwave.it/projects/solidblue</url>
+    <url>https://tidalwave.bitbucket.io/steelblue</url>
     <inceptionYear>2015</inceptionYear>
     <description>
 SteelBlue contains a set of UI abstractions based on DCI roles and JavaFX bindings. It allows to create rich client applications in a way
