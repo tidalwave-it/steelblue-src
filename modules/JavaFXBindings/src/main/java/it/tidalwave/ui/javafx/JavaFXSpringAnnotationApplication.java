@@ -34,7 +34,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import it.tidalwave.ui.javafx.impl.DefaultJavaFXPanelGroupControl;
-import it.tidalwave.ui.javafx.impl.DefaultNodeAndDelegate;
+import it.tidalwave.ui.javafx.impl.util.JavaFXSafeComponentBuilder;
 import it.tidalwave.ui.javafx.spi.AbstractJavaFXSpringApplication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,7 +58,7 @@ public class JavaFXSpringAnnotationApplication extends AbstractJavaFXSpringAppli
         @Bean
         public ThreadPoolTaskExecutor javafxBinderExecutor()
           {
-            return DefaultNodeAndDelegate.getExecutor();
+            return JavaFXSafeComponentBuilder.getExecutor();
           }
 
         @Bean
@@ -70,13 +70,13 @@ public class JavaFXSpringAnnotationApplication extends AbstractJavaFXSpringAppli
         @Bean
         public JavaFXToolBarControl toolBarControl()
           {
-            return DefaultNodeAndDelegate.getToolBarControl();
+            return JavaFXSafeComponentBuilder.getToolBarControl();
           }
 
         @Bean
         public JavaFXMenuBarControl menuBarControl()
           {
-            return DefaultNodeAndDelegate.getMenuBarControl();
+            return JavaFXSafeComponentBuilder.getMenuBarControl();
           }
 
         @Bean

@@ -50,7 +50,8 @@ import it.tidalwave.ui.core.message.PowerOffEvent;
 import it.tidalwave.ui.core.message.PowerOnEvent;
 import it.tidalwave.ui.javafx.JavaFXApplicationWithSplash;
 import it.tidalwave.ui.javafx.NodeAndDelegate;
-import it.tidalwave.ui.javafx.impl.DefaultNodeAndDelegate;
+import it.tidalwave.ui.javafx.impl.util.JavaFXSafeComponentBuilder;
+import it.tidalwave.ui.javafx.impl.util.JavaFXSafeProxy;
 import it.tidalwave.ui.javafx.impl.util.JavaFXSafeProxy.Proxied;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -147,7 +148,7 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
             final var preferencesHandler = PreferencesHandler.getInstance();
             initParameters.propertyMap.forEach(preferencesHandler::setProperty);
             System.setProperty(initParameters.logFolderPropertyName, preferencesHandler.getLogFolder().toAbsolutePath().toString());
-            DefaultNodeAndDelegate.setLogDelegateInvocations(initParameters.propertyMap.getOptional(K_LOG_DELEGATE_INVOCATIONS).orElse(false));
+            JavaFXSafeProxy.setLogDelegateInvocations(initParameters.propertyMap.getOptional(K_LOG_DELEGATE_INVOCATIONS).orElse(false));
             Application.launch(appClass, initParameters.args);
           }
         catch (Throwable t)
@@ -218,7 +219,7 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
     protected final void onStageCreated (@Nonnull final Stage stage, @Nonnull final NodeAndDelegate<?> applicationNad)
       {
         assert Platform.isFxApplicationThread();
-        DefaultNodeAndDelegate.getJavaFxBinder().setMainWindow(stage);
+        JavaFXSafeComponentBuilder.getJavaFxBinder().setMainWindow(stage);
         onStageCreated2(applicationNad);
       }
 
@@ -317,7 +318,7 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
     @Nonnull
     private <T> T resolveBean (@Nonnull final Class<T> type)
       {
-        return type.cast(Optional.ofNullable(DefaultNodeAndDelegate.BEANS.get(type)).orElseGet(() -> applicationContext.getBean(type)));
+        return type.cast(Optional.ofNullable(JavaFXSafeComponentBuilder.BEANS.get(type)).orElseGet(() -> applicationContext.getBean(type)));
       }
 
     /***********************************************************************************************************************************************************

@@ -32,7 +32,6 @@ import jakarta.annotation.Nonnull;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
 import javafx.application.Platform;
-import it.tidalwave.ui.javafx.impl.DefaultNodeAndDelegate;
 import org.slf4j.LoggerFactory;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -66,6 +65,9 @@ public class JavaFXSafeProxy implements InvocationHandler
         @Nonnull
         public Class<?> __getProxiedClass();
       }
+
+    @Getter @Setter
+    private static boolean logDelegateInvocations = false;
 
     @Nonnull @Getter @Setter
     private Object delegate;
@@ -101,7 +103,7 @@ public class JavaFXSafeProxy implements InvocationHandler
           {
             try
               {
-                if (DefaultNodeAndDelegate.isLogDelegateInvocations())
+                if (logDelegateInvocations)
                   {
                     logInvocation(delegate.getClass(), method, args);
                   }

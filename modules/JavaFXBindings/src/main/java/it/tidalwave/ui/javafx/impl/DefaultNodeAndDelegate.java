@@ -26,29 +26,21 @@
 package it.tidalwave.ui.javafx.impl;
 
 import jakarta.annotation.Nonnull;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.application.Platform;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import it.tidalwave.ui.javafx.JavaFXBinder;
-import it.tidalwave.ui.javafx.JavaFXMenuBarControl;
-import it.tidalwave.ui.javafx.JavaFXToolBarControl;
 import it.tidalwave.ui.javafx.NodeAndDelegate;
 import it.tidalwave.ui.javafx.impl.util.JavaFXSafeProxy;
 import org.slf4j.LoggerFactory;
-import it.tidalwave.util.PreferencesHandler;
 import it.tidalwave.util.ReflectionUtils;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import static it.tidalwave.ui.javafx.impl.util.JavaFXSafeComponentBuilder.BEANS;
 
 /***************************************************************************************************************************************************************
  *
@@ -62,38 +54,6 @@ public class DefaultNodeAndDelegate<T> implements NodeAndDelegate<T>
   {
     private static final String P_TIMEOUT = DefaultNodeAndDelegate.class.getName() + ".initTimeout";
     private static final int INITIALIZER_TIMEOUT = Integer.getInteger(P_TIMEOUT, 10);
-
-    public static final Map<Class<?>, Object> BEANS = new HashMap<>();
-
-    @Getter
-    private static final ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-
-    @Getter
-    private static final JavaFXBinder javaFxBinder = new DefaultJavaFXBinder(executor);
-
-    @Getter
-    private static final JavaFXToolBarControl toolBarControl = new DefaultJavaFXToolBarControl();
-
-    @Getter
-    private static final JavaFXMenuBarControl menuBarControl = new DefaultJavaFXMenuBarControl();
-
-    @Getter @Setter
-    private static boolean logDelegateInvocations = false;
-
-    static
-      {
-        executor.setWaitForTasksToCompleteOnShutdown(false);
-        executor.setThreadNamePrefix("javafxBinder-");
-        // Fix for STB-26
-        executor.setCorePoolSize(1);
-        executor.setMaxPoolSize(1);
-        executor.setQueueCapacity(10000);
-        BEANS.put(JavaFXBinder.class, javaFxBinder);
-        BEANS.put(Executor.class, executor);
-        BEANS.put(JavaFXToolBarControl.class, toolBarControl);
-        BEANS.put(JavaFXMenuBarControl.class, menuBarControl);
-        BEANS.put(PreferencesHandler.class, PreferencesHandler.getInstance());
-      }
 
     @Nonnull
     private final Node node;

@@ -32,12 +32,21 @@ import jakarta.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicReference;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.application.Platform;
-import it.tidalwave.ui.javafx.impl.DefaultNodeAndDelegate;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import it.tidalwave.ui.javafx.JavaFXBinder;
+import it.tidalwave.ui.javafx.JavaFXMenuBarControl;
+import it.tidalwave.ui.javafx.JavaFXToolBarControl;
+import it.tidalwave.ui.javafx.impl.DefaultJavaFXBinder;
+import it.tidalwave.ui.javafx.impl.DefaultJavaFXMenuBarControl;
+import it.tidalwave.ui.javafx.impl.DefaultJavaFXToolBarControl;
+import it.tidalwave.util.PreferencesHandler;
 import it.tidalwave.util.ReflectionUtils;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import static lombok.AccessLevel.PRIVATE;
@@ -52,6 +61,20 @@ import static lombok.AccessLevel.PRIVATE;
 @RequiredArgsConstructor(access = PRIVATE) @Slf4j
 public final class JavaFXSafeComponentBuilder<I, T extends I>
   {
+    public static final Map<Class<?>, Object> BEANS = new HashMap<>();
+
+    @Getter
+    private static final ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+
+    @Getter
+    private static final JavaFXBinder javaFxBinder = new DefaultJavaFXBinder(executor);
+
+    @Getter
+    private static final JavaFXToolBarControl toolBarControl = new DefaultJavaFXToolBarControl();
+
+    @Getter
+    private static final JavaFXMenuBarControl menuBarControl = new DefaultJavaFXMenuBarControl();
+
     @Nonnull
     private final Class<T> componentClass;
 
@@ -59,6 +82,21 @@ public final class JavaFXSafeComponentBuilder<I, T extends I>
     private final Class<I> interfaceClass;
 
     private WeakReference<T> presentationRef = new WeakReference<>(null);
+
+    static
+      {
+        executor.setWaitForTasksToCompleteOnShutdown(false);
+        executor.setThreadNamePrefix("javafxBinder-");
+        // Fix for STB-26
+        executor.setCorePoolSize(1);
+        executor.setMaxPoolSize(1);
+        executor.setQueueCapacity(10000);
+        BEANS.put(JavaFXBinder.class, javaFxBinder);
+        BEANS.put(Executor.class, executor);
+        BEANS.put(JavaFXToolBarControl.class, toolBarControl);
+        BEANS.put(JavaFXMenuBarControl.class, menuBarControl);
+        BEANS.put(PreferencesHandler.class, PreferencesHandler.getInstance());
+      }
 
     @Nonnull
     public static <J, X extends J> JavaFXSafeComponentBuilder<J, X> builderFor (@Nonnull final Class<X> componentClass)
@@ -137,7 +175,7 @@ public final class JavaFXSafeComponentBuilder<I, T extends I>
     @Nonnull
     private T createComponentInstance()
       {
-        return ReflectionUtils.instantiateWithDependencies(componentClass, DefaultNodeAndDelegate.BEANS);
+        return ReflectionUtils.instantiateWithDependencies(componentClass, BEANS);
       }
 
     /***********************************************************************************************************************************************************
@@ -226,6 +264,6 @@ public final class JavaFXSafeComponentBuilder<I, T extends I>
               }
           }
 
-          ReflectionUtils.injectDependencies(target, DefaultNodeAndDelegate.BEANS);
+          ReflectionUtils.injectDependencies(target, BEANS);
       }
   }
