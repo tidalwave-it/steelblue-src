@@ -71,7 +71,7 @@ public class PresentationModelCollectors extends ArrayListCollectorSupport<Prese
      * @since   3.2-ALPHA-3 (refactored)
      **********************************************************************************************************************************************************/
     @Nonnull
-    public static PresentationModelCollectors toCompositePresentationModel (@Nonnull final Collection<Object> roles)
+    public static PresentationModelCollectors toCompositePresentationModel (@Nonnull final Collection<?> roles)
       {
         return new PresentationModelCollectors(roles);
       }
@@ -132,7 +132,7 @@ public class PresentationModelCollectors extends ArrayListCollectorSupport<Prese
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
-    private PresentationModelCollectors (@Nonnull final Collection<Object> roles)
+    private PresentationModelCollectors (@Nonnull final Collection<?> roles)
       {
         this.roles.addAll(roles);
       }
