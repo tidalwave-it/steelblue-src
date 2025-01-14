@@ -155,21 +155,4 @@
         <module>Core</module>
     </modules>
 
-    <profiles>
-        <profile>
-            <id>monocle</id>
-            <properties>
-                <tft.test.vmOptions>-Dtestfx.robot=glass -Dtestfx.headless=true -Dprism.order=sw</tft.test.vmOptions>
-            </properties>
-            <dependencies>
-                <dependency>
-                    <groupId>org.testfx</groupId>
-                    <artifactId>openjfx-monocle</artifactId>
-                    <version>${tft.openjfx-monocle.version}</version>
-                    <scope>test</scope>
-                </dependency>
-            </dependencies>
-        </profile>
-    </profiles>
-
 </project>
