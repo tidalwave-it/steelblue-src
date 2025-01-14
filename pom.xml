@@ -80,22 +80,26 @@ that is mostly independent of the UI technology; so testing is easier, and it is
 
     <dependencyManagement>
         <dependencies>
+            <!-- START SNIPPET: core -->
             <dependency>
                 <groupId>it.tidalwave.steelblue</groupId>
                 <artifactId>it-tidalwave-ui-core</artifactId>
                 <version>2.0-ALPHA-4-SNAPSHOT</version>
             </dependency>
+            <!-- END SNIPPET: core -->
             <dependency>
                 <groupId>it.tidalwave.steelblue</groupId>
                 <artifactId>it-tidalwave-ui-core</artifactId>
                 <classifier>tests</classifier>
                 <version>2.0-ALPHA-4-SNAPSHOT</version>
             </dependency>
+            <!-- START SNIPPET: javafx -->
             <dependency>
                 <groupId>it.tidalwave.steelblue</groupId>
                 <artifactId>it-tidalwave-ui-javafx</artifactId>
                 <version>2.0-ALPHA-4-SNAPSHOT</version>
             </dependency>
+            <!-- END SNIPPET: javafx -->
             <dependency>
                 <groupId>it.tidalwave.steelblue</groupId>
                 <artifactId>it-tidalwave-ui-example-model</artifactId>

@@ -1,7 +1,7 @@
 ![Maven Central](https://img.shields.io/maven-central/v/it.tidalwave.steelblue/steelblue.svg)
 [![Build Status](https://img.shields.io/jenkins/s/http/services.tidalwave.it/ci/job/SteelBlue_Build_from_Scratch.svg)](http://services.tidalwave.it/ci/view/SteelBlue)
 [![Test Status](https://img.shields.io/jenkins/t/http/services.tidalwave.it/ci/job/SteelBlue.svg)](http://services.tidalwave.it/ci/view/SteelBlue)
-[![Coverage](https://img.shields.io/jenkins/c/http/services.tidalwave.it/ci/job/SteelBlue.svg)](http://services.tidalwave.it/ci/view/SteelBlue)
+[![Coverage](https://img.shields.io/jenkins/coverage/jacoco?jobUrl=https%3A%2F%2Fservices.tidalwave.it%2Fci%2Fview%2FSteelBlue%2Fjob%2FSteelBlue%2F)](http://services.tidalwave.it/ci/view/SteelBlue)
 
 SteelBlue
 ================================
