@@ -29,7 +29,6 @@ import javax.annotation.CheckForNull;
 import jakarta.annotation.Nonnull;
 import javafx.scene.control.cell.TextFieldListCell;
 import it.tidalwave.util.As;
-import lombok.AllArgsConstructor;
 
 /***************************************************************************************************************************************************************
  *
@@ -38,11 +37,16 @@ import lombok.AllArgsConstructor;
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-@AllArgsConstructor
 public class AsObjectListCell<T extends As> extends TextFieldListCell<T>
   {
     @Nonnull
     private final CellBinder cellBinder;
+
+    public AsObjectListCell (@Nonnull final CellBinder cellBinder)
+      {
+        super(AsObjectStringConverter.getInstance()); // Required for STB-123
+        this.cellBinder = cellBinder;
+      }
 
     @Override
     public void updateItem (@CheckForNull final T item, final boolean empty)

@@ -30,8 +30,8 @@ import jakarta.annotation.Nullable;
 import javafx.scene.control.cell.TextFieldTableCell;
 import it.tidalwave.util.As;
 import it.tidalwave.util.annotation.VisibleForTesting;
+import it.tidalwave.ui.javafx.impl.common.AsObjectStringConverter;
 import it.tidalwave.ui.javafx.impl.common.CellBinder;
-import lombok.AllArgsConstructor;
 
 /***************************************************************************************************************************************************************
  *
@@ -40,11 +40,16 @@ import lombok.AllArgsConstructor;
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-@AllArgsConstructor(staticName = "of")
 public class AsObjectTableCell<T extends As> extends TextFieldTableCell<T, T>
   {
     @Nonnull
     @VisibleForTesting final CellBinder cellBinder;
+
+    public AsObjectTableCell (@Nonnull final CellBinder cellBinder)
+      {
+        super(AsObjectStringConverter.getInstance()); // Required for STB-123
+        this.cellBinder = cellBinder;
+      }
 
     @Override
     public void updateItem (@Nullable final T item, final boolean empty)

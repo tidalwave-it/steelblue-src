@@ -60,6 +60,9 @@ public interface PresentationModel extends As, Mutable
     /** This is an undocumented feature. If you add a {@link NamedCallback} with this name as a role in this object, it will be called back when
         {@link #dispose()} is called. */
     public static final String CALLBACK_DISPOSE = "dispose";
+
+    public static final String P_VERBOSE_TOSTRING = PresentationModel.class.getCanonicalName() + ".verboseToString";
+
     public static final String PARAM_OWNER = "owner";
     public static final String PARAM_ROLE = "role";
 
@@ -147,5 +150,30 @@ public interface PresentationModel extends As, Mutable
     public static PresentationModel ofMaybePresentable (@Nonnull final As owner)
       {
         return ofMaybePresentable(owner, Collections.emptyList());
+      }
+
+    /***********************************************************************************************************************************************************
+     * Sets the verbose mode for {@link java.lang.Object#toString} implementations of {@code PresentationModel}. Looking at the implementation of
+     * {@link javafx.scene.control.cell.DefaultTreeCell}, the code always calls {@code toString()} during an update, even though the text value is later
+     * overridden; hence, this method should be as fast as possible. By default, the shortened class name and system id of the owner object is returned;
+     * set verbosity to have the owner object {@code toString()} called instead.
+     * It is also possible to set system the property {@code it.tidalwave.ui.core.role.PresentationModel.verboseToString}.
+     * @param           verbose   the verbosity
+     * @since           2.0-ALPHA-4
+     * @see             #isVerboseToString()
+     **********************************************************************************************************************************************************/
+    public static void setVerboseToString (final boolean verbose)
+      {
+        DefaultPresentationModel.setVerboseToString(verbose);
+      }
+
+    /***********************************************************************************************************************************************************
+     * {@return the verbose mode for {@link java.lang.Object#toString} implementations of {@code PresentationModel}}.
+     * @since           2.0-ALPHA-4
+     * @see             #setVerboseToString(boolean)
+     **********************************************************************************************************************************************************/
+    public static boolean isVerboseToString()
+      {
+        return DefaultPresentationModel.isVerboseToString();
       }
   }

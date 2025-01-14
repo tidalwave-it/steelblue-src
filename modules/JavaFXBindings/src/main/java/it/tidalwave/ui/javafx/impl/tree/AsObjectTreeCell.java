@@ -29,8 +29,8 @@ import javax.annotation.CheckForNull;
 import jakarta.annotation.Nonnull;
 import javafx.scene.control.cell.TextFieldTreeCell;
 import it.tidalwave.util.As;
+import it.tidalwave.ui.javafx.impl.common.AsObjectStringConverter;
 import it.tidalwave.ui.javafx.impl.common.CellBinder;
-import lombok.RequiredArgsConstructor;
 
 /***************************************************************************************************************************************************************
  *
@@ -39,11 +39,16 @@ import lombok.RequiredArgsConstructor;
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-@RequiredArgsConstructor
 public class AsObjectTreeCell<T extends As> extends TextFieldTreeCell<T>
   {
     @Nonnull
     private final CellBinder cellBinder;
+
+    public AsObjectTreeCell (@Nonnull final CellBinder cellBinder)
+      {
+        super(AsObjectStringConverter.getInstance()); // Required for STB-123
+        this.cellBinder = cellBinder;
+      }
 
     @Override
     public void updateItem (@CheckForNull final T item, final boolean empty)

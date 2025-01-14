@@ -34,9 +34,11 @@ import it.tidalwave.util.AsException;
 import it.tidalwave.util.Callback;
 import it.tidalwave.util.NamedCallback;
 import it.tidalwave.ui.core.role.PresentationModel;
-import lombok.ToString;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.Delegate;
 import lombok.extern.slf4j.Slf4j;
+import static it.tidalwave.util.ShortNames.shortId;
 
 /***************************************************************************************************************************************************************
  *
@@ -45,9 +47,12 @@ import lombok.extern.slf4j.Slf4j;
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-@ToString(exclude = {"as", "pcs", "mls"}) @Slf4j @SuppressWarnings("this-escape")
+@Slf4j @SuppressWarnings("this-escape")
 public class DefaultPresentationModel implements PresentationModel
   {
+    @Getter @Setter
+    private static boolean verboseToString = Boolean.getBoolean(P_VERBOSE_TOSTRING);
+
     @Nonnull
     private final Object owner;
 
@@ -170,5 +175,15 @@ public class DefaultPresentationModel implements PresentationModel
           {
             log.error(logMessage, t);
           }
+      }
+
+    /***********************************************************************************************************************************************************
+     * {@inheritDoc}
+     * This is unavoidably called by TreeCell renderers, even though the value is later overridden; so this method should be really fast.
+     **********************************************************************************************************************************************************/
+    @Override @Nonnull
+    public String toString()
+      {
+        return "DefaultPresentationModel(" + (verboseToString ? owner : shortId(owner)) + ")";
       }
   }

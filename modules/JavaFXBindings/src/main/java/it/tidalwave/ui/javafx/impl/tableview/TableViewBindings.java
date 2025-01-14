@@ -65,7 +65,7 @@ public class TableViewBindings extends DelegateSupport
     public TableViewBindings (@Nonnull final Executor executor, @Nonnull final CellBinder cellBinder)
       {
         super(executor);
-        cellFactory = ignored -> AsObjectTableCell.of(cellBinder);
+        cellFactory = ignored -> new AsObjectTableCell<>(cellBinder);
       }
 
     /***********************************************************************************************************************************************************

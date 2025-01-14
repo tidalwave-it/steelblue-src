@@ -26,11 +26,11 @@
 package it.tidalwave.ui.javafx.impl.treetable;
 
 import javax.annotation.CheckForNull;
+import jakarta.annotation.Nonnull;
 import javafx.scene.control.TreeTableCell;
 import it.tidalwave.util.As;
 import it.tidalwave.util.annotation.VisibleForTesting;
 import it.tidalwave.ui.javafx.impl.common.CellBinder;
-import lombok.AllArgsConstructor;
 
 /***************************************************************************************************************************************************************
  *
@@ -39,10 +39,14 @@ import lombok.AllArgsConstructor;
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-@AllArgsConstructor(staticName = "of")
 class AsObjectTreeTableCell<T extends As> extends TreeTableCell<T, T>
   {
     @VisibleForTesting final CellBinder cellBinder;
+
+    public AsObjectTreeTableCell (@Nonnull final CellBinder cellBinder)
+      {
+        this.cellBinder = cellBinder;
+      }
 
     @Override
     public void updateItem (@CheckForNull final T item, final boolean empty)
