@@ -49,6 +49,7 @@ public interface MenuBarControl<B, MB>
         FILE("File", 0),
         EDIT("Edit", 2),
         SELECT("Select", 3),
+        VIEW("View", 4),
         HELP("Help", 999);
 
         /** {@return the position of the menu with the given label}.
