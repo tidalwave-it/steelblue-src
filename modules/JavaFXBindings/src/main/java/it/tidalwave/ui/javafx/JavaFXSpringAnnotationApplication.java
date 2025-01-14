@@ -105,7 +105,7 @@ public class JavaFXSpringAnnotationApplication extends AbstractJavaFXSpringAppli
     public static final String APPLICATION_MESSAGE_BUS_BEAN_NAME = "applicationMessageBus";
 
     // Don't use Slf4j and its static logger - give Main a chance to initialize things
-    private final Logger log = LoggerFactory.getLogger(JavaFXSpringApplication.class);
+    private final Logger log = LoggerFactory.getLogger(JavaFXSpringAnnotationApplication.class);
 
     @Override @Nonnull
     protected ConfigurableApplicationContext createApplicationContext()
