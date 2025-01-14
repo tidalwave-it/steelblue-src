@@ -29,8 +29,7 @@ import java.beans.PropertyChangeSupport;
 import it.tidalwave.ui.core.MutableListener;
 import org.testng.annotations.Test;
 import static org.mockito.Mockito.*;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.CoreMatchers.is;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /***************************************************************************************************************************************************************
  *
@@ -72,7 +71,7 @@ public class MutableListenerSupportTest
         underTest.fireChange("old", "new");
         // then
         verify(listener).changed(same(source), eq("old"),  eq("new"));
-        assertThat(underTest.adapterMap.containsKey(listener), is(true));
+        assertThat(underTest.adapterMap).containsKey(listener);
       }
 
     /**********************************************************************************************************************************************************/
@@ -90,6 +89,6 @@ public class MutableListenerSupportTest
         underTest.fireChange("old", "new");
         // then
         verifyNoInteractions(mutableListener);
-        assertThat(underTest.adapterMap.containsKey(mutableListener), is(false));
+        assertThat(underTest.adapterMap).doesNotContainKey(mutableListener);
       }
   }

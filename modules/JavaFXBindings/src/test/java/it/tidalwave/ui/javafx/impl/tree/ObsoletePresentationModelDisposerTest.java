@@ -34,8 +34,7 @@ import it.tidalwave.ui.core.role.PresentationModel;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import static org.mockito.Mockito.*;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /***************************************************************************************************************************************************************
  *
@@ -61,7 +60,7 @@ public class ObsoletePresentationModelDisposerTest
       {
         // given
         final var treeItem = createTreeItemWithChildren(0);
-        assertThat(allPMs.size(), is(85));
+        assertThat(allPMs).hasSize(85);
         // when
         underTest.changed(null, treeItem, null);
         // then

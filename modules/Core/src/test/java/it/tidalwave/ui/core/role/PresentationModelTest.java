@@ -35,8 +35,7 @@ import org.testng.annotations.Test;
 import static it.tidalwave.util.test.MoreAnswers.CALLS_DEFAULT_METHODS;
 import static it.tidalwave.ui.core.role.Presentable._Presentable_;
 import static org.mockito.Mockito.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /***************************************************************************************************************************************************************
  *
@@ -77,8 +76,8 @@ public class PresentationModelTest
         // when
         final var actualPm = PresentationModel.ofMaybePresentable(owner, roles);
         // then
-        assertThat(actualPm.as(MockRole1.class), is(sameInstance(mockRole1)));
-        assertThat(actualPm.as(MockRole2.class), is(sameInstance(mockRole2)));
+        assertThat(actualPm.as(MockRole1.class)).isSameAs(mockRole1);
+        assertThat(actualPm.as(MockRole2.class)).isSameAs(mockRole2);
       }
 
     /***********************************************************************************************************************************************************
@@ -96,8 +95,8 @@ public class PresentationModelTest
         // when
         final var actualPm = PresentationModel.ofMaybePresentable(owner, roles);
         // then
-        assertThat(actualPm, is(sameInstance(pm)));
-        verify(presentable).createPresentationModel(eq(roles));
+        assertThat(actualPm).isSameAs(pm);
+        verify(presentable).createPresentationModel(roles);
         verifyNoMoreInteractions(presentable);
       }
   }

@@ -28,13 +28,11 @@ package it.tidalwave.ui.core.role;
 import jakarta.annotation.Nonnull;
 import java.util.Locale;
 import java.util.function.Consumer;
-import java.util.regex.Pattern;
 import java.nio.file.Path;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import static org.mockito.Mockito.*;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /***************************************************************************************************************************************************************
  *
@@ -49,8 +47,8 @@ public class DisplayableTest
         // when
         final var underTest = Displayable.of("foo bar");
         // then
-        assertThat(underTest.getDisplayName(), is("foo bar"));
-        assertThat(underTest.toString(), Pattern.matches("\\?\\?\\?@.*Displayable\\[\\]", underTest.toString()), is(true));
+        assertThat(underTest.getDisplayName()).isEqualTo("foo bar");
+        assertThat(underTest.toString()).matches("\\?\\?\\?@.*Displayable\\[\\]");
       }
 
     /**********************************************************************************************************************************************************/
@@ -60,8 +58,8 @@ public class DisplayableTest
         // when
         final var underTest = Displayable.of("foo bar", "[toString]");
         // then
-        assertThat(underTest.getDisplayName(), is("foo bar"));
-        assertThat(Pattern.matches("\\[toString\\]@.*Displayable\\[\\]", underTest.toString()), is(true));
+        assertThat(underTest.getDisplayName()).isEqualTo("foo bar");
+        assertThat(underTest.toString()).matches("\\[toString\\]@.*Displayable\\[\\]");
       }
 
     /**********************************************************************************************************************************************************/
@@ -71,8 +69,8 @@ public class DisplayableTest
         // when
         final var underTest = Displayable.of(() -> "foo bar");
         // then
-        assertThat(underTest.getDisplayName(), is("foo bar"));
-        // assertThat(underTest.toString(), is("???"));
+        assertThat(underTest.getDisplayName()).isEqualTo("foo bar");
+        // assertThat(underTest.toString()).isEqualTo("???")));
       }
 
     /**********************************************************************************************************************************************************/
@@ -84,8 +82,8 @@ public class DisplayableTest
         // when
         final var underTest = Displayable.of(Path::toString, path);
         // then
-        assertThat(underTest.getDisplayName(), is("foo bar"));
-        // assertThat(underTest.toString(), is("???"));
+        assertThat(underTest.getDisplayName()).isEqualTo("foo bar");
+        // assertThat(underTest.toString()).isEqualTo("???")));
       }
 
     /**********************************************************************************************************************************************************/
@@ -110,7 +108,7 @@ public class DisplayableTest
         // when
         final var result = underTest.render();
         // then
-        assertThat(result, is("foo bar"));
+        assertThat(result).isEqualTo("foo bar");
       }
 
     /**********************************************************************************************************************************************************/
@@ -123,14 +121,14 @@ public class DisplayableTest
         // when
         final var displayable = Displayable.fromBundle(DisplayableTest.class, "key");
         // then
-//        assertThat(displayable.getLocales(), is(new TreeSet<>(List.of(Locale.ENGLISH, Locale.ITALIAN, Locale.FRENCH))));
+//        assertThat(displayable.getLocales()).isEqualTo(new TreeSet<>(List.of(Locale.ENGLISH, Locale.ITALIAN, Locale.FRENCH)))));
 //        assertThat(displayable.getDisplayNames(), is(Map.of(Locale.ENGLISH, "English",
 //                                                            Locale.ITALIAN, "Italian",
 //                                                            Locale.FRENCH,  "French")));
-        assertThat(displayable.getDisplayName(), is(expected));
+        assertThat(displayable.getDisplayName()).isEqualTo(expected);
         Locale.setDefault(save);
-//        assertThat(displayable.getDisplayName(Locale.ITALIAN), is("Italian"));
-//        assertThat(displayable.getDisplayName(Locale.FRENCH), is("French"));
+//        assertThat(displayable.getDisplayName(Locale.ITALIAN)).isEqualTo("Italian")));
+//        assertThat(displayable.getDisplayName(Locale.FRENCH)).isEqualTo("French")));
       }
 
     @DataProvider

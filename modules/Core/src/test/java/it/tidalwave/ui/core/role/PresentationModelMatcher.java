@@ -35,13 +35,12 @@ import it.tidalwave.util.AsException;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mockito.ArgumentMatcher;
-import org.hamcrest.Matcher;
 import static java.util.stream.Collectors.*;
 import static it.tidalwave.util.ShortNames.*;
 
 /***************************************************************************************************************************************************************
  *
- * A {@link Matcher} for {@link PresentationModel}.
+ * An {@link ArgumentMatcher} for {@link PresentationModel}.
  *
  * @stereotype  mockito matcher
  *

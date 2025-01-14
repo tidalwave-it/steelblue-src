@@ -29,8 +29,7 @@ import jakarta.annotation.Nonnull;
 import it.tidalwave.ui.core.role.Displayable;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /***************************************************************************************************************************************************************
  *
@@ -52,7 +51,7 @@ public class DisplayableComparatorTest
         // when
         final var actualResult = underTest.compare(d1, d2);
         // then
-        assertThat(actualResult, is(expectedResult));
+        assertThat(actualResult).isEqualTo(expectedResult);
       }
 
     @DataProvider

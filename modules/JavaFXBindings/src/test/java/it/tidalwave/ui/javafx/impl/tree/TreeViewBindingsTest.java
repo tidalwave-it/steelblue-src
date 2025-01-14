@@ -37,6 +37,7 @@ import it.tidalwave.ui.javafx.impl.common.DefaultCellBinder;
 import org.testng.annotations.Test;
 import static it.tidalwave.ui.core.role.PresentationModel._SimpleCompositeOfPresentationModel_;
 import static it.tidalwave.ui.core.role.Selectable._Selectable_;
+import static org.assertj.core.api.Assertions.assertThat;
 import static java.util.stream.Collectors.*;
 import static java.util.stream.IntStream.rangeClosed;
 import static org.testng.Assert.*;
@@ -96,7 +97,7 @@ public class TreeViewBindingsTest extends BindingTestSupport<TreeView<Presentati
         // given
         runSafelyAndWait("bind", executor, () -> underTest.bind(control, pm, Optional.of(callBack)));
         // then
-        // TODO: assertFalse(control.isShowRoot()); // TODO test variant when Visibility.INVISIBLE is passed in the parent PM
+        // TODO: assert(control.isShowRoot()).isFalse(); // TODO test variant when Visibility.INVISIBLE is passed in the parent PM
         final var texts = findTextsFrom(control.getSkin(), s -> !s.isEmpty());
         assertEquals(texts, List.of());
       }
@@ -111,7 +112,7 @@ public class TreeViewBindingsTest extends BindingTestSupport<TreeView<Presentati
         runSafelyAndWait("bind", executor, () -> underTest.bind(control, pm, Optional.of(callBack)));
         runSafelyAndWait("expand root", executor, () -> control.getRoot().setExpanded(true));
         // then
-        assertTrue(control.isShowRoot()); // TODO test variant when Visibility.INVISIBLE is passed in the parent PM
+        assertThat(control.isShowRoot()).isTrue(); // TODO test variant when Visibility.INVISIBLE is passed in the parent PM
         final var texts = findTextsFrom(control.getSkin(), s -> !s.isEmpty());
         final var expected = rangeClosed(1, 10).mapToObj(i -> "Item #" + i).collect(toList());
         assertEquals(texts, expected);

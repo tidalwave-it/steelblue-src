@@ -43,8 +43,7 @@ import static it.tidalwave.ui.core.role.Displayable._Displayable_;
 import static it.tidalwave.ui.core.role.Selectable._Selectable_;
 import static it.tidalwave.ui.core.role.Styleable._Styleable_;
 import static org.mockito.Mockito.*;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /***************************************************************************************************************************************************************
  *
@@ -73,16 +72,16 @@ public class FileEntityPresentableTest
         // then
         final var pm = underTest.createPresentationModel(extraRole);
         final Aggregate<PresentationModel> aggregate = pm.as(_Aggregate_);
-        assertThat(aggregate.getNames(), is(Set.of("name", "size", "latestModificationDate", "creationDate")));
+        assertThat(aggregate.getNames()).containsExactlyInAnyOrder("name", "size", "latestModificationDate", "creationDate");
         final var pmName = aggregate.getByName("name").orElseThrow();
-        assertThat(pmName.as(_Displayable_).getDisplayName(), is("file.txt"));
+        assertThat(pmName.as(_Displayable_).getDisplayName()).isEqualTo("file.txt");
         final var pmSize = aggregate.getByName("size").orElseThrow();
-        assertThat(pmSize.as(_Displayable_).getDisplayName(), is("12345678"));
-        assertThat(pmSize.as(_Styleable_).getStyles(), is(List.of("right-aligned")));
+        assertThat(pmSize.as(_Displayable_).getDisplayName()).isEqualTo("12345678");
+        assertThat(pmSize.as(_Styleable_).getStyles()).containsExactly("right-aligned");
         final var pmCDT = aggregate.getByName("creationDate").orElseThrow();
-        assertThat(pmCDT.as(_Displayable_).getDisplayName(), is(FORMATTER.format(creationDateTime)));
+        assertThat(pmCDT.as(_Displayable_).getDisplayName()).isEqualTo(FORMATTER.format(creationDateTime));
         final var pmLMDT = aggregate.getByName("latestModificationDate").orElseThrow();
-        assertThat(pmLMDT.as(_Displayable_).getDisplayName(), is(FORMATTER.format(lastModifiedDateTime)));
-        assertThat(pm.as(_Selectable_), is(extraRole));
+        assertThat(pmLMDT.as(_Displayable_).getDisplayName()).isEqualTo(FORMATTER.format(lastModifiedDateTime));
+        assertThat(pm.as(_Selectable_)).isEqualTo(extraRole);
       }
   }

@@ -33,8 +33,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import static it.tidalwave.util.Parameters.r;
 import static org.mockito.Mockito.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /***************************************************************************************************************************************************************
  *
@@ -94,9 +93,9 @@ public class DefaultPresentationModelTest
         final var ut2Role1 = underTest2.as(Role1.class);
         final var ut2Role2 = underTest2.as(Role2.class);
         //then
-        assertThat(ut1Role1, is(sameInstance(localRole1)));
-        assertThat(ut2Role1, is(sameInstance(localRole1)));
-        assertThat(ut2Role2, is(sameInstance(localRole2)));
+        assertThat(ut1Role1).isSameAs(localRole1);
+        assertThat(ut2Role1).isSameAs(localRole1);
+        assertThat(ut2Role2).isSameAs(localRole2);
       }
 
     /***********************************************************************************************************************************************************
@@ -134,7 +133,7 @@ public class DefaultPresentationModelTest
         // when
         final var role2 = underTest.as(Role2.class);
         // then
-        assertThat(role2, is(sameInstance(role2InOwner)));
+        assertThat(role2).isSameAs(role2InOwner);
       }
 
     /***********************************************************************************************************************************************************
@@ -148,7 +147,7 @@ public class DefaultPresentationModelTest
         // when
         final var role2 = underTest.as(Role2.class);
         // then
-        assertThat(role2, is(sameInstance(localRole2)));
+        assertThat(role2).isSameAs(localRole2);
       }
 
     /***********************************************************************************************************************************************************
@@ -162,6 +161,6 @@ public class DefaultPresentationModelTest
         // when
         final var role3 = underTest.maybeAs(Role3.class);
         // then
-        assertThat(role3.isPresent(), is(false));
+        assertThat(role3).isNotPresent();
       }
   }

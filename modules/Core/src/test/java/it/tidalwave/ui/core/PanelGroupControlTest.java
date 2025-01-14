@@ -31,9 +31,8 @@ import java.util.Map;
 import org.testng.annotations.Test;
 import static it.tidalwave.ui.core.PanelGroupControl.Options.*;
 import static it.tidalwave.ui.core.PanelGroupControl.DefaultGroups.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 /***************************************************************************************************************************************************************
  *
@@ -76,16 +75,16 @@ public class PanelGroupControlTest
                                .withGroup(RIGHT, panelRight, ALWAYS_WRAP)
                                .withOptions(DISABLE_ACCORDION_ANIMATION);
         // then
-        assertThat(underTest.getTopContainersByGroup(), is(Map.of(LEFT, panelLeft,
+        assertThat(underTest.getTopContainersByGroup()).isEqualTo(Map.of(LEFT, panelLeft,
                                                                   CENTER, panelCenter,
                                                                   BOTTOM, panelBottom,
-                                                                  RIGHT, panelRight)));
+                                                                  RIGHT, panelRight));
         final var optionsMap = underTest.getGroupOptions();
-        assertThat(optionsMap.size(), is(4));
-        assertThat(optionsMap.get(LEFT),   is(List.of(ALWAYS_WRAP)));
-        assertThat(optionsMap.get(CENTER), is(List.of(ALWAYS_WRAP)));
-        assertThat(optionsMap.get(BOTTOM), is(List.of(ALWAYS_WRAP)));
-        assertThat(optionsMap.get(RIGHT),  is(List.of(ALWAYS_WRAP)));
-        assertThat(underTest.getOptions(), is(List.of(DISABLE_ACCORDION_ANIMATION)));
+        assertThat(optionsMap).hasSize(4)
+                              .containsEntry(LEFT,   List.of(ALWAYS_WRAP))
+                              .containsEntry(CENTER, List.of(ALWAYS_WRAP))
+                              .containsEntry(BOTTOM, List.of(ALWAYS_WRAP))
+                              .containsEntry(RIGHT,  List.of(ALWAYS_WRAP));
+        assertThat(underTest.getOptions()).isEqualTo(List.of(DISABLE_ACCORDION_ANIMATION));
       }
   }

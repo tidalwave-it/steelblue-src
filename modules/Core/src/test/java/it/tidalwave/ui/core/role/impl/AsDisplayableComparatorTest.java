@@ -33,8 +33,7 @@ import it.tidalwave.ui.core.role.Displayable;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import static it.tidalwave.util.mock.MockAsFactory.mockWithAs;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /***************************************************************************************************************************************************************
  *
@@ -56,7 +55,7 @@ public class AsDisplayableComparatorTest
         // when
         final var actualResult = underTest.compare(a1, a2);
         // then
-        assertThat(actualResult, is(expectedResult));
+        assertThat(actualResult).isEqualTo(expectedResult);
       }
 
     @Nonnull

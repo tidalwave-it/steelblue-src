@@ -36,8 +36,7 @@ import lombok.RequiredArgsConstructor;
 import org.testng.annotations.Test;
 import static it.tidalwave.ui.core.role.Displayable._Displayable_;
 import static org.mockito.Mockito.*;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class BinderMock2
   {
@@ -97,13 +96,13 @@ public class ToolBarControlSupportTest
         underTest.populate(binder, toolBar);
         // then
         final var buttons = toolBar.getItems();
-        assertThat(buttons.size(), is(3));
+        assertThat(buttons).hasSize(3);
         final var button1 = buttons.get(0);
         final var button2 = buttons.get(1);
         final var button3 = buttons.get(2);
 
-        assertThat(button1.getText(), is("Open"));
-        assertThat(button2.getText(), is("Close"));
-        assertThat(button3.getText(), is("Close all"));
+        assertThat(button1.getText()).isEqualTo("Open");
+        assertThat(button2.getText()).isEqualTo("Close");
+        assertThat(button3.getText()).isEqualTo("Close all");
       }
   }

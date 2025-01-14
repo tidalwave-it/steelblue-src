@@ -27,8 +27,7 @@ package it.tidalwave.ui.core;
 
 import org.testng.annotations.Test;
 import static it.tidalwave.ui.core.UserNotification.notification;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /***************************************************************************************************************************************************************
  *
@@ -43,8 +42,8 @@ public class UserNotificationTest
         // when
         final var underTest = notification();
         // then
-        assertThat(underTest.getText(), is(""));
-        assertThat(underTest.getCaption(), is(""));
+        assertThat(underTest.getText()).isEmpty();
+        assertThat(underTest.getCaption()).isEmpty();
       }
 
     /**********************************************************************************************************************************************************/
@@ -55,8 +54,8 @@ public class UserNotificationTest
         final var underTest = notification().withText("text")
                                             .withCaption("caption");
         // then
-        assertThat(underTest.getText(), is("text"));
-        assertThat(underTest.getCaption(), is("caption"));
+        assertThat(underTest.getText()).isEqualTo("text");
+        assertThat(underTest.getCaption()).isEqualTo("caption");
       }
 
     /**********************************************************************************************************************************************************/
@@ -67,7 +66,7 @@ public class UserNotificationTest
         final var underTest = notification().withText(UserNotificationTest.class, "text", "param")
                                             .withCaption(UserNotificationTest.class, "caption", "param");
         // then
-        assertThat(underTest.getText(), is("The text with param"));
-        assertThat(underTest.getCaption(), is("The caption with param"));
+        assertThat(underTest.getText()).isEqualTo("The text with param");
+        assertThat(underTest.getCaption()).isEqualTo("The caption with param");
       }
   }

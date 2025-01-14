@@ -25,22 +25,15 @@
  */
 package it.tidalwave.ui.core.role;
 
-import jakarta.annotation.Nonnull;
-import java.util.Collection;
-import java.util.List;
 import java.util.stream.IntStream;
 import it.tidalwave.util.NotFoundException;
-import lombok.RequiredArgsConstructor;
 import org.testng.annotations.Test;
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.Description;
-import static java.util.Arrays.asList;
-import static java.util.Collections.emptyList;
+import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.*;
 import static org.testng.FileAssert.fail;
 import static org.mockito.Mockito.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+import static it.tidalwave.util.StreamUtils.zip;
 
 /***************************************************************************************************************************************************************
  *
@@ -48,39 +41,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
  **************************************************************************************************************************************************************/
 public class UserActionProviderTest
   {
-    @RequiredArgsConstructor(staticName = "sameInstances")
-    static class InstanceMatcher extends BaseMatcher<Collection<? extends UserAction>>
-      {
-        private final List<UserAction> expected;
-
-        @Override
-        public boolean matches (@Nonnull final Object object)
-          {
-            final var actual = (List<UserAction>)object;
-
-             if (expected.size() != actual.size())
-               {
-                 return false;
-               }
-
-             for (var i = 0; i < actual.size(); i++)
-               {
-                 if (expected.get(i) != actual.get(i))
-                   {
-                     return false;
-                   }
-               }
-
-             return true;
-          }
-
-        @Override
-        public void describeTo(final Description description)
-          {
-            description.appendValue(expected);
-          }
-      }
-
     private final UserAction[] ACTIONS = IntStream.range(0, 10)
                                                   .mapToObj(i -> mock(UserAction.class))
                                                   .collect(toList())
@@ -95,9 +55,9 @@ public class UserActionProviderTest
         // when
         final var underTest = UserActionProvider.of(ACTIONS);
         // then
-        assertThat(underTest.getActions(), is(InstanceMatcher.sameInstances(asList(ACTIONS))));
-        assertThat(underTest.getDefaultAction(), sameInstance(ACTIONS[0]));
-        assertThat(underTest.getOptionalDefaultAction().orElseThrow(), sameInstance(ACTIONS[0]));
+        zip(underTest.getActions().stream(), stream(ACTIONS)).forEach(p -> assertThat(p.a).isSameAs(p.b));
+        assertThat(underTest.getDefaultAction()).isSameAs(ACTIONS[0]);
+        assertThat(underTest.getOptionalDefaultAction().orElseThrow()).isSameAs(ACTIONS[0]);
       }
 
     @Test
@@ -106,8 +66,8 @@ public class UserActionProviderTest
         // when
         final var underTest = UserActionProvider.of(NO_ACTIONS);
         // then
-        assertThat(underTest.getActions(), is(emptyList()));
-        assertThat(underTest.getOptionalDefaultAction().isPresent(), is(false));
+        assertThat(underTest.getActions()).isEmpty();
+        assertThat(underTest.getOptionalDefaultAction()).isNotPresent();
 
         try
           {

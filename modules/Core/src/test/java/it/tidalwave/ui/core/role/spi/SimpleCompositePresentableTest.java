@@ -47,8 +47,7 @@ import static java.util.Collections.emptyList;
 import static it.tidalwave.util.Parameters.r;
 import static it.tidalwave.ui.core.role.PresentationModel._SimpleCompositeOfPresentationModel_;
 import static org.testng.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /***************************************************************************************************************************************************************
  *
@@ -191,7 +190,7 @@ public class SimpleCompositePresentableTest
         pm.as(MockRole1.class);                   // must not throw AsException
         final var role = pm.as(MockRole2.class); // must not throw AsException
 
-        assertThat(role.getDatum(), is(sameInstance(datum)));
+        assertThat(role.getDatum()).isSameAs(datum);
 
         final var childrenPm = pm.maybeAs(_SimpleCompositeOfPresentationModel_)
                                  .map(c -> c.findChildren().results())
@@ -206,7 +205,7 @@ public class SimpleCompositePresentableTest
 
         final var childrenData = datum.getChildren();
 
-        assertThat(childrenPm.size(), is(childrenData.size()));
+        assertThat(childrenPm).hasSize(childrenData.size());
 
         for (var i = 0; i < childrenPm.size(); i++)
           {

@@ -31,8 +31,7 @@ import it.tidalwave.ui.core.annotation.EnableMessageBus;
 import it.tidalwave.messagebus.MessageBus;
 import org.testng.annotations.Test;
 import static it.tidalwave.ui.javafx.JavaFXSpringAnnotationApplication.APPLICATION_MESSAGE_BUS_BEAN_NAME;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /***************************************************************************************************************************************************************
  *
@@ -60,11 +59,11 @@ public class JavaFXSpringAnnotationApplicationTest
         // when
         final var applicationContext = underTest.createApplicationContext();
         // then
-        assertThat(applicationContext.getBean("javafxBinderExecutor", ThreadPoolTaskExecutor.class), notNullValue());
-        assertThat(applicationContext.getBean("preferencesHandler", PreferencesHandler.class), notNullValue());
-        assertThat(applicationContext.getBean("toolBarControl", JavaFXToolBarControl.class), notNullValue());
-        assertThat(applicationContext.getBean("menuBarControl", JavaFXMenuBarControl.class), notNullValue());
-        assertThat(applicationContext.containsBean(APPLICATION_MESSAGE_BUS_BEAN_NAME), is(false));
+        assertThat(applicationContext.getBean("javafxBinderExecutor", ThreadPoolTaskExecutor.class)).isNotNull();
+        assertThat(applicationContext.getBean("preferencesHandler", PreferencesHandler.class)).isNotNull();
+        assertThat(applicationContext.getBean("toolBarControl", JavaFXToolBarControl.class)).isNotNull();
+        assertThat(applicationContext.getBean("menuBarControl", JavaFXMenuBarControl.class)).isNotNull();
+        assertThat(applicationContext.containsBean(APPLICATION_MESSAGE_BUS_BEAN_NAME)).isFalse();
       }
 
     /**********************************************************************************************************************************************************/
@@ -77,10 +76,10 @@ public class JavaFXSpringAnnotationApplicationTest
         // when
         final var applicationContext = underTest.createApplicationContext();
         // then
-        assertThat(applicationContext.getBean("javafxBinderExecutor", ThreadPoolTaskExecutor.class), notNullValue());
-        assertThat(applicationContext.getBean("preferencesHandler", PreferencesHandler.class), notNullValue());
-        assertThat(applicationContext.getBean("toolBarControl", JavaFXToolBarControl.class), notNullValue());
-        assertThat(applicationContext.getBean("menuBarControl", JavaFXMenuBarControl.class), notNullValue());
-        assertThat(applicationContext.getBean(APPLICATION_MESSAGE_BUS_BEAN_NAME, MessageBus.class), notNullValue());
+        assertThat(applicationContext.getBean("javafxBinderExecutor", ThreadPoolTaskExecutor.class)).isNotNull();
+        assertThat(applicationContext.getBean("preferencesHandler", PreferencesHandler.class)).isNotNull();
+        assertThat(applicationContext.getBean("toolBarControl", JavaFXToolBarControl.class)).isNotNull();
+        assertThat(applicationContext.getBean("menuBarControl", JavaFXMenuBarControl.class)).isNotNull();
+        assertThat(applicationContext.getBean(APPLICATION_MESSAGE_BUS_BEAN_NAME, MessageBus.class)).isNotNull();
       }
   }

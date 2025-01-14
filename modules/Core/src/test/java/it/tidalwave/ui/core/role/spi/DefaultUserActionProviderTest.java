@@ -28,8 +28,7 @@ package it.tidalwave.ui.core.role.spi;
 import it.tidalwave.util.NotFoundException;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /***************************************************************************************************************************************************************
  *
@@ -52,7 +51,7 @@ public class DefaultUserActionProviderTest
         // when
         final var actions = underTest.getActions();
         // then
-        assertThat(actions.isEmpty(), is(true));
+        assertThat(actions).isEmpty();
       }
 
     @Test(expectedExceptions = NotFoundException.class)

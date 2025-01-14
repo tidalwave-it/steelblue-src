@@ -31,8 +31,7 @@ import it.tidalwave.ui.core.role.Displayable;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
 import static org.mockito.Mockito.*;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /***************************************************************************************************************************************************************
  *
@@ -53,7 +52,7 @@ public class DefaultUserActionTest
         // when
         final var string = underTest.toString();
         // then
-        assertThat(string, is("DefaultUserAction@" + Integer.toHexString(System.identityHashCode(underTest))));
+        assertThat(string).isEqualTo("DefaultUserAction@" + Integer.toHexString(System.identityHashCode(underTest)));
       }
 
     /**********************************************************************************************************************************************************/
@@ -65,7 +64,7 @@ public class DefaultUserActionTest
         // when
         final var string = underTest.toString();
         // then
-        assertThat(string, is("DefaultUserAction[\"Action\"]"));
+        assertThat(string).isEqualTo("DefaultUserAction[\"Action\"]");
       }
 
     /**********************************************************************************************************************************************************/
@@ -79,6 +78,6 @@ public class DefaultUserActionTest
         // when
         final var string = underTest.toString();
         // then
-        assertThat(string, is("DefaultUserAction@" + Integer.toHexString(System.identityHashCode(underTest)) + ",broken"));
+        assertThat(string).isEqualTo("DefaultUserAction@" + Integer.toHexString(System.identityHashCode(underTest)) + ",broken");
       }
   }

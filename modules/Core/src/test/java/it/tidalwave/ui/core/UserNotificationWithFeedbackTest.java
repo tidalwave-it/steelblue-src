@@ -30,8 +30,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import static it.tidalwave.ui.core.UserNotificationWithFeedback.*;
 import static org.mockito.Mockito.*;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /***************************************************************************************************************************************************************
  *
@@ -59,10 +58,10 @@ public class UserNotificationWithFeedbackTest
         // when
         final var underTest = notificationWithFeedback();
         // then
-        assertThat(underTest.getText(), is(""));
-        assertThat(underTest.getCaption(), is(""));
-        assertThat(underTest.getFeedback().canCancel(), is(false));
-        assertThat(underTest.getFeedback().canConfirm(), is(false));
+        assertThat(underTest.getText()).isEmpty();
+        assertThat(underTest.getCaption()).isEmpty();
+        assertThat(underTest.getFeedback().canCancel()).isFalse();
+        assertThat(underTest.getFeedback().canConfirm()).isFalse();
       }
 
     /**********************************************************************************************************************************************************/
@@ -73,10 +72,10 @@ public class UserNotificationWithFeedbackTest
         final var underTest = notificationWithFeedback().withText("text")
                                                         .withCaption("caption");
         // then
-        assertThat(underTest.getText(), is("text"));
-        assertThat(underTest.getCaption(), is("caption"));
-        assertThat(underTest.getFeedback().canCancel(), is(false));
-        assertThat(underTest.getFeedback().canConfirm(), is(false));
+        assertThat(underTest.getText()).isEqualTo("text");
+        assertThat(underTest.getCaption()).isEqualTo("caption");
+        assertThat(underTest.getFeedback().canCancel()).isFalse();
+        assertThat(underTest.getFeedback().canConfirm()).isFalse();
       }
 
     /**********************************************************************************************************************************************************/
@@ -87,10 +86,10 @@ public class UserNotificationWithFeedbackTest
         final var underTest = notificationWithFeedback().withText(UserNotificationWithFeedbackTest.class, "text", "param")
                                                         .withCaption(UserNotificationWithFeedbackTest.class, "caption", "param");
         // then
-        assertThat(underTest.getText(), is("The text with param"));
-        assertThat(underTest.getCaption(), is("The caption with param"));
-        assertThat(underTest.getFeedback().canCancel(), is(false));
-        assertThat(underTest.getFeedback().canConfirm(), is(false));
+        assertThat(underTest.getText()).isEqualTo("The text with param");
+        assertThat(underTest.getCaption()).isEqualTo("The caption with param");
+        assertThat(underTest.getFeedback().canCancel()).isFalse();
+        assertThat(underTest.getFeedback().canConfirm()).isFalse();
       }
 
     /**********************************************************************************************************************************************************/
@@ -103,8 +102,8 @@ public class UserNotificationWithFeedbackTest
         // when
         underTest.confirm();
         // then
-        assertThat(underTest.getFeedback().canCancel(), is(false));
-        assertThat(underTest.getFeedback().canConfirm(), is(true));
+        assertThat(underTest.getFeedback().canCancel()).isFalse();
+        assertThat(underTest.getFeedback().canConfirm()).isTrue();
         verify(onConfirm).call();
         verifyNoInteractions(onCancel);
       }
@@ -119,8 +118,8 @@ public class UserNotificationWithFeedbackTest
         // when
         underTest.cancel();
         // then
-        assertThat(underTest.getFeedback().canCancel(), is(true));
-        assertThat(underTest.getFeedback().canConfirm(), is(false));
+        assertThat(underTest.getFeedback().canCancel()).isTrue();
+        assertThat(underTest.getFeedback().canConfirm()).isFalse();
         verify(onCancel).call();
         verifyNoInteractions(onConfirm);
       }

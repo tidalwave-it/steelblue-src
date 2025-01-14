@@ -35,8 +35,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.testng.annotations.Test;
 import static it.tidalwave.ui.core.role.Displayable._Displayable_;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class BinderMock
   {
@@ -114,39 +113,39 @@ public class MenuBarControlSupportTest
         underTest.populate(binder, control);
         // then
         final var menus = control.getMenus();
-        assertThat(menus.size(), is(3));
+        assertThat(menus).hasSize(3);
         final var menuFile = menus.get(0);
         final var menuEdit = menus.get(1);
         final var menuSelect = menus.get(2);
 
         final var menuFileItems = menuFile.getItems();
-        assertThat(menuFileItems.size(), is(3));
+        assertThat(menuFileItems).hasSize(3);
         final var menuFileOpen = menuFileItems.get(0);
         final var menuFileClose = menuFileItems.get(1);
         final var menuFileCloseAll = menuFileItems.get(2);
 
         final var menuEditItems = menuEdit.getItems();
-        assertThat(menuEditItems.size(), is(2));
+        assertThat(menuEditItems).hasSize(2);
         final var menuEditUndo = menuEditItems.get(0);
         final var menuEditRedo = menuEditItems.get(1);
 
         final var menuSelectItems = menuSelect.getItems();
-        assertThat(menuSelectItems.size(), is(2));
+        assertThat(menuSelectItems).hasSize(2);
         final var menuSelectSelectAll = menuSelectItems.get(0);
         final var menuSelectDeselect = menuSelectItems.get(1);
 
-        assertThat(menuFile.getText(), is("File"));
-        assertThat(menuFileOpen.getText(), is("Open"));
-        assertThat(menuFileClose.getText(), is("Close"));
-        assertThat(menuFileCloseAll.getText(), is("Close all"));
+        assertThat(menuFile.getText()).isEqualTo("File");
+        assertThat(menuFileOpen.getText()).isEqualTo("Open");
+        assertThat(menuFileClose.getText()).isEqualTo("Close");
+        assertThat(menuFileCloseAll.getText()).isEqualTo("Close all");
 
-        assertThat(menuEdit.getText(), is("Edit"));
-        assertThat(menuEditUndo.getText(), is("Undo"));
-        assertThat(menuEditRedo.getText(), is("Redo"));
+        assertThat(menuEdit.getText()).isEqualTo("Edit");
+        assertThat(menuEditUndo.getText()).isEqualTo("Undo");
+        assertThat(menuEditRedo.getText()).isEqualTo("Redo");
 
-        assertThat(menuSelect.getText(), is("Select"));
-        assertThat(menuSelectSelectAll.getText(), is("Select all"));
-        assertThat(menuSelectDeselect.getText(), is("Deselect"));
+        assertThat(menuSelect.getText()).isEqualTo("Select");
+        assertThat(menuSelectSelectAll.getText()).isEqualTo("Select all");
+        assertThat(menuSelectDeselect.getText()).isEqualTo("Deselect");
         // actionNoMenuBar correctly did not appear anywhere
       }
   }

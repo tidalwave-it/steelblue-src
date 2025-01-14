@@ -40,8 +40,7 @@ import it.tidalwave.role.spi.SystemRoleFactory;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import static org.mockito.Mockito.*;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /***************************************************************************************************************************************************************
  *
@@ -83,7 +82,7 @@ public class AsObjectTreeCellTest extends JavaFXTestSupport
         // when
         runSafelyAndWait("updateItem", executorService, () -> underTest.updateItem(asObject, false));
         // then
-        assertThat(underTest.getText(), is("foo"));
+        assertThat(underTest.getText()).isEqualTo("foo");
       }
 
     /**********************************************************************************************************************************************************/
@@ -96,7 +95,7 @@ public class AsObjectTreeCellTest extends JavaFXTestSupport
          // when
         runSafelyAndWait("updateItem", executorService, () -> underTest.updateItem(asObject, true));
         // then
-        assertThat(underTest.getText(), is(""));
+        assertThat(underTest.getText()).isEmpty();
       }
 
     // TODO: test setting of ContextMenu

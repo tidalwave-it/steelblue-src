@@ -51,8 +51,7 @@ import static it.tidalwave.ui.core.role.Presentable._Presentable_;
 import static it.tidalwave.ui.core.role.Selectable._Selectable_;
 import static it.tidalwave.ui.core.role.UserActionProvider._UserActionProvider_;
 import static org.mockito.Mockito.*;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /***************************************************************************************************************************************************************
  *
@@ -102,7 +101,7 @@ public class DefaultMainPanelPresentationControlTest
         verify(presentation).notify("Button pressed");
         // TBD: test bound property incremented
         verifyNoMoreInteractions(presentation);
-        assertThat(bindings.textProperty.get(), is("2"));
+        assertThat(bindings.textProperty.get()).isEqualTo("2");
       }
     // END SNIPPET: test_buttonAction
 
@@ -253,43 +252,43 @@ public class DefaultMainPanelPresentationControlTest
         verify(presentation).populate(cpm1.capture(), cpm2.capture(), cpm3.capture());
 
         final var pmList1 = toPmList(cpm1.getValue());
-        assertThat(pmList1.size(), is(1));
+        assertThat(pmList1).hasSize(1);
         pmList1.forEach(pm -> assertPresentationModel(pm, "Item #simple entity", "SimpleEntity(simple entity)"));
 
         final var pmList2 = toPmList(cpm2.getValue());
-        assertThat(pmList2.size(), is(1));
+        assertThat(pmList2).hasSize(1);
         pmList2.forEach(pm ->
           {
             assertPresentationModel(pm, simpleDciEntity.getName(), simpleDciEntity.toString());
 
             final var aggregate = pm.as(_PresentationModelAggregate_);
-            assertThat(aggregate.getNames(), is(Set.of("C1", "C2", "C3")));
+            assertThat(aggregate.getNames()).containsExactlyInAnyOrder("C1", "C2", "C3");
             final var pmc1 = aggregate.getByName("C1").orElseThrow();
             final var pmc2 = aggregate.getByName("C2").orElseThrow();
             final var pmc3 = aggregate.getByName("C3").orElseThrow();
-            assertThat(pmc1.as(_Displayable_).getDisplayName(), is(simpleDciEntity.getName()));
-            assertThat(pmc2.as(_Displayable_).getDisplayName(), is("" + simpleDciEntity.getAttribute1()));
-            assertThat(pmc3.as(_Displayable_).getDisplayName(), is("" + simpleDciEntity.getAttribute2()));
+            assertThat(pmc1.as(_Displayable_).getDisplayName()).isEqualTo(simpleDciEntity.getName());
+            assertThat(pmc2.as(_Displayable_).getDisplayName()).isEqualTo("" + simpleDciEntity.getAttribute1());
+            assertThat(pmc3.as(_Displayable_).getDisplayName()).isEqualTo("" + simpleDciEntity.getAttribute2());
           });
 
         final var pmList3 = toPmList(cpm3.getValue());
-        assertThat(pmList3.size(), is(1));
+        assertThat(pmList3).hasSize(1);
         pmList3.forEach(_c(pm ->
           {
             final var displayable = pm.as(_Displayable_);
-            assertThat(displayable.getDisplayName(), is(fe.getDisplayName()));
+            assertThat(displayable.getDisplayName()).isEqualTo(fe.getDisplayName());
 
             final var aggregate = pm.as(_PresentationModelAggregate_);
-            assertThat(aggregate.getNames(), is(Set.of("name", "size", "creationDate", "latestModificationDate")));
+            assertThat(aggregate.getNames()).containsExactlyInAnyOrder("name", "size", "creationDate", "latestModificationDate");
             final var pmc1 = aggregate.getByName("name").orElseThrow();
             final var pmc2 = aggregate.getByName("size").orElseThrow();
             final var pmc3 = aggregate.getByName("creationDate").orElseThrow();
             final var pmc4 = aggregate.getByName("latestModificationDate").orElseThrow();
-            assertThat(pmc1.as(_Displayable_).getDisplayName(), is(fe.getDisplayName()));
-            assertThat(pmc2.as(_Displayable_).getDisplayName(), is("" + fe.getSize()));
+            assertThat(pmc1.as(_Displayable_).getDisplayName()).isEqualTo(fe.getDisplayName());
+            assertThat(pmc2.as(_Displayable_).getDisplayName()).isEqualTo("" + fe.getSize());
             // Commented out because they keep changing, but you get the point.
-            // assertThat(pmc3.as(_Displayable_).getDisplayName(), is("12/18/24 11:25 am"));
-            // assertThat(pmc4.as(_Displayable_).getDisplayName(), is("12/18/24 11:28 am"));
+            // assertThat(pmc3.as(_Displayable_).getDisplayName()).isEqualTo("12/18/24 11:25 am")));
+            // assertThat(pmc4.as(_Displayable_).getDisplayName()).isEqualTo("12/18/24 11:28 am")));
           }));
 
         // FIXME verifyNoMoreInteractions(presentation);
@@ -303,13 +302,13 @@ public class DefaultMainPanelPresentationControlTest
         final var selectable = pm.as(_Selectable_);
         final var userActionProvider = pm.as(_UserActionProvider_);
 
-        assertThat(displayable.getDisplayName(), is(expectedDisplayName));
+        assertThat(displayable.getDisplayName()).isEqualTo(expectedDisplayName);
 
         selectable.select();
         verify(presentation).notify("Selected " + expectedToString);
 
         final var actions = new ArrayList<>(userActionProvider.getActions());
-        assertThat(actions.size(), is(3));
+        assertThat(actions).hasSize(3);
         actions.get(0).actionPerformed();
         verify(presentation).notify("Action 1 on " + expectedToString);
         actions.get(1).actionPerformed();

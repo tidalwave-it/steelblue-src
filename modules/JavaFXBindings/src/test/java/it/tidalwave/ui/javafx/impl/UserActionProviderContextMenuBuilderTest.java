@@ -49,8 +49,7 @@ import lombok.experimental.Delegate;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import static org.mockito.Mockito.*;
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /***************************************************************************************************************************************************************
  *
@@ -96,7 +95,7 @@ public class UserActionProviderContextMenuBuilderTest
 
     private void checkThread()
       {
-        assertThat("Must not be in the FX thread!", Platform.isFxApplicationThread(), is(false));
+        assertThat(Platform.isFxApplicationThread()).withFailMessage("Must not be in the FX thread!").isFalse();
       }
 
     /***********************************************************************************************************************************************************
@@ -141,8 +140,7 @@ public class UserActionProviderContextMenuBuilderTest
         // when
         final var menuItems = underTest.createMenuItems(roleMapWithoutUserActionProvider);
         // then
-        assertThat(menuItems, is(notNullValue()));
-        assertThat(menuItems.isEmpty(), is(true));
+        assertThat(menuItems).isNotNull().isEmpty();
       }
 
     /***********************************************************************************************************************************************************
@@ -154,14 +152,13 @@ public class UserActionProviderContextMenuBuilderTest
         // when
         final var menuItems = underTest.createMenuItems(roleMapWithUserActionProvider);
         // then
-        assertThat(menuItems, is(not(nullValue())));
-        assertThat(menuItems.size(), is(actions.size()));
+        assertThat(menuItems).isNotNull().hasSize(actions.size());
 
         for (var i = 0; i < menuItems.size(); i++)
           {
             final var menuItem = menuItems.get(i);
-            assertThat(menuItem, is(not(nullValue())));
-            assertThat(menuItem.getText(), is("Action #" + i));
+            assertThat(menuItem).isNotNull();
+            assertThat(menuItem.getText()).isEqualTo("Action #" + i);
           }
       }
 
@@ -175,8 +172,7 @@ public class UserActionProviderContextMenuBuilderTest
         // when
         final var menuItems = underTest.createMenuItems(roleMapWithUserActionProvider);
         // then
-        assertThat(menuItems, is(not(nullValue())));
-        assertThat(menuItems.size(), is(actions.size()));
+        assertThat(menuItems).isNotNull().hasSize(actions.size());
 
         for (final var menuItem : menuItems)
           {

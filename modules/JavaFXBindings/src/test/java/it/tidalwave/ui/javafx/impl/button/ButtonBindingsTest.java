@@ -48,8 +48,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.mockito.stubbing.Answer;
 import static org.testfx.assertions.api.Assertions.assertThat;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 /***************************************************************************************************************************************************************
@@ -92,7 +90,7 @@ public class ButtonBindingsTest extends JavaFXTestSupport
         callback = mock(Callback.class);
         doAnswer((Answer<Void>)invocation ->
           {
-            assertTrue(!Platform.isFxApplicationThread(), "Erroneously in JavaFX thread.");
+            assertThat(Platform.isFxApplicationThread()).withFailMessage("Erroneously in JavaFX thread.").isFalse();
             return null;
           }).when(callback).call();
         userAction = UserAction.of(callback, List.of(displayable));
@@ -185,9 +183,9 @@ public class ButtonBindingsTest extends JavaFXTestSupport
         Thread.sleep(100);
         final var enabled3 = !button.isDisabled();
         // then
-        assertTrue(enabled1, "Wrong initial enablement");
-        assertFalse(enabled2, "Wrong second enablement");
-        assertTrue(enabled3, "Wrong third enablement");
+        assertThat(enabled1).withFailMessage("Wrong initial enablement").isTrue();
+        assertThat(enabled2).withFailMessage("Wrong second enablement").isFalse();
+        assertThat(enabled3).withFailMessage("Wrong third enablement").isTrue();
       }
 
     /**********************************************************************************************************************************************************/
