@@ -34,14 +34,14 @@
     <parent>
         <groupId>it.tidalwave.steelblue</groupId>
         <artifactId>it-tidalwave-ui-examples</artifactId>
-        <version>2.0-ALPHA-4</version>
+        <version>2.0-ALPHA-5-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>it.tidalwave.steelblue</groupId>
     <artifactId>it-tidalwave-ui-example-model</artifactId>
     <packaging>jar</packaging>
-    <version>2.0-ALPHA-4</version>
+    <version>2.0-ALPHA-5-SNAPSHOT</version>
     <name>SteelBlue :: Examples :: Model</name>
 
     <dependencies>
