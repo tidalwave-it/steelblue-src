@@ -26,7 +26,6 @@
 package it.tidalwave.ui.example.presentation.impl;
 
 import jakarta.annotation.Nonnull;
-import java.util.Collection;
 import java.util.List;
 import it.tidalwave.ui.core.MenuBarControl;
 import it.tidalwave.ui.core.ToolBarControl;
@@ -50,7 +49,7 @@ public class MainPanelUserActionProvider extends DefaultUserActionProvider
     private final DefaultMainPanelPresentationControl pc;
 
     @Override @Nonnull
-    public Collection<? extends UserAction> getActions()
+    public List<UserAction> getActions()
       {
         return List.of(pc.getActionButton(), pc.getActionDialogOk(), pc.getActionDialogCancelOk(), pc.getActionPickFile(), pc.getActionPickDirectory());
       }

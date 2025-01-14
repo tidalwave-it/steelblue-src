@@ -27,7 +27,6 @@ package it.tidalwave.ui.javafx.impl;
 
 import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -116,7 +115,7 @@ public class UserActionProviderContextMenuBuilderTest
         final UserActionProvider userActionProvider = new DefaultUserActionProvider()
           {
             @Override @Nonnull
-            public Collection<? extends UserAction> getActions()
+            public List<UserAction> getActions()
               {
                 return actions;
               }

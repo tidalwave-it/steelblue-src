@@ -26,7 +26,6 @@
 package it.tidalwave.ui.core.role;
 
 import jakarta.annotation.Nonnull;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import it.tidalwave.util.NotFoundException;
@@ -51,7 +50,7 @@ public interface UserActionProvider
      * @return  a collection of actions
      **********************************************************************************************************************************************************/
     @Nonnull
-    public Collection<? extends UserAction> getActions();
+    public List<UserAction> getActions();
 
     /***********************************************************************************************************************************************************
      * Returns the default action, if available.
@@ -98,7 +97,7 @@ public interface UserActionProvider
         return new UserActionProvider()
           {
             @Override @Nonnull
-            public Collection<? extends UserAction> getActions()
+            public List<UserAction> getActions()
               {
                 return List.of(actions);
               }
