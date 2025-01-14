@@ -35,12 +35,11 @@ import it.tidalwave.util.As;
 import it.tidalwave.util.Pair;
 import it.tidalwave.ui.core.MenuBarControl;
 import it.tidalwave.ui.core.role.UserAction;
-import it.tidalwave.ui.core.role.UserActionProvider;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
 import lombok.extern.slf4j.Slf4j;
-import static java.util.Collections.emptyList;
+import static java.util.stream.Collectors.*;
 import static it.tidalwave.ui.core.MenuBarControl.MenuPlacement._MenuItemPlacement_;
 import static it.tidalwave.ui.core.role.UserActionProvider._UserActionProvider_;
 
@@ -70,7 +69,7 @@ public abstract class MenuBarControlSupport<B, MB, M> implements MenuBarControl<
      **********************************************************************************************************************************************************/
     protected MenuBarControlSupport ()
       {
-        userActionsSupplier = () -> maybeAs(_UserActionProvider_).map(UserActionProvider::getActions).orElse(emptyList());
+        userActionsSupplier = () -> asMany(_UserActionProvider_).stream().flatMap(ap -> ap.getActions().stream()).collect(toList());
       }
 
     /***********************************************************************************************************************************************************
