@@ -54,7 +54,7 @@ import lombok.Setter;
  **************************************************************************************************************************************************************/
 public abstract class JavaFXApplicationWithSplash extends Application
   {
-    private static final String K_BASE_NAME = "it.tidalwave.javafx";
+    private static final String K_BASE_NAME = "it.tidalwave.ui.javafx";
 
     /** A property representing the initial main window size as a percentual of the screen size. */
     public static final Key<Double> K_INITIAL_SIZE = Key.of(K_BASE_NAME + ".initialSize", Double.class);
