@@ -30,8 +30,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import org.springframework.beans.factory.BeanFactory;
 import it.tidalwave.ui.core.PanelGroupProvider;
 import it.tidalwave.ui.core.PanelGroupControl.Group;
+import it.tidalwave.ui.core.message.PanelShowRequest;
 import it.tidalwave.util.As;
 import org.testng.annotations.Test;
 import static it.tidalwave.ui.core.PanelGroupControl.Options.*;
@@ -51,9 +53,9 @@ public class PanelGroupControlSupportTest
 
     static class Fixture extends PanelGroupControlSupport<MockPanel, MockNode>
       {
-        public Fixture (@Nonnull final Function<As, Collection<? extends PanelGroupProvider<MockNode>>> pgpProvider)
+        public Fixture (@Nonnull final Function<As, Collection<PanelGroupProvider<MockNode>>> pgProvider)
           {
-            super(pgpProvider);
+            super(pgProvider, mock(BeanFactory.class), "");
           }
 
         @Override
@@ -62,6 +64,12 @@ public class PanelGroupControlSupportTest
                                  @Nonnull final MockPanel topContainer,
                                  @Nonnull final Map<Group, List<Options>> groupOptions,
                                  @Nonnull final List<Options> options)
+          {
+            // not needed in tests
+          }
+
+        @Override
+        protected void onShowRequest (@Nonnull final PanelShowRequest panelShowRequest)
           {
             // not needed in tests
           }
@@ -91,10 +99,10 @@ public class PanelGroupControlSupportTest
         final var ppBottom2 = createMock(BOTTOM, "Bottom 2");
         final var underTest = spy(new Fixture(ignored -> List.of(ppLeft1, ppLeft2, ppRight1, ppRight2, ppCenter1, ppCenter2, ppBottom1, ppBottom2)));
         final var configuration = underTest.config()
-                                           .withGroup(LEFT, panelLeft, ALWAYS_WRAP)
+                                           .withGroup(LEFT,   panelLeft,   ALWAYS_WRAP)
                                            .withGroup(CENTER, panelCenter, ALWAYS_WRAP)
                                            .withGroup(BOTTOM, panelBottom, ALWAYS_WRAP)
-                                           .withGroup(RIGHT, panelRight, ALWAYS_WRAP)
+                                           .withGroup(RIGHT,  panelRight,  ALWAYS_WRAP)
                                            .withOptions(DISABLE_ACCORDION_ANIMATION);
         // when
         underTest.setup(configuration);

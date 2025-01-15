@@ -300,6 +300,7 @@ public class DefaultJavaFXPanelGroupControlTest extends JavaFXTestSupport
     private MessageBus createUnderTestWithMessageBus()
       {
         final var messageBus = mock(MessageBus.class);
+        beanFactory = mock(BeanFactory.class);
         when(beanFactory.containsBean(APPLICATION_MESSAGE_BUS_BEAN_NAME)).thenReturn(true);
         when(beanFactory.getBean(APPLICATION_MESSAGE_BUS_BEAN_NAME, MessageBus.class)).thenReturn(messageBus);
         underTest = new DefaultJavaFXPanelGroupControl(beanFactory);

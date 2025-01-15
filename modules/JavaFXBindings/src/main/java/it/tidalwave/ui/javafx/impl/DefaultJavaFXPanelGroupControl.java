@@ -27,8 +27,6 @@ package it.tidalwave.ui.javafx.impl;
 
 import java.lang.reflect.InvocationTargetException;
 import jakarta.annotation.Nonnull;
-import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
 import java.util.Arrays;
 import java.util.IdentityHashMap;
 import java.util.List;
@@ -39,7 +37,6 @@ import javafx.scene.control.Accordion;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.tidalwave.ui.core.PanelGroupControl;
@@ -51,8 +48,6 @@ import it.tidalwave.ui.core.message.PanelShowRequest;
 import it.tidalwave.ui.javafx.JavaFXPanelGroupControl;
 import it.tidalwave.ui.javafx.NodeAndDelegate;
 import it.tidalwave.util.Pair;
-import it.tidalwave.util.annotation.VisibleForTesting;
-import it.tidalwave.messagebus.MessageBus;
 import lombok.extern.slf4j.Slf4j;
 import static it.tidalwave.ui.core.PanelGroupControl.Options.*;
 import static it.tidalwave.ui.javafx.impl.DefaultJavaFXBinder.enforceFxApplicationThread;
@@ -83,31 +78,12 @@ public class DefaultJavaFXPanelGroupControl extends PanelGroupControlSupport<Anc
     /* A map associating to each managed {@Code Node} its provider. */
     private final Map<Node, PanelGroupProvider<Node>> providerByNode = new IdentityHashMap<>();
 
-    /** The message bus, if present on the system. */
-    @Nonnull
-    private final Optional<MessageBus> messageBus;
-
-    /** The listener to the message bus. */
-    private final MessageBus.Listener<PanelShowRequest> messageListener = this::onShowRequest;
-
     /***********************************************************************************************************************************************************
-     * This class doesn't rely on the @SimpleSubscriber/@ListensTo annotations to avoid having a dependency on the MessageBus runtime, so it dynamically
-     * queries a {@link BeanFactory}.
+     *
      **********************************************************************************************************************************************************/
     public DefaultJavaFXPanelGroupControl (@Nonnull final BeanFactory beanFactory)
       {
-        MessageBus messageBus = null;
-
-        try
-          {
-            messageBus = beanFactory.getBean(APPLICATION_MESSAGE_BUS_BEAN_NAME, MessageBus.class);
-          }
-        catch (BeansException e)
-          {
-            log.warn("No message bus");
-          }
-
-        this.messageBus = Optional.ofNullable(messageBus);
+        super(beanFactory, APPLICATION_MESSAGE_BUS_BEAN_NAME);
       }
 
     /***********************************************************************************************************************************************************
@@ -117,24 +93,6 @@ public class DefaultJavaFXPanelGroupControl extends PanelGroupControlSupport<Anc
     public void show (@Nonnull final Object requestor)
       {
         expanderByNode.getOrDefault(findNode(requestor), DO_NOTHING).run();
-      }
-
-    /***********************************************************************************************************************************************************
-     *
-     **********************************************************************************************************************************************************/
-    @PostConstruct
-    @VisibleForTesting void initialize()
-      {
-        messageBus.ifPresent(mb -> mb.subscribe(PanelShowRequest.class, messageListener));
-      }
-
-    /***********************************************************************************************************************************************************
-     *
-     **********************************************************************************************************************************************************/
-    @PreDestroy
-    @VisibleForTesting void destroy()
-      {
-        messageBus.ifPresent(mb -> mb.unsubscribe(messageListener));
       }
 
     /***********************************************************************************************************************************************************
@@ -163,6 +121,16 @@ public class DefaultJavaFXPanelGroupControl extends PanelGroupControlSupport<Anc
           {
             addInStackPane(group, panelProviders, topContainer, options);
           }
+      }
+
+    /***********************************************************************************************************************************************************
+     *
+     **********************************************************************************************************************************************************/
+    @Override
+    protected void onShowRequest (@Nonnull final PanelShowRequest panelShowRequest)
+      {
+        log.info("onShowRequest({})", panelShowRequest);
+        expanderByNode.getOrDefault(findNode(panelShowRequest.getRequestor()), DO_NOTHING).run();
       }
 
     /***********************************************************************************************************************************************************
@@ -235,26 +203,14 @@ public class DefaultJavaFXPanelGroupControl extends PanelGroupControlSupport<Anc
       }
 
     /***********************************************************************************************************************************************************
-     *
-     **********************************************************************************************************************************************************/
-    @VisibleForTesting final void onShowRequest (@Nonnull final PanelShowRequest panelShowRequest)
-      {
-        log.info("onShowRequest({})", panelShowRequest);
-        expanderByNode.getOrDefault(findNode(panelShowRequest.getRequestor()), DO_NOTHING).run();
-      }
-
-    /***********************************************************************************************************************************************************
      * Fires update messages after a change.
      * @param     hiddenNode         the old node
      * @param     shownNode         the new node
      **********************************************************************************************************************************************************/
     private void fireUpdateMessages (@Nonnull final Optional<Node> hiddenNode, @Nonnull final Optional<Node> shownNode)
       {
-        messageBus.ifPresent(mb ->
-          {
-            hiddenNode.ifPresent(n -> mb.publish(new PanelHiddenNotification(providerByNode.get(n).getPresentation(), groupByNode.get(n))));
-            shownNode.ifPresent(n -> mb.publish(new PanelShownNotification(providerByNode.get(n).getPresentation(), groupByNode.get(n))));
-          });
+        hiddenNode.ifPresent(n -> publish(new PanelHiddenNotification(providerByNode.get(n).getPresentation(), groupByNode.get(n))));
+        shownNode.ifPresent(n -> publish(new PanelShownNotification(providerByNode.get(n).getPresentation(), groupByNode.get(n))));
       }
 
     /***********************************************************************************************************************************************************
