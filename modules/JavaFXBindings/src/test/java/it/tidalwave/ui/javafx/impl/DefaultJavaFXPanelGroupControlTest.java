@@ -213,7 +213,7 @@ public class DefaultJavaFXPanelGroupControlTest extends JavaFXTestSupport
         // given
         runSafelyAndWait("assemble", () -> underTest.assemble(LEFT, List.of(provider1, provider2), topContainer, Map.of(), List.of()));
         // when
-        underTest.show(presentation1);
+        runSafelyAndWait("show", () -> underTest.show(presentation1));
         // then
         assertThat(provider1.getComponent()).isVisible();
         assertThat(provider2.getComponent()).isInvisible();
@@ -226,7 +226,7 @@ public class DefaultJavaFXPanelGroupControlTest extends JavaFXTestSupport
         // given
         runSafelyAndWait("assemble", () -> underTest.assemble(LEFT, List.of(provider1, provider2), topContainer, Map.of(), List.of(USE_ACCORDION)));
         // when
-        underTest.show(presentation2);
+        runSafelyAndWait("show", () -> underTest.show(presentation2));
         // then
         final var accordion = (Accordion)topContainer.getChildren().get(0);
         assertThat(accordion.getExpandedPane()).isNotNull();

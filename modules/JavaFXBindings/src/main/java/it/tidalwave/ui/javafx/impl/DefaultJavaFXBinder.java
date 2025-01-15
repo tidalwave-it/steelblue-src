@@ -107,6 +107,7 @@ public class DefaultJavaFXBinder implements JavaFXBinder
     @Override
     public void setMainWindow (@Nonnull final Window mainWindow)
       {
+        enforceFxApplicationThread();
         treeItemBindings.setMainWindow(mainWindow);
         tableViewBindings.setMainWindow(mainWindow);
         dialogBindings.setMainWindow(mainWindow);
