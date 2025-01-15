@@ -40,12 +40,12 @@ import static org.assertj.core.api.Assertions.assertThat;
  **************************************************************************************************************************************************************/
 public class JavaFXSpringAnnotationApplicationTest
   {
-    static class UnderTest extends JavaFXSpringAnnotationApplication
+    static class TestApplication extends JavaFXSpringAnnotationApplication
       {
       }
 
     @EnableMessageBus
-    static class UnderTestWithEnableMessageBus extends UnderTest
+    static class TestApplicationWithEnableMessageBus extends TestApplication
       {
       }
 
@@ -54,7 +54,7 @@ public class JavaFXSpringAnnotationApplicationTest
     public void test_ApplicationContext()
       {
         // given
-        final var underTest = new UnderTest();
+        final var underTest = new TestApplication();
         PreferencesHandler.setAppName("test");
         // when
         final var applicationContext = underTest.createApplicationContext();
@@ -71,7 +71,7 @@ public class JavaFXSpringAnnotationApplicationTest
     public void test_ApplicationContext_with_EnableMessageBus()
       {
         // given
-        final var underTest = new UnderTestWithEnableMessageBus();
+        final var underTest = new it.tidalwave.ui.javafx.JavaFXSpringAnnotationApplicationTest.TestApplicationWithEnableMessageBus();
         PreferencesHandler.setAppName("test");
         // when
         final var applicationContext = underTest.createApplicationContext();

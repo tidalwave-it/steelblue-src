@@ -56,9 +56,9 @@ class ButtonMock
     private final String text;
   }
 
-class UnderTest extends ToolBarControlSupport<BinderMock2, ToolbarMock, ButtonMock>
+class Fixture extends ToolBarControlSupport<BinderMock2, ToolbarMock, ButtonMock>
   {
-    public UnderTest (@Nonnull final Supplier<Collection<? extends UserAction>> userActionsSupplier)
+    public Fixture (@Nonnull final Supplier<Collection<? extends UserAction>> userActionsSupplier)
       {
         super(userActionsSupplier);
       }
@@ -89,7 +89,7 @@ public class ToolBarControlSupportTest
     public void test_populate()
       {
         // given
-        final var underTest = new UnderTest(() -> List.of(a.actionFileOpen, a.actionFileClose, a.actionFileCloseAll));
+        final var underTest = new Fixture(() -> List.of(a.actionFileOpen, a.actionFileClose, a.actionFileCloseAll));
         final var binder = mock(BinderMock2.class);
         final var toolBar = new ToolbarMock();
         // when
