@@ -51,8 +51,10 @@ import static org.apiguardian.api.API.Status.EXPERIMENTAL;
  **************************************************************************************************************************************************************/
 public interface PresentationModel extends As, Mutable
   {
+    /** Shortcut for {@link it.tidalwave.util.As}. */
     public static final Class<PresentationModel> _PresentationModel_ = PresentationModel.class;
 
+    /** Shortcut for {@link it.tidalwave.util.As}. */
     public static final As.Type<SimpleComposite<PresentationModel>> _SimpleCompositeOfPresentationModel_ = As.type(SimpleComposite.class);
 
     public static final String PROPERTY_CHILDREN = "children";

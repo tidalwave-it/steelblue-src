@@ -42,6 +42,7 @@ import it.tidalwave.ui.core.role.impl.DefaultStyleable;
 @FunctionalInterface
 public interface Styleable
   {
+    /** Shortcut for {@link it.tidalwave.util.As}. */
     public static final Class<Styleable> _Styleable_ = Styleable.class;
     
     @Nonnull

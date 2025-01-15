@@ -45,6 +45,7 @@ import it.tidalwave.ui.core.role.impl.DefaultMutableDisplayable;
  **************************************************************************************************************************************************************/
 public interface MutableDisplayable extends Displayable, Mutable
   {
+    /** Shortcut for {@link it.tidalwave.util.As}. */
     public static final Class<MutableDisplayable> _MutableDisplayable_ = MutableDisplayable.class;
 
     /** The property name for displayName */

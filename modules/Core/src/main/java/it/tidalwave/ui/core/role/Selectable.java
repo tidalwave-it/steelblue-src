@@ -38,6 +38,7 @@ package it.tidalwave.ui.core.role;
 @FunctionalInterface
 public interface Selectable
   {
+    /** Shortcut for {@link it.tidalwave.util.As}. */
     public static final Class<Selectable> _Selectable_ = Selectable.class;
 
     /***********************************************************************************************************************************************************

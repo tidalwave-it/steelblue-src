@@ -42,6 +42,7 @@ import javax.swing.Icon;
  **************************************************************************************************************************************************************/
 public interface MutableIconProvider extends IconProvider, Mutable
   {
+    /** Shortcut for {@link it.tidalwave.util.As}. */
     public static final Class<MutableIconProvider> _MutableIconProvider_ = MutableIconProvider.class;
 
     /** The property name for icon. */

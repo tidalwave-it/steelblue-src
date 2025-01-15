@@ -38,5 +38,6 @@ package it.tidalwave.ui.core.role;
 @FunctionalInterface
 public interface PlainTextDisplayable extends Displayable
   {
+    /** Shortcut for {@link it.tidalwave.util.As}. */
     public static final Class<PlainTextDisplayable> _PlainTextDisplayable_ = PlainTextDisplayable.class;
   }

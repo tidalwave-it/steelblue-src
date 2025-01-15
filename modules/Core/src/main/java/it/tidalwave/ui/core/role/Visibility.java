@@ -37,6 +37,7 @@ package it.tidalwave.ui.core.role;
 @FunctionalInterface
 public interface Visibility
   {
+    /** Shortcut for {@link it.tidalwave.util.As}. */
     public static final Class<Visibility> _Visibility_ = Visibility.class;
 
     /***********************************************************************************************************************************************************

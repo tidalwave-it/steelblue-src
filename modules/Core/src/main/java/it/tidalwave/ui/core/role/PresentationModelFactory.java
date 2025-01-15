@@ -41,6 +41,7 @@ import it.tidalwave.util.RoleFactory;
 @FunctionalInterface
 public interface PresentationModelFactory
   {
+    /** Shortcut for {@link it.tidalwave.util.As}. */
     public static final Class<PresentationModelFactory> _PresentationModelFactory_ = PresentationModelFactory.class;
 
     /***********************************************************************************************************************************************************

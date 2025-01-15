@@ -33,6 +33,7 @@ import lombok.ToString;
  *
  * A message requesting to show the given presentation. The requestor must expose a public method that returns a {@link it.tidalwave.ui.javafx.NodeAndDelegate}.
  *
+ * @stereotype  Message
  * @since       2.0-ALPHA-3
  * @author      Fabrizio Giudici
  *

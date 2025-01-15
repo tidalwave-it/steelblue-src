@@ -34,6 +34,7 @@ import lombok.ToString;
  *
  * A message notifying that a panel has been shown.
  *
+ * @stereotype  Message
  * @since       2.0-ALPHA-3
  * @author      Fabrizio Giudici
  *

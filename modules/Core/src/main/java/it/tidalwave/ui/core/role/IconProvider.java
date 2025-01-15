@@ -45,6 +45,7 @@ import javax.swing.ImageIcon;
 @FunctionalInterface
 public interface IconProvider
   {
+    /** Shortcut for {@link it.tidalwave.util.As}. */
     public static final Class<IconProvider> _IconProvider_ = IconProvider.class;
 
     /***********************************************************************************************************************************************************

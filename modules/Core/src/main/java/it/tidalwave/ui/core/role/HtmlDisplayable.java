@@ -38,5 +38,6 @@ package it.tidalwave.ui.core.role;
 @FunctionalInterface
 public interface HtmlDisplayable extends Displayable
   {
+    /** Shortcut for {@link it.tidalwave.util.As}. */
     public static final Class<HtmlDisplayable> _HtmlDisplayable_ = HtmlDisplayable.class;
   }

@@ -76,6 +76,7 @@ public interface MenuBarControl<B, MB>
     @RequiredArgsConstructor(staticName = "under") @Getter
     public static class MenuPlacement
       {
+        /** Shortcut for {@link it.tidalwave.util.As}. */
         public static final Class<MenuPlacement> _MenuItemPlacement_ = MenuPlacement.class;
 
         @Nonnull

@@ -39,6 +39,7 @@ import javafx.scene.Node;
  **************************************************************************************************************************************************************/
 public interface CustomGraphicProvider 
   {
+    /** Shortcut for {@link it.tidalwave.util.As}. */
     public static final Class<CustomGraphicProvider> _CustomGraphicProvider_ = CustomGraphicProvider.class;
     
     @Nonnull

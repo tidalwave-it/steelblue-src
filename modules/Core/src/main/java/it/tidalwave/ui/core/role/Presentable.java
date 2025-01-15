@@ -45,6 +45,7 @@ import static it.tidalwave.util.Parameters.r;
 @FunctionalInterface
 public interface Presentable
   {
+    /** Shortcut for {@link it.tidalwave.util.As}. */
     public static final Class<Presentable> _Presentable_ = Presentable.class;
 
     /***********************************************************************************************************************************************************

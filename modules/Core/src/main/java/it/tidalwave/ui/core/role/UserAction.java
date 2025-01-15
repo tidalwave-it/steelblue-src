@@ -44,6 +44,7 @@ import it.tidalwave.ui.core.role.impl.DefaultUserAction;
  **************************************************************************************************************************************************************/
 public interface UserAction extends As
   {
+    /** Shortcut for {@link it.tidalwave.util.As}. */
     public static final Class<UserAction> _UserAction_ = UserAction.class;
 
     /***********************************************************************************************************************************************************

@@ -129,9 +129,7 @@ public class DefaultMainPanelPresentationControl implements MainPanelPresentatio
 
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
-     *
      * This method demonstrates the typical idiom for populating model:
-     *
      * 1. A dao is called to provide raw model - let's say in form of collections;
      * 2. Objects in the collection are transformed into PresentationModels.
      * 3. The PresentationModels are then passed to the presentation.
@@ -166,7 +164,6 @@ public class DefaultMainPanelPresentationControl implements MainPanelPresentatio
 
     /***********************************************************************************************************************************************************
      * Factory method for the PresentationModel of SimpleEntity instances.
-     *
      * It aggregates a few extra roles into the PresentationModel that are used by the control, such as callbacks
      * for action associated to the context menu. Also a Displayable role is usually injected to control the rendering
      * of entities.
