@@ -25,6 +25,7 @@
  */
 package it.tidalwave.ui.core.message;
 
+import it.tidalwave.ui.core.PanelGroupControl;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -41,4 +42,6 @@ import lombok.ToString;
 public class PanelShownNotification
   {
     private final Object target;
+
+    private final PanelGroupControl.Group group;
   }

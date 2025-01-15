@@ -75,6 +75,9 @@ public class DefaultJavaFXPanelGroupControl extends PanelGroupControlSupport<Anc
     /** A map associating to each managed {@code Node} a callback that makes it visible. */
     private final Map<Node, Runnable> expanderByNode = new HashMap<>();
 
+    /* A map associating to each managed {@Code Node} the group it belongs to. */
+    private final Map<Node, Group> groupByNode = new HashMap<>();
+
     /** The message bus, if present on the system. */
     @Nonnull
     private final Optional<MessageBus> messageBus;
@@ -146,27 +149,32 @@ public class DefaultJavaFXPanelGroupControl extends PanelGroupControlSupport<Anc
           {
             final var node = panelProviders.get(0).getComponent();
             log.info("{}: options: {} --- using no wrapper for {}", group, options, node);
+            groupByNode.put(node, group);
             put(topContainer, node);
           }
         else if (options.contains(USE_ACCORDION))
           {
             final var accordion = new Accordion();
             put(topContainer, accordion);
-            final var titledPanes = panelProviders.stream()
-                                                  .sorted(comparing(PanelGroupProvider::getLabel))
-                                                  .map(p -> Pair.of(p.getComponent(), createTitledPane(p, globalOptions)))
-                                                  .collect(toList()); // pair of (Node, TitledPane)
-            final var nodes = titledPanes.stream().map(Pair::getB).collect(toList());
-            log.info("{}: options: {} ---  using Accordion for {}", group, options, nodes);
+            final var nodesAndTitlePanes = panelProviders.stream()
+                                                         .sorted(comparing(PanelGroupProvider::getLabel))
+                                                         .map(p -> Pair.of(p.getComponent(), createTitledPane(p, globalOptions)))
+                                                         .collect(toList()); // pair of (Node, TitledPane)
+            final var titlePanes = nodesAndTitlePanes.stream().map(Pair::getB).collect(toList());
+            log.info("{}: options: {} ---  using Accordion for {}", group, options, titlePanes);
 
-            if (nodes.isEmpty())
+            if (titlePanes.isEmpty())
               {
                 accordion.setVisible(false);
               }
             else
               {
-                accordion.getPanes().setAll(nodes);
-                titledPanes.forEach(p -> expanderByNode.put(p.a, () -> accordion.setExpandedPane(p.b)));
+                accordion.getPanes().setAll(titlePanes);
+                nodesAndTitlePanes.forEach(p ->
+                  {
+                    groupByNode.put(p.a, group);
+                    expanderByNode.put(p.a, () -> accordion.setExpandedPane(p.b));
+                  });
               }
           }
         else
@@ -178,8 +186,12 @@ public class DefaultJavaFXPanelGroupControl extends PanelGroupControlSupport<Anc
                                             .map(PanelGroupProvider::getComponent)
                                             .collect(toList());
             log.info("{}: options: {} ---  using StackPane for {}", group, options, nodes);
-            nodes.forEach(n -> n.setVisible(false));
-            nodes.forEach(n -> expanderByNode.put(n, () -> n.setVisible(true)));
+            nodes.forEach(n ->
+              {
+                n.setVisible(false);
+                groupByNode.put(n, group);
+                expanderByNode.put(n, () -> n.setVisible(true));
+              });
 
             if (nodes.isEmpty())
               {
@@ -198,8 +210,9 @@ public class DefaultJavaFXPanelGroupControl extends PanelGroupControlSupport<Anc
     @VisibleForTesting final void onShowRequest (@Nonnull final PanelShowRequest panelShowRequest)
       {
         log.info("onShowRequest({})", panelShowRequest);
-        show(panelShowRequest.getRequestor());
-        messageBus.ifPresent(mb -> mb.publish(panelShowRequest.createResponse()));
+        final var node = findNode(panelShowRequest.getRequestor());
+        expanderByNode.getOrDefault(node, DO_NOTHING).run();
+        messageBus.ifPresent(mb -> mb.publish(panelShowRequest.createResponse(groupByNode.get(node))));
       }
 
     /***********************************************************************************************************************************************************

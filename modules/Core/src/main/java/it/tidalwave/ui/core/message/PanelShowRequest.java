@@ -26,6 +26,7 @@
 package it.tidalwave.ui.core.message;
 
 import jakarta.annotation.Nonnull;
+import it.tidalwave.ui.core.PanelGroupControl;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -44,8 +45,8 @@ public class PanelShowRequest
     private final Object requestor;
 
     @Nonnull
-    public PanelShownNotification createResponse()
+    public PanelShownNotification createResponse (@Nonnull final PanelGroupControl.Group group)
       {
-        return new PanelShownNotification(requestor);
+        return new PanelShownNotification(requestor, group);
       }
   }
