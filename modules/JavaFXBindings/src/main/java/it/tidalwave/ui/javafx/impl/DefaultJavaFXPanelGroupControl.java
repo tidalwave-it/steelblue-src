@@ -30,7 +30,7 @@ import jakarta.annotation.Nonnull;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -44,6 +44,8 @@ import org.springframework.beans.factory.BeanFactory;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.tidalwave.ui.core.PanelGroupControl;
 import it.tidalwave.ui.core.PanelGroupProvider;
+import it.tidalwave.ui.core.message.PanelHiddenNotification;
+import it.tidalwave.ui.core.message.PanelShownNotification;
 import it.tidalwave.ui.core.spi.PanelGroupControlSupport;
 import it.tidalwave.ui.core.message.PanelShowRequest;
 import it.tidalwave.ui.javafx.JavaFXPanelGroupControl;
@@ -73,10 +75,13 @@ public class DefaultJavaFXPanelGroupControl extends PanelGroupControlSupport<Anc
     private static final Runnable DO_NOTHING = () -> {};
 
     /** A map associating to each managed {@code Node} a callback that makes it visible. */
-    private final Map<Node, Runnable> expanderByNode = new HashMap<>();
+    private final Map<Node, Runnable> expanderByNode = new IdentityHashMap<>();
 
     /* A map associating to each managed {@Code Node} the group it belongs to. */
-    private final Map<Node, Group> groupByNode = new HashMap<>();
+    private final Map<Node, Group> groupByNode = new IdentityHashMap<>();
+
+    /* A map associating to each managed {@Code Node} its provider. */
+    private final Map<Node, PanelGroupProvider<Node>> providerByNode = new IdentityHashMap<>();
 
     /** The message bus, if present on the system. */
     @Nonnull
@@ -144,6 +149,7 @@ public class DefaultJavaFXPanelGroupControl extends PanelGroupControlSupport<Anc
       {
         enforceFxApplicationThread();
         final var options = concatAll(globalOptions, groupOptions.getOrDefault(group, List.of()));
+        panelProviders.forEach(p -> providerByNode.put(p.getComponent(), p));
 
         if (!options.contains(ALWAYS_WRAP) && panelProviders.size() == 1)
           {
@@ -175,6 +181,14 @@ public class DefaultJavaFXPanelGroupControl extends PanelGroupControlSupport<Anc
                     groupByNode.put(p.a, group);
                     expanderByNode.put(p.a, () -> accordion.setExpandedPane(p.b));
                   });
+                // Needs a listener because the change might be originated by the user
+                accordion.expandedPaneProperty().addListener((observable, collapsed, expanded) ->
+                  {
+                    final var collapsedNode = Optional.ofNullable(collapsed).map(TitledPane::getContent);
+                    final var expandedNode = Optional.ofNullable(expanded).map(TitledPane::getContent);
+                    log.debug("expanded {} -> {}", collapsedNode, expandedNode);
+                    fireUpdateMessages(collapsedNode, expandedNode);
+                  });
               }
           }
         else
@@ -191,6 +205,11 @@ public class DefaultJavaFXPanelGroupControl extends PanelGroupControlSupport<Anc
                 n.setVisible(false);
                 groupByNode.put(n, group);
                 expanderByNode.put(n, () -> n.setVisible(true));
+                n.visibleProperty().addListener((observable, oldVisible, visible) ->
+                  {
+                    log.debug("visibility changed for {}: {} -> {}", n, oldVisible, visible);
+                    fireUpdateMessages(visible ? Optional.empty() : Optional.of(n), visible ? Optional.of(n) : Optional.empty());
+                  });
               });
 
             if (nodes.isEmpty())
@@ -210,9 +229,21 @@ public class DefaultJavaFXPanelGroupControl extends PanelGroupControlSupport<Anc
     @VisibleForTesting final void onShowRequest (@Nonnull final PanelShowRequest panelShowRequest)
       {
         log.info("onShowRequest({})", panelShowRequest);
-        final var node = findNode(panelShowRequest.getRequestor());
-        expanderByNode.getOrDefault(node, DO_NOTHING).run();
-        messageBus.ifPresent(mb -> mb.publish(panelShowRequest.createResponse(groupByNode.get(node))));
+        expanderByNode.getOrDefault(findNode(panelShowRequest.getRequestor()), DO_NOTHING).run();
+      }
+
+    /***********************************************************************************************************************************************************
+     * Fires update messages after a change.
+     * @param     hiddenNode         the old node
+     * @param     shownNode         the new node
+     **********************************************************************************************************************************************************/
+    private void fireUpdateMessages (@Nonnull final Optional<Node> hiddenNode, @Nonnull final Optional<Node> shownNode)
+      {
+        messageBus.ifPresent(mb ->
+          {
+            hiddenNode.ifPresent(n -> mb.publish(new PanelHiddenNotification(providerByNode.get(n).getPresentation(), groupByNode.get(n))));
+            shownNode.ifPresent(n -> mb.publish(new PanelShownNotification(providerByNode.get(n).getPresentation(), groupByNode.get(n))));
+          });
       }
 
     /***********************************************************************************************************************************************************

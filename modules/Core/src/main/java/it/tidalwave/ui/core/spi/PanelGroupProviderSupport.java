@@ -52,19 +52,27 @@ public abstract class PanelGroupProviderSupport<T> implements PanelGroupProvider
     @Getter @Nonnull
     private final String label;
 
+    @Getter @Nonnull
+    private final Object presentation;
+
     @Nonnull
     private final LazySupplier<T> lazySupplier;
 
     /***********************************************************************************************************************************************************
      * Creates a new instance with the given parameter.
-     * @param   group       the group
-     * @param   label       the label of the provided object
-     * @param   supplier    the supplier of the UI control
+     * @param   group         the group
+     * @param   label         the label of the provided object
+     * @param   presentation  the presentation object
+     * @param   supplier      the supplier of the UI control
      **********************************************************************************************************************************************************/
-    protected PanelGroupProviderSupport (@Nonnull final Group group, @Nonnull final String label, @Nonnull final Supplier<T> supplier)
+    protected PanelGroupProviderSupport (@Nonnull final Group group,
+                                         @Nonnull final String label,
+                                         @Nonnull final Object presentation,
+                                         @Nonnull final Supplier<T> supplier)
       {
         this.group = group;
         this.label = label;
+        this.presentation = presentation;
         this.lazySupplier = LazySupplier.of(supplier);
       }
 

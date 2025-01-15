@@ -25,9 +25,9 @@
  */
 package it.tidalwave.ui.core.message;
 
+import jakarta.annotation.Nonnull;
 import it.tidalwave.ui.core.PanelGroupControl;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import it.tidalwave.ui.core.role.impl.AbstractPanelNotification;
 import lombok.ToString;
 
 /***************************************************************************************************************************************************************
@@ -38,10 +38,11 @@ import lombok.ToString;
  * @author      Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-@RequiredArgsConstructor @Getter @ToString
-public class PanelShownNotification
+@ToString
+public class PanelShownNotification extends AbstractPanelNotification
   {
-    private final Object target;
-
-    private final PanelGroupControl.Group group;
+    public PanelShownNotification (@Nonnull final Object target, @Nonnull final PanelGroupControl.Group group)
+      {
+        super(target, group);
+      }
   }

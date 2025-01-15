@@ -37,16 +37,23 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.BeanFactory;
+import it.tidalwave.ui.core.PanelGroupControl;
 import it.tidalwave.ui.core.PanelGroupProvider;
+import it.tidalwave.ui.core.role.impl.AbstractPanelNotification;
+import it.tidalwave.ui.core.message.PanelHiddenNotification;
+import it.tidalwave.ui.core.message.PanelShownNotification;
 import it.tidalwave.ui.core.spi.PanelGroupProviderSupport;
 import it.tidalwave.ui.javafx.NodeAndDelegate;
+import it.tidalwave.messagebus.MessageBus;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.mockito.ArgumentCaptor;
 import static it.tidalwave.ui.core.PanelGroupControl.Options.*;
 import static it.tidalwave.ui.core.PanelGroupControl.DefaultGroups.LEFT;
+import static it.tidalwave.ui.javafx.spi.AbstractJavaFXSpringApplication.APPLICATION_MESSAGE_BUS_BEAN_NAME;
 import static org.testfx.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -58,6 +65,18 @@ import static org.mockito.Mockito.*;
 @Slf4j
 public class DefaultJavaFXPanelGroupControlTest extends JavaFXTestSupport
   {
+    @Getter
+    static class MockPresentation
+      {
+        @SuppressWarnings("unchecked")
+        private final NodeAndDelegate<Node> nad = mock(NodeAndDelegate.class);
+
+        MockPresentation (@Nonnull final Node node)
+          {
+            when(nad.getNode()).thenReturn(node);
+          }
+      }
+
     private DefaultJavaFXPanelGroupControl underTest;
 
     private AnchorPane topContainer;
@@ -65,6 +84,12 @@ public class DefaultJavaFXPanelGroupControlTest extends JavaFXTestSupport
     private PanelGroupProvider<Node> provider1;
 
     private PanelGroupProvider<Node> provider2;
+
+    private MockPresentation presentation1;
+
+    private MockPresentation presentation2;
+
+    private BeanFactory beanFactory;
 
     /***********************************************************************************************************************************************************
      * Prepares the {@link Stage for the test}.
@@ -75,7 +100,6 @@ public class DefaultJavaFXPanelGroupControlTest extends JavaFXTestSupport
         topContainer = new AnchorPane();
         stage.setScene(new Scene(new StackPane(topContainer), 800, 600));
         stage.show();
-        stage.setAlwaysOnTop(true);
       }
 
     /***********************************************************************************************************************************************************
@@ -84,10 +108,12 @@ public class DefaultJavaFXPanelGroupControlTest extends JavaFXTestSupport
     @BeforeMethod(groups = "display")
     public void setup()
       {
-        final var beanFactory = mock(BeanFactory.class);
+        beanFactory = mock(BeanFactory.class);
         underTest = new DefaultJavaFXPanelGroupControl(beanFactory);
-        provider1 = createMockPanelGroupProvider("Panel 1");
-        provider2 = createMockPanelGroupProvider("Panel 2");
+        presentation1 = new MockPresentation(new StackPane(new Label("1")));
+        presentation2 = new MockPresentation(new StackPane(new Label("2")));
+        provider1 = createMockPanelGroupProvider("Panel 1", presentation1);
+        provider2 = createMockPanelGroupProvider("Panel 2", presentation2);
       }
 
     /**********************************************************************************************************************************************************/
@@ -181,50 +207,120 @@ public class DefaultJavaFXPanelGroupControlTest extends JavaFXTestSupport
       }
 
     /**********************************************************************************************************************************************************/
-    @RequiredArgsConstructor @Getter
-    static class MockPresentation
-      {
-        @Nonnull
-        private NodeAndDelegate<Object> nad;
-      }
-
-    /**********************************************************************************************************************************************************/
-    @Test(groups = "display", dependsOnMethods = "two_panes_with_same_selector_must_be_wrapped_in_StackPane") @SuppressWarnings("unchecked")
+    @Test(groups = "display", dependsOnMethods = "two_panes_with_same_selector_must_be_wrapped_in_StackPane")
     public void must_properly_show_when_StackPane_is_used()
       {
         // given
-        final var nad = mock(NodeAndDelegate.class);
-        when(nad.getNode()).thenReturn(provider1.getComponent());
-        final var requestor = new MockPresentation(nad);
-        // when
         runSafelyAndWait("assemble", () -> underTest.assemble(LEFT, List.of(provider1, provider2), topContainer, Map.of(), List.of()));
+        // when
+        underTest.show(presentation1);
         // then
-        underTest.show(requestor);
         assertThat(provider1.getComponent()).isVisible();
         assertThat(provider2.getComponent()).isInvisible();
       }
 
     /**********************************************************************************************************************************************************/
-    @Test(groups = "display", dependsOnMethods = "two_panes_with_USE_ACCORDION_must_be_wrapped_in_TitlePane_and_placed_in_Accordion") @SuppressWarnings("unchecked")
+    @Test(groups = "display", dependsOnMethods = "two_panes_with_USE_ACCORDION_must_be_wrapped_in_TitlePane_and_placed_in_Accordion")
     public void must_properly_show_when_Accordion_is_used()
       {
         // given
-        final var nad = mock(NodeAndDelegate.class);
-        when(nad.getNode()).thenReturn(provider1.getComponent());
-        final var requestor = new MockPresentation(nad);
-        // when
         runSafelyAndWait("assemble", () -> underTest.assemble(LEFT, List.of(provider1, provider2), topContainer, Map.of(), List.of(USE_ACCORDION)));
+        // when
+        underTest.show(presentation2);
         // then
-        underTest.show(requestor);
         final var accordion = (Accordion)topContainer.getChildren().get(0);
         assertThat(accordion.getExpandedPane()).isNotNull();
-        assertThat(accordion.getExpandedPane().getContent()).isSameAs(provider1.getComponent());
+        assertThat(accordion.getExpandedPane().getContent()).isSameAs(provider2.getComponent());
+      }
+
+    /**********************************************************************************************************************************************************/
+    @Test(groups = "display", dataProvider = "showOptions")
+    public void show_mush_publish_proper_messages_at_first (@Nonnull final List<PanelGroupControl.Options> options)
+      {
+        // given
+        final var messageBus = createUnderTestWithMessageBus();
+        runSafelyAndWait("assemble", () -> underTest.assemble(LEFT, List.of(provider1, provider2), topContainer, Map.of(), List.of(USE_ACCORDION)));
+        // when
+        runSafelyAndWait("show", () -> underTest.show(presentation1));
+        // then
+        final var messages = getMessageSequence(messageBus, 1);
+        assertThat(messages).allMatch(m -> m.getGroup().equals(LEFT));
+        assertThat(messages[0]).isInstanceOf(PanelShownNotification.class).matches(m -> m.getTarget() == presentation1);
+      }
+
+    /**********************************************************************************************************************************************************/
+    @Test(groups = "display", dataProvider = "showOptions")
+    public void show_mush_publish_proper_messages (@Nonnull final List<PanelGroupControl.Options> options)
+      {
+        // given
+        final var messageBus = createUnderTestWithMessageBus();
+        runSafelyAndWait("assemble", () -> underTest.assemble(LEFT, List.of(provider1, provider2), topContainer, Map.of(), options));
+        runSafelyAndWait("show1", () -> underTest.show(presentation1));
+        reset(messageBus);
+        // when
+        runSafelyAndWait("show2", () -> underTest.show(presentation2));
+        // then
+        final var messages = getMessageSequence(messageBus, 2);
+        assertThat(messages).allMatch(m -> m.getGroup().equals(LEFT));
+        assertThat(messages[0]).isInstanceOf(PanelHiddenNotification.class).matches(m -> m.getTarget() == presentation1);
+        assertThat(messages[1]).isInstanceOf(PanelShownNotification.class).matches(m -> m.getTarget() == presentation2);
+      }
+
+    /**********************************************************************************************************************************************************/
+    @Test(groups = "display")
+    public void show_mush_publish_proper_messages_when_expanded_from_UI()
+      {
+        // given
+        final var messageBus = createUnderTestWithMessageBus();
+        runSafelyAndWait("assemble", () -> underTest.assemble(LEFT, List.of(provider1, provider2), topContainer, Map.of(), List.of(USE_ACCORDION)));
+        final var accordion = (Accordion)topContainer.getChildren().get(0);
+        final var titledPane2 = accordion.getPanes().get(1);
+        runSafelyAndWait("show1", () -> underTest.show(presentation1));
+        reset(messageBus);
+        // when
+        runSafelyAndWait("show2", () -> accordion.setExpandedPane(titledPane2));
+        // then
+        final var messages = getMessageSequence(messageBus, 2);
+        assertThat(messages).allMatch(m -> m.getGroup().equals(LEFT));
+        assertThat(messages[0]).isInstanceOf(PanelHiddenNotification.class).matches(m -> m.getTarget() == presentation1);
+        assertThat(messages[1]).isInstanceOf(PanelShownNotification.class).matches(m -> m.getTarget() == presentation2);
       }
 
     /**********************************************************************************************************************************************************/
     @Nonnull
-    private static PanelGroupProvider<Node> createMockPanelGroupProvider (@Nonnull final String name)
+    private static AbstractPanelNotification[] getMessageSequence (@Nonnull final MessageBus messageBus, final int wantedNumberOfInvocations)
       {
-        return new PanelGroupProviderSupport<>(LEFT, name, () -> new StackPane(new Label(name))) {};
+        final var messageCaptor = ArgumentCaptor.forClass(AbstractPanelNotification.class);
+        verify(messageBus, times(wantedNumberOfInvocations)).publish(messageCaptor.capture());
+        return messageCaptor.getAllValues().toArray(AbstractPanelNotification[]::new);
+      }
+
+    /**********************************************************************************************************************************************************/
+    @Nonnull
+    private MessageBus createUnderTestWithMessageBus()
+      {
+        final var messageBus = mock(MessageBus.class);
+        when(beanFactory.containsBean(APPLICATION_MESSAGE_BUS_BEAN_NAME)).thenReturn(true);
+        when(beanFactory.getBean(APPLICATION_MESSAGE_BUS_BEAN_NAME, MessageBus.class)).thenReturn(messageBus);
+        underTest = new DefaultJavaFXPanelGroupControl(beanFactory);
+        return messageBus;
+      }
+
+    /**********************************************************************************************************************************************************/
+    @Nonnull
+    private static PanelGroupProvider<Node> createMockPanelGroupProvider (@Nonnull final String name, @Nonnull final MockPresentation presentation)
+      {
+        return new PanelGroupProviderSupport<>(LEFT, name, presentation, presentation.nad::getNode) {};
+      }
+
+    /**********************************************************************************************************************************************************/
+    @DataProvider
+    private static Object[][] showOptions()
+      {
+        return new Object[][]
+          {
+            { List.of() },
+            { List.of(USE_ACCORDION) },
+          };
       }
   }
