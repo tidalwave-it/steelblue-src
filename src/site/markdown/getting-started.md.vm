@@ -281,7 +281,7 @@ This class must first inject the required fields: an instance of the `JavaFXBind
 
 <!-- MACRO{snippet|id=fields|file=${project.basedir}/modules/examples/PresentationJavaFX/src/main/java/it/tidalwave/ui/example/presentation/impl/javafx/JavaFXMainPanelPresentationDelegate.java} -->
 
-> Unfortunately it's not possible to inject fields by constructor, since this feature is not supported by the JavaFX runtime.
+> It's possible to inject fields by constructor and/or by using the ```@Inject``` annotation.
 
 A `bind()` method, called just once, must use the `binder` to create associations between `UserAction` and `BoundProperty` instances and the JavaFX widgets. Bindings are
 by default unidirectional, that is e.g. a button calls a `UserAction`; in some cases, they can be bidirectional, as in the `tfTextField` example, because

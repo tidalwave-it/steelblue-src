@@ -67,13 +67,13 @@ The primary source repository is on **[Bitbucket]($context.get("scm.repo.browse.
 To checkout sources from Bitbucket:
 
 ```shell
-> git clone $context.get("scm.repo.readonly.url")
+git clone $context.get("scm.repo.readonly.url")
 ```
 
 To checkout sources from GitHub:
 
 ```shell
-> git clone $context.get("tidalwave.github.readonly.url")
+git clone $context.get("tidalwave.github.readonly.url")
 ```
 
 The issue tracker is hosted on the Atlassian Jira Cloud:
@@ -83,12 +83,8 @@ The issue tracker is hosted on the Atlassian Jira Cloud:
 The **continuous integration** is available at:
 
 + Tidalwave CI server (primary): ${project.ciManagement.url}
-+ Travis: https://travis-ci.org/github/tidalwave-it/solidblue-src
-+ Bitbucket pipelines (demonstration only): https://bitbucket.org/tidalwave/solidblue-src/addon/pipelines/home
++ Sonar: https://sonarcloud.io/project/overview?id=tidalwave_steelblue-src
 
-There are also other **quality analysis tools** available:
-
-+ LGTM: https://lgtm.com/projects/b/tidalwave/solidblue-src/
 
 #[[###]]# API documentation
 
