@@ -191,7 +191,7 @@ public class DefaultJavaFXPanelGroupControl extends PanelGroupControlSupport<Anc
           {
             n.setVisible(false);
             groupByNode.put(n, group);
-            expanderByNode.put(n, () -> n.setVisible(true));
+            expanderByNode.put(n, () -> nodes.forEach(n2 -> n2.setVisible(n2 == n)));
             n.visibleProperty().addListener((observable, oldVisible, visible) ->
                     fireUpdateMessages(visible ? Optional.empty() : Optional.of(n),
                                        visible ? Optional.of(n) : Optional.empty()));
