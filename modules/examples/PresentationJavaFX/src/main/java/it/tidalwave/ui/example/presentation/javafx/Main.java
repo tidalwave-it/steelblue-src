@@ -67,6 +67,7 @@ public class Main extends JavaFXSpringAnnotationApplication
                params().withArgs(args)
                        .withApplicationName("SteelBlueExample")
                        .withLogFolderPropertyName("it.tidalwave.ui.example.logFolder") // referenced in the logger configuration
+                       .withSceneFinalizer(STYLE_METRO_DARK)
                        // .withProperty(K_FULL_SCREEN, true)
                        // .withProperty(K_FULL_SCREEN_LOCKED, true)
                        // .withProperty(K_MAXIMIZED, true)

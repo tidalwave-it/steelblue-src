@@ -40,8 +40,6 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import javafx.application.Application;
 import javafx.application.Platform;
-import jfxtras.styles.jmetro.JMetro;
-import jfxtras.styles.jmetro.Style;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import it.tidalwave.util.Key;
@@ -209,10 +207,7 @@ public abstract class JavaFXApplicationWithSplash extends Application
      **********************************************************************************************************************************************************/
     protected Scene createScene (@Nonnull final Parent parent)
       {
-        final var scene = new Scene(parent);
-        final var jMetro = new JMetro(Style.DARK);
-        jMetro.setScene(scene);
-        return scene;
+        return new Scene(parent);
       }
 
     /***********************************************************************************************************************************************************

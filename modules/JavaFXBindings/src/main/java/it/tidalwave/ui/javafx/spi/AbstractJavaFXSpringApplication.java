@@ -31,13 +31,17 @@ import java.lang.reflect.Proxy;
 import javax.annotation.CheckForNull;
 import jakarta.annotation.Nonnull;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.io.IOException;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -53,6 +57,8 @@ import it.tidalwave.ui.javafx.NodeAndDelegate;
 import it.tidalwave.ui.javafx.impl.util.JavaFXSafeComponentBuilder;
 import it.tidalwave.ui.javafx.impl.util.JavaFXSafeProxy;
 import it.tidalwave.ui.javafx.impl.util.JavaFXSafeProxy.Proxied;
+import jfxtras.styles.jmetro.JMetro;
+import jfxtras.styles.jmetro.Style;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import it.tidalwave.util.Key;
@@ -65,6 +71,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.With;
 import static java.util.stream.Collectors.*;
+import static it.tidalwave.util.CollectionUtils.concat;
 import static it.tidalwave.util.FunctionalCheckedExceptionWrappers.*;
 import static it.tidalwave.util.ShortNames.*;
 import static lombok.AccessLevel.PRIVATE;
@@ -78,6 +85,12 @@ import static lombok.AccessLevel.PRIVATE;
  **************************************************************************************************************************************************************/
 public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationWithSplash
   {
+    /** Configures the JMetro style, light mode. @since 2.0-ALPHA-6 */
+    public static final Consumer<Scene> STYLE_METRO_LIGHT = scene ->  new JMetro(Style.LIGHT).setScene(scene);
+
+    /** Configures the JMetro style, dark mode.  @since 2.0-ALPHA-6 */
+    public static final Consumer<Scene> STYLE_METRO_DARK = scene ->  new JMetro(Style.DARK).setScene(scene);
+
     /***********************************************************************************************************************************************************
      * The initialisation parameters to pass to {@link #launch(Class, InitParameters)}.
      * @since   1.1-ALPHA-6
@@ -100,9 +113,18 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
         private final TypeSafeMap propertyMap;
 
         @Nonnull
+        private final List<Consumer<Scene>> sceneFinalizers;
+
+        @Nonnull
         public <T> InitParameters withProperty (@Nonnull final Key<T> key, @Nonnull final T value)
           {
-            return new InitParameters(args, applicationName, logFolderPropertyName, implicitExit, propertyMap.with(key, value));
+            return new InitParameters(args, applicationName, logFolderPropertyName, implicitExit, propertyMap.with(key, value), sceneFinalizers);
+          }
+
+        @Nonnull
+        public InitParameters withSceneFinalizer (@Nonnull final Consumer<Scene> stageFinalizer)
+          {
+            return new InitParameters(args, applicationName, logFolderPropertyName, implicitExit, propertyMap, concat(sceneFinalizers, stageFinalizer));
           }
 
         public void validate()
@@ -132,6 +154,8 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
     @Getter(AccessLevel.PACKAGE) @Nonnull
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
+    private static InitParameters initParameters;
+
     /***********************************************************************************************************************************************************
      * Launches the application.
      * @param   appClass          the class of the application to instantiate
@@ -149,6 +173,7 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
             initParameters.propertyMap.forEach(preferencesHandler::setProperty);
             System.setProperty(initParameters.logFolderPropertyName, preferencesHandler.getLogFolder().toAbsolutePath().toString());
             JavaFXSafeProxy.setLogDelegateInvocations(initParameters.propertyMap.getOptional(K_LOG_DELEGATE_INVOCATIONS).orElse(false));
+            AbstractJavaFXSpringApplication.initParameters = initParameters;
             Application.launch(appClass, initParameters.args);
           }
         catch (Throwable t)
@@ -166,7 +191,7 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
     @Nonnull
     protected static InitParameters params()
       {
-        return new InitParameters(new String[0], "", "", true, TypeSafeMap.newInstance());
+        return new InitParameters(new String[0], "", "", true, TypeSafeMap.newInstance(), List.of());
       }
 
     /***********************************************************************************************************************************************************
@@ -211,6 +236,17 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
      **********************************************************************************************************************************************************/
     @Nonnull
     protected abstract ConfigurableApplicationContext createApplicationContext();
+
+    /***********************************************************************************************************************************************************
+     *
+     **********************************************************************************************************************************************************/
+    @Override
+    protected Scene createScene (@Nonnull final Parent parent)
+      {
+        final var scene = super.createScene(parent);
+        initParameters.sceneFinalizers.forEach(f -> f.accept(scene));
+        return scene;
+      }
 
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
