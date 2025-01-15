@@ -40,7 +40,7 @@
 
     <groupId>it.tidalwave.steelblue</groupId>
     <artifactId>steelblue</artifactId>
-    <version>2.0-ALPHA-5-SNAPSHOT</version>
+    <version>2.0-ALPHA-5</version>
     <packaging>pom</packaging>
     <name>SteelBlue</name>
     <url>https://tidalwave.bitbucket.io/steelblue</url>
@@ -55,7 +55,7 @@ that is mostly independent of the UI technology; so testing is easier, and it is
         <connection>scm:git:${scm.repo.readonly.url}</connection>
         <developerConnection>scm:git:${scm.repo.effective.url}</developerConnection>
         <url>${scm.repo.browse.url}</url>
-        <tag>HEAD</tag>
+        <tag>2.0-ALPHA-5</tag>
     </scm>
 
     <distributionManagement>
@@ -84,36 +84,36 @@ that is mostly independent of the UI technology; so testing is easier, and it is
             <dependency>
                 <groupId>it.tidalwave.steelblue</groupId>
                 <artifactId>it-tidalwave-ui-core</artifactId>
-                <version>2.0-ALPHA-5-SNAPSHOT</version>
+                <version>2.0-ALPHA-5</version>
             </dependency>
             <!-- END SNIPPET: core -->
             <dependency>
                 <groupId>it.tidalwave.steelblue</groupId>
                 <artifactId>it-tidalwave-ui-core</artifactId>
                 <classifier>tests</classifier>
-                <version>2.0-ALPHA-5-SNAPSHOT</version>
+                <version>2.0-ALPHA-5</version>
             </dependency>
             <!-- START SNIPPET: javafx -->
             <dependency>
                 <groupId>it.tidalwave.steelblue</groupId>
                 <artifactId>it-tidalwave-ui-javafx</artifactId>
-                <version>2.0-ALPHA-5-SNAPSHOT</version>
+                <version>2.0-ALPHA-5</version>
             </dependency>
             <!-- END SNIPPET: javafx -->
             <dependency>
                 <groupId>it.tidalwave.steelblue</groupId>
                 <artifactId>it-tidalwave-ui-example-model</artifactId>
-                <version>2.0-ALPHA-5-SNAPSHOT</version>
+                <version>2.0-ALPHA-5</version>
             </dependency>
             <dependency>
                 <groupId>it.tidalwave.steelblue</groupId>
                 <artifactId>it-tidalwave-ui-example-presentation</artifactId>
-                <version>2.0-ALPHA-5-SNAPSHOT</version>
+                <version>2.0-ALPHA-5</version>
             </dependency>
             <dependency>
                 <groupId>it.tidalwave.steelblue</groupId>
                 <artifactId>it-tidalwave-ui-example-presentation-javafx</artifactId>
-                <version>2.0-ALPHA-5-SNAPSHOT</version>
+                <version>2.0-ALPHA-5</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
