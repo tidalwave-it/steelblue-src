@@ -153,74 +153,85 @@ public class DefaultJavaFXPanelGroupControl extends PanelGroupControlSupport<Anc
 
         if (!options.contains(ALWAYS_WRAP) && panelProviders.size() == 1)
           {
-            final var node = panelProviders.get(0).getComponent();
-            log.info("{}: options: {} --- using no wrapper for {}", group, options, node);
-            groupByNode.put(node, group);
-            put(topContainer, node);
+            addDirectly(group, panelProviders, topContainer, options);
           }
         else if (options.contains(USE_ACCORDION))
           {
-            final var accordion = new Accordion();
-            put(topContainer, accordion);
-            final var nodesAndTitlePanes = panelProviders.stream()
-                                                         .sorted(comparing(PanelGroupProvider::getLabel))
-                                                         .map(p -> Pair.of(p.getComponent(), createTitledPane(p, globalOptions)))
-                                                         .collect(toList()); // pair of (Node, TitledPane)
-            final var titlePanes = nodesAndTitlePanes.stream().map(Pair::getB).collect(toList());
-            log.info("{}: options: {} ---  using Accordion for {}", group, options, titlePanes);
-
-            if (titlePanes.isEmpty())
-              {
-                accordion.setVisible(false);
-              }
-            else
-              {
-                accordion.getPanes().setAll(titlePanes);
-                nodesAndTitlePanes.forEach(p ->
-                  {
-                    groupByNode.put(p.a, group);
-                    expanderByNode.put(p.a, () -> accordion.setExpandedPane(p.b));
-                  });
-                // Needs a listener because the change might be originated by the user
-                accordion.expandedPaneProperty().addListener((observable, collapsed, expanded) ->
-                  {
-                    final var collapsedNode = Optional.ofNullable(collapsed).map(TitledPane::getContent);
-                    final var expandedNode = Optional.ofNullable(expanded).map(TitledPane::getContent);
-                    log.debug("expanded {} -> {}", collapsedNode, expandedNode);
-                    fireUpdateMessages(collapsedNode, expandedNode);
-                  });
-              }
+            addInAccordion(group, panelProviders, topContainer, options);
           }
         else
           {
-            final var stackPane = new StackPane();
-            put(topContainer, stackPane);
-            final var nodes = panelProviders.stream()
-                                            .sorted(comparing(PanelGroupProvider::getLabel))
-                                            .map(PanelGroupProvider::getComponent)
-                                            .collect(toList());
-            log.info("{}: options: {} ---  using StackPane for {}", group, options, nodes);
-            nodes.forEach(n ->
-              {
-                n.setVisible(false);
-                groupByNode.put(n, group);
-                expanderByNode.put(n, () -> n.setVisible(true));
-                n.visibleProperty().addListener((observable, oldVisible, visible) ->
-                  {
-                    log.debug("visibility changed for {}: {} -> {}", n, oldVisible, visible);
-                    fireUpdateMessages(visible ? Optional.empty() : Optional.of(n), visible ? Optional.of(n) : Optional.empty());
-                  });
-              });
-
-            if (nodes.isEmpty())
-              {
-                stackPane.setVisible(false);
-              }
-            else
-              {
-                stackPane.getChildren().setAll(nodes);
-              }
+            addInStackPane(group, panelProviders, topContainer, options);
           }
+      }
+
+    /***********************************************************************************************************************************************************
+     *
+     **********************************************************************************************************************************************************/
+    private void addDirectly (@Nonnull final Group group,
+                              @Nonnull final List<? extends PanelGroupProvider<Node>> panelProviders,
+                              @Nonnull final AnchorPane topContainer,
+                              @Nonnull final List<Options> options)
+      {
+        final var node = put(topContainer, panelProviders.get(0).getComponent());
+        groupByNode.put(node, group);
+        log.info("{}: options: {} --- no wrapper for {}", group, options, node);
+      }
+
+    /***********************************************************************************************************************************************************
+     *
+     **********************************************************************************************************************************************************/
+    private void addInAccordion (@Nonnull final Group group,
+                                 @Nonnull final List<? extends PanelGroupProvider<Node>> panelProviders,
+                                 @Nonnull final AnchorPane topContainer,
+                                 @Nonnull final List<Options> options)
+      {
+        final var accordion = put(topContainer, new Accordion());
+        final var nodesAndTitlePanes = panelProviders.stream()
+                                                     .sorted(comparing(PanelGroupProvider::getLabel))
+                                                     .map(p -> Pair.of(p.getComponent(), createTitledPane(p, options)))
+                                                     .collect(toList()); // pair of (Node, TitledPane)
+        final var titlePanes = nodesAndTitlePanes.stream().map(Pair::getB).collect(toList());
+        accordion.setVisible(!titlePanes.isEmpty());
+        accordion.getPanes().setAll(titlePanes);
+        nodesAndTitlePanes.forEach(p ->
+          {
+            groupByNode.put(p.a, group);
+            expanderByNode.put(p.a, () -> accordion.setExpandedPane(p.b));
+          });
+        // Needs a listener because the change might be originated by the user
+        accordion.expandedPaneProperty().addListener((observable, collapsed, expanded) ->
+                fireUpdateMessages(Optional.ofNullable(collapsed).map(TitledPane::getContent),
+                                   Optional.ofNullable(expanded).map(TitledPane::getContent)));
+        log.info("{}: options: {} --- Accordion for {}", group, options, titlePanes);
+      }
+
+    /***********************************************************************************************************************************************************
+     *
+     **********************************************************************************************************************************************************/
+    private void addInStackPane (@Nonnull final Group group,
+                                 @Nonnull final List<? extends PanelGroupProvider<Node>> panelProviders,
+                                 @Nonnull final AnchorPane topContainer,
+                                 @Nonnull final List<Options> options)
+      {
+        final var stackPane = put(topContainer, new StackPane());
+        final var nodes = panelProviders.stream()
+                                        .sorted(comparing(PanelGroupProvider::getLabel))
+                                        .map(PanelGroupProvider::getComponent)
+                                        .collect(toList());
+        nodes.forEach(n ->
+          {
+            n.setVisible(false);
+            groupByNode.put(n, group);
+            expanderByNode.put(n, () -> n.setVisible(true));
+            n.visibleProperty().addListener((observable, oldVisible, visible) ->
+                    fireUpdateMessages(visible ? Optional.empty() : Optional.of(n),
+                                       visible ? Optional.of(n) : Optional.empty()));
+          });
+
+        stackPane.setVisible(!nodes.isEmpty());
+        stackPane.getChildren().setAll(nodes);
+        log.info("{}: options: {} --- StackPane for {}", group, options, nodes);
       }
 
     /***********************************************************************************************************************************************************
@@ -296,12 +307,14 @@ public class DefaultJavaFXPanelGroupControl extends PanelGroupControlSupport<Anc
      * @param   anchorPane    the {@code AnchorPane}
      * @param   node          the {@code Node}
      **********************************************************************************************************************************************************/
-    private static void put (@Nonnull final AnchorPane anchorPane, @Nonnull final Node node)
+    @Nonnull
+    private static <T extends Node> T put (@Nonnull final AnchorPane anchorPane, @Nonnull final T node)
       {
         AnchorPane.setLeftAnchor(node, 0.0); // TODO: maybe useless?
         AnchorPane.setRightAnchor(node, 0.0);
         AnchorPane.setTopAnchor(node, 0.0);
         AnchorPane.setBottomAnchor(node, 0.0);
         anchorPane.getChildren().setAll(node);
+        return node;
       }
   }
