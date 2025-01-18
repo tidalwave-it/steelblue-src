@@ -35,7 +35,7 @@ import java.util.concurrent.TimeUnit;
 import javafx.event.ActionEvent;
 import javafx.application.Platform;
 import it.tidalwave.util.ContextManager;
-import it.tidalwave.role.impl.DefaultContextManagerProvider;
+import it.tidalwave.util.impl.DefaultContextManagerProvider;
 import it.tidalwave.role.spi.SystemRoleFactory;
 import it.tidalwave.ui.core.role.Displayable;
 import it.tidalwave.ui.core.role.UserAction;
