@@ -58,11 +58,16 @@
             <artifactId>it-tidalwave-util</artifactId>
         </dependency>
 
-        <!-- These are indirect dependencies, directly referencing them solves convergence problems -->
         <dependency>
             <groupId>it.tidalwave.thesefoolishthings</groupId>
             <artifactId>it-tidalwave-role-spring</artifactId>
         </dependency>
+        <dependency> <!-- Required by it-tidalwave-role-spring -->
+            <groupId>jakarta.inject</groupId>
+            <artifactId>jakarta.inject-api</artifactId>
+        </dependency>
+
+        <!-- Indirect dependencies, directly referencing them solves convergence problems -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>

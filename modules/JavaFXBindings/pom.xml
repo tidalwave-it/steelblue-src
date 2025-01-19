@@ -87,7 +87,7 @@
         <dependency>
             <groupId>org.jfxtras</groupId>
             <artifactId>jmetro</artifactId>
-            <exclusions>
+            <exclusions> <!-- To avoid convergence problems. -->
                 <exclusion>
                     <groupId>org.openjfx</groupId>
                     <artifactId>javafx-base</artifactId>
@@ -114,22 +114,18 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-base</artifactId>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-web</artifactId>
-            <scope>provided</scope>
         </dependency>
 
         <!-- TEST DEPENDENCIES -->

@@ -48,8 +48,7 @@
     </description>
 
     <properties>
-        <tft.javafx.modules>javafx.base,javafx.controls,javafx.fxml,javafx.graphics,javafx.web</tft.javafx.modules>
-        <tft.mainClass>it.tidalwave.ui.example.presentation.javafx.Main</tft.mainClass>
+        <tft.mainClass>it.tidalwave.ui.example.presentation.javafx/it.tidalwave.ui.example.presentation.javafx.Main</tft.mainClass>
     </properties>
 
     <dependencies>
@@ -101,22 +100,18 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-base</artifactId>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-web</artifactId>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 

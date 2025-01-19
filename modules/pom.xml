@@ -54,6 +54,10 @@
         <tft.javafx.version>11.0.1</tft.javafx.version>
         <tft.openjfx-monocle.version>11.0.2</tft.openjfx-monocle.version>
         <jmetro.version>11.6.14</jmetro.version>
+        <tft.modulePathInTests>false</tft.modulePathInTests>
+        <tft.javac.xlint>-Xlint:all,-exports,-missing-explicit-ctor</tft.javac.xlint>
+        <tft.profile.metrics.checkstyleGoal /> <!-- FIXME: checkstyle crashes with module-info.java -->
+        <tft.checkstyle.skip>true</tft.checkstyle.skip>
     </properties>
 
     <dependencyManagement>
@@ -162,6 +166,23 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <annotationProcessorPath>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </annotationProcessorPath>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+         </plugins>
+    </build>
 
     <modules>
         <module>Core</module>
