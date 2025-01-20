@@ -84,10 +84,10 @@ import static lombok.AccessLevel.PRIVATE;
  **************************************************************************************************************************************************************/
 public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationWithSplash
   {
-    /** Configures the JMetro style, light mode. @since 2.0-ALPHA-6 */
+    /** Configures the JMetro style, light mode. @since 3.0-ALPHA-1 */
     public static final Consumer<Scene> STYLE_METRO_LIGHT = scene ->  new JMetro(Style.LIGHT).setScene(scene);
 
-    /** Configures the JMetro style, dark mode.  @since 2.0-ALPHA-6 */
+    /** Configures the JMetro style, dark mode.  @since 3.0-ALPHA-1 */
     public static final Consumer<Scene> STYLE_METRO_DARK = scene ->  new JMetro(Style.DARK).setScene(scene);
 
     /***********************************************************************************************************************************************************
