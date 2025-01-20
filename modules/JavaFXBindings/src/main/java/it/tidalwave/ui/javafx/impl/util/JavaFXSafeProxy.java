@@ -63,7 +63,7 @@ public class JavaFXSafeProxy implements InvocationHandler
       {
         /** {@return the class of the proxied object}. */
         @Nonnull
-        public Class<?> __getProxiedClass();
+        public Object __getProxiedObject();
       }
 
     @Getter @Setter
@@ -90,9 +90,9 @@ public class JavaFXSafeProxy implements InvocationHandler
     public Object invoke (@Nonnull final Object proxy, @Nonnull final Method method, @Nonnull final Object[] args)
       throws Throwable
       {
-        if ("__getProxiedClass".equals(method.getName()))
+        if ("__getProxiedObject".equals(method.getName()))
           {
-            return delegate.getClass();
+            return delegate;
           }
 
         final var result = new AtomicReference<>();

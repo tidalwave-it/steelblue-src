@@ -27,7 +27,6 @@ package it.tidalwave.ui.javafx.spi;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 import javax.annotation.CheckForNull;
 import jakarta.annotation.Nonnull;
 import java.util.Arrays;
@@ -267,17 +266,12 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
       {
         Objects.requireNonNull(applicationContext, "applicationContext is null");
         final var delegate = applicationNad.getDelegate();
-        final var actualClass = getActualClass(delegate);
-        log.info("Application presentation delegate: {}", delegate);
+        final var actualDelegate = getActualDelegate(delegate);
+        log.info("Application presentation delegate: {} --- actual: {}", delegate, actualDelegate);
 
-        if (!actualClass.equals(delegate.getClass()))
+        if (actualDelegate.getClass().getAnnotation(PresentationAssembler.class) != null)
           {
-            log.info(">>>> delegate class {} is a proxy of {}", delegate.getClass().getName(), actualClass.getName());
-          }
-
-        if (actualClass.getAnnotation(PresentationAssembler.class) != null)
-          {
-            callAssemble(delegate);
+            callAssemble(actualDelegate);
           }
 
         callPresentationAssemblers();
@@ -316,17 +310,15 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
       }
 
     /***********************************************************************************************************************************************************
-     * Call a method annotated with {@link Assemble} in the given object. Since the object is likely to be a dynamic proxy, and proxies don't carry the
-     * annotation of proxied classes, the proxied class is the one being probed for the annotation.
-     * @param     delegate          the presentation delegate
+     * Call a method annotated with {@link Assemble} in the given object.
+     * @param     assembler       the assembler
      **********************************************************************************************************************************************************/
-    private void callAssemble (@Nonnull final Object delegate)
+    private void callAssemble (@Nonnull final Object assembler)
       {
-        log.info("Calling presentation assembler: {}", delegate);
-        final var actualClass = getActualClass(delegate);
-        Arrays.stream(actualClass.getDeclaredMethods())
+        log.info("Calling presentation assembler: {}", assembler);
+        Arrays.stream(assembler.getClass().getDeclaredMethods())
               .filter(_p(m -> m.getDeclaredAnnotation(Assemble.class) != null))
-              .forEach(_c(m -> invokeInjecting(delegate.getClass().getDeclaredMethod(m.getName(), m.getParameterTypes()), delegate, this::resolveBean)));
+              .forEach(_c(m -> invokeInjecting(m, assembler, this::resolveBean)));
       }
 
     /***********************************************************************************************************************************************************
@@ -358,14 +350,12 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
       }
 
     /***********************************************************************************************************************************************************
-     * {@return the class of the given object or its proxied class if it's a proxy}.
-     * @param   object      the object
+     *
      **********************************************************************************************************************************************************/
     @Nonnull
-    private Class<?> getActualClass (@Nonnull final Object object)
+    private static Object getActualDelegate (@Nonnull final Object delegate)
       {
-        final var clazz = object.getClass();
-        return !Proxy.isProxyClass(clazz) ? clazz : ((Proxied)object).__getProxiedClass();
+        return delegate instanceof Proxied ? ((Proxied)delegate).__getProxiedObject() : delegate;
       }
 
     /***********************************************************************************************************************************************************
