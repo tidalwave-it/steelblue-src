@@ -49,7 +49,7 @@
         <tft.javac.source>21</tft.javac.source>
         <tft.javac.target>21</tft.javac.target>
         <tft.javac.release>21</tft.javac.release>
-        <tft.javafx.version>23.0.1</tft.javafx.version>
+        <tft.javafx.version>21.0.1</tft.javafx.version>
         <tft.spring.version>6.2.1</tft.spring.version>
         <!-- Generate all javadocs and UML diagrams. -->
         <tft.javadoc.excludePackageNames />
