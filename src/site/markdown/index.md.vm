@@ -29,8 +29,6 @@
 #set ($ci_view = "http://services.tidalwave.it/ci/job/" + $project_cc)
 #set ($test_status = "https://img.shields.io/jenkins/t/http/services.tidalwave.it/ci/job/" + $project_cc + ".svg")
 #set ($coverage_status = "https://img.shields.io/jenkins/coverage/jacoco?jobUrl=https%3A%2F%2Fservices.tidalwave.it%2Fci%2Fview%2FSteelBlue%2Fjob%2FSteelBlue%2F")
-#set ($lgtm = "https://lgtm.com/projects/b/tidalwave/" + $project_lc + "-src/")
-#set ($lgtm_alerts = "https://lgtm.com/projects/b/tidalwave/" + $project_lc + "-src/alerts/")
 
 [![Maven Central](https://img.shields.io/maven-central/v/${project.groupId}/solidblue.svg)]()
 [![Build Status]($build_status)]($ci_view)
