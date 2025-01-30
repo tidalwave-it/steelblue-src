@@ -197,7 +197,7 @@ public abstract class JavaFXApplicationWithSplash extends Application
      *
      **********************************************************************************************************************************************************/
     @Nonnull
-    protected Executor getExecutor()
+    private Executor getExecutor ()
       {
         return Executors.newSingleThreadExecutor();
       }

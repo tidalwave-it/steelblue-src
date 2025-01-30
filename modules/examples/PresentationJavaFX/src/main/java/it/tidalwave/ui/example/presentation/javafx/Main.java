@@ -32,9 +32,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
+import it.tidalwave.ui.example.presentation.MainPanelPresentationControl;
 import it.tidalwave.ui.javafx.JavaFXSpringAnnotationApplication;
 import it.tidalwave.ui.javafx.JavaFXSpringApplication;
-import it.tidalwave.ui.example.presentation.MainPanelPresentationControl;
 
 /***************************************************************************************************************************************************************
  *
@@ -71,8 +71,8 @@ public class Main extends JavaFXSpringAnnotationApplication
                        // .withProperty(K_FULL_SCREEN, true)
                        // .withProperty(K_FULL_SCREEN_LOCKED, true)
                        // .withProperty(K_MAXIMIZED, true)
-                       .withProperty(K_MIN_SPLASH_DURATION, Duration.seconds(3))
-                       .withProperty(K_INITIAL_SIZE, 0.8));                                 // initial windows size (in percentage)
+                       .withProperty(K_MIN_SPLASH_DURATION, Duration.seconds(3.0))
+                       .withProperty(K_INITIAL_SIZE, 0.8));                            // initial windows size (in percentage)
       }
     // END SNIPPET: main
 

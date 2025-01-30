@@ -38,7 +38,6 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <groupId>it.tidalwave.steelblue</groupId>
     <artifactId>it-tidalwave-ui-examples</artifactId>
     <version>3.0-ALPHA-2-SNAPSHOT</version>
     <packaging>pom</packaging>

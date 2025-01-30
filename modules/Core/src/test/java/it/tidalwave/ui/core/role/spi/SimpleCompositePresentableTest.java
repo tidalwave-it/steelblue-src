@@ -25,29 +25,29 @@
  */
 package it.tidalwave.ui.core.role.spi;
 
-import javax.annotation.CheckForNull;
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import it.tidalwave.ui.core.role.PresentationModel;
 import it.tidalwave.util.As;
 import it.tidalwave.util.Id;
 import it.tidalwave.util.RoleFactory;
 import it.tidalwave.role.Identifiable;
 import it.tidalwave.role.SimpleComposite;
 import it.tidalwave.role.spi.SystemRoleFactory;
-import it.tidalwave.ui.core.role.PresentationModel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import static it.tidalwave.ui.core.role.PresentationModel._CompositeOfPresentationModel_;
+import static org.assertj.core.api.Assertions.assertThat;
 import static java.util.Collections.emptyList;
 import static it.tidalwave.util.Parameters.r;
-import static it.tidalwave.ui.core.role.PresentationModel._SimpleCompositeOfPresentationModel_;
 import static org.testng.Assert.*;
-import static org.assertj.core.api.Assertions.assertThat;
 
 /***************************************************************************************************************************************************************
  *
@@ -65,25 +65,25 @@ public class SimpleCompositePresentableTest
         @Getter @Nonnull
         private final Id id;
 
-        @CheckForNull
+        @Nullable
         private SimpleComposite<MockDatum> composite;
 
         @Getter
         private List<MockDatum> children = new ArrayList<>();
 
-        public MockDatum (@Nonnull final String id)
+        private MockDatum (@Nonnull final String id)
           {
             this.id = new Id(id);
           }
 
         @Nonnull
-        public MockDatum withChildren (@Nonnull final MockDatum ... children)
+        private MockDatum withChildren (@Nonnull final MockDatum... children)
           {
             return withChildren(List.of(children));
           }
 
         @Nonnull
-        public MockDatum withChildren (@Nonnull final List<MockDatum> children)
+        private MockDatum withChildren (@Nonnull final List<MockDatum> children)
           {
             composite = SimpleComposite.ofCloned(this.children = children);
             return this;
@@ -118,7 +118,7 @@ public class SimpleCompositePresentableTest
     /***********************************************************************************************************************************************************
      * 
      **********************************************************************************************************************************************************/
-    static class MockRole1
+    private static class MockRole1
       {
       }
 
@@ -135,7 +135,7 @@ public class SimpleCompositePresentableTest
     /***********************************************************************************************************************************************************
      * 
      **********************************************************************************************************************************************************/
-    static class MockRoleFactory implements RoleFactory<MockDatum, MockRole2>
+    private static class MockRoleFactory implements RoleFactory<MockDatum, MockRole2>
       {
         @Override @Nonnull
         public Optional<MockRole2> createRoleFor (@Nonnull final MockDatum datum)
@@ -182,6 +182,7 @@ public class SimpleCompositePresentableTest
     /***********************************************************************************************************************************************************
      * 
      **********************************************************************************************************************************************************/
+    @SuppressWarnings("DataFlowIssue")
     private void assertProperPresentationModel (@Nonnull final String indent,
                                                 @Nonnull final PresentationModel pm,
                                                 @Nonnull final MockDatum datum)
@@ -192,7 +193,7 @@ public class SimpleCompositePresentableTest
 
         assertThat(role.getDatum()).isSameAs(datum);
 
-        final var childrenPm = pm.maybeAs(_SimpleCompositeOfPresentationModel_)
+        final var childrenPm = pm.maybeAs(_CompositeOfPresentationModel_)
                                  .map(c -> c.findChildren().results())
                                  .orElse(emptyList());
         final var notPMs = new ArrayList<>(childrenPm);

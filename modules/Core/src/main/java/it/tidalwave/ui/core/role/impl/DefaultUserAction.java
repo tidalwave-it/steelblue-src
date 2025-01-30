@@ -27,10 +27,10 @@ package it.tidalwave.ui.core.role.impl;
 
 import jakarta.annotation.Nonnull;
 import java.util.Collection;
-import it.tidalwave.util.As;
-import it.tidalwave.util.Callback;
 import it.tidalwave.ui.core.BoundProperty;
 import it.tidalwave.ui.core.role.UserAction;
+import it.tidalwave.util.As;
+import it.tidalwave.util.Callback;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;

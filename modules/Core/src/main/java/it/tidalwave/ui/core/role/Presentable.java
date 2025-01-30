@@ -28,8 +28,8 @@ package it.tidalwave.ui.core.role;
 import jakarta.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Collections;
-import it.tidalwave.util.Parameters;
 import it.tidalwave.ui.core.role.impl.DefaultPresentable;
+import it.tidalwave.util.Parameters;
 import static it.tidalwave.util.Parameters.r;
 
 /***************************************************************************************************************************************************************

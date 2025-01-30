@@ -27,7 +27,7 @@ package it.tidalwave.ui.javafx.impl;
 
 import it.tidalwave.ui.core.spi.TestUserActions;
 import it.tidalwave.ui.javafx.JavaFXBinder;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 /***************************************************************************************************************************************************************
  *
@@ -42,7 +42,7 @@ public class UserActionsTestSupport<T, C> extends JavaFXTestSupport
 
     protected C control;
 
-    protected JavaFXBinder binder;
+    private JavaFXBinder binder;
 
     protected void createBinder()
       {

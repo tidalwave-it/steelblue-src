@@ -28,7 +28,6 @@ package it.tidalwave.ui.javafx.impl.treetable;
 import jakarta.annotation.Nonnull;
 import java.util.Optional;
 import java.util.concurrent.Executor;
-import javafx.collections.ObservableList;
 import javafx.scene.control.TreeTableCell;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
@@ -48,8 +47,7 @@ import static it.tidalwave.ui.javafx.impl.DefaultJavaFXBinder.enforceFxApplicati
 @Slf4j
 public class TreeTableViewBindings extends TreeItemDelegateSupport
   {
-    private final Callback<TreeTableColumn<PresentationModel, PresentationModel>,
-            TreeTableCell<PresentationModel, PresentationModel>> cellFactory;
+    private final Callback<TreeTableColumn<PresentationModel, PresentationModel>, TreeTableCell<PresentationModel, PresentationModel>> cellFactory;
 
     /***********************************************************************************************************************************************************
      *
@@ -69,7 +67,6 @@ public class TreeTableViewBindings extends TreeItemDelegateSupport
       {
         enforceFxApplicationThread();
         log.debug("bind({}, {}, {})", treeTableView, pm, callback);
-
         setRootProperty(pm, treeTableView.rootProperty());
         setCellFactory(treeTableView);
         treeTableView.setShowRoot(shouldShowRoot(pm));
@@ -82,13 +79,12 @@ public class TreeTableViewBindings extends TreeItemDelegateSupport
      **********************************************************************************************************************************************************/
     private void setCellFactory (@Nonnull final TreeTableView<PresentationModel> treeTableView)
       {
-        final ObservableList rawColumns = treeTableView.getColumns(); // FIXME cast
-        final var columns = (ObservableList<TreeTableColumn<PresentationModel, PresentationModel>>)rawColumns;
-
-        for (final var column : columns)
+        for (final var column : treeTableView.getColumns())
           {
-            column.setCellValueFactory(PresentationModelObservable::of);
-            column.setCellFactory(cellFactory);
+            @SuppressWarnings("unchecked")
+            final var c = (TreeTableColumn<PresentationModel, PresentationModel>)column;
+            c.setCellValueFactory(PresentationModelObservable::of);
+            c.setCellFactory(cellFactory);
           }
       }
   }

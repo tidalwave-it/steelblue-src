@@ -26,7 +26,7 @@
 package it.tidalwave.ui.javafx.impl.common;
 
 import jakarta.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import javafx.scene.control.Cell;
 import it.tidalwave.util.As;
 

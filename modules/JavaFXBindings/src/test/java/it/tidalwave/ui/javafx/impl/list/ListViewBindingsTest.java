@@ -34,7 +34,7 @@ import it.tidalwave.ui.core.role.Selectable;
 import it.tidalwave.ui.javafx.impl.BindingTestSupport;
 import it.tidalwave.ui.javafx.impl.common.DefaultCellBinder;
 import org.testng.annotations.Test;
-import static it.tidalwave.ui.core.role.PresentationModel._SimpleCompositeOfPresentationModel_;
+import static it.tidalwave.ui.core.role.PresentationModel._CompositeOfPresentationModel_;
 import static it.tidalwave.ui.core.role.Selectable._Selectable_;
 import static java.util.stream.Collectors.*;
 import static java.util.stream.IntStream.rangeClosed;
@@ -70,7 +70,7 @@ public class ListViewBindingsTest extends BindingTestSupport<ListView<Presentati
         // when
         runSafelyAndWait("bind", executor, () -> underTest.bind(control, pm, Optional.of(callBack)));
         // then
-        assertEquals(new ArrayList<>(control.getItems()), pm.as(_SimpleCompositeOfPresentationModel_).findChildren().results());
+        assertEquals(new ArrayList<>(control.getItems()), pm.as(_CompositeOfPresentationModel_).findChildren().results());
       }
 
     /**********************************************************************************************************************************************************/

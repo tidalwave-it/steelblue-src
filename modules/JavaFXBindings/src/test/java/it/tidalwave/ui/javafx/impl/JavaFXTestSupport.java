@@ -125,7 +125,7 @@ public abstract class JavaFXTestSupport extends TestNGApplicationTest
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
-    protected static void waitForLatch (@Nonnull final CountDownLatch latch)
+    private static void waitForLatch (@Nonnull final CountDownLatch latch)
       {
         try
           {

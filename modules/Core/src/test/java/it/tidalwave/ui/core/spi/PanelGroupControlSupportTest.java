@@ -31,13 +31,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import org.springframework.beans.factory.BeanFactory;
-import it.tidalwave.ui.core.PanelGroupProvider;
 import it.tidalwave.ui.core.PanelGroupControl.Group;
+import it.tidalwave.ui.core.PanelGroupProvider;
 import it.tidalwave.ui.core.message.PanelShowRequest;
 import it.tidalwave.util.As;
 import org.testng.annotations.Test;
-import static it.tidalwave.ui.core.PanelGroupControl.Options.*;
 import static it.tidalwave.ui.core.PanelGroupControl.DefaultGroups.*;
+import static it.tidalwave.ui.core.PanelGroupControl.Options.*;
 import static org.mockito.Mockito.*;
 
 /***************************************************************************************************************************************************************
@@ -47,13 +47,13 @@ import static org.mockito.Mockito.*;
  **************************************************************************************************************************************************************/
 public class PanelGroupControlSupportTest
   {
-    static class MockPanel {}
+    private static class MockPanel {}
 
-    static class MockNode {}
+    private static class MockNode {}
 
     static class Fixture extends PanelGroupControlSupport<MockPanel, MockNode>
       {
-        public Fixture (@Nonnull final Function<As, Collection<PanelGroupProvider<MockNode>>> pgProvider)
+        private Fixture (@Nonnull final Function<As, Collection<PanelGroupProvider<MockNode>>> pgProvider)
           {
             super(pgProvider, mock(BeanFactory.class), "");
           }

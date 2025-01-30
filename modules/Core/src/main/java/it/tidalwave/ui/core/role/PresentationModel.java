@@ -28,16 +28,17 @@ package it.tidalwave.ui.core.role;
 import jakarta.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Collections;
-import it.tidalwave.util.As;
-import it.tidalwave.util.NamedCallback;
-import it.tidalwave.util.Parameters;
-import it.tidalwave.role.SimpleComposite;
 import it.tidalwave.ui.core.Mutable;
 import it.tidalwave.ui.core.role.impl.DefaultPresentationModel;
 import org.apiguardian.api.API;
-import static it.tidalwave.util.Parameters.r;
+import it.tidalwave.util.As;
+import it.tidalwave.util.NamedCallback;
+import it.tidalwave.util.Parameters;
+import it.tidalwave.role.Aggregate;
+import it.tidalwave.role.SimpleComposite;
 import static it.tidalwave.ui.core.role.Presentable._Presentable_;
 import static org.apiguardian.api.API.Status.EXPERIMENTAL;
+import static it.tidalwave.util.Parameters.r;
 
 /***************************************************************************************************************************************************************
  *
@@ -55,7 +56,10 @@ public interface PresentationModel extends As, Mutable
     public static final Class<PresentationModel> _PresentationModel_ = PresentationModel.class;
 
     /** Shortcut for {@link it.tidalwave.util.As}. */
-    public static final As.Type<SimpleComposite<PresentationModel>> _SimpleCompositeOfPresentationModel_ = As.type(SimpleComposite.class);
+    public static final As.Type<SimpleComposite<PresentationModel>> _CompositeOfPresentationModel_ = As.type(SimpleComposite.class);
+
+    /** Shortcut for {@link it.tidalwave.util.As}. */
+    public static final As.Type<Aggregate<PresentationModel>> _AggregateOfPresentationModel_ = new As.Type<>(Aggregate.class);
 
     public static final String PROPERTY_CHILDREN = "children";
 

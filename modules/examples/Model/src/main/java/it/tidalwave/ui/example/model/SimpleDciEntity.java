@@ -26,8 +26,8 @@
 package it.tidalwave.ui.example.model;
 
 import jakarta.annotation.Nonnull;
-import it.tidalwave.util.As;
 import it.tidalwave.ui.core.role.Displayable;
+import it.tidalwave.util.As;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.Delegate;
@@ -42,7 +42,7 @@ import lombok.experimental.Delegate;
  *
  **************************************************************************************************************************************************************/
 // START SNIPPET: entity
-@Getter @ToString(exclude = "asDelegate")
+@Getter @ToString(exclude = "asDelegate") @SuppressWarnings("this-escape")
 public class SimpleDciEntity implements As
   {
     @Delegate

@@ -34,21 +34,21 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import javafx.event.ActionEvent;
 import javafx.application.Platform;
-import it.tidalwave.util.ContextManager;
-import it.tidalwave.util.impl.DefaultContextManagerProvider;
-import it.tidalwave.role.spi.SystemRoleFactory;
 import it.tidalwave.ui.core.role.Displayable;
 import it.tidalwave.ui.core.role.UserAction;
 import it.tidalwave.ui.core.role.UserActionProvider;
+import it.tidalwave.ui.core.role.spi.DefaultUserActionProvider;
 import it.tidalwave.ui.javafx.impl.common.DefaultCellBinder;
 import it.tidalwave.ui.javafx.impl.common.RoleCollector;
-import it.tidalwave.ui.core.role.spi.DefaultUserActionProvider;
+import it.tidalwave.util.ContextManager;
+import it.tidalwave.util.impl.DefaultContextManagerProvider;
+import it.tidalwave.role.spi.SystemRoleFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import static org.mockito.Mockito.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 /***************************************************************************************************************************************************************
  *
@@ -63,7 +63,7 @@ public class UserActionProviderContextMenuBuilderTest
         @Nonnull @Delegate
         private final ExecutorService delegate;
 
-        public final List<AssertionError> assertionErrors = new ArrayList<>();
+        protected final List<AssertionError> assertionErrors = new ArrayList<>();
 
         @Override @Nonnull
         public Future<?> submit (final Runnable task)
@@ -179,7 +179,7 @@ public class UserActionProviderContextMenuBuilderTest
           }
 
         executorService.shutdown();
-        executorService.awaitTermination(10, TimeUnit.SECONDS);
+        executorService.awaitTermination(10L, TimeUnit.SECONDS);
 
         for (var i = 0; i < menuItems.size(); i++)
           {

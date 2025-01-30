@@ -42,10 +42,10 @@ import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
 import javafx.application.Platform;
-import it.tidalwave.util.BundleUtilities;
-import it.tidalwave.util.Callback;
 import it.tidalwave.ui.core.UserNotificationWithFeedback;
 import it.tidalwave.ui.javafx.impl.common.DelegateSupport;
+import it.tidalwave.util.BundleUtilities;
+import it.tidalwave.util.Callback;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -59,7 +59,7 @@ import lombok.extern.slf4j.Slf4j;
 public class DialogBindings extends DelegateSupport
   {
     @RequiredArgsConstructor
-    static class UrlOpener implements ChangeListener<String>
+    private static class UrlOpener implements ChangeListener<String>
       {
         @Nonnull
         private final WebView webView;

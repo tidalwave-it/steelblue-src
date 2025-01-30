@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Label;
@@ -39,9 +40,9 @@ import javafx.stage.Stage;
 import org.springframework.beans.factory.BeanFactory;
 import it.tidalwave.ui.core.PanelGroupControl;
 import it.tidalwave.ui.core.PanelGroupProvider;
-import it.tidalwave.ui.core.role.impl.AbstractPanelNotification;
 import it.tidalwave.ui.core.message.PanelHiddenNotification;
 import it.tidalwave.ui.core.message.PanelShownNotification;
+import it.tidalwave.ui.core.role.impl.AbstractPanelNotification;
 import it.tidalwave.ui.core.spi.PanelGroupProviderSupport;
 import it.tidalwave.ui.javafx.NodeAndDelegate;
 import it.tidalwave.messagebus.MessageBus;
@@ -51,8 +52,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.mockito.ArgumentCaptor;
-import static it.tidalwave.ui.core.PanelGroupControl.Options.*;
 import static it.tidalwave.ui.core.PanelGroupControl.DefaultGroups.LEFT;
+import static it.tidalwave.ui.core.PanelGroupControl.Options.*;
 import static it.tidalwave.ui.javafx.spi.AbstractJavaFXSpringApplication.APPLICATION_MESSAGE_BUS_BEAN_NAME;
 import static org.testfx.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
@@ -66,12 +67,12 @@ import static org.mockito.Mockito.*;
 public class DefaultJavaFXPanelGroupControlTest extends JavaFXTestSupport
   {
     @Getter
-    static class MockPresentation
+    private static class MockPresentation
       {
         @SuppressWarnings("unchecked")
         private final NodeAndDelegate<Node> nad = mock(NodeAndDelegate.class);
 
-        MockPresentation (@Nonnull final Node node)
+        private MockPresentation (@Nonnull final Node node)
           {
             when(nad.getNode()).thenReturn(node);
           }
@@ -137,8 +138,8 @@ public class DefaultJavaFXPanelGroupControlTest extends JavaFXTestSupport
         assertThat(topContainer).hasExactlyNumChildren(1);
         final var stackPane = topContainer.getChildren().get(0);
         assertThat(stackPane).isInstanceOf(StackPane.class);
-        assertThat((StackPane)stackPane).hasExactlyNumChildren(1);
-        final var children = ((StackPane)stackPane).getChildrenUnmodifiable();
+        assertThat((Parent)stackPane).hasExactlyNumChildren(1);
+        final var children = ((Parent)stackPane).getChildrenUnmodifiable();
         assertThat(children.get(0)).isSameAs(provider1.getComponent());
         assertThat(stackPane).isVisible();
         assertThat(provider1.getComponent()).isInvisible();
@@ -175,8 +176,8 @@ public class DefaultJavaFXPanelGroupControlTest extends JavaFXTestSupport
         assertThat(topContainer).hasExactlyNumChildren(1);
         final var stackPane = topContainer.getChildren().get(0);
         assertThat(stackPane).isInstanceOf(StackPane.class);
-        assertThat((StackPane)stackPane).hasExactlyNumChildren(2);
-        final var children = ((StackPane)stackPane).getChildrenUnmodifiable();
+        assertThat((Parent)stackPane).hasExactlyNumChildren(2);
+        final var children = ((Parent)stackPane).getChildrenUnmodifiable();
         assertThat(children.get(0)).isSameAs(provider1.getComponent());
         assertThat(children.get(1)).isSameAs(provider2.getComponent());
         assertThat(stackPane).isVisible();

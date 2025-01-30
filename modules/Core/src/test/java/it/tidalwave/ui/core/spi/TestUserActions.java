@@ -28,9 +28,9 @@ package it.tidalwave.ui.core.spi;
 import jakarta.annotation.Nonnull;
 import java.util.List;
 import it.tidalwave.ui.core.MenuBarControl;
-import it.tidalwave.util.Callback;
 import it.tidalwave.ui.core.role.Displayable;
 import it.tidalwave.ui.core.role.UserAction;
+import it.tidalwave.util.Callback;
 import static org.mockito.Mockito.*;
 
 /***************************************************************************************************************************************************************

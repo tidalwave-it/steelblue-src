@@ -28,12 +28,12 @@ package it.tidalwave.ui.core.role.impl;
 import jakarta.annotation.Nonnull;
 import java.util.Comparator;
 import java.util.List;
-import it.tidalwave.util.As;
 import it.tidalwave.ui.core.role.Displayable;
+import it.tidalwave.util.As;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import static it.tidalwave.util.mock.MockAsFactory.mockWithAs;
 import static org.assertj.core.api.Assertions.assertThat;
+import static it.tidalwave.util.mock.MockAsFactory.mockWithAs;
 
 /***************************************************************************************************************************************************************
  *

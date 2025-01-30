@@ -25,8 +25,8 @@
  */
 package it.tidalwave.ui.javafx.impl.common;
 
-import javax.annotation.CheckForNull;
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import javafx.scene.control.cell.TextFieldListCell;
 import it.tidalwave.util.As;
 
@@ -49,7 +49,7 @@ public class AsObjectListCell<T extends As> extends TextFieldListCell<T>
       }
 
     @Override
-    public void updateItem (@CheckForNull final T item, final boolean empty)
+    public void updateItem (@Nullable final T item, final boolean empty)
       {
         super.updateItem(item, empty);
         cellBinder.bind(this, item, empty);

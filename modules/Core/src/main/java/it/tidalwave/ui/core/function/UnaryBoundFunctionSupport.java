@@ -38,7 +38,7 @@ import it.tidalwave.ui.core.ChangingSource;
 public abstract class UnaryBoundFunctionSupport<T, R> extends BoundFunctionSupport<T, R>
   {
     @Nonnull
-    protected final ChangingSource<T> source;
+    private final ChangingSource<T> source;
 
     protected R value;
 

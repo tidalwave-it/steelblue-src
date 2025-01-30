@@ -36,7 +36,7 @@ import org.testng.annotations.Test;
  **************************************************************************************************************************************************************/
 public class JavaFXPresentationBuilderTest
   {
-    public static interface MockInterface
+    protected static interface MockInterface
       {
         public void theMethod();
       }
@@ -50,7 +50,7 @@ public class JavaFXPresentationBuilderTest
           }
       }
 
-    public static class MockProvider extends JavaFXPresentationBuilder<MockInterface, MockImplementation>
+    private static class MockProvider extends JavaFXPresentationBuilder<MockInterface, MockImplementation>
       {
       }
 

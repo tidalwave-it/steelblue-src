@@ -28,8 +28,8 @@ package it.tidalwave.ui.core.role.impl;
 import java.beans.PropertyChangeSupport;
 import it.tidalwave.ui.core.MutableListener;
 import org.testng.annotations.Test;
-import static org.mockito.Mockito.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 /***************************************************************************************************************************************************************
  *

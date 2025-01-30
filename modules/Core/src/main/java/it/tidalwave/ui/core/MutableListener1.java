@@ -41,7 +41,7 @@ import static org.apiguardian.api.API.Status.EXPERIMENTAL;
  * @author        Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-@API(status = EXPERIMENTAL)
+@FunctionalInterface @API(status = EXPERIMENTAL)
 public interface MutableListener1<T> extends MutableListener<T>
   {
     /***********************************************************************************************************************************************************

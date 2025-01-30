@@ -34,10 +34,10 @@ import java.util.TreeSet;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import it.tidalwave.util.As;
 import it.tidalwave.ui.core.role.impl.AsDisplayableComparator;
 import it.tidalwave.ui.core.role.impl.DefaultDisplayable;
 import it.tidalwave.ui.core.role.impl.DisplayableComparator;
+import it.tidalwave.util.As;
 import static it.tidalwave.util.BundleUtilities.getMessage;
 
 /***************************************************************************************************************************************************************

@@ -106,7 +106,7 @@ public class AbstractJavaFXSpringApplicationTest
         // when
         underTest.onStageCreated2(nad);
         executorService.shutdown();
-        executorService.awaitTermination(1, TimeUnit.SECONDS);
+        executorService.awaitTermination(1L, TimeUnit.SECONDS);
         // then
         verifyNoInteractions(messageBus);
       }
@@ -123,7 +123,7 @@ public class AbstractJavaFXSpringApplicationTest
         // when
         underTest.onStageCreated2(nad);
         executorService.shutdown();
-        executorService.awaitTermination(1, TimeUnit.SECONDS);
+        executorService.awaitTermination(1L, TimeUnit.SECONDS);
         // then
         verify(messageBus).publish(any(PowerOnEvent.class));
         verifyNoMoreInteractions(messageBus);
@@ -157,34 +157,34 @@ public class AbstractJavaFXSpringApplicationTest
       }
 
     /**********************************************************************************************************************************************************/
-    static class Bean1 {}
-    static class Bean2 {}
+    private static class Bean1 {}
+    private static class Bean2 {}
 
     @PresentationAssembler
-    static class PresentationDelegateAssembler extends MockPresentationDelegate
+    private static class PresentationDelegateAssembler extends MockPresentationDelegate
       {
         @Assemble
-        public void assemble(@Nonnull final JavaFXBinder javaFXBinder,
-                             @Nonnull final JavaFXToolBarControl javaFXToolBarControl,
-                             @Nonnull final JavaFXMenuBarControl menuBarControl,
-                             @Nonnull final JavaFXPanelGroupControl javaFXPanelGroupControl,
-                             @Nonnull final Bean1 bean1,
-                             @Nonnull final Bean2 bean2)
+        public void assemble (@Nonnull final JavaFXBinder javaFXBinder,
+                              @Nonnull final JavaFXToolBarControl javaFXToolBarControl,
+                              @Nonnull final JavaFXMenuBarControl menuBarControl,
+                              @Nonnull final JavaFXPanelGroupControl javaFXPanelGroupControl,
+                              @Nonnull final Bean1 bean1,
+                              @Nonnull final Bean2 bean2)
           {
             // body not needed for tests
           }
       }
 
     @PresentationAssembler
-    static class SpringComponentAssembler
+    private static class SpringComponentAssembler
       {
         @Assemble
-        public void assemble(@Nonnull final JavaFXBinder javaFXBinder,
-                             @Nonnull final JavaFXToolBarControl javaFXToolBarControl,
-                             @Nonnull final JavaFXMenuBarControl menuBarControl,
-                             @Nonnull final JavaFXPanelGroupControl javaFXPanelGroupControl,
-                             @Nonnull final Bean1 bean1,
-                             @Nonnull final Bean2 bean2)
+        public void assemble (@Nonnull final JavaFXBinder javaFXBinder,
+                              @Nonnull final JavaFXToolBarControl javaFXToolBarControl,
+                              @Nonnull final JavaFXMenuBarControl menuBarControl,
+                              @Nonnull final JavaFXPanelGroupControl javaFXPanelGroupControl,
+                              @Nonnull final Bean1 bean1,
+                              @Nonnull final Bean2 bean2)
           {
             // body not needed for tests
           }

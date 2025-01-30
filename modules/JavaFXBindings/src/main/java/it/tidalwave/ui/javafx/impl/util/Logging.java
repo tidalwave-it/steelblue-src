@@ -27,10 +27,10 @@ package it.tidalwave.ui.javafx.impl.util;
 
 import jakarta.annotation.Nonnull;
 import java.util.Collection;
+import it.tidalwave.ui.core.role.Displayable;
 import it.tidalwave.util.As;
 import it.tidalwave.role.Aggregate;
 import it.tidalwave.role.Composite;
-import it.tidalwave.ui.core.role.Displayable;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import static java.util.stream.Collectors.*;
@@ -107,8 +107,7 @@ public class Logging
         if (object instanceof Aggregate)
           {
             final var aggregate = (Aggregate<?>)object;
-            aggregate.getNames().forEach(name ->
-                       logObject(indent + "    " + name + ": ", aggregate.getByName(name).get()));
+            aggregate.getNames().forEach(name -> logObject(indent + "    " + name + ": ", aggregate.getByName(name).get()));
           }
 
         if (object instanceof Composite)
@@ -118,7 +117,7 @@ public class Logging
             // this is optional because it would jeopardize incremental loading of tress and probably cause troubles
             if (!LOG_CHILDREN)
               {
-                log.debug(">>>>     {}    to see children, set system property to true: " + P_LOG_CHILDREN, indent);
+                log.debug(">>>>     {}    to see children, set system property to true: {}", indent, P_LOG_CHILDREN);
               }
             else
               {

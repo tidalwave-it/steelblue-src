@@ -31,17 +31,17 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
-import it.tidalwave.util.As;
-import it.tidalwave.util.Pair;
 import it.tidalwave.ui.core.MenuBarControl;
 import it.tidalwave.ui.core.role.UserAction;
+import it.tidalwave.util.As;
+import it.tidalwave.util.Pair;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
 import lombok.extern.slf4j.Slf4j;
-import static java.util.stream.Collectors.*;
 import static it.tidalwave.ui.core.MenuBarControl.MenuPlacement._MenuItemPlacement_;
 import static it.tidalwave.ui.core.role.UserActionProvider._UserActionProvider_;
+import static java.util.stream.Collectors.*;
 
 /***************************************************************************************************************************************************************
  *
@@ -120,7 +120,7 @@ public abstract class MenuBarControlSupport<B, MB, M> implements MenuBarControl<
      * {@return a {@link Comparator } for menus}
      **********************************************************************************************************************************************************/
     @Nonnull
-    private final Comparator<Map.Entry<String, ?>> menuComparator()
+    private static Comparator<Map.Entry<String, ?>> menuComparator ()
       {
         return (e1, e2) ->
           {

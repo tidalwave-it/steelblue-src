@@ -31,9 +31,9 @@ import it.tidalwave.util.mock.MockAsFactory;
 import it.tidalwave.role.spi.SystemRoleFactory;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 import static it.tidalwave.util.Parameters.r;
 import static org.mockito.Mockito.*;
-import static org.assertj.core.api.Assertions.assertThat;
 
 /***************************************************************************************************************************************************************
  *
@@ -42,15 +42,15 @@ import static org.assertj.core.api.Assertions.assertThat;
  **************************************************************************************************************************************************************/
 public class DefaultPresentationModelTest
   {
-    public static interface Role1
+    private static interface Role1
       {
       }
 
-    public static interface Role2
+    private static interface Role2
       {
       }
 
-    public static interface Role3
+    private static interface Role3
       {
       }
 

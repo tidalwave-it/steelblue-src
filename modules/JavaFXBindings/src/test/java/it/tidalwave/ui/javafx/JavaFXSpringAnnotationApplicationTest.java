@@ -26,8 +26,8 @@
 package it.tidalwave.ui.javafx;
 
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-import it.tidalwave.util.PreferencesHandler;
 import it.tidalwave.ui.core.annotation.EnableMessageBus;
+import it.tidalwave.util.PreferencesHandler;
 import it.tidalwave.messagebus.MessageBus;
 import org.testng.annotations.Test;
 import static it.tidalwave.ui.javafx.JavaFXSpringAnnotationApplication.APPLICATION_MESSAGE_BUS_BEAN_NAME;

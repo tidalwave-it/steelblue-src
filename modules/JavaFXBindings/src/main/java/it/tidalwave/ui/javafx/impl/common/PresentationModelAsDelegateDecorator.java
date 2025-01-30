@@ -30,9 +30,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import it.tidalwave.ui.core.role.PresentationModel;
 import it.tidalwave.util.As;
 import it.tidalwave.util.AsException;
-import it.tidalwave.ui.core.role.PresentationModel;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -70,7 +70,7 @@ public class PresentationModelAsDelegateDecorator implements PresentationModel
       }
 
     @Override @Nonnull
-    public <T> Optional<T> maybeAs (@Nonnull Class<? extends T> type)
+    public <T> Optional<T> maybeAs (@Nonnull final Class<? extends T> type)
       {
         final Optional<T> t = pmDelegate.maybeAs(type);
         return t.isPresent() ? t : asDelegate.maybeAs(type);

@@ -31,7 +31,6 @@ import java.util.concurrent.Executor;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeView;
 import javafx.util.Callback;
-import it.tidalwave.util.annotation.VisibleForTesting;
 import it.tidalwave.ui.core.role.PresentationModel;
 import it.tidalwave.ui.javafx.impl.common.CellBinder;
 import it.tidalwave.ui.javafx.impl.common.TreeItemDelegateSupport;
@@ -46,7 +45,7 @@ import static it.tidalwave.ui.javafx.impl.DefaultJavaFXBinder.enforceFxApplicati
 @Slf4j
 public class TreeViewBindings extends TreeItemDelegateSupport
   {
-    @VisibleForTesting final Callback<TreeView<PresentationModel>, TreeCell<PresentationModel>> cellFactory;
+    private final Callback<TreeView<PresentationModel>, TreeCell<PresentationModel>> cellFactory;
 
     /***********************************************************************************************************************************************************
      *

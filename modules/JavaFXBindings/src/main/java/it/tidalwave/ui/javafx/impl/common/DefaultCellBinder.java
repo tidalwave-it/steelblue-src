@@ -26,7 +26,7 @@
 package it.tidalwave.ui.javafx.impl.common;
 
 import jakarta.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.List;
 import java.util.concurrent.Executor;
 import javafx.collections.ObservableList;
@@ -34,19 +34,19 @@ import javafx.scene.control.Cell;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
-import it.tidalwave.ui.javafx.role.CustomGraphicProvider;
-import it.tidalwave.util.As;
-import it.tidalwave.util.annotation.VisibleForTesting;
 import it.tidalwave.ui.core.role.Displayable;
 import it.tidalwave.ui.core.role.UserAction;
 import it.tidalwave.ui.core.role.UserActionProvider;
+import it.tidalwave.ui.javafx.role.CustomGraphicProvider;
+import it.tidalwave.util.As;
+import it.tidalwave.util.annotation.VisibleForTesting;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import static it.tidalwave.ui.javafx.role.CustomGraphicProvider._CustomGraphicProvider_;
-import static java.util.stream.Collectors.*;
 import static it.tidalwave.ui.core.role.Displayable._Displayable_;
 import static it.tidalwave.ui.core.role.Styleable._Styleable_;
 import static it.tidalwave.ui.core.role.UserActionProvider._UserActionProvider_;
+import static it.tidalwave.ui.javafx.role.CustomGraphicProvider._CustomGraphicProvider_;
+import static java.util.stream.Collectors.*;
 
 /***************************************************************************************************************************************************************
  *

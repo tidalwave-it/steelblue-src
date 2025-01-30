@@ -40,16 +40,16 @@ import javafx.util.Callback;
 import it.tidalwave.ui.core.role.PresentationModel;
 import it.tidalwave.ui.core.role.UserAction;
 import it.tidalwave.ui.core.role.UserActionProvider;
+import it.tidalwave.ui.javafx.impl.common.AsObjectListCell;
 import it.tidalwave.ui.javafx.impl.common.CellBinder;
 import it.tidalwave.ui.javafx.impl.common.ChangeListenerSelectableAdapter;
 import it.tidalwave.ui.javafx.impl.common.DelegateSupport;
 import it.tidalwave.ui.javafx.impl.common.JavaFXWorker;
-import it.tidalwave.ui.javafx.impl.common.AsObjectListCell;
 import lombok.extern.slf4j.Slf4j;
-import static javafx.scene.input.KeyCode.*;
 import static it.tidalwave.ui.core.role.UserActionProvider._UserActionProvider_;
 import static it.tidalwave.ui.javafx.impl.DefaultJavaFXBinder.enforceFxApplicationThread;
 import static it.tidalwave.ui.javafx.impl.common.JavaFXWorker.childrenPm;
+import static javafx.scene.input.KeyCode.*;
 
 /***************************************************************************************************************************************************************
  *

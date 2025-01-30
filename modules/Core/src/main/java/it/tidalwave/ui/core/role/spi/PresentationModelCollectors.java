@@ -33,13 +33,13 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
+import it.tidalwave.ui.core.role.PresentationModel;
 import it.tidalwave.util.As;
 import it.tidalwave.util.spi.ArrayListCollectorSupport;
 import it.tidalwave.role.Composite;
 import it.tidalwave.role.SimpleComposite;
-import it.tidalwave.ui.core.role.PresentationModel;
-import static it.tidalwave.util.Parameters.r;
 import static it.tidalwave.ui.core.role.Presentable._Presentable_;
+import static it.tidalwave.util.Parameters.r;
 
 /***************************************************************************************************************************************************************
  *

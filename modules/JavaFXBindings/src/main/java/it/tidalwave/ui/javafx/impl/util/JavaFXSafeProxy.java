@@ -67,7 +67,7 @@ public class JavaFXSafeProxy implements InvocationHandler
       }
 
     @Getter @Setter
-    private static boolean logDelegateInvocations = false;
+    private static boolean logDelegateInvocations;
 
     @Nonnull @Getter @Setter
     private Object delegate;

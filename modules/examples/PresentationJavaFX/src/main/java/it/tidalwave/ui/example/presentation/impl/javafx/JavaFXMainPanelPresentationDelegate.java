@@ -36,11 +36,11 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.control.TreeView;
-import it.tidalwave.ui.core.UserNotificationWithFeedback;
 import it.tidalwave.ui.core.BoundProperty;
+import it.tidalwave.ui.core.UserNotificationWithFeedback;
 import it.tidalwave.ui.core.role.PresentationModel;
-import it.tidalwave.ui.javafx.JavaFXBinder;
 import it.tidalwave.ui.example.presentation.MainPanelPresentation;
+import it.tidalwave.ui.javafx.JavaFXBinder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

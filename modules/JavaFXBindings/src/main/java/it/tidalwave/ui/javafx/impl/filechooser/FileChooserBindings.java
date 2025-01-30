@@ -26,15 +26,15 @@
 package it.tidalwave.ui.javafx.impl.filechooser;
 
 import jakarta.annotation.Nonnull;
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.concurrent.Executor;
 import java.io.File;
 import java.nio.file.Path;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.application.Platform;
-import it.tidalwave.ui.core.UserNotificationWithFeedback;
 import it.tidalwave.ui.core.BoundProperty;
+import it.tidalwave.ui.core.UserNotificationWithFeedback;
 import it.tidalwave.ui.javafx.impl.common.DelegateSupport;
 import lombok.extern.slf4j.Slf4j;
 import static it.tidalwave.ui.javafx.impl.DefaultJavaFXBinder.enforceFxApplicationThread;

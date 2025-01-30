@@ -27,9 +27,9 @@ package it.tidalwave.ui.core.role.spi;
 
 import jakarta.annotation.Nonnull;
 import java.beans.PropertyChangeSupport;
+import it.tidalwave.ui.core.role.MutableIconProvider;
 import it.tidalwave.ui.core.role.impl.MutableListenerSupport;
 import javax.swing.Icon;
-import it.tidalwave.ui.core.role.MutableIconProvider;
 import lombok.experimental.Delegate;
 
 /***************************************************************************************************************************************************************

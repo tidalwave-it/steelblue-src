@@ -39,10 +39,10 @@ import it.tidalwave.ui.core.role.Visibility;
 import it.tidalwave.ui.javafx.impl.tree.ObsoletePresentationModelDisposer;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import static java.util.stream.Collectors.*;
 import static it.tidalwave.ui.core.role.Visibility._Visibility_;
 import static it.tidalwave.ui.javafx.impl.DefaultJavaFXBinder.enforceFxApplicationThread;
 import static it.tidalwave.ui.javafx.impl.common.JavaFXWorker.childrenPm;
+import static java.util.stream.Collectors.*;
 
 /***************************************************************************************************************************************************************
  *
@@ -72,7 +72,7 @@ public class TreeItemDelegateSupport extends DelegateSupport
      * @param   parentItem  the {@code TreeItem}
      * @param   depth       the depth level (used only for logging)
      **********************************************************************************************************************************************************/
-    protected void setChildren (@Nonnull final TreeItem<PresentationModel> parentItem, final int depth)
+    private void setChildren (@Nonnull final TreeItem<PresentationModel> parentItem, final int depth)
       {
         JavaFXWorker.run(executor,
                          () -> childrenPm(parentItem.getValue(), depth),
@@ -98,7 +98,7 @@ public class TreeItemDelegateSupport extends DelegateSupport
      * @return              the
      **********************************************************************************************************************************************************/
     @Nonnull
-    protected TreeItem<PresentationModel> createTreeItem (@Nonnull final PresentationModel pm, final int depth)
+    private TreeItem<PresentationModel> createTreeItem (@Nonnull final PresentationModel pm, final int depth)
       {
         enforceFxApplicationThread();
         final TreeItem<PresentationModel> item = new PresentationModelTreeItem(pm);

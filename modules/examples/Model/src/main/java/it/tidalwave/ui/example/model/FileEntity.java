@@ -26,8 +26,8 @@
 package it.tidalwave.ui.example.model;
 
 import javax.annotation.Nonnegative;
-import jakarta.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
+import jakarta.annotation.Nonnull;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Comparator;
@@ -40,10 +40,10 @@ import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributeView;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
+import it.tidalwave.ui.core.role.Displayable;
 import it.tidalwave.util.As;
 import it.tidalwave.util.spi.SimpleFinderSupport;
 import it.tidalwave.role.SimpleComposite;
-import it.tidalwave.ui.core.role.Displayable;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -70,7 +70,7 @@ public class FileEntity implements As, Displayable
         @Nonnull
         private final Path path;
 
-        public FileEntityFinder (@Nonnull final FileEntityFinder other, @Nonnull final Object override)
+        private FileEntityFinder (@Nonnull final FileEntityFinder other, @Nonnull final Object override)
           {
             super(other, override);
             final var source = getSource(FileEntityFinder.class, other, override);

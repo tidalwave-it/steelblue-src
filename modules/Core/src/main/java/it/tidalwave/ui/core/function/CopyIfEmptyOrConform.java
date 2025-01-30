@@ -42,7 +42,7 @@ public class CopyIfEmptyOrConform extends WeakCopyFunctionSupport<String>
         return new CopyIfEmptyOrConform(source);
       }
 
-    public CopyIfEmptyOrConform (@Nonnull final ChangingSource<String> sourceProperty)
+    private CopyIfEmptyOrConform (@Nonnull final ChangingSource<String> sourceProperty)
       {
         super(sourceProperty);
       }

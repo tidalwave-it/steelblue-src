@@ -28,6 +28,7 @@ package it.tidalwave.ui.core.role.impl;
 import jakarta.annotation.Nonnull;
 import java.beans.PropertyChangeSupport;
 import java.util.IdentityHashMap;
+import java.util.Map;
 import it.tidalwave.ui.core.MutableListener;
 import it.tidalwave.util.annotation.VisibleForTesting;
 import lombok.RequiredArgsConstructor;
@@ -43,7 +44,7 @@ public class MutableListenerSupport
     @Nonnull
     private final PropertyChangeSupport pcs;
 
-    @VisibleForTesting final IdentityHashMap<MutableListener<?>, MutableListenerAdapter<?>> adapterMap = new IdentityHashMap<>();
+    @VisibleForTesting final Map<MutableListener<?>, MutableListenerAdapter<?>> adapterMap = new IdentityHashMap<>();
 
     /***********************************************************************************************************************************************************
      * Registers a {@link MutableListener}.

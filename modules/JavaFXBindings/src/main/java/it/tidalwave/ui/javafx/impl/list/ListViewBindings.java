@@ -44,11 +44,11 @@ import it.tidalwave.ui.javafx.impl.common.DelegateSupport;
 import it.tidalwave.ui.javafx.impl.common.JavaFXWorker;
 import it.tidalwave.ui.javafx.impl.common.RoleCollector;
 import lombok.extern.slf4j.Slf4j;
-import static javafx.collections.FXCollections.observableArrayList;
-import static javafx.scene.input.KeyCode.*;
 import static it.tidalwave.ui.core.role.UserActionProvider._UserActionProvider_;
 import static it.tidalwave.ui.javafx.impl.DefaultJavaFXBinder.enforceFxApplicationThread;
 import static it.tidalwave.ui.javafx.impl.common.JavaFXWorker.childrenPm;
+import static javafx.collections.FXCollections.observableArrayList;
+import static javafx.scene.input.KeyCode.*;
 
 /***************************************************************************************************************************************************************
  *

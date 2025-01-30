@@ -28,13 +28,9 @@ package it.tidalwave.ui.example.presentation.impl;
 import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.nio.file.Path;
-import it.tidalwave.util.As;
-import it.tidalwave.ui.core.UserNotificationWithFeedback;
-import it.tidalwave.role.Aggregate;
-import it.tidalwave.role.SimpleComposite;
 import it.tidalwave.ui.core.BoundProperty;
+import it.tidalwave.ui.core.UserNotificationWithFeedback;
 import it.tidalwave.ui.core.role.PresentationModel;
 import it.tidalwave.ui.example.model.Dao;
 import it.tidalwave.ui.example.model.FileEntity;
@@ -44,14 +40,15 @@ import it.tidalwave.ui.example.presentation.MainPanelPresentation;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.mockito.ArgumentCaptor;
-import static it.tidalwave.util.FunctionalCheckedExceptionWrappers.*;
-import static it.tidalwave.ui.core.test.UserNotificationWithFeedbackTestHelper.*;
 import static it.tidalwave.ui.core.role.Displayable._Displayable_;
 import static it.tidalwave.ui.core.role.Presentable._Presentable_;
+import static it.tidalwave.ui.core.role.PresentationModel.*;
 import static it.tidalwave.ui.core.role.Selectable._Selectable_;
 import static it.tidalwave.ui.core.role.UserActionProvider._UserActionProvider_;
-import static org.mockito.Mockito.*;
+import static it.tidalwave.ui.core.test.UserNotificationWithFeedbackTestHelper.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static it.tidalwave.util.FunctionalCheckedExceptionWrappers.*;
+import static org.mockito.Mockito.*;
 
 /***************************************************************************************************************************************************************
  *
@@ -60,10 +57,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  **************************************************************************************************************************************************************/
 public class DefaultMainPanelPresentationControlTest
   {
-    private static final As.Type<Aggregate<PresentationModel>> _PresentationModelAggregate_ = new As.Type<>(Aggregate.class);
-
-    private static final As.Type<SimpleComposite<PresentationModel>> _PresentationModelComposite_ = new As.Type<>(SimpleComposite.class);
-
     // START SNIPPET: mocks
     private Dao dao;
 
@@ -226,7 +219,7 @@ public class DefaultMainPanelPresentationControlTest
     /******************************************************************************************************************/
     // START SNIPPET: test_start
     @Test
-    public void test_populate ()
+    public void test_populate()
       {
         // given
         final var simpleEntity = new SimpleEntity("simple entity");
@@ -251,17 +244,17 @@ public class DefaultMainPanelPresentationControlTest
         final var cpm3 = ArgumentCaptor.forClass(PresentationModel.class);
         verify(presentation).populate(cpm1.capture(), cpm2.capture(), cpm3.capture());
 
-        final var pmList1 = toPmList(cpm1.getValue());
+        final var pmList1 = cpm1.getValue().as(_CompositeOfPresentationModel_).stream().toList();
         assertThat(pmList1).hasSize(1);
         pmList1.forEach(pm -> assertPresentationModel(pm, "Item #simple entity", "SimpleEntity(simple entity)"));
 
-        final var pmList2 = toPmList(cpm2.getValue());
+        final var pmList2 = cpm2.getValue().as(_CompositeOfPresentationModel_).stream().toList();
         assertThat(pmList2).hasSize(1);
         pmList2.forEach(pm ->
           {
             assertPresentationModel(pm, simpleDciEntity.getName(), simpleDciEntity.toString());
 
-            final var aggregate = pm.as(_PresentationModelAggregate_);
+            final var aggregate = pm.as(_AggregateOfPresentationModel_);
             assertThat(aggregate.getNames()).containsExactlyInAnyOrder("C1", "C2", "C3");
             final var pmc1 = aggregate.getByName("C1").orElseThrow();
             final var pmc2 = aggregate.getByName("C2").orElseThrow();
@@ -271,14 +264,14 @@ public class DefaultMainPanelPresentationControlTest
             assertThat(pmc3.as(_Displayable_).getDisplayName()).isEqualTo("" + simpleDciEntity.getAttribute2());
           });
 
-        final var pmList3 = toPmList(cpm3.getValue());
+        final var pmList3 = cpm3.getValue().as(_CompositeOfPresentationModel_).stream().toList();
         assertThat(pmList3).hasSize(1);
         pmList3.forEach(_c(pm ->
           {
             final var displayable = pm.as(_Displayable_);
             assertThat(displayable.getDisplayName()).isEqualTo(fe.getDisplayName());
 
-            final var aggregate = pm.as(_PresentationModelAggregate_);
+            final var aggregate = pm.as(_AggregateOfPresentationModel_);
             assertThat(aggregate.getNames()).containsExactlyInAnyOrder("name", "size", "creationDate", "latestModificationDate");
             final var pmc1 = aggregate.getByName("name").orElseThrow();
             final var pmc2 = aggregate.getByName("size").orElseThrow();
@@ -315,12 +308,6 @@ public class DefaultMainPanelPresentationControlTest
         verify(presentation).notify("Action 2 on " + expectedToString);
         actions.get(2).actionPerformed();
         verify(presentation).notify("Action 3 on " + expectedToString);
-      }
-
-    @Nonnull
-    private static List<? extends PresentationModel> toPmList (@Nonnull final PresentationModel pm)
-      {
-        return pm.as(_PresentationModelComposite_).stream().toList();
       }
     // END SNIPPET: test_start
   }

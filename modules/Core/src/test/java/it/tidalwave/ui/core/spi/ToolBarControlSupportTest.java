@@ -35,8 +35,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.testng.annotations.Test;
 import static it.tidalwave.ui.core.role.Displayable._Displayable_;
-import static org.mockito.Mockito.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 class BinderMock2
   {

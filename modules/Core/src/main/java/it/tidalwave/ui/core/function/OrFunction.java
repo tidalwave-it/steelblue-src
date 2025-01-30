@@ -36,13 +36,15 @@ import it.tidalwave.ui.core.ChangingSource;
  **************************************************************************************************************************************************************/
 public class OrFunction extends BooleanBoundFunctionSupport
   {
+    @SafeVarargs
     @Nonnull
     public static OrFunction or (@Nonnull final ChangingSource<Boolean> ... sources)
       {
         return new OrFunction(sources);
       }
 
-    public OrFunction (@Nonnull final ChangingSource<Boolean> ... sources)
+    @SafeVarargs
+    private OrFunction (@Nonnull final ChangingSource<Boolean>... sources)
       {
         super(sources);
       }

@@ -29,17 +29,17 @@ import jakarta.annotation.Nonnull;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Supplier;
-import it.tidalwave.util.As;
 import it.tidalwave.ui.core.ToolBarControl;
 import it.tidalwave.ui.core.role.UserAction;
 import it.tidalwave.ui.core.role.UserActionProvider;
+import it.tidalwave.util.As;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
 import lombok.extern.slf4j.Slf4j;
+import static it.tidalwave.ui.core.role.UserActionProvider._UserActionProvider_;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.*;
-import static it.tidalwave.ui.core.role.UserActionProvider._UserActionProvider_;
 
 /***************************************************************************************************************************************************************
  *

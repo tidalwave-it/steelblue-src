@@ -31,12 +31,10 @@ import java.util.List;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.springframework.stereotype.Component;
-import it.tidalwave.util.annotation.VisibleForTesting;
-import it.tidalwave.role.Aggregate;
 import it.tidalwave.ui.core.BoundProperty;
+import it.tidalwave.ui.core.MenuBarControl.MenuPlacement;
 import it.tidalwave.ui.core.message.PowerOnEvent;
 import it.tidalwave.ui.core.role.Displayable;
-import it.tidalwave.ui.core.MenuBarControl.MenuPlacement;
 import it.tidalwave.ui.core.role.PresentationModel;
 import it.tidalwave.ui.core.role.PresentationModelAggregate;
 import it.tidalwave.ui.core.role.Selectable;
@@ -49,13 +47,15 @@ import it.tidalwave.ui.example.model.SimpleEntity;
 import it.tidalwave.ui.example.presentation.MainPanelPresentation;
 import it.tidalwave.ui.example.presentation.MainPanelPresentation.Bindings;
 import it.tidalwave.ui.example.presentation.MainPanelPresentationControl;
+import it.tidalwave.util.annotation.VisibleForTesting;
+import it.tidalwave.role.Aggregate;
 import it.tidalwave.messagebus.annotation.ListensTo;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import static it.tidalwave.util.Parameters.r;
 import static it.tidalwave.ui.core.UserNotificationWithFeedback.*;
 import static it.tidalwave.ui.core.role.Presentable._Presentable_;
 import static it.tidalwave.ui.core.role.spi.PresentationModelCollectors.toCompositePresentationModel;
+import static it.tidalwave.util.Parameters.r;
 
 /***************************************************************************************************************************************************************
  *

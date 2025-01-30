@@ -37,7 +37,7 @@ import javafx.scene.Node;
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-public interface CustomGraphicProvider 
+@FunctionalInterface public interface CustomGraphicProvider
   {
     /** Shortcut for {@link it.tidalwave.util.As}. */
     public static final Class<CustomGraphicProvider> _CustomGraphicProvider_ = CustomGraphicProvider.class;

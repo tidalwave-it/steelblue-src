@@ -27,8 +27,8 @@ package it.tidalwave.ui.example.presentation;
 
 import jakarta.annotation.Nonnull;
 import java.nio.file.Path;
-import it.tidalwave.ui.core.UserNotificationWithFeedback;
 import it.tidalwave.ui.core.BoundProperty;
+import it.tidalwave.ui.core.UserNotificationWithFeedback;
 import it.tidalwave.ui.core.role.PresentationModel;
 import it.tidalwave.ui.core.role.UserAction;
 import lombok.Builder;

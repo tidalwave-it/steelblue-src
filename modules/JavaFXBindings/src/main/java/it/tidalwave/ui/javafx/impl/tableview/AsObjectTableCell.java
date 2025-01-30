@@ -28,10 +28,9 @@ package it.tidalwave.ui.javafx.impl.tableview;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import javafx.scene.control.cell.TextFieldTableCell;
-import it.tidalwave.util.As;
-import it.tidalwave.util.annotation.VisibleForTesting;
 import it.tidalwave.ui.javafx.impl.common.AsObjectStringConverter;
 import it.tidalwave.ui.javafx.impl.common.CellBinder;
+import it.tidalwave.util.As;
 
 /***************************************************************************************************************************************************************
  *
@@ -43,7 +42,7 @@ import it.tidalwave.ui.javafx.impl.common.CellBinder;
 public class AsObjectTableCell<T extends As> extends TextFieldTableCell<T, T>
   {
     @Nonnull
-    @VisibleForTesting final CellBinder cellBinder;
+    private final CellBinder cellBinder;
 
     public AsObjectTableCell (@Nonnull final CellBinder cellBinder)
       {

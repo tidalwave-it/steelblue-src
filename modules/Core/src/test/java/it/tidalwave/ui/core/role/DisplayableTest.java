@@ -31,8 +31,8 @@ import java.util.function.Consumer;
 import java.nio.file.Path;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import static org.mockito.Mockito.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 /***************************************************************************************************************************************************************
  *

@@ -28,9 +28,9 @@ package it.tidalwave.ui.core.role.spi;
 import jakarta.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
-import it.tidalwave.util.NotFoundException;
 import it.tidalwave.ui.core.role.UserAction;
 import it.tidalwave.ui.core.role.UserActionProvider;
+import it.tidalwave.util.NotFoundException;
 
 /***************************************************************************************************************************************************************
  *

@@ -48,13 +48,13 @@ import javafx.scene.control.TreeView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Window;
-import it.tidalwave.ui.core.role.Visibility;
-import it.tidalwave.ui.javafx.role.CustomGraphicProvider;
+import it.tidalwave.ui.core.BoundProperty;
 import it.tidalwave.ui.core.UserNotification;
 import it.tidalwave.ui.core.UserNotificationWithFeedback;
-import it.tidalwave.ui.core.BoundProperty;
 import it.tidalwave.ui.core.role.PresentationModel;
 import it.tidalwave.ui.core.role.UserAction;
+import it.tidalwave.ui.core.role.Visibility;
+import it.tidalwave.ui.javafx.role.CustomGraphicProvider;
 
 /***************************************************************************************************************************************************************
  *

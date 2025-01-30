@@ -32,10 +32,10 @@ import it.tidalwave.util.As;
 import it.tidalwave.role.spi.SystemRoleFactory;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import static it.tidalwave.util.test.MoreAnswers.CALLS_DEFAULT_METHODS;
 import static it.tidalwave.ui.core.role.Presentable._Presentable_;
-import static org.mockito.Mockito.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static it.tidalwave.util.test.MoreAnswers.CALLS_DEFAULT_METHODS;
+import static org.mockito.Mockito.*;
 
 /***************************************************************************************************************************************************************
  *
@@ -44,9 +44,9 @@ import static org.assertj.core.api.Assertions.assertThat;
  **************************************************************************************************************************************************************/
 public class PresentationModelTest
   {
-    static interface MockRole1 {}
+    private static interface MockRole1 {}
 
-    static interface MockRole2 {}
+    private static interface MockRole2 {}
 
     private final MockRole1 mockRole1 = mock(MockRole1.class);
 

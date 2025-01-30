@@ -63,6 +63,8 @@ public final class JavaFXSafeComponentBuilder<I, T extends I>
   {
     public static final Map<Class<?>, Object> BEANS = new HashMap<>();
 
+    private static final int QUEUE_CAPACITY = 10000;
+
     @Getter
     private static final ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
 
@@ -90,7 +92,7 @@ public final class JavaFXSafeComponentBuilder<I, T extends I>
         // Fix for STB-26
         executor.setCorePoolSize(1);
         executor.setMaxPoolSize(1);
-        executor.setQueueCapacity(10000);
+        executor.setQueueCapacity(QUEUE_CAPACITY);
         BEANS.put(JavaFXBinder.class, javaFxBinder);
         BEANS.put(Executor.class, executor);
         BEANS.put(JavaFXToolBarControl.class, toolBarControl);
@@ -99,7 +101,7 @@ public final class JavaFXSafeComponentBuilder<I, T extends I>
       }
 
     @Nonnull
-    public static <J, X extends J> JavaFXSafeComponentBuilder<J, X> builderFor (@Nonnull final Class<X> componentClass)
+    private static <J, X extends J> JavaFXSafeComponentBuilder<J, X> builderFor (@Nonnull final Class<X> componentClass)
       {
         final var interfaceClass = (Class<J>)componentClass.getInterfaces()[0]; // FIXME: guess
         return new JavaFXSafeComponentBuilder<>(componentClass, interfaceClass);
@@ -139,7 +141,7 @@ public final class JavaFXSafeComponentBuilder<I, T extends I>
      * @param   fxmlFieldsSource    the existing JavaFX delegate with {@code @FXML} annotated fields.
      * @return                      the new surrogate delegate
      **********************************************************************************************************************************************************/
-    @Nonnull
+    @Nonnull @SuppressWarnings("unchecked")
     public synchronized T createInstance (@Nonnull final Object fxmlFieldsSource)
       {
         log.trace("createInstance({})", fxmlFieldsSource);
@@ -150,7 +152,7 @@ public final class JavaFXSafeComponentBuilder<I, T extends I>
             presentation = Platform.isFxApplicationThread() ? createComponentInstance() : createComponentInstanceInJAT();
             copyFxmlFields(presentation, fxmlFieldsSource); // FIXME: in JFX thread?
 
-            try // FIXME // FIXME: in JFX thread?
+            try // FIXME: in JFX thread?
               {
                 presentation.getClass().getDeclaredMethod("initialize").invoke(presentation);
               }

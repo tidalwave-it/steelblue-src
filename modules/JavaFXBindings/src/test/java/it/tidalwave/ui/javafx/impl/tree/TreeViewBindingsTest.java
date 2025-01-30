@@ -35,7 +35,7 @@ import it.tidalwave.ui.core.role.Selectable;
 import it.tidalwave.ui.javafx.impl.BindingTestSupport;
 import it.tidalwave.ui.javafx.impl.common.DefaultCellBinder;
 import org.testng.annotations.Test;
-import static it.tidalwave.ui.core.role.PresentationModel._SimpleCompositeOfPresentationModel_;
+import static it.tidalwave.ui.core.role.PresentationModel._CompositeOfPresentationModel_;
 import static it.tidalwave.ui.core.role.Selectable._Selectable_;
 import static org.assertj.core.api.Assertions.assertThat;
 import static java.util.stream.Collectors.*;
@@ -85,7 +85,7 @@ public class TreeViewBindingsTest extends BindingTestSupport<TreeView<Presentati
         runSafelyAndWait("expand root", executor, () -> control.getRoot().setExpanded(true));
         // then
         final var actual = control.getRoot().getChildren().stream().map(TreeItem::getValue).collect(toList());
-        assertEquals(actual, pm.as(_SimpleCompositeOfPresentationModel_).findChildren().results());
+        assertEquals(actual, pm.as(_CompositeOfPresentationModel_).findChildren().results());
       }
 
     /***********************************************************************************************************************************************************

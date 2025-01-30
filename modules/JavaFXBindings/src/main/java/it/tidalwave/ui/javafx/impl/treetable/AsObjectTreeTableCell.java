@@ -25,12 +25,11 @@
  */
 package it.tidalwave.ui.javafx.impl.treetable;
 
-import javax.annotation.CheckForNull;
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import javafx.scene.control.TreeTableCell;
-import it.tidalwave.util.As;
-import it.tidalwave.util.annotation.VisibleForTesting;
 import it.tidalwave.ui.javafx.impl.common.CellBinder;
+import it.tidalwave.util.As;
 
 /***************************************************************************************************************************************************************
  *
@@ -41,7 +40,8 @@ import it.tidalwave.ui.javafx.impl.common.CellBinder;
  **************************************************************************************************************************************************************/
 class AsObjectTreeTableCell<T extends As> extends TreeTableCell<T, T>
   {
-    @VisibleForTesting final CellBinder cellBinder;
+    @Nonnull
+    private final CellBinder cellBinder;
 
     public AsObjectTreeTableCell (@Nonnull final CellBinder cellBinder)
       {
@@ -49,7 +49,7 @@ class AsObjectTreeTableCell<T extends As> extends TreeTableCell<T, T>
       }
 
     @Override
-    public void updateItem (@CheckForNull final T item, final boolean empty)
+    public void updateItem (@Nullable final T item, final boolean empty)
       {
         super.updateItem(item, empty);
         cellBinder.bind(this, item, empty);

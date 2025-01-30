@@ -29,21 +29,19 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
-import java.util.List;
 import java.util.Locale;
-import java.util.Set;
-import it.tidalwave.role.Aggregate;
 import it.tidalwave.ui.core.role.PresentationModel;
 import it.tidalwave.ui.core.role.Selectable;
 import it.tidalwave.ui.example.model.FileEntity;
+import it.tidalwave.role.Aggregate;
 import org.testng.annotations.Test;
-import static it.tidalwave.util.LocalizedDateTimeFormatters.getDateTimeFormatterFor;
-import static it.tidalwave.role.Aggregate._Aggregate_;
 import static it.tidalwave.ui.core.role.Displayable._Displayable_;
+import static it.tidalwave.ui.core.role.PresentationModel._AggregateOfPresentationModel_;
 import static it.tidalwave.ui.core.role.Selectable._Selectable_;
 import static it.tidalwave.ui.core.role.Styleable._Styleable_;
-import static org.mockito.Mockito.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static it.tidalwave.util.LocalizedDateTimeFormatters.getDateTimeFormatterFor;
+import static org.mockito.Mockito.*;
 
 /***************************************************************************************************************************************************************
  *
@@ -71,7 +69,7 @@ public class FileEntityPresentableTest
         final var underTest = new FileEntityPresentable(fileEntity);
         // then
         final var pm = underTest.createPresentationModel(extraRole);
-        final Aggregate<PresentationModel> aggregate = pm.as(_Aggregate_);
+        final Aggregate<PresentationModel> aggregate = pm.as(_AggregateOfPresentationModel_);
         assertThat(aggregate.getNames()).containsExactlyInAnyOrder("name", "size", "latestModificationDate", "creationDate");
         final var pmName = aggregate.getByName("name").orElseThrow();
         assertThat(pmName.as(_Displayable_).getDisplayName()).isEqualTo("file.txt");

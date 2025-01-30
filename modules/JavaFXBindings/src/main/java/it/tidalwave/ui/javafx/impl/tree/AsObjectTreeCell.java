@@ -25,12 +25,12 @@
  */
 package it.tidalwave.ui.javafx.impl.tree;
 
-import javax.annotation.CheckForNull;
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import javafx.scene.control.cell.TextFieldTreeCell;
-import it.tidalwave.util.As;
 import it.tidalwave.ui.javafx.impl.common.AsObjectStringConverter;
 import it.tidalwave.ui.javafx.impl.common.CellBinder;
+import it.tidalwave.util.As;
 
 /***************************************************************************************************************************************************************
  *
@@ -51,7 +51,7 @@ public class AsObjectTreeCell<T extends As> extends TextFieldTreeCell<T>
       }
 
     @Override
-    public void updateItem (@CheckForNull final T item, final boolean empty)
+    public void updateItem (@Nullable final T item, final boolean empty)
       {
         super.updateItem(item, empty);
         cellBinder.bind(this, item, empty);

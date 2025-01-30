@@ -189,6 +189,6 @@ public abstract class PanelGroupControlSupport<T, S> implements As, PanelGroupCo
     @Nonnull
     private static <S> Collection<PanelGroupProvider<S>> defaultPanelGroupProviders (@Nonnull final As as)
       {
-        return as.asMany(As.<PanelGroupProvider<S>>type(PanelGroupProvider.class));
+        return as.asMany(As.type(PanelGroupProvider.class));
       }
   }

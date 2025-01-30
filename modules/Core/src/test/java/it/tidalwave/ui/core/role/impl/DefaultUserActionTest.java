@@ -26,12 +26,12 @@
 package it.tidalwave.ui.core.role.impl;
 
 import java.util.List;
-import it.tidalwave.util.Callback;
 import it.tidalwave.ui.core.role.Displayable;
+import it.tidalwave.util.Callback;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
-import static org.mockito.Mockito.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 /***************************************************************************************************************************************************************
  *
@@ -41,7 +41,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Slf4j
 public class DefaultUserActionTest
   {
-    final Callback callback = () -> log.info("CALLBACK");
+    private final Callback callback = () -> log.info("CALLBACK");
 
     /**********************************************************************************************************************************************************/
     @Test

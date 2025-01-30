@@ -26,8 +26,8 @@
 package it.tidalwave.ui.example.presentation.impl.javafx;
 
 import org.springframework.stereotype.Component;
-import it.tidalwave.ui.javafx.NodeAndDelegate;
 import it.tidalwave.ui.example.presentation.MainPanelPresentation;
+import it.tidalwave.ui.javafx.NodeAndDelegate;
 import lombok.Getter;
 import lombok.experimental.Delegate;
 

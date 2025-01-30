@@ -34,9 +34,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 import javafx.application.Platform;
-import it.tidalwave.util.As;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.tidalwave.ui.core.role.UserAction;
+import it.tidalwave.util.As;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import static it.tidalwave.ui.core.role.UserActionProvider._UserActionProvider_;
@@ -73,7 +73,7 @@ public class RoleCollector
      * @param   roleTypes     the types of roles to collect
      **********************************************************************************************************************************************************/
     @SuppressFBWarnings("CT_CONSTRUCTOR_THROW")
-    public RoleCollector (@Nonnull final As source, @Nonnull final Collection<Class<?>> roleTypes)
+    public RoleCollector (@Nonnull final As source, @Nonnull final Iterable<Class<?>> roleTypes)
       {
         if (Platform.isFxApplicationThread())
           {
@@ -105,7 +105,7 @@ public class RoleCollector
      * @param   roleType      the type of the role
      * @param   roles         the roles
      **********************************************************************************************************************************************************/
-    public <R> void putMany (@Nonnull final Class<R> roleType, @Nonnull final Collection<? extends R> roles)
+    private <R> void putMany (@Nonnull final Class<R> roleType, @Nonnull final Collection<? extends R> roles)
       {
         roleMapByTipe.put(roleType, new ArrayList<>(roles));
       }
@@ -127,7 +127,7 @@ public class RoleCollector
     @Nonnull @SuppressWarnings("unchecked")
     public <R> List<R> getMany (@Nonnull final Class<R> roleType)
       {
-        return new CopyOnWriteArrayList<>((List<R>)roleMapByTipe.getOrDefault(roleType, List.of()));
+        return new CopyOnWriteArrayList<>((Collection<? extends R>)roleMapByTipe.getOrDefault(roleType, List.of()));
       }
 
     /***********************************************************************************************************************************************************

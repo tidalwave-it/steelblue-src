@@ -40,7 +40,7 @@ import static org.mockito.Mockito.*;
  **************************************************************************************************************************************************************/
 public class MutableTest
   {
-    static class MutableHelper implements Mutable
+    private static class MutableHelper implements Mutable
       {
         @Delegate
         private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);

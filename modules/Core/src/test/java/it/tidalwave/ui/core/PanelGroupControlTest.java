@@ -29,8 +29,8 @@ import jakarta.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
 import org.testng.annotations.Test;
-import static it.tidalwave.ui.core.PanelGroupControl.Options.*;
 import static it.tidalwave.ui.core.PanelGroupControl.DefaultGroups.*;
+import static it.tidalwave.ui.core.PanelGroupControl.Options.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -56,7 +56,7 @@ public class PanelGroupControlTest
           }
       }
 
-    static class MockPanel {}
+    private static class MockPanel {}
 
     @Test
     public void test_Configuration()

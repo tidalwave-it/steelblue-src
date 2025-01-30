@@ -28,12 +28,12 @@ package it.tidalwave.ui.core.role;
 import java.util.stream.IntStream;
 import it.tidalwave.util.NotFoundException;
 import org.testng.annotations.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.*;
+import static it.tidalwave.util.StreamUtils.zip;
 import static org.testng.FileAssert.fail;
 import static org.mockito.Mockito.*;
-import static org.assertj.core.api.Assertions.assertThat;
-import static it.tidalwave.util.StreamUtils.zip;
 
 /***************************************************************************************************************************************************************
  *

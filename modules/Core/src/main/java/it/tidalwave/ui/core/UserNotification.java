@@ -25,8 +25,8 @@
  */
 package it.tidalwave.ui.core;
 
-import jakarta.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
+import jakarta.annotation.Nonnull;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;

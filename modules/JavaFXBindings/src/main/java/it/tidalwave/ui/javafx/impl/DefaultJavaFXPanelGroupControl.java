@@ -28,6 +28,7 @@ package it.tidalwave.ui.javafx.impl;
 import java.lang.reflect.InvocationTargetException;
 import jakarta.annotation.Nonnull;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,9 +43,9 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.tidalwave.ui.core.PanelGroupControl;
 import it.tidalwave.ui.core.PanelGroupProvider;
 import it.tidalwave.ui.core.message.PanelHiddenNotification;
+import it.tidalwave.ui.core.message.PanelShowRequest;
 import it.tidalwave.ui.core.message.PanelShownNotification;
 import it.tidalwave.ui.core.spi.PanelGroupControlSupport;
-import it.tidalwave.ui.core.message.PanelShowRequest;
 import it.tidalwave.ui.javafx.JavaFXPanelGroupControl;
 import it.tidalwave.ui.javafx.NodeAndDelegate;
 import it.tidalwave.util.Pair;
@@ -151,7 +152,7 @@ public class DefaultJavaFXPanelGroupControl extends PanelGroupControlSupport<Anc
      *
      **********************************************************************************************************************************************************/
     private void addInAccordion (@Nonnull final Group group,
-                                 @Nonnull final List<? extends PanelGroupProvider<Node>> panelProviders,
+                                 @Nonnull final Collection<? extends PanelGroupProvider<Node>> panelProviders,
                                  @Nonnull final AnchorPane topContainer,
                                  @Nonnull final List<Options> options)
       {
@@ -179,7 +180,7 @@ public class DefaultJavaFXPanelGroupControl extends PanelGroupControlSupport<Anc
      *
      **********************************************************************************************************************************************************/
     private void addInStackPane (@Nonnull final Group group,
-                                 @Nonnull final List<? extends PanelGroupProvider<Node>> panelProviders,
+                                 @Nonnull final Collection<? extends PanelGroupProvider<Node>> panelProviders,
                                  @Nonnull final AnchorPane topContainer,
                                  @Nonnull final List<Options> options)
       {
@@ -250,7 +251,7 @@ public class DefaultJavaFXPanelGroupControl extends PanelGroupControlSupport<Anc
      * @param   options         the options
      **********************************************************************************************************************************************************/
     @Nonnull
-    private TitledPane createTitledPane (@Nonnull final PanelGroupProvider<? extends Node> panelGroupProvider, @Nonnull final List<Options> options)
+    private TitledPane createTitledPane (@Nonnull final PanelGroupProvider<? extends Node> panelGroupProvider, @Nonnull final Collection<Options> options)
       {
         final var titledPane = new TitledPane();
         titledPane.setText(panelGroupProvider.getLabel());

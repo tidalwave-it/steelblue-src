@@ -36,13 +36,15 @@ import it.tidalwave.ui.core.ChangingSource;
  **************************************************************************************************************************************************************/
 public class AndFunction extends BooleanBoundFunctionSupport
   {
+    @SafeVarargs
     @Nonnull
     public static AndFunction and (@Nonnull final ChangingSource<Boolean> ... sources)
       {
         return new AndFunction(sources);
       }
 
-    public AndFunction (@Nonnull final ChangingSource<Boolean> ... sources)
+    @SafeVarargs
+    private AndFunction (@Nonnull final ChangingSource<Boolean>... sources)
       {
         super(sources);
       }

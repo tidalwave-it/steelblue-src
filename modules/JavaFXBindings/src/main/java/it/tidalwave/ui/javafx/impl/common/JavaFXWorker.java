@@ -35,17 +35,16 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import javafx.collections.ObservableList;
 import javafx.application.Platform;
-import it.tidalwave.util.As;
-import it.tidalwave.util.annotation.VisibleForTesting;
 import it.tidalwave.ui.core.role.PresentationModel;
 import it.tidalwave.ui.javafx.impl.util.Logging;
+import it.tidalwave.util.As;
 import it.tidalwave.role.Composite;
 import it.tidalwave.role.SimpleComposite;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
+import static it.tidalwave.ui.javafx.impl.util.Logging.INDENT;
 import static java.util.Collections.emptyList;
 import static javafx.collections.FXCollections.*;
-import static it.tidalwave.ui.javafx.impl.util.Logging.INDENT;
 
 /***************************************************************************************************************************************************************
  *
@@ -103,7 +102,7 @@ public class JavaFXWorker
       }
 
     @Nonnull
-    @VisibleForTesting static List<Object> extractBadItems (@Nonnull final List<PresentationModel> items)
+    private static List<Object> extractBadItems (@Nonnull final List<PresentationModel> items)
       {
         final List<Object> badItems = new ArrayList<>(items);
         badItems.removeIf(PresentationModel.class::isInstance);

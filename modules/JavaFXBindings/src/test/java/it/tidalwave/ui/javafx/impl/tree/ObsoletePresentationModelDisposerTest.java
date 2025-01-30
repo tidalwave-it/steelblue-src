@@ -29,12 +29,12 @@ import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.control.TreeItem;
-import it.tidalwave.role.spi.SystemRoleFactory;
 import it.tidalwave.ui.core.role.PresentationModel;
+import it.tidalwave.role.spi.SystemRoleFactory;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import static org.mockito.Mockito.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 /***************************************************************************************************************************************************************
  *

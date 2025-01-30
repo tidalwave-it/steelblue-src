@@ -125,15 +125,15 @@ public class ButtonBindings extends DelegateSupport
         final var columnIndex = new AtomicInteger(0);
 
         actions.forEach(menuAction ->
-                          {
-                          final var column = new ColumnConstraints();
-                          column.setPercentWidth(100.0 / actions.size());
-                          columnConstraints.add(column);
-                          final var button = createButton();
-                          GridPane.setConstraints(button, columnIndex.getAndIncrement(), 0);
-                          bind(button, menuAction);
-                          children.add(button);
-                          });
+          {
+            final var column = new ColumnConstraints();
+            column.setPercentWidth(100.0 / actions.size());
+            columnConstraints.add(column);
+            final var button = createButton();
+            GridPane.setConstraints(button, columnIndex.getAndIncrement(), 0);
+            bind(button, menuAction);
+            children.add(button);
+          });
       }
 
     /***********************************************************************************************************************************************************
@@ -147,7 +147,7 @@ public class ButtonBindings extends DelegateSupport
         GridPane.setVgrow(button, Priority.ALWAYS);
         GridPane.setHalignment(button, HPos.CENTER);
         GridPane.setValignment(button, VPos.CENTER);
-        button.setPrefSize(999, 999); // fill
+        button.setPrefSize(Integer.MAX_VALUE, Integer.MAX_VALUE); // fill
         button.getStyleClass().add("mainMenuButton");
 
         return button;

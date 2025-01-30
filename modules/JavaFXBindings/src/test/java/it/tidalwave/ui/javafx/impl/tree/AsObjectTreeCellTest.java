@@ -32,15 +32,15 @@ import java.util.concurrent.Executors;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import it.tidalwave.util.As;
 import it.tidalwave.ui.core.role.Displayable;
 import it.tidalwave.ui.javafx.impl.JavaFXTestSupport;
 import it.tidalwave.ui.javafx.impl.common.DefaultCellBinder;
+import it.tidalwave.util.As;
 import it.tidalwave.role.spi.SystemRoleFactory;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import static org.mockito.Mockito.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 /***************************************************************************************************************************************************************
  *

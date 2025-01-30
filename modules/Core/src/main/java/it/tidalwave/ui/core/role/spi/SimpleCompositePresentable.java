@@ -25,18 +25,18 @@
  */
 package it.tidalwave.ui.core.role.spi;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 import java.util.Collection;
 import java.util.List;
+import it.tidalwave.ui.core.role.Presentable;
+import it.tidalwave.ui.core.role.PresentationModel;
+import it.tidalwave.ui.core.role.PresentationModelFactory;
 import it.tidalwave.util.As;
 import it.tidalwave.util.RoleFactory;
 import it.tidalwave.util.Task;
 import it.tidalwave.util.spi.ContextSnapshot;
 import it.tidalwave.util.spi.SimpleFinderSupport;
 import it.tidalwave.role.SimpleComposite;
-import it.tidalwave.ui.core.role.Presentable;
-import it.tidalwave.ui.core.role.PresentationModel;
-import it.tidalwave.ui.core.role.PresentationModelFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import static java.util.Collections.emptyList;
@@ -56,8 +56,10 @@ import static it.tidalwave.role.SimpleComposite._SimpleComposite_;
 @Slf4j
 public class SimpleCompositePresentable implements Presentable
   {
+    private static final As.Type<SimpleComposite<As>> _SimpleAsComposite_ = As.type(SimpleComposite.class);
+
     @RequiredArgsConstructor
-    static class SCPFinder extends SimpleFinderSupport<PresentationModel>
+    public static class SCPFinder extends SimpleFinderSupport<PresentationModel>
       {
         // private static final long serialVersionUID = -3235827383866946732L;
 
@@ -83,19 +85,15 @@ public class SimpleCompositePresentable implements Presentable
                 @Override @Nonnull
                 public List<PresentationModel> run()
                   {
-                    final List<As> children = scp.datum.maybeAs(_SimpleComposite_)
-                                                       .map(c -> c.findChildren().results()).orElse(emptyList());
+                    final List<As> children = scp.datum.maybeAs(_SimpleAsComposite_).map(c -> c.findChildren().results()).orElse(emptyList());
                     return children.stream()
-                                   .map(child -> child.maybeAs(_Presentable_)
-                                                      .orElseGet(() -> new SimpleCompositePresentable(child)))
+                                   .map(child -> child.maybeAs(_Presentable_).orElseGet(() -> new SimpleCompositePresentable(child)))
                                    .map(presentable -> presentable.createPresentationModel(roles))
                                    .collect(toList());
                   }
               });
           }
       }
-
-    private static final long serialVersionUID = 324646965695684L;
 
     @Nonnull
     private final As datum;

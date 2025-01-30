@@ -56,6 +56,7 @@ public abstract class BooleanBoundFunctionSupport extends BoundFunctionSupport<B
           }
       };
 
+    @SafeVarargs
     public BooleanBoundFunctionSupport (@Nonnull final ChangingSource<Boolean> ... sources)
       {
         this.sources = sources;

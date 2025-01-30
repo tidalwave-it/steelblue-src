@@ -114,7 +114,7 @@ public class ButtonBindingsTest extends JavaFXTestSupport
     public void start (@Nonnull final Stage stage)
       {
         button = new Button("original label");
-        stage.setScene(new Scene(new StackPane(button), 100, 100));
+        stage.setScene(new Scene(new StackPane(button), 100.0, 100.0));
         stage.show();
         stage.setAlwaysOnTop(true);
       }
@@ -129,7 +129,6 @@ public class ButtonBindingsTest extends JavaFXTestSupport
     /**********************************************************************************************************************************************************/
     @Test(groups = "display")
     public void bind_button_to_Displayable_action_must_assign_label()
-            throws Throwable
       {
         // when
         runSafelyAndWait("bind", () -> underTest.bind(button, userAction));
@@ -140,7 +139,6 @@ public class ButtonBindingsTest extends JavaFXTestSupport
     /**********************************************************************************************************************************************************/
     @Test(groups = "display")
     public void bind_button_to_not_Displayable_action_must_not_assign_label()
-            throws Throwable
       {
         // when
         runSafelyAndWait("bind", () -> underTest.bind(button, userActionWithoutDisplayable));
@@ -151,7 +149,6 @@ public class ButtonBindingsTest extends JavaFXTestSupport
     /**********************************************************************************************************************************************************/
     @Test(groups="display", dataProvider = "falseTrue")
     public void bind_button_must_assign_correct_initial_enablement (final boolean enabled)
-            throws Throwable
       {
         // given
         userAction.enabled().set(enabled);
@@ -171,16 +168,16 @@ public class ButtonBindingsTest extends JavaFXTestSupport
     /**********************************************************************************************************************************************************/
     @Test(groups = "display")
     public void button_enablement_must_be_bound_to_UserAction_enablement()
-            throws Throwable
+            throws InterruptedException
       {
         // when
         runSafelyAndWait("bind", () -> underTest.bind(button, userAction));
         final var enabled1 = !button.isDisabled();
         userAction.enabled().set(false);
-        Thread.sleep(100);
+        Thread.sleep(100L);
         final var enabled2 = !button.isDisabled();
         userAction.enabled().set(true);
-        Thread.sleep(100);
+        Thread.sleep(100L);
         final var enabled3 = !button.isDisabled();
         // then
         assertThat(enabled1).withFailMessage("Wrong initial enablement").isTrue();
@@ -210,7 +207,7 @@ public class ButtonBindingsTest extends JavaFXTestSupport
       {
         log.info("waitForThread()...");
         executorService.shutdown();
-        executorService.awaitTermination(1, TimeUnit.SECONDS);
+        executorService.awaitTermination(1L, TimeUnit.SECONDS);
       }
 
     /**********************************************************************************************************************************************************/

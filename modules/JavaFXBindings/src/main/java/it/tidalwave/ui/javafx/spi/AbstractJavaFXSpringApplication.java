@@ -27,8 +27,8 @@ package it.tidalwave.ui.javafx.spi;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import javax.annotation.CheckForNull;
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -47,8 +47,8 @@ import javafx.application.Platform;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import it.tidalwave.ui.core.annotation.PresentationAssembler;
 import it.tidalwave.ui.core.annotation.Assemble;
+import it.tidalwave.ui.core.annotation.PresentationAssembler;
 import it.tidalwave.ui.core.message.PowerOffEvent;
 import it.tidalwave.ui.core.message.PowerOnEvent;
 import it.tidalwave.ui.javafx.JavaFXApplicationWithSplash;
@@ -72,7 +72,7 @@ import lombok.With;
 import static java.util.stream.Collectors.*;
 import static it.tidalwave.util.CollectionUtils.concat;
 import static it.tidalwave.util.FunctionalCheckedExceptionWrappers.*;
-import static it.tidalwave.util.ShortNames.*;
+import static it.tidalwave.util.ShortNames.shortIds;
 import static lombok.AccessLevel.PRIVATE;
 
 /***************************************************************************************************************************************************************
@@ -126,13 +126,13 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
             return new InitParameters(args, applicationName, logFolderPropertyName, implicitExit, propertyMap, concat(sceneFinalizers, stageFinalizer));
           }
 
-        public void validate()
+        private void validate()
           {
             requireNotEmpty(applicationName, "applicationName");
             requireNotEmpty(logFolderPropertyName, "logFolderPropertyName");
           }
 
-        private void requireNotEmpty (@CheckForNull final String name, @Nonnull final String message)
+        private static void requireNotEmpty (@Nullable final String name, @Nonnull final String message)
           {
             if (name == null || name.isEmpty())
               {
@@ -173,7 +173,7 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
             System.setProperty(initParameters.logFolderPropertyName, preferencesHandler.getLogFolder().toAbsolutePath().toString());
             JavaFXSafeProxy.setLogDelegateInvocations(initParameters.propertyMap.getOptional(K_LOG_DELEGATE_INVOCATIONS).orElse(false));
             AbstractJavaFXSpringApplication.initParameters = initParameters;
-            Application.launch(appClass, initParameters.args);
+            launch(appClass, initParameters.args);
           }
         catch (Throwable t)
           {

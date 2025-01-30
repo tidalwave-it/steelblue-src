@@ -33,13 +33,13 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import it.tidalwave.ui.core.annotation.EnableMessageBus;
 import it.tidalwave.ui.javafx.impl.DefaultJavaFXPanelGroupControl;
 import it.tidalwave.ui.javafx.impl.util.JavaFXSafeComponentBuilder;
 import it.tidalwave.ui.javafx.spi.AbstractJavaFXSpringApplication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import it.tidalwave.util.PreferencesHandler;
-import it.tidalwave.ui.core.annotation.EnableMessageBus;
 import it.tidalwave.messagebus.MessageBus;
 import it.tidalwave.messagebus.spi.SimpleMessageBus;
 
@@ -53,7 +53,7 @@ import it.tidalwave.messagebus.spi.SimpleMessageBus;
  **************************************************************************************************************************************************************/
 public class JavaFXSpringAnnotationApplication extends AbstractJavaFXSpringApplication
   {
-    static class Beans
+    private static class Beans
       {
         @Bean
         public ThreadPoolTaskExecutor javafxBinderExecutor()
@@ -86,7 +86,7 @@ public class JavaFXSpringAnnotationApplication extends AbstractJavaFXSpringAppli
           }
       }
 
-    static class MessageBusBeans
+    private static class MessageBusBeans
       {
         @Bean(name = APPLICATION_MESSAGE_BUS_BEAN_NAME)
         public MessageBus applicationMessageBus()

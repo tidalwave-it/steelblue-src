@@ -30,9 +30,9 @@ import java.util.function.Supplier;
 import javafx.beans.value.ObservableValueBase;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TreeTableColumn;
-import it.tidalwave.role.Aggregate;
 import it.tidalwave.ui.core.role.PresentationModel;
 import it.tidalwave.util.As;
+import it.tidalwave.role.Aggregate;
 import lombok.RequiredArgsConstructor;
 
 /***************************************************************************************************************************************************************
