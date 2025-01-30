@@ -64,24 +64,19 @@ import it.tidalwave.ui.javafx.role.CustomGraphicProvider;
 public interface JavaFXBinder
   {
     /***********************************************************************************************************************************************************
-     * Sets the main window. This operation must be performed before any other method is called. This operation is
-     * automatically performed by the SteelBlue runtime.
-     *
+     * Sets the main window. This operation must be performed before any other method is called. This operation is automatically performed by the SteelBlue
+     * runtime.
      * @param   window      the main window
      **********************************************************************************************************************************************************/
     public void setMainWindow (@Nonnull Window window);
 
     /***********************************************************************************************************************************************************
      * Binds a button to a {@link UserAction}. The following roles o the action are used:
-     *
      * <ul>
      * <li>Displayable: to set the label of the button</li>
      * </ul>
-     *
-     * The action is used as a callback when the button is pressed; invoked in a thread provided by the binder executor.
-     * The {@code enabled} property of the {@code UserAction} is bound, negated, to the {@code disabled} property of the
-     * button.
-     *
+     * The action is used as a callback when the button is pressed; invoked in a thread provided by the binder executor. The {@code enabled} property of the
+     * {@code UserAction} is bound, negated, to the {@code disabled} property of the button.
      * @param   button      the button
      * @param   action      the action
      **********************************************************************************************************************************************************/
@@ -89,25 +84,19 @@ public interface JavaFXBinder
 
     /***********************************************************************************************************************************************************
      * Binds a menu item to a {@link UserAction}. The following roles o the action are used:
-     *
      * <ul>
      * <li>Displayable: to set the label of the menu item</li>
      * </ul>
-     *
-     * The action is used as a callback when the button is pressed; invoked in a thread provided by the binder executor.
-     * The {@code enabled} property of the {@code UserAction} is bound, negated, to the {@code disabled} property of the
-     * menu item.
-     *
+     * The action is used as a callback when the button is pressed; invoked in a thread provided by the binder executor. The {@code enabled} property of the
+     * {@code UserAction} is bound, negated, to the {@code disabled} property of the menu item.
      * @param   menuItem    the menu item
      * @param   action      the action
      **********************************************************************************************************************************************************/
     public void bind (@Nonnull MenuItem menuItem, @Nonnull UserAction action);
 
     /***********************************************************************************************************************************************************
-     * Binds a {@link TableView} to a {@link PresentationModel} and an optional callback.
-     *
-     * The {@code PresentationModel} is used to populate the table. The following roles are used:
-     *
+     * Binds a {@link TableView} to a {@link PresentationModel} and an optional callback. The {@code PresentationModel} is used to populate the table. The
+     * following roles are used:
      * <ul>
      * <li>A {@link it.tidalwave.role.SimpleComposite} provides children {@code PresentationModel}s for each row.</li>
      * <li>In each row, an {@link it.tidalwave.role.Aggregate<PresentationModel>} is used to provide the {@code PresentationModel}s for
@@ -118,58 +107,43 @@ public interface JavaFXBinder
      * <li>A {@link it.tidalwave.ui.core.role.UserActionProvider} (optional) is used to provide the actions for creating a context menu;
      *     the default action is also bound to the double click or SPACE gesture.</li>
      * </ul>
-     *
-     * The process of populating data is performed in background threads, so this method quickly returns also in case
-     * of large amount of data.
-     * The initialization callback is called in the JavaFX thread when data population has been completed.
-     *
-     * @since   1.0-ALPHA-13
+     * The process of populating data is performed in background threads, so this method quickly returns also in case of large amount of data. The
+     * initialization callback is called in the JavaFX thread when data population has been completed.
      * @param   tableView       the {@code TablewView}
      * @param   pm              the {@code PresentationModel}
      * @param   initCallback    the callback
+     * @since   1.0-ALPHA-13
      **********************************************************************************************************************************************************/
-    public void bind (@Nonnull TableView<PresentationModel> tableView,
-                      @Nonnull PresentationModel pm,
-                      @Nonnull Optional<Runnable> initCallback);
+    public void bind (@Nonnull TableView<PresentationModel> tableView, @Nonnull PresentationModel pm, @Nonnull Optional<Runnable> initCallback);
 
     /***********************************************************************************************************************************************************
-     * Binds a {@link TableView} to a {@link PresentationModel} and a callback.
-     * See {@link #bind(javafx.scene.control.TableView, it.tidalwave.ui.core.role.PresentationModel, java.util.Optional)}.
-     *
-     * The process of populating data is performed in background threads, so this method quickly returns also in case
-     * of large amount of data.
-     * The initialization callback is called in the JavaFX thread when data population has been completed.
-     *
+     * Binds a {@link TableView} to a {@link PresentationModel} and a callback. See {@link #bind(javafx.scene.control.TableView,
+     * it.tidalwave.ui.core.role.PresentationModel, java.util.Optional)}. The process of populating data is performed in background threads, so this method
+     * quickly returns also in case of large amount of data. The initialization callback is called in the JavaFX thread when data population has been completed.
      * @param   tableView       the {@code TablewView}
      * @param   pm              the {@code PresentationModel}
      * @param   initCallback    the callback
      **********************************************************************************************************************************************************/
-    public default void bind (@Nonnull final TableView<PresentationModel> tableView,
-                              @Nonnull final PresentationModel pm,
-                              @Nonnull final Runnable initCallback)
+    public default void bind (@Nonnull final TableView<PresentationModel> tableView, @Nonnull final PresentationModel pm, @Nonnull final Runnable initCallback)
       {
         bind(tableView, pm, Optional.of(initCallback));
       }
 
     /***********************************************************************************************************************************************************
-     * Binds a {@link TableView} to a {@link PresentationModel}.
-     * See {@link #bind(javafx.scene.control.TableView, it.tidalwave.ui.core.role.PresentationModel, java.util.Optional)}.
-     *
-     * @since   1.0-ALPHA-13
+     * Binds a {@link TableView} to a {@link PresentationModel}. See {@link #bind(javafx.scene.control.TableView, it.tidalwave.ui.core.role.PresentationModel,
+     * java.util.Optional)}.
      * @param   tableView       the {@code TablewView}
      * @param   pm              the {@code PresentationModel}
+     * @since   1.0-ALPHA-13
      **********************************************************************************************************************************************************/
-    public default void bind (@Nonnull final TableView<PresentationModel> tableView,
-                              @Nonnull final PresentationModel pm)
+    public default void bind (@Nonnull final TableView<PresentationModel> tableView, @Nonnull final PresentationModel pm)
       {
         bind(tableView, pm, Optional.empty());
       }
 
     /***********************************************************************************************************************************************************
-     * Binds a {@link TreeView} to a {@link PresentationModel} and a callback.
-     *
-     * The {@code PresentationModel} is used to populate the table. The following roles are used:
-     *
+     * Binds a {@link TreeView} to a {@link PresentationModel} and a callback. The {@code PresentationModel} is used to populate the table. The following roles
+     * are used:
      * <ul>
      * <li>A {@link it.tidalwave.role.SimpleComposite} provides children {@code PresentationModel}s for each row.</li>
      * <li>In each row, an {@link it.tidalwave.role.Aggregate<PresentationModel>} is used to provide the {@code PresentationModel}s for
@@ -181,54 +155,42 @@ public interface JavaFXBinder
      *     the default action is also bound to the double click or SPACE gesture.</li>
      * <li>A {@link Visibility} (optional) is used to decide whether the root node should be visible or not.</li>
      * </ul>
-     *
-     * The process of populating data is performed in background threads, so this method quickly returns also in case
-     * of large amount of data.
-     * The initialization callback is called in the JavaFX thread when data population has been completed.
-     *
+     * The process of populating data is performed in background threads, so this method quickly returns also in case  of large amount of data. The
+     * initialization callback is called in the JavaFX thread when data population has been completed.
      * @param   treeView        the {@code TreeView}
      * @param   pm              the {@code PresentationModel}
      * @param   initCallback    the callback
      **********************************************************************************************************************************************************/
-    public void bind (@Nonnull TreeView<PresentationModel> treeView,
-                      @Nonnull PresentationModel pm,
-                      @Nonnull Optional<Runnable> initCallback);
+    public void bind (@Nonnull TreeView<PresentationModel> treeView, @Nonnull PresentationModel pm, @Nonnull Optional<Runnable> initCallback);
 
     /***********************************************************************************************************************************************************
-     * Binds a {@link TableView} to a {@link PresentationModel} and a callback.
-     * See {@link #bind(javafx.scene.control.TreeView, it.tidalwave.ui.core.role.PresentationModel, java.util.Optional)}.
-     *
-     * @since   1.0-ALPHA-13
+     * Binds a {@link TableView} to a {@link PresentationModel} and a callback. See {@link #bind(javafx.scene.control.TreeView,
+     * it.tidalwave.ui.core.role.PresentationModel, java.util.Optional)}.
      * @param   treeView        the {@code TreeView}
      * @param   pm              the {@code PresentationModel}
      * @param   initCallback    the callback
+     * @since   1.0-ALPHA-13
      **********************************************************************************************************************************************************/
-    public default void bind (@Nonnull final TreeView<PresentationModel> treeView,
-                              @Nonnull final PresentationModel pm,
-                              @Nonnull final Runnable initCallback)
+    public default void bind (@Nonnull final TreeView<PresentationModel> treeView, @Nonnull final PresentationModel pm, @Nonnull final Runnable initCallback)
       {
         bind(treeView, pm, Optional.of(initCallback));
       }
 
     /***********************************************************************************************************************************************************
-     * Binds a {@link TableView} to a {@link PresentationModel}.
-     * See {@link #bind(javafx.scene.control.TableView, it.tidalwave.ui.core.role.PresentationModel, java.util.Optional)}
-     *
-     * @since   1.0-ALPHA-13
+     * Binds a {@link TableView} to a {@link PresentationModel}. See {@link #bind(javafx.scene.control.TableView, it.tidalwave.ui.core.role.PresentationModel,
+     * java.util.Optional)}
      * @param   treeView        the {@code TreeView}
      * @param   pm              the {@code PresentationModel}
+     * @since   1.0-ALPHA-13
      **********************************************************************************************************************************************************/
-    public default void bind (@Nonnull final TreeView<PresentationModel> treeView,
-                              @Nonnull final PresentationModel pm)
+    public default void bind (@Nonnull final TreeView<PresentationModel> treeView, @Nonnull final PresentationModel pm)
       {
         bind(treeView, pm, Optional.empty());
       }
 
     /***********************************************************************************************************************************************************
-     * Binds a {@link TreeTableView} to a {@link PresentationModel} and a callback.
-     *
-     * The {@code PresentationModel} is used to populate the table. The following roles are used:
-     *
+     * Binds a {@link TreeTableView} to a {@link PresentationModel} and a callback. The {@code PresentationModel} is used to populate the table. The following
+     * roles are used:
      * <ul>
      * <li>A {@link it.tidalwave.role.SimpleComposite} provides children {@code PresentationModel}s for each row.</li>
      * <li>In each row, an {@link it.tidalwave.role.Aggregate<PresentationModel>} is used to provide the {@code PresentationModel}s for
@@ -240,27 +202,21 @@ public interface JavaFXBinder
      *     the default action is also bound to the double click or SPACE gesture.</li>
      * <li>A {@link Visibility} (optional) is used to decide whether the root node should be visible or not.</li>
      * </ul>
-     *
-     * The process of populating data is performed in background threads, so this method quickly returns also in case
-     * of large amount of data.
-     * The initialization callback is called in the JavaFX thread when data population has been completed.
-     *
+     * The process of populating data is performed in background threads, so this method quickly returns also in case of large amount of data. The
+     * initialization callback is called in the JavaFX thread when data population has been completed.
      * @param   treeTableView   the {@code TreeTableView}
      * @param   pm              the {@code PresentationModel}
      * @param   initCallback    the callback
      **********************************************************************************************************************************************************/
-    public void bind (@Nonnull TreeTableView<PresentationModel> treeTableView,
-                      @Nonnull PresentationModel pm,
-                      @Nonnull Optional<Runnable> initCallback);
+    public void bind (@Nonnull TreeTableView<PresentationModel> treeTableView, @Nonnull PresentationModel pm, @Nonnull Optional<Runnable> initCallback);
 
     /***********************************************************************************************************************************************************
-     * Binds a {@link TreeTableView} to a {@link PresentationModel} and a callback.
-     * See {@link #bind(javafx.scene.control.TreeTableView, it.tidalwave.ui.core.role.PresentationModel, java.util.Optional)}.
-     *
-     * @since   1.0-ALPHA-13
+     * Binds a {@link TreeTableView} to a {@link PresentationModel} and a callback. See {@link #bind(javafx.scene.control.TreeTableView,
+     * it.tidalwave.ui.core.role.PresentationModel, java.util.Optional)}.
      * @param   treeTableView   the {@code TreeTableView}
      * @param   pm              the {@code PresentationModel}
      * @param   initCallback    the callback
+     * @since   1.0-ALPHA-13
      **********************************************************************************************************************************************************/
     public default void bind (@Nonnull final TreeTableView<PresentationModel> treeTableView,
                               @Nonnull final PresentationModel pm,
@@ -270,24 +226,20 @@ public interface JavaFXBinder
       }
 
     /***********************************************************************************************************************************************************
-     * Binds a {@link TreeTableView} to a {@link PresentationModel}.
-     * See {@link #bind(javafx.scene.control.TreeTableView, it.tidalwave.ui.core.role.PresentationModel, java.util.Optional)}.
-     *
-     * @since   1.0-ALPHA-13
+     * Binds a {@link TreeTableView} to a {@link PresentationModel}. See {@link #bind(javafx.scene.control.TreeTableView,
+     * it.tidalwave.ui.core.role.PresentationModel, java.util.Optional)}.
      * @param   treeTableView   the {@code TreeTableView}
      * @param   pm              the {@code PresentationModel}
+     * @since   1.0-ALPHA-13
      **********************************************************************************************************************************************************/
-    public default void bind (@Nonnull final TreeTableView<PresentationModel> treeTableView,
-                              @Nonnull final PresentationModel pm)
+    public default void bind (@Nonnull final TreeTableView<PresentationModel> treeTableView, @Nonnull final PresentationModel pm)
       {
         bind(treeTableView, pm, Optional.empty());
       }
 
     /***********************************************************************************************************************************************************
-     * Binds a {@link ListView} to a {@link PresentationModel} and an optional callback.
-     *
-     * The {@code PresentationModel} is used to populate the table. The following roles are used:
-     *
+     * Binds a {@link ListView} to a {@link PresentationModel} and an optional callback. The {@code PresentationModel} is used to populate the table. The
+     * following roles are used:
      * <ul>
      * <li>A {@link it.tidalwave.role.SimpleComposite} provides children {@code PresentationModel}s for each row.</li>
      * <li>In each row, an {@link it.tidalwave.role.Aggregate<PresentationModel>} is used to provide the {@code PresentationModel}s for
@@ -298,54 +250,42 @@ public interface JavaFXBinder
      * <li>A {@link it.tidalwave.ui.core.role.UserActionProvider} (optional) is used to provide the actions for creating a context menu;
      *     the default action is also bound to the double click or SPACE gesture.</li>
      * </ul>
-     *
-     * The process of populating data is performed in background threads, so this method quickly returns also in case
-     * of large amount of data.
-     * The initialization callback is called in the JavaFX thread when data population has been completed.
-     *
+     * The process of populating data is performed in background threads, so this method quickly returns also in case of large amount of data. The
+     * initialization callback is called in the JavaFX thread when data population has been completed.
      * @param   listView        the {@code ListView}
      * @param   pm              the {@code PresentationModel}
      * @param   initCallback    the callback
      **********************************************************************************************************************************************************/
-    public void bind (@Nonnull ListView<PresentationModel> listView,
-                      @Nonnull PresentationModel pm,
-                      @Nonnull Optional<Runnable> initCallback);
+    public void bind (@Nonnull ListView<PresentationModel> listView, @Nonnull PresentationModel pm, @Nonnull Optional<Runnable> initCallback);
 
     /***********************************************************************************************************************************************************
-     * Binds a {@link ListView} to a {@link PresentationModel} and a callback.
-     * See {@link #bind(javafx.scene.control.ListView, it.tidalwave.ui.core.role.PresentationModel, java.util.Optional)}.
-     *
-     * @since   1.0-ALPHA-13
+     * Binds a {@link ListView} to a {@link PresentationModel} and a callback. See {@link #bind(javafx.scene.control.ListView,
+     * it.tidalwave.ui.core.role.PresentationModel, java.util.Optional)}.
      * @param   listView        the {@code ListView}
      * @param   pm              the {@code PresentationModel}
      * @param   initCallback    the callback
+     * @since   1.0-ALPHA-13
      **********************************************************************************************************************************************************/
-    public default void bind (@Nonnull final ListView<PresentationModel> listView,
-                              @Nonnull final PresentationModel pm,
-                              @Nonnull final Runnable initCallback)
+    public default void bind (@Nonnull final ListView<PresentationModel> listView, @Nonnull final PresentationModel pm, @Nonnull final Runnable initCallback)
       {
         bind(listView, pm, Optional.of(initCallback));
       }
 
     /***********************************************************************************************************************************************************
-     * Binds a {@link ComboBox} to a {@link PresentationModel}.
-     * See {@link #bind(javafx.scene.control.ListView, it.tidalwave.ui.core.role.PresentationModel, java.util.Optional)}.
-     *
-     * @since   1.0-ALPHA-13
+     * Binds a {@link ComboBox} to a {@link PresentationModel}. See {@link #bind(javafx.scene.control.ListView, it.tidalwave.ui.core.role.PresentationModel,
+     * java.util.Optional)}.
      * @param   listView        the {@code ListView}
      * @param   pm              the {@code PresentationModel}
+     * @since   1.0-ALPHA-13
      **********************************************************************************************************************************************************/
-    public default void bind (@Nonnull final ListView<PresentationModel> listView,
-                              @Nonnull final PresentationModel pm)
+    public default void bind (@Nonnull final ListView<PresentationModel> listView, @Nonnull final PresentationModel pm)
       {
         bind(listView, pm, Optional.empty());
       }
 
     /***********************************************************************************************************************************************************
-     * Binds a {@link ComboBox} to a {@link PresentationModel} and an optional callback.
-     *
-     * The {@code PresentationModel} is used to populate the table. The following roles are used:
-     *
+     * Binds a {@link ComboBox} to a {@link PresentationModel} and an optional callback. The {@code PresentationModel} is used to populate the table. The
+     * following roles are used:
      * <ul>
      * <li>A {@link it.tidalwave.role.SimpleComposite} provides children {@code PresentationModel}s for each row.</li>
      * <li>In each row, an {@link it.tidalwave.role.Aggregate<PresentationModel>} is used to provide the {@code PresentationModel}s for
@@ -356,62 +296,48 @@ public interface JavaFXBinder
      * <li>A {@link it.tidalwave.ui.core.role.UserActionProvider} (optional) is used to provide the actions for creating a context menu;
      *     the default action is also bound to the double click or SPACE gesture.</li>
      * </ul>
-     *
-     * The process of populating data is performed in background threads, so this method quickly returns also in case
-     * of large amount of data.
-     * The initialization callback is called in the JavaFX thread when data population has been completed.
-     *
+     * The process of populating data is performed in background threads, so this method quickly returns also in case of large amount of data. The
+     * initialization callback is called in the JavaFX thread when data population has been completed.
      * @param   comboBox        the {@code ComboBox}
      * @param   pm              the {@code PresentationModel}
      * @param   initCallback    the callback
      **********************************************************************************************************************************************************/
-    public void bind (@Nonnull ComboBox<PresentationModel> comboBox,
-                      @Nonnull PresentationModel pm,
-                      @Nonnull Optional<Runnable> initCallback);
+    public void bind (@Nonnull ComboBox<PresentationModel> comboBox, @Nonnull PresentationModel pm, @Nonnull Optional<Runnable> initCallback);
 
     /***********************************************************************************************************************************************************
-     * Binds a {@link ComboBox} to a {@link PresentationModel} and a callback.
-     * See {@link #bind(javafx.scene.control.ComboBox, it.tidalwave.ui.core.role.PresentationModel, java.util.Optional)}.
-     *
-     * @since   1.0-ALPHA-13
+     * Binds a {@link ComboBox} to a {@link PresentationModel} and a callback. See {@link #bind(javafx.scene.control.ComboBox,
+     * it.tidalwave.ui.core.role.PresentationModel, java.util.Optional)}.
      * @param   comboBox        the {@code ComboBox}
      * @param   pm              the {@code PresentationModel}
      * @param   initCallback    the callback
+     * @since   1.0-ALPHA-13
      **********************************************************************************************************************************************************/
-    public default void bind (@Nonnull final ComboBox<PresentationModel> comboBox,
-                              @Nonnull final PresentationModel pm,
-                              @Nonnull final Runnable initCallback)
+    public default void bind (@Nonnull final ComboBox<PresentationModel> comboBox, @Nonnull final PresentationModel pm, @Nonnull final Runnable initCallback)
       {
         bind(comboBox, pm, Optional.of(initCallback));
       }
 
     /***********************************************************************************************************************************************************
-     * Binds a {@link ComboBox} to a {@link PresentationModel}.
-     * See {@link #bind(javafx.scene.control.ComboBox, it.tidalwave.ui.core.role.PresentationModel, java.util.Optional)}.
-     *
-     * @since   1.0-ALPHA-13
+     * Binds a {@link ComboBox} to a {@link PresentationModel}. See {@link #bind(javafx.scene.control.ComboBox, it.tidalwave.ui.core.role.PresentationModel,
+     * java.util.Optional)}.
      * @param   comboBox        the {@code ComboBox}
      * @param   pm              the {@code PresentationModel}
+     * @since   1.0-ALPHA-13
      **********************************************************************************************************************************************************/
-    public default void bind (@Nonnull final ComboBox<PresentationModel> comboBox,
-                              @Nonnull final PresentationModel pm)
+    public default void bind (@Nonnull final ComboBox<PresentationModel> comboBox, @Nonnull final PresentationModel pm)
       {
         bind(comboBox, pm, Optional.empty());
       }
 
     /***********************************************************************************************************************************************************
-     * Given a {@link PresentationModel} that contains a {@link it.tidalwave.role.Composite}, populate the pane with
-     * {@link ToggleButton}s associated to the elements of the {@link it.tidalwave.role.Composite}. Each element is searched for the
-     * following roles:
-     *
+     * Given a {@link PresentationModel} that contains a {@link it.tidalwave.role.Composite}, populate the pane with {@link ToggleButton}s associated to the
+     * elements of the {@link it.tidalwave.role.Composite}. Each element is searched for the following roles:
      * <ul>
      * <li>{@link it.tidalwave.ui.core.role.UserActionProvider} (mandatory) to provide a callback for the button</li>
      * <li>{@link it.tidalwave.ui.core.role.Displayable} to provide a text for the button</li>
      * <li>{@link it.tidalwave.ui.core.role.Styleable} to provide a CSS style for the button</li>
      * </ul>
-     *
      * The pane must be pre-populated with at least one button, which will be queried for the CSS style.
-     *
      * @param   pane        the {@code Pane}
      * @param   pm          the {@code PresentationModel}
      **********************************************************************************************************************************************************/
@@ -419,7 +345,6 @@ public interface JavaFXBinder
 
     /***********************************************************************************************************************************************************
      * Deprecated. Merge to bindToggleButtons, passing some arguments for choosing toggle or normal buttons.
-     *
      * @deprecated
      **********************************************************************************************************************************************************/
     @Deprecated
@@ -434,9 +359,7 @@ public interface JavaFXBinder
      * @param   adapter         an adapter from one source to the target
      * @since   2.0-ALPHA-1
      **********************************************************************************************************************************************************/
-    public <T, S> void bind (@Nonnull final BoundProperty<? super T> target,
-                             @Nonnull final Property<? extends S> source,
-                             @Nonnull final Function<S, T> adapter);
+    public <T, S> void bind (@Nonnull final BoundProperty<? super T> target, @Nonnull final Property<? extends S> source, @Nonnull final Function<S, T> adapter);
 
     /***********************************************************************************************************************************************************
      * Binds two properties of the same type.
@@ -516,13 +439,10 @@ public interface JavaFXBinder
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
-    public void bindBidirectionally (@Nonnull TextField textField,
-                                     @Nonnull BoundProperty<String> textProperty,
-                                     @Nonnull BoundProperty<Boolean> validProperty);
+    public void bindBidirectionally (@Nonnull TextField textField, @Nonnull BoundProperty<String> textProperty,  @Nonnull BoundProperty<Boolean> validProperty);
 
     /***********************************************************************************************************************************************************
      * Shows a modal dialog with the given content and provides feedback by means of the given notification.
-     *
      * @param   notification  the object notifying whether the operation is confirmed or cancelled
      * @since   1.1-ALPHA-6
      **********************************************************************************************************************************************************/
@@ -535,12 +455,10 @@ public interface JavaFXBinder
 
     /***********************************************************************************************************************************************************
      * Shows a modal dialog with the given content and provides feedback by means of the given notification.
-     *
      * @param  node          the dialog content
      * @param  notification  the object notifying whether the operation is confirmed or cancelled
      **********************************************************************************************************************************************************/
-    public void showInModalDialog (@Nonnull UserNotificationWithFeedback notification,
-                                   @Nonnull Optional<Node> node);
+    public void showInModalDialog (@Nonnull UserNotificationWithFeedback notification, @Nonnull Optional<Node> node);
 
     // FIXME: use a Builder, merge with the above
     public default void showInModalDialog (@Nonnull final Node node,
@@ -551,8 +469,7 @@ public interface JavaFXBinder
       }
 
     @Deprecated
-    public default void showInModalDialog (@Nonnull final Node node,
-                                           @Nonnull final UserNotificationWithFeedback notification)
+    public default void showInModalDialog (@Nonnull final Node node, @Nonnull final UserNotificationWithFeedback notification)
       {
         showInModalDialog(notification, Optional.of(node));
       }
@@ -563,24 +480,18 @@ public interface JavaFXBinder
       }
 
     /***********************************************************************************************************************************************************
-     * Opens the FileChooser for selecting a file. The outcome of the operation (confirmed or cancelled) will be
-     * notified to the given notification object. The selected file will be set to the given bound property, which can
-     * be also used to set the default value rendered on the FileChooser.
-     *
+     * Opens the FileChooser for selecting a file. The outcome of the operation (confirmed or cancelled) will be notified to the given notification object. The
+     * selected file will be set to the given bound property, which can be also used to set the default value rendered on the FileChooser.
      * @param  notification  the object notifying whether the operation is confirmed or cancelled
      * @param  selectedFile  the property containing the selected file
      **********************************************************************************************************************************************************/
-    public void openFileChooserFor (@Nonnull UserNotificationWithFeedback notification,
-                                    @Nonnull BoundProperty<Path> selectedFile);
+    public void openFileChooserFor (@Nonnull UserNotificationWithFeedback notification, @Nonnull BoundProperty<Path> selectedFile);
 
     /***********************************************************************************************************************************************************
-     * Opens the FileChooser for selecting a folder. The outcome of the operation (confirmed or cancelled) will be
-     * notified to the given notification object. The selected folder will be set to the given bound property, which can
-     * be also used to set the default value rendered on the FileChooser.
-     *
+     * Opens the FileChooser for selecting a folder. The outcome of the operation (confirmed or cancelled) will be notified to the given notification object.
+     * The selected folder will be set to the given bound property, which can be also used to set the default value rendered on the FileChooser.
      * @param  notification    the object notifying whether the operation is confirmed or cancelled
      * @param  selectedFolder  the property containing the selected folder
      **********************************************************************************************************************************************************/
-    public void openDirectoryChooserFor (@Nonnull UserNotificationWithFeedback notification,
-                                         @Nonnull BoundProperty<Path> selectedFolder);
+    public void openDirectoryChooserFor (@Nonnull UserNotificationWithFeedback notification, @Nonnull BoundProperty<Path> selectedFolder);
   }

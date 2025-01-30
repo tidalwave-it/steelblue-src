@@ -58,15 +58,11 @@ public class DefaultNodeAndDelegate<T> implements NodeAndDelegate<T>
     private final T delegate;
 
     /***********************************************************************************************************************************************************
-     * Creates a {@link NodeAndDelegate} for the given presentation class. The FXML resource name is inferred by
-     * default, For instance, is the class is named {@code JavaFXFooBarPresentation}, the resource name is
-     * {@code FooBar.fxml} and searched in the same packages as the class.
-     *
-     * @see #of(java.lang.Class, java.lang.String)
-     *
-     * @since 1.0-ALPHA-13
-     *
+     * Creates a {@link NodeAndDelegate} for the given presentation class. The FXML resource name is inferred by default, For instance, is the class is named
+     * {@code JavaFXFooBarPresentation}, the resource name is {@code FooBar.fxml} and searched in the same packages as the class.
      * @param   presentationClass   the class of the presentation for which the resources must be created.
+     * @since   1.0-ALPHA-13
+     * @see                         #of(java.lang.Class, java.lang.String)
      **********************************************************************************************************************************************************/
     @Nonnull
     public static <T> NodeAndDelegate<T> of (@Nonnull final Class<T> presentationClass)
@@ -80,7 +76,6 @@ public class DefaultNodeAndDelegate<T> implements NodeAndDelegate<T>
 
     /***********************************************************************************************************************************************************
      * Creates a {@link NodeAndDelegate} for the given presentation class.
-     *
      * @param   presentationClass   the class of the presentation for which the resources must be created.
      * @param   fxmlResourcePath    the path of the FXML resource
      **********************************************************************************************************************************************************/

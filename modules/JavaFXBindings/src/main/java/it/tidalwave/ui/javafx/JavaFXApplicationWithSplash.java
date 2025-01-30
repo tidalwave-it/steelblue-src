@@ -161,7 +161,7 @@ public abstract class JavaFXApplicationWithSplash extends Application
     protected abstract void initializeInBackground();
 
     /***********************************************************************************************************************************************************
-     * Invoked when the main {@link Stage} is being closed.
+     * Invoked when the main {@link Stage} is being closed. This method is called in the JavaFX thread.
      **********************************************************************************************************************************************************/
     protected void onClosing()
       {

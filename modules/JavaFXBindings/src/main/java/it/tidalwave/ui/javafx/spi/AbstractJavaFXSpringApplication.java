@@ -318,7 +318,7 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
         executor.execute(() ->
           {
             onStageCreated(applicationContext);
-            messageBus.ifPresent(mb -> mb.publish(new PowerOnEvent()));
+            messageBus.ifPresent(mb -> mb.publish(new PowerOnEvent())); // must be after onStageCreated()
           });
       }
 
