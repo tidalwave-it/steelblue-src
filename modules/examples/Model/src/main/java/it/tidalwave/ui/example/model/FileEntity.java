@@ -30,11 +30,9 @@ import javax.annotation.concurrent.Immutable;
 import jakarta.annotation.Nonnull;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributeView;
@@ -42,15 +40,16 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 import it.tidalwave.ui.core.role.Displayable;
 import it.tidalwave.util.As;
-import it.tidalwave.util.spi.SimpleFinderSupport;
+import it.tidalwave.util.Finder;
 import it.tidalwave.role.SimpleComposite;
 import lombok.EqualsAndHashCode;
-import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Delegate;
 import lombok.extern.slf4j.Slf4j;
 import static java.util.Collections.emptyList;
+import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.*;
+import static it.tidalwave.util.FunctionalCheckedExceptionWrappers.*;
 
 /***************************************************************************************************************************************************************
  *
@@ -62,36 +61,6 @@ import static java.util.stream.Collectors.*;
 @Immutable @EqualsAndHashCode @ToString @Slf4j
 public class FileEntity implements As, Displayable
   {
-    @RequiredArgsConstructor
-    private static class FileEntityFinder extends SimpleFinderSupport<FileEntity>
-      {
-        private static final long serialVersionUID = 5780394869213L;
-
-        @Nonnull
-        private final Path path;
-
-        private FileEntityFinder (@Nonnull final FileEntityFinder other, @Nonnull final Object override)
-          {
-            super(other, override);
-            final var source = getSource(FileEntityFinder.class, other, override);
-            this.path = source.path;
-          }
-
-        @Nonnull @Override
-        protected List<FileEntity> computeNeededResults()
-          {
-            try (final var stream = Files.list(path))
-              {
-                return stream.sorted(Comparator.comparing(Path::toString)).map(FileEntity::of).collect(toList());
-              }
-            catch (IOException e)
-              {
-                log.error("While listing directory " + path, e);
-                throw new UncheckedIOException(e);
-              }
-          }
-      }
-
     /** The path of the file.*/
     @Nonnull
     private final Path path;
@@ -108,7 +77,7 @@ public class FileEntity implements As, Displayable
     private FileEntity (@Nonnull final Path path)
       {
         this.path = path;
-        delegate = As.forObject(this, Files.isDirectory(path) ? List.of(SimpleComposite.of(new FileEntityFinder(path))) : emptyList());
+        delegate = As.forObject(this, Files.isDirectory(path) ? List.of(SimpleComposite.of(Finder.ofSupplier(_s(() -> filesIn(path))))) : emptyList());
       }
     // END SNIPPET: constructor
 
@@ -186,6 +155,19 @@ public class FileEntity implements As, Displayable
             throws IOException
       {
         return Files.getFileAttributeView(path, BasicFileAttributeView.class).readAttributes();
+      }
+
+    /***********************************************************************************************************************************************************
+     *
+     **********************************************************************************************************************************************************/
+    @Nonnull
+    private static List<FileEntity> filesIn (@Nonnull final Path path)
+            throws IOException
+      {
+        try (final var stream = Files.list(path))
+          {
+            return stream.sorted(comparing(Path::toString)).map(FileEntity::of).collect(toList());
+          }
       }
 
     /***********************************************************************************************************************************************************
