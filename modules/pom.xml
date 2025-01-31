@@ -53,6 +53,7 @@
         <tft.javafx.version>11.0.1</tft.javafx.version>
         <tft.openjfx-monocle.version>11.0.2</tft.openjfx-monocle.version>
         <jmetro.version>11.6.14</jmetro.version>
+        <tft.byte-buddy.version>1.15.11</tft.byte-buddy.version>
         <tft.modulePathInTests>false</tft.modulePathInTests>
         <tft.javac.xlint>-Xlint:all,-exports,-missing-explicit-ctor,-requires-automatic</tft.javac.xlint>
         <tft.profile.metrics.checkstyleGoal /> <!-- FIXME: checkstyle crashes with module-info.java -->
@@ -102,6 +103,13 @@
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-web</artifactId>
                 <version>${tft.javafx.version}</version>
+            </dependency>
+
+            <!-- For convergence. -->
+            <dependency>
+                <groupId>net.bytebuddy</groupId>
+                <artifactId>byte-buddy</artifactId>
+                <version>${tft.byte-buddy.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -186,6 +194,7 @@
     <modules>
         <module>Core</module>
         <module>JavaFXBindings</module>
+        <module>Test</module>
         <module>examples</module>
     </modules>
 

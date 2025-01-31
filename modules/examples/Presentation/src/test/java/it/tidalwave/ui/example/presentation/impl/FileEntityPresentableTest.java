@@ -30,16 +30,12 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.Locale;
-import it.tidalwave.ui.core.role.PresentationModel;
 import it.tidalwave.ui.core.role.Selectable;
 import it.tidalwave.ui.example.model.FileEntity;
-import it.tidalwave.role.Aggregate;
 import org.testng.annotations.Test;
-import static it.tidalwave.ui.core.role.Displayable._Displayable_;
-import static it.tidalwave.ui.core.role.PresentationModel._AggregateOfPresentationModel_;
+import static it.tidalwave.ui.core.role.PresentationModel.*;
 import static it.tidalwave.ui.core.role.Selectable._Selectable_;
-import static it.tidalwave.ui.core.role.Styleable._Styleable_;
-import static org.assertj.core.api.Assertions.assertThat;
+import static it.tidalwave.ui.test.AsAssert.assertThat;
 import static it.tidalwave.util.LocalizedDateTimeFormatters.getDateTimeFormatterFor;
 import static org.mockito.Mockito.*;
 
@@ -65,21 +61,17 @@ public class FileEntityPresentableTest
         when(fileEntity.getCreationDateTime()).thenReturn(creationDateTime);
         when(fileEntity.getLastModifiedDateTime()).thenReturn(lastModifiedDateTime);
         final var extraRole = mock(Selectable.class);
-        // when
         final var underTest = new FileEntityPresentable(fileEntity);
-        // then
+        // when
         final var pm = underTest.createPresentationModel(extraRole);
-        final Aggregate<PresentationModel> aggregate = pm.as(_AggregateOfPresentationModel_);
-        assertThat(aggregate.getNames()).containsExactlyInAnyOrder("name", "size", "latestModificationDate", "creationDate");
-        final var pmName = aggregate.getByName("name").orElseThrow();
-        assertThat(pmName.as(_Displayable_).getDisplayName()).isEqualTo("file.txt");
-        final var pmSize = aggregate.getByName("size").orElseThrow();
-        assertThat(pmSize.as(_Displayable_).getDisplayName()).isEqualTo("12345678");
-        assertThat(pmSize.as(_Styleable_).getStyles()).containsExactly("right-aligned");
-        final var pmCDT = aggregate.getByName("creationDate").orElseThrow();
-        assertThat(pmCDT.as(_Displayable_).getDisplayName()).isEqualTo(FORMATTER.format(creationDateTime));
-        final var pmLMDT = aggregate.getByName("latestModificationDate").orElseThrow();
-        assertThat(pmLMDT.as(_Displayable_).getDisplayName()).isEqualTo(FORMATTER.format(lastModifiedDateTime));
-        assertThat(pm.as(_Selectable_)).isEqualTo(extraRole);
+        // then
+        assertThat(pm).hasRole(_Selectable_).isSameAs(extraRole);
+        assertThat(pm).hasAggregateOf(_PresentationModel_)
+                      .withExactItemNames("name", "size", "latestModificationDate", "creationDate")
+                      .withNextItemSatisfying(apm -> apm.hasDisplayName("file.txt"))
+                      .withNextItemSatisfying(apm -> apm.hasDisplayName("12345678")
+                                                                    .hasStyleable().withExactStyles("right-aligned"))
+                      .withNextItemSatisfying(apm -> apm.hasDisplayName(FORMATTER.format(lastModifiedDateTime)))
+                      .withNextItemSatisfying(apm -> apm.hasDisplayName(FORMATTER.format(creationDateTime)));
       }
   }

@@ -61,21 +61,24 @@
 
     <body>
         <menu name="Overview" inherit="top">
-            <item name="Introduction" href="index.html"/>
-            <item name="Getting started" href="getting-started.html"/>
-            <item name="Core" href="it-tidalwave-ui-modules/it-tidalwave-ui-core/index.html"/>
-            <item name="JavaFX bindings" href="it-tidalwave-ui-modules/it-tidalwave-ui-javafx/index.html"/>
-            <item name="Core Javadocs" href="it-tidalwave-ui-modules/it-tidalwave-ui-core/apidocs/index.html"/>
+            <item name="Introduction"             href="index.html"/>
+            <item name="Getting started"          href="getting-started.html"/>
+            <item name="Core"                     href="it-tidalwave-ui-modules/it-tidalwave-ui-core/index.html"/>
+            <item name="JavaFX bindings"          href="it-tidalwave-ui-modules/it-tidalwave-ui-javafx/index.html"/>
+            <item name="Test"                     href="it-tidalwave-ui-modules/it-tidalwave-ui-test/index.html"/>
+            <item name="Core Javadocs"            href="it-tidalwave-ui-modules/it-tidalwave-ui-core/apidocs/index.html"/>
             <item name="JavaFX bindings Javadocs" href="it-tidalwave-ui-modules/it-tidalwave-ui-javafx/apidocs/index.html"/>
+            <item name="Test Javadocs"            href="it-tidalwave-ui-modules/it-tidalwave-ui-test/apidocs/it.tidalwave.ui.test/it/tidalwave/ui/test/package-summary.html"/>
         </menu>
 
         <menu name="SpotBugs" inherit="top">
         <!-- It's not possible to have a SpotBugs aggregate: https://spotbugs.github.io/spotbugs-maven-plugin/faq.html#Aggregate_Reporting -->
-            <item name="Core" href="it-tidalwave-ui-modules/it-tidalwave-ui-core/spotbugs.html"/>
-            <item name="JavaFX Bindings" href="it-tidalwave-ui-modules/it-tidalwave-ui-javafx/spotbugs.html"/>
-            <item name="Example Model" href="it-tidalwave-ui-modules/it-tidalwave-ui-examples/it-tidalwave-ui-example-model/spotbugs.html"/>
-            <item name="Example Presentation" href="it-tidalwave-ui-modules/it-tidalwave-ui-examples/it-tidalwave-ui-example-presentation/spotbugs.html"/>
-            <item name="Example JavaFX Presentation" href="it-tidalwave-ui-modules/it-tidalwave-ui-examples/it-tidalwave-ui-example-presentation-javafx/spotbugs.html"/>
+            <item name="Core"                         href="it-tidalwave-ui-modules/it-tidalwave-ui-core/spotbugs.html"/>
+            <item name="JavaFX Bindings"              href="it-tidalwave-ui-modules/it-tidalwave-ui-javafx/spotbugs.html"/>
+            <item name="Test"                         href="it-tidalwave-ui-modules/it-tidalwave-ui-test/spotbugs.html"/>
+            <item name="Example Model"                href="it-tidalwave-ui-modules/it-tidalwave-ui-examples/it-tidalwave-ui-example-model/spotbugs.html"/>
+            <item name="Example Presentation"         href="it-tidalwave-ui-modules/it-tidalwave-ui-examples/it-tidalwave-ui-example-presentation/spotbugs.html"/>
+            <item name="Example JavaFX Presentation"  href="it-tidalwave-ui-modules/it-tidalwave-ui-examples/it-tidalwave-ui-example-presentation-javafx/spotbugs.html"/>
         </menu>
 
         <menu ref="reports" inherit="bottom"/>

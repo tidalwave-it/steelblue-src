@@ -93,6 +93,13 @@ that is mostly independent of the UI technology; so testing is easier, and it is
                 <classifier>tests</classifier>
                 <version>3.0-ALPHA-3-SNAPSHOT</version>
             </dependency>
+            <!-- START SNIPPET: test -->
+            <dependency>
+                <groupId>it.tidalwave.steelblue</groupId>
+                <artifactId>it-tidalwave-ui-test</artifactId>
+                <version>3.0-ALPHA-3-SNAPSHOT</version>
+            </dependency>
+            <!-- END SNIPPET: test -->
             <!-- START SNIPPET: javafx -->
             <dependency>
                 <groupId>it.tidalwave.steelblue</groupId>

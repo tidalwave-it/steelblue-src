@@ -26,7 +26,6 @@
 package it.tidalwave.ui.example.presentation.impl;
 
 import jakarta.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.List;
 import java.nio.file.Path;
 import it.tidalwave.ui.core.BoundProperty;
@@ -37,17 +36,16 @@ import it.tidalwave.ui.example.model.FileEntity;
 import it.tidalwave.ui.example.model.SimpleDciEntity;
 import it.tidalwave.ui.example.model.SimpleEntity;
 import it.tidalwave.ui.example.presentation.MainPanelPresentation;
+import it.tidalwave.ui.test.AsAssert;
+import it.tidalwave.util.As;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.mockito.ArgumentCaptor;
-import static it.tidalwave.ui.core.role.Displayable._Displayable_;
 import static it.tidalwave.ui.core.role.Presentable._Presentable_;
 import static it.tidalwave.ui.core.role.PresentationModel.*;
 import static it.tidalwave.ui.core.role.Selectable._Selectable_;
-import static it.tidalwave.ui.core.role.UserActionProvider._UserActionProvider_;
 import static it.tidalwave.ui.core.test.UserNotificationWithFeedbackTestHelper.*;
-import static org.assertj.core.api.Assertions.assertThat;
-import static it.tidalwave.util.FunctionalCheckedExceptionWrappers.*;
+import static it.tidalwave.ui.test.AsAssert.assertThat;
 import static org.mockito.Mockito.*;
 
 /***************************************************************************************************************************************************************
@@ -71,16 +69,16 @@ public class DefaultMainPanelPresentationControlTest
       {
         dao = mock(Dao.class);
         presentation = mock(MainPanelPresentation.class);
-        // A capturer matcher intercepts the method call and stores the argument for later retrieval, by calling getCapture().
-        final var captureBindings = ArgumentCaptor.forClass(MainPanelPresentation.Bindings.class);
         underTest = new DefaultMainPanelPresentationControl(dao, presentation);
         underTest.initialize();
+        // A capturer matcher intercepts the method call and stores the argument for later retrieval, by calling getCapture().
+        final var captureBindings = ArgumentCaptor.forClass(MainPanelPresentation.Bindings.class);
         verify(presentation).bind(captureBindings.capture());
         bindings = captureBindings.getValue();
       }
     // END SNIPPET: mocks
 
-    /******************************************************************************************************************/
+    /**********************************************************************************************************************************************************/
     // START SNIPPET: test_buttonAction
     @Test
     public void test_buttonAction()
@@ -94,11 +92,11 @@ public class DefaultMainPanelPresentationControlTest
         verify(presentation).notify("Button pressed");
         // TBD: test bound property incremented
         verifyNoMoreInteractions(presentation);
-        assertThat(bindings.textProperty.get()).isEqualTo("2");
+        assertThat(bindings.textProperty).isEqualTo("2");
       }
     // END SNIPPET: test_buttonAction
 
-    /******************************************************************************************************************/
+    /**********************************************************************************************************************************************************/
     // START SNIPPET: test_actionDialogOk_confirm
     @Test
     public void test_actionDialogOk_confirm()
@@ -115,7 +113,7 @@ public class DefaultMainPanelPresentationControlTest
       }
     // END SNIPPET: test_actionDialogOk_confirm
 
-    /******************************************************************************************************************/
+    /**********************************************************************************************************************************************************/
     @Test
     public void test_actionDialogCancelOk_confirm()
       {
@@ -130,7 +128,7 @@ public class DefaultMainPanelPresentationControlTest
         verifyNoMoreInteractions(presentation);
       }
 
-    /******************************************************************************************************************/
+    /**********************************************************************************************************************************************************/
     // START SNIPPET: test_actionDialogCancelOk_cancel
     @Test
     public void test_actionDialogCancelOk_cancel()
@@ -147,7 +145,7 @@ public class DefaultMainPanelPresentationControlTest
       }
     // END SNIPPET: test_actionDialogCancelOk_cancel
 
-    /******************************************************************************************************************/
+    /**********************************************************************************************************************************************************/
     // START SNIPPET: test_actionPickFile_confirm
     @Test @SuppressWarnings("unchecked")
     public void test_actionPickFile_confirm()
@@ -168,7 +166,7 @@ public class DefaultMainPanelPresentationControlTest
       }
     // END SNIPPET: test_actionPickFile_confirm
 
-    /******************************************************************************************************************/
+    /**********************************************************************************************************************************************************/
     @Test @SuppressWarnings("unchecked")
     public void test_actionPickFile_cancel()
       {
@@ -184,7 +182,7 @@ public class DefaultMainPanelPresentationControlTest
         verifyNoMoreInteractions(presentation);
       }
 
-    /******************************************************************************************************************/
+    /**********************************************************************************************************************************************************/
     @Test @SuppressWarnings("unchecked")
     public void test_actionPickDirectory_confirm()
       {
@@ -200,7 +198,7 @@ public class DefaultMainPanelPresentationControlTest
         //verifyNoMoreInteractions(presentation);
       }
 
-    /******************************************************************************************************************/
+    /**********************************************************************************************************************************************************/
     @Test @SuppressWarnings("unchecked")
     public void test_actionPickDirectory_cancel()
       {
@@ -216,7 +214,7 @@ public class DefaultMainPanelPresentationControlTest
         verifyNoMoreInteractions(presentation);
       }
 
-    /******************************************************************************************************************/
+    /**********************************************************************************************************************************************************/
     // START SNIPPET: test_start
     @Test
     public void test_populate()
@@ -243,71 +241,58 @@ public class DefaultMainPanelPresentationControlTest
         final var cpm2 = ArgumentCaptor.forClass(PresentationModel.class);
         final var cpm3 = ArgumentCaptor.forClass(PresentationModel.class);
         verify(presentation).populate(cpm1.capture(), cpm2.capture(), cpm3.capture());
-
-        final var pmList1 = cpm1.getValue().as(_CompositeOfPresentationModel_).stream().toList();
-        assertThat(pmList1).hasSize(1);
-        pmList1.forEach(pm -> assertPresentationModel(pm, "Item #simple entity", "SimpleEntity(simple entity)"));
-
-        final var pmList2 = cpm2.getValue().as(_CompositeOfPresentationModel_).stream().toList();
-        assertThat(pmList2).hasSize(1);
-        pmList2.forEach(pm ->
-          {
-            assertPresentationModel(pm, simpleDciEntity.getName(), simpleDciEntity.toString());
-
-            final var aggregate = pm.as(_AggregateOfPresentationModel_);
-            assertThat(aggregate.getNames()).containsExactlyInAnyOrder("C1", "C2", "C3");
-            final var pmc1 = aggregate.getByName("C1").orElseThrow();
-            final var pmc2 = aggregate.getByName("C2").orElseThrow();
-            final var pmc3 = aggregate.getByName("C3").orElseThrow();
-            assertThat(pmc1.as(_Displayable_).getDisplayName()).isEqualTo(simpleDciEntity.getName());
-            assertThat(pmc2.as(_Displayable_).getDisplayName()).isEqualTo("" + simpleDciEntity.getAttribute1());
-            assertThat(pmc3.as(_Displayable_).getDisplayName()).isEqualTo("" + simpleDciEntity.getAttribute2());
-          });
-
-        final var pmList3 = cpm3.getValue().as(_CompositeOfPresentationModel_).stream().toList();
-        assertThat(pmList3).hasSize(1);
-        pmList3.forEach(_c(pm ->
-          {
-            final var displayable = pm.as(_Displayable_);
-            assertThat(displayable.getDisplayName()).isEqualTo(fe.getDisplayName());
-
-            final var aggregate = pm.as(_AggregateOfPresentationModel_);
-            assertThat(aggregate.getNames()).containsExactlyInAnyOrder("name", "size", "creationDate", "latestModificationDate");
-            final var pmc1 = aggregate.getByName("name").orElseThrow();
-            final var pmc2 = aggregate.getByName("size").orElseThrow();
-            final var pmc3 = aggregate.getByName("creationDate").orElseThrow();
-            final var pmc4 = aggregate.getByName("latestModificationDate").orElseThrow();
-            assertThat(pmc1.as(_Displayable_).getDisplayName()).isEqualTo(fe.getDisplayName());
-            assertThat(pmc2.as(_Displayable_).getDisplayName()).isEqualTo("" + fe.getSize());
-            // Commented out because they keep changing, but you get the point.
-            // assertThat(pmc3.as(_Displayable_).getDisplayName()).isEqualTo("12/18/24 11:25 am")));
-            // assertThat(pmc4.as(_Displayable_).getDisplayName()).isEqualTo("12/18/24 11:28 am")));
-          }));
-
+        assertThat(cpm1).hasCompositeOf(_PresentationModel_)
+                            .withItemCount(1)
+                            .withEachItem(i ->
+                                commonPmAssertions(i, "Item #simple entity", "SimpleEntity(simple entity)"));
+        assertThat(cpm2).hasCompositeOf(_PresentationModel_)
+                            .withItemCount(1)
+                            .withEachItem(i ->
+                                commonPmAssertions(i, simpleDciEntity.getName(), simpleDciEntity.toString())
+                                .hasAggregateOf(_PresentationModel_)
+                                    .withExactItemNames("C1", "C2", "C3")
+                                    .withNextItemSatisfying(j -> j.hasDisplayName(simpleDciEntity.getName()))
+                                    .withNextItemSatisfying(j -> j.hasDisplayName("" + simpleDciEntity.getAttribute1()))
+                                    .withNextItemSatisfying(j -> j.hasDisplayName("" + simpleDciEntity.getAttribute2())));
+        assertThat(cpm3).hasCompositeOf(_PresentationModel_)
+                            .withItemCount(1)
+                            .withEachItemSatisfying(i -> i
+                                .hasDisplayName(fe.getDisplayName())
+                                .hasAggregateOf(_PresentationModel_)
+                                    .withExactItemNames("name", "size", "creationDate", "latestModificationDate")
+                                    .withNextItemSatisfying(j -> j.hasDisplayName(fe.getDisplayName()))
+                                    .withNextItemSatisfying(j -> j.hasDisplayName(() -> "" + fe.getSize())));
+                                    // Commented out because timestamps keep changing, but you get the point.
+                                    //.withNextItemSatisfying(j -> j.hasDisplayNameOf("12/18/24 11:25 am"))
+                                    //.withNextItemSatisfying(j -> j.hasDisplayNameOf("12/18/24 11:28 am")));
         // FIXME verifyNoMoreInteractions(presentation);
       }
 
-    private void assertPresentationModel (@Nonnull final PresentationModel pm,
-                                          @Nonnull final String expectedDisplayName,
-                                          @Nonnull final String expectedToString)
+    /**********************************************************************************************************************************************************/
+    @Nonnull
+    private AsAssert<As> commonPmAssertions (@Nonnull final PresentationModel pm,
+                                             @Nonnull final String expectedDisplayName,
+                                             @Nonnull final String expectedToString)
       {
-        final var displayable = pm.as(_Displayable_);
+        assertThat(pm).hasDisplayName(expectedDisplayName);
+
         final var selectable = pm.as(_Selectable_);
-        final var userActionProvider = pm.as(_UserActionProvider_);
-
-        assertThat(displayable.getDisplayName()).isEqualTo(expectedDisplayName);
-
         selectable.select();
         verify(presentation).notify("Selected " + expectedToString);
 
-        final var actions = new ArrayList<>(userActionProvider.getActions());
-        assertThat(actions).hasSize(3);
-        actions.get(0).actionPerformed();
-        verify(presentation).notify("Action 1 on " + expectedToString);
-        actions.get(1).actionPerformed();
-        verify(presentation).notify("Action 2 on " + expectedToString);
-        actions.get(2).actionPerformed();
-        verify(presentation).notify("Action 3 on " + expectedToString);
+        assertThat(pm).hasUserActionProvider()
+                          .withActionCount(3)
+                          .withAll(actions ->
+          {
+            actions[0].actionPerformed();
+            verify(presentation).notify("Action 1 on " + expectedToString);
+            actions[1].actionPerformed();
+            verify(presentation).notify("Action 2 on " + expectedToString);
+            actions[2].actionPerformed();
+            verify(presentation).notify("Action 3 on " + expectedToString);
+          });
+
+        return assertThat(pm); // trick to allow chaining assertions
       }
     // END SNIPPET: test_start
   }

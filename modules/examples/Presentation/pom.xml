@@ -89,6 +89,11 @@
             <classifier>tests</classifier>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>it.tidalwave.steelblue</groupId>
+            <artifactId>it-tidalwave-ui-test</artifactId>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 

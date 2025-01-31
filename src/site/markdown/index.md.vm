@@ -54,6 +54,10 @@ This library is composed of two modules:
 + [**JavaFX**](it-tidalwave-ui-modules/it-tidalwave-ui-javafx/index.html) which contains the JavaFX specific bindings:
 <!-- MACRO{snippet|id=javafx|file=${project.basedir}/pom.xml} -->
 
++ [**Test**](it-tidalwave-ui-modules/it-tidalwave-ui-test/index.html) which contains tools for writing more concise test code, similar and compatible to AssertJ:
+<!-- MACRO{snippet|id=test|file=${project.basedir}/pom.xml} -->
+
+
 The best way to get in sync with SteelBlue is to look at a real example and the [“Getting started”](getting-started.html) section that describes it.
 
 
