@@ -34,13 +34,13 @@
     <parent>
         <groupId>it.tidalwave.steelblue</groupId>
         <artifactId>it-tidalwave-ui-examples</artifactId>
-        <version>3.0-ALPHA-2-SNAPSHOT</version>
+        <version>3.0-ALPHA-2</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>it-tidalwave-ui-example-presentation</artifactId>
     <packaging>jar</packaging>
-    <version>3.0-ALPHA-2-SNAPSHOT</version>
+    <version>3.0-ALPHA-2</version>
     <name>SteelBlue :: Examples :: Presentation</name>
 
     <dependencies>
