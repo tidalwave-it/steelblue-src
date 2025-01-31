@@ -66,6 +66,12 @@ public class AbstractJavaFXSpringApplicationTest
             return mockApplicationContext;
           }
 
+        @Override
+        protected void exit()
+          {
+            // don't System.exit()
+          }
+
         @Nonnull
         private ThreadPoolTaskExecutor getExecutor()
           {
@@ -95,6 +101,7 @@ public class AbstractJavaFXSpringApplicationTest
         when(applicationContext.getBean(eq(APPLICATION_MESSAGE_BUS_BEAN_NAME), eq(MessageBus.class))).thenThrow(new NoSuchBeanDefinitionException(MessageBus.class));
         nad = mock(NodeAndDelegate.class);
         when(nad.getDelegate()).thenReturn(new MockPresentationDelegate());
+        PreferencesHandler.setAppName("test");
         underTest = new Fixture(applicationContext);
       }
 
