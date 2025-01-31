@@ -54,8 +54,7 @@ The application is partitioned in the following modules:
 
 #[[###]]# Model
 
-![UML](it-tidalwave-ui-modules/it-tidalwave-ui-examples/it-tidalwave-ui-example-model/apidocs/it/tidalwave/ui/example/model/package.svg)
-
+![UML](it-tidalwave-ui-modules/it-tidalwave-ui-examples/it-tidalwave-ui-example-model/apidocs/it.tidalwave.ui.example.model/it/tidalwave/ui/example/model/package.svg)
 Let's introduce a bunch of model classes. First, a very simple one, a plain POJO with constructor and getters.
 
 <!-- MACRO{snippet|id=entity|file=${project.basedir}/modules/examples/Model/src/main/java/it/tidalwave/ui/example/model/SimpleEntity.java} -->
@@ -77,11 +76,11 @@ At last, a DAO provides collections of such objects.
 
 <!-- MACRO{snippet|id=dao|file=${project.basedir}/modules/examples/Model/src/main/java/it/tidalwave/ui/example/model/Dao.java} -->
 
-![UML](it-tidalwave-ui-modules/it-tidalwave-ui-examples/it-tidalwave-ui-example-model/apidocs/it/tidalwave/ui/example/model/package.svg)
+![UML](it-tidalwave-ui-modules/it-tidalwave-ui-examples/it-tidalwave-ui-example-model/apidocs/it.tidalwave.ui.example.model/it/tidalwave/ui/example/model/package.svg)
 
 #[[###]]# Presentation
 
-![UML](it-tidalwave-ui-modules/it-tidalwave-ui-examples/it-tidalwave-ui-example-presentation/apidocs/it/tidalwave/ui/example/presentation/package.svg)
+![UML](it-tidalwave-ui-modules/it-tidalwave-ui-examples/it-tidalwave-ui-example-presentation/apidocs/it.tidalwave.ui.example.presentation/it/tidalwave/ui/example/presentation/package.svg)
 
 #[[####]]# MainPanelPresentation
 
@@ -90,7 +89,7 @@ it can be mocked and used in tests.
 
 #[[####]]# DefaultMainPanelPresentationControl
 
-![UML](it-tidalwave-ui-modules/it-tidalwave-ui-examples/it-tidalwave-ui-example-presentation/apidocs/it/tidalwave/ui/example/presentation/impl/DefaultMainPanelPresentationControl.svg)
+![UML](it-tidalwave-ui-modules/it-tidalwave-ui-examples/it-tidalwave-ui-example-presentation/apidocs/it.tidalwave.ui.example.presentation/it/tidalwave/ui/example/presentation/impl/DefaultMainPanelPresentationControl.svg)
 
 First, the control must inject the related presentation and the DAOs:
 
@@ -181,7 +180,7 @@ Presentation models can be created in various way:
 2. explicitly created in a presentation control, as shown above (this works for POJOs);
 3. create in a specific `Presentable` role, that acts as a presentation model factory.
 
-![UML](it-tidalwave-ui-modules/it-tidalwave-ui-examples/it-tidalwave-ui-example-presentation/apidocs/it/tidalwave/ui/example/presentation/impl/FileEntityPresentable.svg)
+![UML](it-tidalwave-ui-modules/it-tidalwave-ui-examples/it-tidalwave-ui-example-presentation/apidocs/it.tidalwave.ui.example.presentation/it/tidalwave/ui/example/presentation/impl/FileEntityPresentable.svg)
 
 The `Presentable` approach is the recommended one (unless the entity is very simple) since in practice the runtime will ask each entity to create is
 presentation model. In particular this is important for composite entities, unless one wants to write code that recursively navigate the tree of child
@@ -271,7 +270,7 @@ while the latter needs to be instantiated by Spring.
 
 #[[####]]# JavaFXMainPanelPresentationDelegate
 
-![UML](it-tidalwave-ui-modules/it-tidalwave-ui-examples/it-tidalwave-ui-example-presentation-javafx/apidocs/it/tidalwave/ui/example/presentation/impl/javafx/JavaFXMainPanelPresentationDelegate.svg)
+![UML](it-tidalwave-ui-modules/it-tidalwave-ui-examples/it-tidalwave-ui-example-presentation-javafx/apidocs/it.tidalwave.ui.example.presentation.javafx/it/tidalwave/ui/example/presentation/impl/javafx/JavaFXMainPanelPresentationDelegate.svg)
 
 The presentation delegate is the class referred by the `.fxml` resource associated to the presentation (in this case `MainPanel.fxml`).
 
@@ -310,7 +309,7 @@ Notifications and special dialogs are also executed by `binder`.
 
 #[[####]]# JavaFXMainPanelPresentation
 
-![UML](it-tidalwave-ui-modules/it-tidalwave-ui-examples/it-tidalwave-ui-example-presentation-javafx/apidocs/it/tidalwave/ui/example/presentation/impl/javafx/JavaFXMainPanelPresentation.svg)
+![UML](it-tidalwave-ui-modules/it-tidalwave-ui-examples/it-tidalwave-ui-example-presentation-javafx/apidocs/it.tidalwave.ui.example.presentation.javafx/it/tidalwave/ui/example/presentation/impl/javafx/JavaFXMainPanelPresentation.svg)
 
 The decorator implementation is always created in the same way, as in the following code example. The returned delegate is indeed a dynamic proxy that wraps
 all method calls in JavaFX `Platform.runLater()`, thus the programmer need not to take care of threading issues.
@@ -326,7 +325,7 @@ package.
 
 #[[####]]# JavaFXApplicationPresentationDelegate
 
-![UML](it-tidalwave-ui-modules/it-tidalwave-ui-examples/it-tidalwave-ui-example-presentation-javafx/apidocs/it/tidalwave/ui/example/presentation/impl/javafx/JavaFXApplicationPresentationDelegate.svg)
+![UML](it-tidalwave-ui-modules/it-tidalwave-ui-examples/it-tidalwave-ui-example-presentation-javafx/apidocs/it.tidalwave.ui.example.presentation.javafx/it/tidalwave/ui/example/presentation/impl/javafx/JavaFXApplicationPresentationDelegate.svg)
 
 The application presentation delegate is the class referred by the `.fxml` resource associated to the application (in this case `Application.fxml`).
 
