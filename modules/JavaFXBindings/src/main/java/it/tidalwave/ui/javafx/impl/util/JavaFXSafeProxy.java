@@ -29,14 +29,13 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import jakarta.annotation.Nonnull;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.atomic.AtomicReference;
 import javafx.application.Platform;
 import org.slf4j.LoggerFactory;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import static it.tidalwave.ui.javafx.impl.util.JavaFXSafeRunner.runSafelyAndWait;
 import static java.util.Arrays.asList;
 import static it.tidalwave.util.CollectionUtils.concat;
 
@@ -95,42 +94,17 @@ public class JavaFXSafeProxy implements InvocationHandler
             return delegate;
           }
 
-        final var result = new AtomicReference<>();
-        final var throwable = new AtomicReference<Throwable>();
-        final var waitForReturn = new CountDownLatch(1);
-
-        JavaFXSafeRunner.runSafely(() ->
+        final var result = runSafelyAndWait(() ->
           {
-            try
+            if (logDelegateInvocations)
               {
-                if (logDelegateInvocations)
-                  {
-                    logInvocation(delegate.getClass(), method, args);
-                  }
+                logInvocation(delegate.getClass(), method, args);
+              }
 
-                result.set(method.invoke(delegate, args));
-              }
-            catch (Throwable t)
-              {
-                throwable.set(t);
-                log.error("Exception while calling JavaFX", t);
-              }
-            finally
-              {
-                waitForReturn.countDown();
-              }
+            return method.invoke(delegate, args);
           });
 
-        log.trace(">>>> waiting for method completion");
-        waitForReturn.await();
-
-        // This is probably useless - void methods return asynchronously
-        if (throwable.get() != null)
-          {
-            throw throwable.get();
-          }
-
-        return method.getReturnType().equals(void.class) ? null : result.get();
+        return method.getReturnType().equals(void.class) ? null : result;
       }
 
     /***********************************************************************************************************************************************************

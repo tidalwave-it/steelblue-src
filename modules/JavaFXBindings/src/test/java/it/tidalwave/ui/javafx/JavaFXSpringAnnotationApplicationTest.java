@@ -54,8 +54,8 @@ public class JavaFXSpringAnnotationApplicationTest
     public void test_ApplicationContext()
       {
         // given
-        final var underTest = new TestApplication();
         PreferencesHandler.setAppName("test");
+        final var underTest = new TestApplication();
         // when
         final var applicationContext = underTest.createApplicationContext();
         // then

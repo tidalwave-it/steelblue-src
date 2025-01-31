@@ -26,7 +26,6 @@
 package it.tidalwave.ui.javafx;
 
 import jakarta.annotation.Nonnull;
-import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import it.tidalwave.ui.javafx.impl.DefaultNodeAndDelegate;
@@ -136,13 +135,6 @@ public interface NodeAndDelegate<T>
     public static <T> NodeAndDelegate<T> of (@Nonnull final Class<T> presentationClass, @Nonnull final String fxmlResourcePath)
       {
         return DefaultNodeAndDelegate.of(presentationClass, fxmlResourcePath);
-      }
-
-    @Nonnull
-    public static <T> NodeAndDelegate<T> load (@Nonnull final Class<T> clazz, @Nonnull final String resource)
-            throws IOException
-      {
-        return DefaultNodeAndDelegate.load(clazz, resource);
       }
 
     @Nonnull

@@ -32,6 +32,7 @@ module it.tidalwave.ui.javafx
     requires transitive it.tidalwave.ui.core;
     requires it.tidalwave.messagebus; // not transitive, since it's optional
     requires transitive jakarta.annotation;
+    requires transitive jakarta.inject;
     requires transitive javafx.base;
     requires transitive javafx.controls;
     requires transitive javafx.graphics;

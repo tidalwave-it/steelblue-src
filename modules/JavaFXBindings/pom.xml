@@ -45,6 +45,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>jakarta.inject</groupId>
+            <artifactId>jakarta.inject-api</artifactId>
+        </dependency>
+        <dependency>
             <groupId>it.tidalwave.steelblue</groupId>
             <artifactId>it-tidalwave-ui-core</artifactId>
         </dependency>

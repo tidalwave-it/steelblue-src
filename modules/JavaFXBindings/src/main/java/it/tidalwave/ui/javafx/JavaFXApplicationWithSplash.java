@@ -26,7 +26,6 @@
 package it.tidalwave.ui.javafx;
 
 import jakarta.annotation.Nonnull;
-import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.io.IOException;
 import javafx.animation.KeyFrame;
@@ -134,37 +133,12 @@ public abstract class JavaFXApplicationWithSplash extends Application
         final var splashCreationTime = System.currentTimeMillis();
         splash.show(splashStage);
 
-        getExecutor().execute(() -> // FIXME: use JavaFX Worker?
-          {
-            initializeInBackground();
-            Platform.runLater(() ->
-              {
-                try
-                  {
-                    final var applicationNad = createParent();
-                    final var scene = createScene((Parent)applicationNad.getNode());
-                    stage.setOnCloseRequest(event -> onClosing());
-                    stage.setScene(scene);
-                    onStageCreated(stage, applicationNad);
-                    stage.setFullScreen(fullScreen);
-                    final double scale = preferencesHandler.getProperty(K_INITIAL_SIZE).orElse(0.65);
-                    final var screenSize = Screen.getPrimary().getBounds();
-                    stage.setWidth(scale * screenSize.getWidth());
-                    stage.setHeight(scale * screenSize.getHeight());
-                    stage.show();
-                    splashStage.toFront();
-
-                    final var duration = preferencesHandler.getProperty(K_MIN_SPLASH_DURATION).orElse(DEFAULT_MIN_SPLASH_DURATION);
-                    final var delay = Math.max(0, splashCreationTime + duration.toMillis() - System.currentTimeMillis());
-                    final var dismissSplash = new Timeline(new KeyFrame(Duration.millis(delay), e -> splash.dismiss()));
-                    Platform.runLater(dismissSplash::play);
-                  }
-                catch (IOException e)
-                  {
-                    log.error("", e);
-                  }
-              });
-          });
+        // try (final var executor = Executors.newSingleThreadExecutor()) TODO: only since JDK 19
+        //  {
+            final var executor = Executors.newSingleThreadExecutor(); // can't use Spring executors, Spring is not yet there
+            executor.execute(() -> initialize(stage, splashStage, splashCreationTime));
+            executor.shutdown();
+        //  }
       }
 
     /***********************************************************************************************************************************************************
@@ -196,18 +170,46 @@ public abstract class JavaFXApplicationWithSplash extends Application
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
-    @Nonnull
-    private Executor getExecutor ()
+    protected Scene createScene (@Nonnull final Parent parent)
       {
-        return Executors.newSingleThreadExecutor();
+        return new Scene(parent);
       }
 
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
-    protected Scene createScene (@Nonnull final Parent parent)
+    private void initialize (@Nonnull final Stage stage, @Nonnull final Stage splashStage, final long splashCreationTime)
       {
-        return new Scene(parent);
+        Thread.currentThread().setName("initializer");
+        initializeInBackground();
+        Platform.runLater(() ->
+          {
+            try
+              {
+                final var preferencesHandler = PreferencesHandler.getInstance();
+                final var applicationNad = createParent();
+                final var scene = createScene((Parent)applicationNad.getNode());
+                stage.setOnCloseRequest(event -> onClosing());
+                stage.setScene(scene);
+                onStageCreated(stage, applicationNad);
+                stage.setFullScreen(fullScreen);
+                final double scale = preferencesHandler.getProperty(K_INITIAL_SIZE).orElse(0.65);
+                final var screenSize = Screen.getPrimary().getBounds();
+                stage.setWidth(scale * screenSize.getWidth());
+                stage.setHeight(scale * screenSize.getHeight());
+                stage.show();
+                splashStage.toFront();
+
+                final var duration = preferencesHandler.getProperty(K_MIN_SPLASH_DURATION).orElse(DEFAULT_MIN_SPLASH_DURATION);
+                final var delay = Math.max(0, splashCreationTime + duration.toMillis() - System.currentTimeMillis());
+                final var dismissSplash = new Timeline(new KeyFrame(Duration.millis(delay), e -> splash.dismiss()));
+                dismissSplash.play();
+              }
+            catch (IOException e)
+              {
+                log.error("", e);
+              }
+          });
       }
 
     /***********************************************************************************************************************************************************

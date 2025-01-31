@@ -26,9 +26,14 @@
 package it.tidalwave.ui.javafx.impl.util;
 
 import jakarta.annotation.Nonnull;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 import javafx.application.Platform;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import it.tidalwave.ui.javafx.impl.DefaultNodeAndDelegate;
+import lombok.SneakyThrows;
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
 /***************************************************************************************************************************************************************
@@ -36,34 +41,67 @@ import lombok.extern.slf4j.Slf4j;
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-@Slf4j @NoArgsConstructor(access=AccessLevel.PRIVATE)
+@UtilityClass @Slf4j
 public final class JavaFXSafeRunner
   {
+    private static final String P_TIMEOUT = DefaultNodeAndDelegate.class.getName() + ".initTimeout";
+    private static final int INITIALIZER_TIMEOUT = Integer.getInteger(P_TIMEOUT, 10);
+
     /***********************************************************************************************************************************************************
-     *
+     * {@return the value provided by the given {@link Callable}, running it in the JavaFX thread}.
+     * @param   callable    the callable
      **********************************************************************************************************************************************************/
-    public static void runSafely (@Nonnull final Runnable runnable)
+    @SneakyThrows
+    public static <T> T runSafelyAndWait (@Nonnull final Callable<T> callable)
+          throws Exception
       {
-        final Runnable guardedRunnable = () ->
+        if (Platform.isFxApplicationThread())
+          {
+            return callable.call();
+          }
+
+        final var latch = new CountDownLatch(1);
+        final var result = new AtomicReference<T>();
+        final var exception = new AtomicReference<Throwable>();
+        final var timeoutMessage = String.format("Likely deadlock in the JavaFX Thread. If you need longer time with the debugger, set -D%s=<v> (current : %s)",
+                                                 P_TIMEOUT, INITIALIZER_TIMEOUT);
+        Platform.runLater(() ->
           {
             try
               {
-                runnable.run();
+                result.set(callable.call());
               }
-            catch (Throwable t)
+            catch (Throwable e)
               {
-                log.error("", t);
-                throw t;
+                exception.set(e);
               }
-          };
+            finally
+              {
+                latch.countDown();
+              }
+          });
 
-        if (Platform.isFxApplicationThread())
+        try
           {
-            guardedRunnable.run();
+            log.debug("Waiting for JavaFX thread...");
+
+            if (!latch.await(INITIALIZER_TIMEOUT, TimeUnit.SECONDS))
+              {
+                throw new RuntimeException(timeoutMessage);
+              }
           }
-        else
+        catch (InterruptedException e)
           {
-            Platform.runLater(guardedRunnable);
+            log.info("Interrupted");
+            Thread.currentThread().interrupt();
+            throw new RuntimeException(e);
           }
+
+        if (exception.get() != null)
+          {
+            throw exception.get();
+          }
+
+        return result.get();
       }
   }

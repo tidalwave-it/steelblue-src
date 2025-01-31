@@ -30,15 +30,15 @@ import java.lang.reflect.Method;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.TreeMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.io.IOException;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -46,14 +46,20 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.tidalwave.ui.core.annotation.Assemble;
 import it.tidalwave.ui.core.annotation.PresentationAssembler;
 import it.tidalwave.ui.core.message.PowerOffEvent;
 import it.tidalwave.ui.core.message.PowerOnEvent;
 import it.tidalwave.ui.javafx.JavaFXApplicationWithSplash;
+import it.tidalwave.ui.javafx.JavaFXBinder;
+import it.tidalwave.ui.javafx.JavaFXMenuBarControl;
+import it.tidalwave.ui.javafx.JavaFXToolBarControl;
 import it.tidalwave.ui.javafx.NodeAndDelegate;
-import it.tidalwave.ui.javafx.impl.util.JavaFXSafeComponentBuilder;
+import it.tidalwave.ui.javafx.impl.DefaultJavaFXBinder;
+import it.tidalwave.ui.javafx.impl.DefaultJavaFXMenuBarControl;
+import it.tidalwave.ui.javafx.impl.DefaultJavaFXToolBarControl;
 import it.tidalwave.ui.javafx.impl.util.JavaFXSafeProxy;
 import it.tidalwave.ui.javafx.impl.util.JavaFXSafeProxy.Proxied;
 import jfxtras.styles.jmetro.JMetro;
@@ -65,8 +71,6 @@ import it.tidalwave.util.PreferencesHandler;
 import it.tidalwave.util.TypeSafeMap;
 import it.tidalwave.util.annotation.VisibleForTesting;
 import it.tidalwave.messagebus.MessageBus;
-import lombok.AccessLevel;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.With;
 import static java.util.stream.Collectors.*;
@@ -143,17 +147,26 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
 
     public static final String APPLICATION_MESSAGE_BUS_BEAN_NAME = "applicationMessageBus";
 
+    private static final Map<Class<?>, Object> BEANS = new HashMap<>();
+
+    private static final int QUEUE_CAPACITY = 10000;
+
+    private static InitParameters initParameters;
+
+    protected final ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+
+    protected final JavaFXBinder javaFxBinder = new DefaultJavaFXBinder(executor);
+
+    protected final JavaFXToolBarControl toolBarControl = new DefaultJavaFXToolBarControl();
+
+    protected final JavaFXMenuBarControl menuBarControl = new DefaultJavaFXMenuBarControl();
+
     // Don't use Slf4j and its static logger - give Main a chance to initialize things
     private final Logger log = LoggerFactory.getLogger(AbstractJavaFXSpringApplication.class);
 
     private ConfigurableApplicationContext applicationContext;
 
     private Optional<MessageBus> messageBus = Optional.empty();
-
-    @Getter(AccessLevel.PACKAGE) @Nonnull
-    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
-
-    private static InitParameters initParameters;
 
     /***********************************************************************************************************************************************************
      * Launches the application.
@@ -178,9 +191,37 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
         catch (Throwable t)
           {
             // Don't use logging facilities here, they could be not initialized
-            t.  printStackTrace();
+            t.printStackTrace();
             System.exit(-1);
           }
+      }
+
+    /***********************************************************************************************************************************************************
+     *
+     **********************************************************************************************************************************************************/
+    @Nonnull
+    public static Map<Class<?>, Object> getBeans()
+      {
+        return Collections.unmodifiableMap(BEANS);
+      }
+
+    /***********************************************************************************************************************************************************
+     *
+     **********************************************************************************************************************************************************/
+    protected AbstractJavaFXSpringApplication()
+      {
+        executor.setWaitForTasksToCompleteOnShutdown(false);
+        executor.setAwaitTerminationMillis(2000); // FIXME
+        executor.setThreadNamePrefix("ui-service-pool-");
+        // Fix for STB-26
+        executor.setCorePoolSize(1);
+        executor.setMaxPoolSize(1);
+        executor.setQueueCapacity(QUEUE_CAPACITY);
+        executor.initialize(); // it's used before Spring completes initialisation
+        BEANS.put(JavaFXBinder.class, javaFxBinder);
+        BEANS.put(JavaFXToolBarControl.class, toolBarControl);
+        BEANS.put(JavaFXMenuBarControl.class, menuBarControl);
+        BEANS.put(PreferencesHandler.class, PreferencesHandler.getInstance());
       }
 
     /***********************************************************************************************************************************************************
@@ -198,9 +239,8 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
      **********************************************************************************************************************************************************/
     @Override @Nonnull
     protected NodeAndDelegate<?> createParent()
-            throws IOException
       {
-        return NodeAndDelegate.load(getClass(), applicationFxml);
+        return NodeAndDelegate.of(getClass(), applicationFxml);
       }
 
     /***********************************************************************************************************************************************************
@@ -254,7 +294,7 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
     protected final void onStageCreated (@Nonnull final Stage stage, @Nonnull final NodeAndDelegate<?> applicationNad)
       {
         assert Platform.isFxApplicationThread();
-        JavaFXSafeComponentBuilder.getJavaFxBinder().setMainWindow(stage);
+        javaFxBinder.setMainWindow(stage);
         onStageCreated2(applicationNad);
       }
 
@@ -275,7 +315,7 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
           }
 
         callPresentationAssemblers();
-        executorService.execute(() ->
+        executor.execute(() ->
           {
             onStageCreated(applicationContext);
             messageBus.ifPresent(mb -> mb.publish(new PowerOnEvent()));
@@ -297,7 +337,9 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
     @Override
     protected void onClosing()
       {
+        log.info("onClosing()");
         messageBus.ifPresent(mb -> mb.publish(new PowerOffEvent()));
+        log.info(">>>> closing applicationContext...");
         applicationContext.close();
       }
 
@@ -346,7 +388,7 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
     @Nonnull
     private <T> T resolveBean (@Nonnull final Class<T> type)
       {
-        return type.cast(Optional.ofNullable(JavaFXSafeComponentBuilder.BEANS.get(type)).orElseGet(() -> applicationContext.getBean(type)));
+        return type.cast(Optional.ofNullable(BEANS.get(type)).orElseGet(() -> applicationContext.getBean(type)));
       }
 
     /***********************************************************************************************************************************************************

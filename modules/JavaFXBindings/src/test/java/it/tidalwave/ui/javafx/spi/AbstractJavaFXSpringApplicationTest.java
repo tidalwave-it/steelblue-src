@@ -27,10 +27,9 @@ package it.tidalwave.ui.javafx.spi;
 
 import jakarta.annotation.Nonnull;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import it.tidalwave.ui.core.annotation.Assemble;
 import it.tidalwave.ui.core.annotation.PresentationAssembler;
 import it.tidalwave.ui.core.message.PowerOffEvent;
@@ -66,6 +65,12 @@ public class AbstractJavaFXSpringApplicationTest
           {
             return mockApplicationContext;
           }
+
+        @Nonnull
+        private ThreadPoolTaskExecutor getExecutor()
+          {
+            return executor;
+          }
       }
 
     static class MockPresentationDelegate
@@ -80,8 +85,6 @@ public class AbstractJavaFXSpringApplicationTest
 
     private NodeAndDelegate<MockPresentationDelegate> nad;
 
-    private ExecutorService executorService;
-
     /**********************************************************************************************************************************************************/
     @BeforeMethod @SuppressWarnings("unchecked")
     public void setup()
@@ -93,20 +96,17 @@ public class AbstractJavaFXSpringApplicationTest
         nad = mock(NodeAndDelegate.class);
         when(nad.getDelegate()).thenReturn(new MockPresentationDelegate());
         underTest = new Fixture(applicationContext);
-        executorService = underTest.getExecutorService();
       }
 
     /**********************************************************************************************************************************************************/
     @Test
     public void must_not_fire_PowerOnEvent_when_MessageBus_not_present()
-            throws InterruptedException
       {
         // given
         underTest.initializeInBackground();
         // when
         underTest.onStageCreated2(nad);
-        executorService.shutdown();
-        executorService.awaitTermination(1L, TimeUnit.SECONDS);
+        underTest.getExecutor().shutdown();
         // then
         verifyNoInteractions(messageBus);
       }
@@ -114,7 +114,6 @@ public class AbstractJavaFXSpringApplicationTest
     /**********************************************************************************************************************************************************/
     @Test
     public void must_fire_PowerOnEvent_when_MessageBus_present()
-            throws InterruptedException
       {
         // given
         when(applicationContext.containsBean(APPLICATION_MESSAGE_BUS_BEAN_NAME)).thenReturn(true);
@@ -122,8 +121,7 @@ public class AbstractJavaFXSpringApplicationTest
         underTest.initializeInBackground();
         // when
         underTest.onStageCreated2(nad);
-        executorService.shutdown();
-        executorService.awaitTermination(1L, TimeUnit.SECONDS);
+        underTest.getExecutor().shutdown();
         // then
         verify(messageBus).publish(any(PowerOnEvent.class));
         verifyNoMoreInteractions(messageBus);

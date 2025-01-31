@@ -26,6 +26,7 @@
 package it.tidalwave.ui.javafx;
 
 import jakarta.annotation.Nonnull;
+import jakarta.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.BeanFactory;
@@ -35,7 +36,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import it.tidalwave.ui.core.annotation.EnableMessageBus;
 import it.tidalwave.ui.javafx.impl.DefaultJavaFXPanelGroupControl;
-import it.tidalwave.ui.javafx.impl.util.JavaFXSafeComponentBuilder;
 import it.tidalwave.ui.javafx.spi.AbstractJavaFXSpringApplication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,12 +53,15 @@ import it.tidalwave.messagebus.spi.SimpleMessageBus;
  **************************************************************************************************************************************************************/
 public class JavaFXSpringAnnotationApplication extends AbstractJavaFXSpringApplication
   {
-    private static class Beans
+    /***********************************************************************************************************************************************************
+     * Base bean factory.
+     **********************************************************************************************************************************************************/
+    private class Beans
       {
         @Bean
         public ThreadPoolTaskExecutor javafxBinderExecutor()
           {
-            return JavaFXSafeComponentBuilder.getExecutor();
+            return executor;
           }
 
         @Bean
@@ -70,13 +73,13 @@ public class JavaFXSpringAnnotationApplication extends AbstractJavaFXSpringAppli
         @Bean
         public JavaFXToolBarControl toolBarControl()
           {
-            return JavaFXSafeComponentBuilder.getToolBarControl();
+            return toolBarControl;
           }
 
         @Bean
         public JavaFXMenuBarControl menuBarControl()
           {
-            return JavaFXSafeComponentBuilder.getMenuBarControl();
+            return menuBarControl;
           }
 
         @Bean
@@ -86,10 +89,13 @@ public class JavaFXSpringAnnotationApplication extends AbstractJavaFXSpringAppli
           }
       }
 
+    /***********************************************************************************************************************************************************
+     * Auxiliary bean factory for message bus.
+     **********************************************************************************************************************************************************/
     private static class MessageBusBeans
       {
-        @Bean(name = APPLICATION_MESSAGE_BUS_BEAN_NAME)
-        public MessageBus applicationMessageBus()
+        @Bean(name = MESSAGE_BUS_EXECUTOR_BEAN_NAME)
+        public ThreadPoolTaskExecutor applicationMessageBusExecutor()
           {
             final var executor = new ThreadPoolTaskExecutor();
             executor.setWaitForTasksToCompleteOnShutdown(false);
@@ -97,16 +103,24 @@ public class JavaFXSpringAnnotationApplication extends AbstractJavaFXSpringAppli
             executor.setCorePoolSize(10);
             executor.setMaxPoolSize(10);
             executor.setQueueCapacity(10);
-            executor.afterPropertiesSet();
+            return executor;
+          }
+
+        @Bean(name = APPLICATION_MESSAGE_BUS_BEAN_NAME)
+        public MessageBus applicationMessageBus (@Named(MESSAGE_BUS_EXECUTOR_BEAN_NAME) final ThreadPoolTaskExecutor executor)
+          {
             return new SimpleMessageBus(executor);
           }
       }
 
-    public static final String APPLICATION_MESSAGE_BUS_BEAN_NAME = "applicationMessageBus";
+    public static final String MESSAGE_BUS_EXECUTOR_BEAN_NAME = "applicationMessageBusExecutor";
 
     // Don't use Slf4j and its static logger - give Main a chance to initialize things
     private final Logger log = LoggerFactory.getLogger(JavaFXSpringAnnotationApplication.class);
 
+    /***********************************************************************************************************************************************************
+     * {@inheritDoc}
+     **********************************************************************************************************************************************************/
     @Override @Nonnull
     protected ConfigurableApplicationContext createApplicationContext()
       {
@@ -120,6 +134,6 @@ public class JavaFXSpringAnnotationApplication extends AbstractJavaFXSpringAppli
           }
 
         log.info("Scanning beans from {}", mainClass);
-        return new AnnotationConfigApplicationContext(componentClasses.toArray(new Class<?>[0]));
+        return new AnnotationConfigApplicationContext(componentClasses.toArray(Class<?>[]::new));
       }
   }
