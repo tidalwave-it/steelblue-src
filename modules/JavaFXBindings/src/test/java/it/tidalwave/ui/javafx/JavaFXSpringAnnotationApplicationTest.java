@@ -27,6 +27,7 @@ package it.tidalwave.ui.javafx;
 
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import it.tidalwave.ui.core.annotation.EnableMessageBus;
+import org.assertj.core.api.Assertions;
 import it.tidalwave.util.PreferencesHandler;
 import it.tidalwave.messagebus.MessageBus;
 import org.testng.annotations.Test;
@@ -71,15 +72,15 @@ public class JavaFXSpringAnnotationApplicationTest
     public void test_ApplicationContext_with_EnableMessageBus()
       {
         // given
-        final var underTest = new it.tidalwave.ui.javafx.JavaFXSpringAnnotationApplicationTest.TestApplicationWithEnableMessageBus();
+        final var underTest = new JavaFXSpringAnnotationApplicationTest.TestApplicationWithEnableMessageBus();
         PreferencesHandler.setAppName("test");
         // when
         final var applicationContext = underTest.createApplicationContext();
         // then
-        assertThat(applicationContext.getBean("javafxBinderExecutor", ThreadPoolTaskExecutor.class)).isNotNull();
-        assertThat(applicationContext.getBean("preferencesHandler", PreferencesHandler.class)).isNotNull();
-        assertThat(applicationContext.getBean("toolBarControl", JavaFXToolBarControl.class)).isNotNull();
-        assertThat(applicationContext.getBean("menuBarControl", JavaFXMenuBarControl.class)).isNotNull();
-        assertThat(applicationContext.getBean(APPLICATION_MESSAGE_BUS_BEAN_NAME, MessageBus.class)).isNotNull();
+        Assertions.assertThat(applicationContext.getBean("javafxBinderExecutor", ThreadPoolTaskExecutor.class)).isNotNull();
+        Assertions.assertThat(applicationContext.getBean("preferencesHandler", PreferencesHandler.class)).isNotNull();
+        Assertions.assertThat(applicationContext.getBean("toolBarControl", JavaFXToolBarControl.class)).isNotNull();
+        Assertions.assertThat(applicationContext.getBean("menuBarControl", JavaFXMenuBarControl.class)).isNotNull();
+        Assertions.assertThat(applicationContext.getBean(APPLICATION_MESSAGE_BUS_BEAN_NAME, MessageBus.class)).isNotNull();
       }
   }

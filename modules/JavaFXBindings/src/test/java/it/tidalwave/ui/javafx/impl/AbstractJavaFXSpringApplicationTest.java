@@ -23,7 +23,7 @@
  *
  * *************************************************************************************************************************************************************
  */
-package it.tidalwave.ui.javafx.spi;
+package it.tidalwave.ui.javafx.impl;
 
 import jakarta.annotation.Nonnull;
 import java.util.Map;

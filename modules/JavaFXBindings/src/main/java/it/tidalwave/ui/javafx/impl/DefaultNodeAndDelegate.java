@@ -31,14 +31,12 @@ import java.io.UncheckedIOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import it.tidalwave.ui.javafx.NodeAndDelegate;
-import it.tidalwave.ui.javafx.impl.util.JavaFXSafeProxy;
-import it.tidalwave.ui.javafx.spi.AbstractJavaFXSpringApplication;
 import org.slf4j.LoggerFactory;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import static it.tidalwave.ui.javafx.impl.DefaultJavaFXBinder.enforceFxApplicationThread;
-import static it.tidalwave.ui.javafx.impl.util.JavaFXSafeRunner.runSafelyAndWait;
+import static it.tidalwave.ui.javafx.impl.JavaFXSafeRunner.runSafelyAndWait;
 import static it.tidalwave.util.ReflectionUtils.*;
 
 /***************************************************************************************************************************************************************

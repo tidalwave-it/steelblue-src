@@ -36,13 +36,13 @@ import java.util.function.Supplier;
 import javafx.collections.ObservableList;
 import javafx.application.Platform;
 import it.tidalwave.ui.core.role.PresentationModel;
-import it.tidalwave.ui.javafx.impl.util.Logging;
+import it.tidalwave.ui.javafx.impl.Logging;
 import it.tidalwave.util.As;
 import it.tidalwave.role.Composite;
 import it.tidalwave.role.SimpleComposite;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
-import static it.tidalwave.ui.javafx.impl.util.Logging.INDENT;
+import static it.tidalwave.ui.javafx.impl.Logging.INDENT;
 import static java.util.Collections.emptyList;
 import static javafx.collections.FXCollections.*;
 

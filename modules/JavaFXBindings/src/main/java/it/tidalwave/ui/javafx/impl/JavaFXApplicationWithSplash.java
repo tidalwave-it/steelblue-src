@@ -23,7 +23,7 @@
  *
  * *************************************************************************************************************************************************************
  */
-package it.tidalwave.ui.javafx;
+package it.tidalwave.ui.javafx.impl;
 
 import jakarta.annotation.Nonnull;
 import java.util.concurrent.Executors;
@@ -39,6 +39,7 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import javafx.application.Application;
 import javafx.application.Platform;
+import it.tidalwave.ui.javafx.NodeAndDelegate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import it.tidalwave.util.Key;

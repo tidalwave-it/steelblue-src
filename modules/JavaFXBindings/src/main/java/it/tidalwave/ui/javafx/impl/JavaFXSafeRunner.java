@@ -23,7 +23,7 @@
  *
  * *************************************************************************************************************************************************************
  */
-package it.tidalwave.ui.javafx.impl.util;
+package it.tidalwave.ui.javafx.impl;
 
 import jakarta.annotation.Nonnull;
 import java.util.concurrent.Callable;
@@ -31,7 +31,6 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import javafx.application.Platform;
-import it.tidalwave.ui.javafx.impl.DefaultNodeAndDelegate;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;

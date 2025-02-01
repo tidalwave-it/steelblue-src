@@ -23,19 +23,20 @@
  *
  * *************************************************************************************************************************************************************
  */
-package it.tidalwave.ui.javafx.impl.util;
+package it.tidalwave.ui.javafx.impl;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import jakarta.annotation.Nonnull;
 import javafx.application.Platform;
+import it.tidalwave.ui.javafx.NodeAndDelegate;
 import org.slf4j.LoggerFactory;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import static it.tidalwave.ui.javafx.impl.util.JavaFXSafeRunner.runSafelyAndWait;
+import static it.tidalwave.ui.javafx.impl.JavaFXSafeRunner.runSafelyAndWait;
 import static java.util.Arrays.asList;
 import static it.tidalwave.util.CollectionUtils.concat;
 
@@ -45,7 +46,7 @@ import static it.tidalwave.util.CollectionUtils.concat;
  * is not blocked if the method is declared as {@code void}; it is blocked otherwise, so it can immediately retrieve
  * the result.
  *
- * This behaviour is required by {@link it.tidalwave.ui.javafx.NodeAndDelegate#of(Class)} ()}.
+ * This behaviour is required by {@link NodeAndDelegate#of(Class)} ()}.
  *
  * TODO: add support for aysnc returning a Future.
  *

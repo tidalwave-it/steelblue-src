@@ -36,7 +36,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import it.tidalwave.ui.core.annotation.EnableMessageBus;
 import it.tidalwave.ui.javafx.impl.DefaultJavaFXPanelGroupControl;
-import it.tidalwave.ui.javafx.spi.AbstractJavaFXSpringApplication;
+import it.tidalwave.ui.javafx.impl.AbstractJavaFXSpringApplication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import it.tidalwave.util.PreferencesHandler;

@@ -43,6 +43,7 @@ module it.tidalwave.ui.javafx
     requires spring.context;
     exports it.tidalwave.ui.javafx;
     exports it.tidalwave.ui.javafx.role;
-    exports it.tidalwave.ui.javafx.spi;
     opens it.tidalwave.ui.javafx to spring.core, javafx.graphics, javafx.fxml;
+    exports it.tidalwave.ui.javafx.impl;
+    opens it.tidalwave.ui.javafx.impl to javafx.fxml, javafx.graphics, spring.core;
   }

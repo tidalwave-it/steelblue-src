@@ -23,7 +23,7 @@
  *
  * *************************************************************************************************************************************************************
  */
-package it.tidalwave.ui.javafx.spi;
+package it.tidalwave.ui.javafx.impl;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -52,16 +52,11 @@ import it.tidalwave.ui.core.annotation.Assemble;
 import it.tidalwave.ui.core.annotation.PresentationAssembler;
 import it.tidalwave.ui.core.message.PowerOffEvent;
 import it.tidalwave.ui.core.message.PowerOnEvent;
-import it.tidalwave.ui.javafx.JavaFXApplicationWithSplash;
 import it.tidalwave.ui.javafx.JavaFXBinder;
 import it.tidalwave.ui.javafx.JavaFXMenuBarControl;
 import it.tidalwave.ui.javafx.JavaFXToolBarControl;
 import it.tidalwave.ui.javafx.NodeAndDelegate;
-import it.tidalwave.ui.javafx.impl.DefaultJavaFXBinder;
-import it.tidalwave.ui.javafx.impl.DefaultJavaFXMenuBarControl;
-import it.tidalwave.ui.javafx.impl.DefaultJavaFXToolBarControl;
-import it.tidalwave.ui.javafx.impl.util.JavaFXSafeProxy;
-import it.tidalwave.ui.javafx.impl.util.JavaFXSafeProxy.Proxied;
+import it.tidalwave.ui.javafx.impl.JavaFXSafeProxy.Proxied;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.Style;
 import org.slf4j.Logger;

@@ -52,7 +52,7 @@ import it.tidalwave.util.Pair;
 import lombok.extern.slf4j.Slf4j;
 import static it.tidalwave.ui.core.PanelGroupControl.Options.*;
 import static it.tidalwave.ui.javafx.impl.DefaultJavaFXBinder.enforceFxApplicationThread;
-import static it.tidalwave.ui.javafx.spi.AbstractJavaFXSpringApplication.APPLICATION_MESSAGE_BUS_BEAN_NAME;
+import static it.tidalwave.ui.javafx.impl.AbstractJavaFXSpringApplication.APPLICATION_MESSAGE_BUS_BEAN_NAME;
 import static java.util.Comparator.*;
 import static java.util.stream.Collectors.*;
 import static it.tidalwave.util.CollectionUtils.concatAll;

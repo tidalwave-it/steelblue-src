@@ -54,7 +54,7 @@ import org.testng.annotations.Test;
 import org.mockito.ArgumentCaptor;
 import static it.tidalwave.ui.core.PanelGroupControl.DefaultGroups.LEFT;
 import static it.tidalwave.ui.core.PanelGroupControl.Options.*;
-import static it.tidalwave.ui.javafx.spi.AbstractJavaFXSpringApplication.APPLICATION_MESSAGE_BUS_BEAN_NAME;
+import static it.tidalwave.ui.javafx.impl.AbstractJavaFXSpringApplication.APPLICATION_MESSAGE_BUS_BEAN_NAME;
 import static org.testfx.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
