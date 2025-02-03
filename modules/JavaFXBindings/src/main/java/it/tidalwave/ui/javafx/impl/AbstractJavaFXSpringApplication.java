@@ -36,7 +36,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.TreeMap;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import javafx.scene.Parent;
@@ -68,7 +67,7 @@ import it.tidalwave.util.annotation.VisibleForTesting;
 import it.tidalwave.messagebus.MessageBus;
 import lombok.RequiredArgsConstructor;
 import lombok.With;
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 import static it.tidalwave.util.CollectionUtils.concat;
 import static it.tidalwave.util.FunctionalCheckedExceptionWrappers.*;
 import static it.tidalwave.util.ShortNames.shortIds;
@@ -156,7 +155,7 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
 
     protected final JavaFXMenuBarControl menuBarControl = new DefaultJavaFXMenuBarControl();
 
-    // Don't use Slf4j and its static logger - give Main a chance to initialize things
+    // Don't use Lombok and its static logger - give Main a chance to initialize things
     private final Logger log = LoggerFactory.getLogger(AbstractJavaFXSpringApplication.class);
 
     private ConfigurableApplicationContext applicationContext;
@@ -245,23 +244,15 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
     protected void initializeInBackground()
       {
         log.info("initializeInBackground()");
+        System.getProperties().forEach((name, value) -> log.debug("{}: {}", name, value));
+        // TODO: workaround for NWRCA-41
+        System.setProperty("it.tidalwave.util.spring.ClassScanner.basePackages", "it");
+        applicationContext = createApplicationContext();
+        applicationContext.registerShutdownHook(); // this actually seems not working, onClosing() does
 
-        try
+        if (applicationContext.containsBean(APPLICATION_MESSAGE_BUS_BEAN_NAME))
           {
-            logProperties();
-            // TODO: workaround for NWRCA-41
-            System.setProperty("it.tidalwave.util.spring.ClassScanner.basePackages", "it");
-            applicationContext = createApplicationContext();
-            applicationContext.registerShutdownHook(); // this actually seems not working, onClosing() does
-
-            if (applicationContext.containsBean(APPLICATION_MESSAGE_BUS_BEAN_NAME))
-              {
-                messageBus = Optional.of(applicationContext.getBean(APPLICATION_MESSAGE_BUS_BEAN_NAME, MessageBus.class));
-              }
-          }
-        catch (Throwable t)
-          {
-            log.error("", t);
+            messageBus = Optional.of(applicationContext.getBean(APPLICATION_MESSAGE_BUS_BEAN_NAME, MessageBus.class));
           }
       }
 
@@ -274,7 +265,7 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
-    @Override
+    @Override @Nonnull
     protected Scene createScene (@Nonnull final Parent parent)
       {
         final var scene = super.createScene(parent);
@@ -408,16 +399,5 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
     private static Object getActualDelegate (@Nonnull final Object delegate)
       {
         return delegate instanceof Proxied ? ((Proxied)delegate).__getProxiedObject() : delegate;
-      }
-
-    /***********************************************************************************************************************************************************
-     * Logs all the system properties.
-     **********************************************************************************************************************************************************/
-    private void logProperties()
-      {
-        for (final var e : new TreeMap<>(System.getProperties()).entrySet())
-          {
-            log.debug("{}: {}", e.getKey(), e.getValue());
-          }
       }
   }

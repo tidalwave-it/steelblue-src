@@ -26,8 +26,6 @@
 package it.tidalwave.ui.javafx.impl;
 
 import jakarta.annotation.Nonnull;
-import java.util.concurrent.Executors;
-import java.io.IOException;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Parent;
@@ -124,13 +122,9 @@ public abstract class JavaFXApplicationWithSplash extends Application
 
         final var splashCreationTime = System.currentTimeMillis();
         splash.show(splashStage);
-
-        // try (final var executor = Executors.newSingleThreadExecutor()) TODO: only since JDK 19
-        //  {
-            final var executor = Executors.newSingleThreadExecutor(); // can't use Spring executors, Spring is not yet there
-            executor.execute(() -> initialize(stage, splashStage, splashCreationTime));
-            executor.shutdown();
-        //  }
+        // No executors available here
+        final var thread = new Thread(() -> initializeInBackground(stage, splashStage, splashCreationTime), "initializer");
+        thread.start();
       }
 
     /***********************************************************************************************************************************************************
@@ -144,8 +138,7 @@ public abstract class JavaFXApplicationWithSplash extends Application
      *
      **********************************************************************************************************************************************************/
     @Nonnull
-    protected abstract NodeAndDelegate<?> createParent()
-      throws IOException;
+    protected abstract NodeAndDelegate<?> createParent();
 
     /***********************************************************************************************************************************************************
      *
@@ -162,46 +155,57 @@ public abstract class JavaFXApplicationWithSplash extends Application
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
+    @Nonnull
     protected Scene createScene (@Nonnull final Parent parent)
       {
         return new Scene(parent);
       }
 
     /***********************************************************************************************************************************************************
-     *
+     * Calls {@link #initializeInBackground()} and then {@link #afterInitializationCompleted(Stage, Stage, long)} in the JavaFX thread.
+     * @param   stage                 the main {@code Stage}
+     * @param   splashStage           the splash {@code Stage}
+     * @param   splashCreationTime    the time at which the splash {@code Stage} was created
      **********************************************************************************************************************************************************/
-    private void initialize (@Nonnull final Stage stage, @Nonnull final Stage splashStage, final long splashCreationTime)
+    private void initializeInBackground (@Nonnull final Stage stage, @Nonnull final Stage splashStage, final long splashCreationTime)
       {
-        Thread.currentThread().setName("initializer");
-        initializeInBackground();
-        Platform.runLater(() ->
+        try
           {
-            try
-              {
-                final var preferencesHandler = PreferencesHandler.getInstance();
-                final var applicationNad = createParent();
-                final var scene = createScene((Parent)applicationNad.getNode());
-                stage.setOnCloseRequest(event -> onClosing());
-                stage.setScene(scene);
-                onStageCreated(stage, applicationNad);
-                stage.setFullScreen(fullScreen);
-                final double scale = preferencesHandler.getProperty(K_INITIAL_SIZE).orElse(0.65);
-                final var screenSize = Screen.getPrimary().getBounds();
-                stage.setWidth(scale * screenSize.getWidth());
-                stage.setHeight(scale * screenSize.getHeight());
-                stage.show();
-                splashStage.toFront();
+            initializeInBackground();
+            Platform.runLater(() -> afterInitializationCompleted(stage, splashStage, splashCreationTime));
+          }
+        catch (Throwable t)
+          {
+            log.error("", t);
+          }
+      }
 
-                final var duration = preferencesHandler.getProperty(K_MIN_SPLASH_DURATION).orElse(DEFAULT_MIN_SPLASH_DURATION);
-                final var delay = Math.max(0, splashCreationTime + duration.toMillis() - System.currentTimeMillis());
-                final var dismissSplash = new Timeline(new KeyFrame(Duration.millis(delay), e -> splash.dismiss()));
-                dismissSplash.play();
-              }
-            catch (IOException e)
-              {
-                log.error("", e);
-              }
-          });
+    /***********************************************************************************************************************************************************
+     * Called after the initialisation in background has been completed, this method dismisses the splash {@link Stage} and brings the main {@code Stage} to
+     * view.
+     * @param   stage                 the main {@code Stage}
+     * @param   splashStage           the splash {@code Stage}
+     * @param   splashCreationTime    the time at which the splash {@code Stage} was created
+     **********************************************************************************************************************************************************/
+    private void afterInitializationCompleted (@Nonnull final Stage stage, @Nonnull final Stage splashStage, final long splashCreationTime)
+      {
+        final var preferencesHandler = PreferencesHandler.getInstance();
+        final var applicationNad = createParent();
+        final var scene = createScene((Parent)applicationNad.getNode());
+        stage.setOnCloseRequest(event -> onClosing());
+        stage.setScene(scene);
+        onStageCreated(stage, applicationNad);
+        final double scale = preferencesHandler.getProperty(K_INITIAL_SIZE).orElse(0.65);
+        final var screenSize = Screen.getPrimary().getBounds();
+        stage.setWidth(scale * screenSize.getWidth());
+        stage.setHeight(scale * screenSize.getHeight());
+        stage.show();
+        splashStage.toFront();
+
+        final var duration = preferencesHandler.getProperty(K_MIN_SPLASH_DURATION).orElse(DEFAULT_MIN_SPLASH_DURATION);
+        final var delay = Math.max(0, splashCreationTime + duration.toMillis() - System.currentTimeMillis());
+        final var dismissSplash = new Timeline(new KeyFrame(Duration.millis(delay), e -> splash.dismiss()));
+        dismissSplash.play();
       }
 
     /***********************************************************************************************************************************************************
