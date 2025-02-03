@@ -101,20 +101,11 @@ public abstract class JavaFXApplicationWithSplash extends Application
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
     @Override
-    public void init()
-      {
-        log.info("init()");
-        splash = new Splash(this, splashFxml, this::createScene);
-        splash.init();
-      }
-
-    /***********************************************************************************************************************************************************
-     * {@inheritDoc}
-     **********************************************************************************************************************************************************/
-    @Override
     public void start (@Nonnull final Stage stage)
       {
         log.info("start({})", stage);
+        splash = new Splash(this, splashFxml, this::createScene);
+        splash.init();
         final var preferencesHandler = PreferencesHandler.getInstance();
         fullScreen = preferencesHandler.getProperty(K_FULL_SCREEN).orElse(false);
         fullScreenLocked = preferencesHandler.getProperty(K_FULL_SCREEN_LOCKED).orElse(false);
