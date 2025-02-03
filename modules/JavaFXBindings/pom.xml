@@ -34,13 +34,13 @@
     <parent>
         <groupId>it.tidalwave.steelblue</groupId>
         <artifactId>it-tidalwave-ui-modules</artifactId>
-        <version>3.0-ALPHA-3-SNAPSHOT</version>
+        <version>3.0-ALPHA-3</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>it-tidalwave-ui-javafx</artifactId>
     <packaging>jar</packaging>
-    <version>3.0-ALPHA-3-SNAPSHOT</version>
+    <version>3.0-ALPHA-3</version>
     <name>SteelBlue :: JavaFX Bindings</name>
 
     <dependencies>
