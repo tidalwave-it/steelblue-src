@@ -28,7 +28,6 @@ package it.tidalwave.ui.core.message;
 import jakarta.annotation.Nonnull;
 import it.tidalwave.ui.core.PanelGroupControl;
 import it.tidalwave.ui.core.role.impl.AbstractPanelNotification;
-import lombok.ToString;
 
 /***************************************************************************************************************************************************************
  *
@@ -39,7 +38,6 @@ import lombok.ToString;
  * @author      Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-@ToString
 public class PanelHiddenNotification extends AbstractPanelNotification
   {
     public PanelHiddenNotification (@Nonnull final Object target, @Nonnull final PanelGroupControl.Group group)

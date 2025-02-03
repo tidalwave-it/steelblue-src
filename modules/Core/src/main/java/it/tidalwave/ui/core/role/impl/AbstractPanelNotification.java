@@ -25,10 +25,11 @@
  */
 package it.tidalwave.ui.core.role.impl;
 
+import jakarta.annotation.Nonnull;
 import it.tidalwave.ui.core.PanelGroupControl;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import static it.tidalwave.util.ShortNames.shortId;
 
 /***************************************************************************************************************************************************************
  *
@@ -38,10 +39,18 @@ import lombok.ToString;
  * @author      Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-@RequiredArgsConstructor @Getter @ToString
+@RequiredArgsConstructor @Getter
 public abstract class AbstractPanelNotification
   {
+    @Nonnull
     private final Object target;
 
+    @Nonnull
     private final PanelGroupControl.Group group;
+
+    @Override @Nonnull
+    public String toString()
+      {
+        return String.format("%s(target=%s, group=%s)", getClass().getSimpleName(), shortId(target), group);
+      }
   }
