@@ -83,7 +83,7 @@ public class Main extends JavaFXSpringAnnotationApplication
     @Override
     protected void onStageCreated (@Nonnull final ApplicationContext applicationContext)
       {
-        // Because of STB-78, it's advisable not to user @PostConstruct to initialise controllers.
+        // Because of STB-78, it's advisable not to use @PostConstruct to initialise controllers.
         applicationContext.getBean(MainPanelPresentationControl.class).populate();
         // If one likes pubsub, an alternate approach is to listen to a message notifying that the application started.
         // See also EnableMessageBus to simplify implementation.
