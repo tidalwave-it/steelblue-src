@@ -34,13 +34,13 @@
     <parent>
         <groupId>it.tidalwave.steelblue</groupId>
         <artifactId>it-tidalwave-ui-modules</artifactId>
-        <version>3.0-ALPHA-3</version>
+        <version>3.0-ALPHA-4-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>it-tidalwave-ui-test</artifactId>
     <packaging>jar</packaging>
-    <version>3.0-ALPHA-3</version>
+    <version>3.0-ALPHA-4-SNAPSHOT</version>
     <name>SteelBlue :: Test</name>
     <description>
         An experimental test framework for UI.
