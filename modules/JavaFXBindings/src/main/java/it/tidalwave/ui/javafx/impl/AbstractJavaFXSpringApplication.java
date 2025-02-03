@@ -321,13 +321,13 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
     @Override
-    protected final void onClosing()
+    protected final void onCloseRequest()
       {
-        log.info("onClosing()");
+        log.info("onCloseRequest()");
         messageBus.ifPresent(mb -> mb.publish(new PowerOffEvent()));
         executor.execute(() ->
           {
-            applicationContext.close();
+            // applicationContext.close();
             Platform.runLater(() ->
               {
                 Platform.exit();

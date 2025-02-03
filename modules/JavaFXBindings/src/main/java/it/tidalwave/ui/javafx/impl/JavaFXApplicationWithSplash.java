@@ -148,7 +148,7 @@ public abstract class JavaFXApplicationWithSplash extends Application
     /***********************************************************************************************************************************************************
      * Invoked when the main {@link Stage} is being closed. This method is called in the JavaFX thread.
      **********************************************************************************************************************************************************/
-    protected void onClosing()
+    protected void onCloseRequest()
       {
       }
 
@@ -189,10 +189,11 @@ public abstract class JavaFXApplicationWithSplash extends Application
      **********************************************************************************************************************************************************/
     private void afterInitializationCompleted (@Nonnull final Stage stage, @Nonnull final Stage splashStage, final long splashCreationTime)
       {
+        log.info("afterInitializationCompleted({}, {}, {})", stage, splashStage, splashCreationTime);
         final var preferencesHandler = PreferencesHandler.getInstance();
         final var applicationNad = createParent();
         final var scene = createScene((Parent)applicationNad.getNode());
-        stage.setOnCloseRequest(event -> onClosing());
+        stage.setOnCloseRequest(event -> onCloseRequest());
         stage.setScene(scene);
         onStageCreated(stage, applicationNad);
         final double scale = preferencesHandler.getProperty(K_INITIAL_SIZE).orElse(0.65);

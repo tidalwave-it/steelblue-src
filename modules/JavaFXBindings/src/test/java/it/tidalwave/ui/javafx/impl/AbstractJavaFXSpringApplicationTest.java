@@ -141,7 +141,7 @@ public class AbstractJavaFXSpringApplicationTest
         // given
         underTest.initializeInBackground();
         // when
-        underTest.onClosing();
+        underTest.onCloseRequest();
         // then
         verifyNoInteractions(messageBus);
       }
@@ -155,7 +155,7 @@ public class AbstractJavaFXSpringApplicationTest
         when(applicationContext.getBean(eq(APPLICATION_MESSAGE_BUS_BEAN_NAME), eq(MessageBus.class))).thenReturn(messageBus);
         underTest.initializeInBackground();
         // when
-        underTest.onClosing();
+        underTest.onCloseRequest();
         // then
         verify(messageBus).publish(any(PowerOffEvent.class));
         verifyNoMoreInteractions(messageBus);
