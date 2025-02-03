@@ -68,8 +68,9 @@ public class Splash
       {
         try
           {
-            log.info("Loading Splash.fxml for application {}", application);
-            splashPane = FXMLLoader.load(application.getClass().getResource(fxml));
+            final var resource = application.getClass().getResource(fxml);
+            log.info("Loading Splash.fxml for application {}: {}", application, resource);
+            splashPane = FXMLLoader.load(resource);
           }
         catch (IOException e)
           {
