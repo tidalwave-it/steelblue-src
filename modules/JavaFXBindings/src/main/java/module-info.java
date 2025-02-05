@@ -49,4 +49,5 @@ module it.tidalwave.ui.javafx
     opens it.tidalwave.ui.javafx to spring.core, javafx.graphics, javafx.fxml;
     exports it.tidalwave.ui.javafx.impl;
     opens it.tidalwave.ui.javafx.impl to javafx.fxml, javafx.graphics, spring.core;
+    opens it.tidalwave.ui.javafx.impl.dialog to it.tidalwave.util;
   }
