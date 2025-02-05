@@ -29,6 +29,7 @@ import jakarta.annotation.Nonnull;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.Executor;
+import java.util.function.Supplier;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.ObservableList;
@@ -36,6 +37,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.stage.Window;
 import javafx.util.Callback;
 import it.tidalwave.ui.core.role.PresentationModel;
 import it.tidalwave.ui.core.role.UserAction;
@@ -71,9 +73,9 @@ public class ComboBoxBindings extends DelegateSupport
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
-    public ComboBoxBindings (@Nonnull final Executor executor, @Nonnull final CellBinder cellBinder)
+    public ComboBoxBindings (@Nonnull final Executor executor, @Nonnull final CellBinder cellBinder, @Nonnull final Supplier<Window> mainWindow)
       {
-        super(executor);
+        super(executor, mainWindow);
         this.cellBinder = cellBinder;
         cellFactory = comboBox -> new AsObjectListCell<>(cellBinder);
       }

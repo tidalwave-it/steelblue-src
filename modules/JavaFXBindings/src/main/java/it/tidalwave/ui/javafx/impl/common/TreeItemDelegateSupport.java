@@ -29,10 +29,12 @@ import jakarta.annotation.Nonnull;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 import java.util.concurrent.Executor;
+import java.util.function.Supplier;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
+import javafx.stage.Window;
 import javafx.application.Platform;
 import it.tidalwave.ui.core.role.PresentationModel;
 import it.tidalwave.ui.core.role.Visibility;
@@ -62,9 +64,9 @@ public class TreeItemDelegateSupport extends DelegateSupport
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
-    public TreeItemDelegateSupport (@Nonnull final Executor executor)
+    public TreeItemDelegateSupport (@Nonnull final Executor executor, @Nonnull final Supplier<Window> mainWindow)
       {
-        super(executor);
+        super(executor, mainWindow);
       }
 
     /***********************************************************************************************************************************************************

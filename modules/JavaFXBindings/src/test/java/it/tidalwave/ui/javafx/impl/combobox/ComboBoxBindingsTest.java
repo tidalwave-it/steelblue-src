@@ -38,9 +38,9 @@ import it.tidalwave.ui.javafx.impl.common.DefaultCellBinder;
 import org.testng.annotations.Test;
 import static it.tidalwave.ui.core.role.PresentationModel._CompositeOfPresentationModel_;
 import static it.tidalwave.ui.core.role.Selectable._Selectable_;
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.rangeClosed;
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 /***************************************************************************************************************************************************************
@@ -62,7 +62,7 @@ public class ComboBoxBindingsTest extends BindingTestSupport<ComboBox<Presentati
     @Override
     protected void setup (@Nonnull final DefaultCellBinder cellBinder)
       {
-        underTest = new ComboBoxBindings(executor, cellBinder);
+        underTest = new ComboBoxBindings(executor, cellBinder, windowSupplier);
       }
 
     /**********************************************************************************************************************************************************/

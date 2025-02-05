@@ -86,7 +86,7 @@ public class ButtonBindingsTest extends JavaFXTestSupport
       {
         SystemRoleFactory.reset();
         executorService = Executors.newSingleThreadExecutor();
-        underTest = new DefaultJavaFXBinder(executorService);
+        underTest = new DefaultJavaFXBinder(executorService, windowSupplier);
         callback = mock(Callback.class);
         doAnswer((Answer<Void>)invocation ->
           {

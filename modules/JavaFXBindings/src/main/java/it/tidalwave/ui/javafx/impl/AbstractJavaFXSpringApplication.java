@@ -34,13 +34,13 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.application.Application;
 import javafx.application.Platform;
 import org.springframework.context.ApplicationContext;
@@ -67,6 +67,7 @@ import it.tidalwave.util.annotation.VisibleForTesting;
 import it.tidalwave.messagebus.MessageBus;
 import lombok.RequiredArgsConstructor;
 import lombok.With;
+import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toList;
 import static it.tidalwave.util.CollectionUtils.concat;
 import static it.tidalwave.util.FunctionalCheckedExceptionWrappers.*;
@@ -147,9 +148,12 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
 
     private static InitParameters initParameters;
 
+    @Nullable
+    protected Window mainWindow;
+
     protected final ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
 
-    protected final JavaFXBinder javaFxBinder = new DefaultJavaFXBinder(executor);
+    protected final JavaFXBinder javaFxBinder = new DefaultJavaFXBinder(executor, () -> requireNonNull(mainWindow, "mainWindow not set"));
 
     protected final JavaFXToolBarControl toolBarControl = new DefaultJavaFXToolBarControl();
 
@@ -280,7 +284,7 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
     protected final void onStageCreated (@Nonnull final Stage stage, @Nonnull final NodeAndDelegate<?> applicationNad)
       {
         assert Platform.isFxApplicationThread();
-        javaFxBinder.setMainWindow(stage);
+        this.mainWindow = stage;
         onStageCreated2(applicationNad);
       }
 
@@ -290,7 +294,7 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
      **********************************************************************************************************************************************************/
     @VisibleForTesting final void onStageCreated2 (@Nonnull final NodeAndDelegate<?> applicationNad)
       {
-        Objects.requireNonNull(applicationContext, "applicationContext is null");
+        requireNonNull(applicationContext, "applicationContext is null");
         final var delegate = applicationNad.getDelegate();
         final var actualDelegate = getActualDelegate(delegate);
         log.info("Application presentation delegate: {} --- actual: {}", delegate, actualDelegate);

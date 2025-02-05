@@ -28,9 +28,11 @@ package it.tidalwave.ui.javafx.impl.treetable;
 import jakarta.annotation.Nonnull;
 import java.util.Optional;
 import java.util.concurrent.Executor;
+import java.util.function.Supplier;
 import javafx.scene.control.TreeTableCell;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
+import javafx.stage.Window;
 import javafx.util.Callback;
 import it.tidalwave.ui.core.role.PresentationModel;
 import it.tidalwave.ui.javafx.impl.common.CellBinder;
@@ -52,9 +54,9 @@ public class TreeTableViewBindings extends TreeItemDelegateSupport
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
-    public TreeTableViewBindings (@Nonnull final Executor executor, @Nonnull final CellBinder cellBinder)
+    public TreeTableViewBindings (@Nonnull final Executor executor, @Nonnull final CellBinder cellBinder, @Nonnull final Supplier<Window> mainWindow)
       {
-        super(executor);
+        super(executor, mainWindow);
         cellFactory = ignored -> new AsObjectTreeTableCell<>(cellBinder);
       }
 

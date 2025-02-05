@@ -30,6 +30,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Supplier;
 import javafx.beans.property.BooleanProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
@@ -42,6 +43,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import javafx.stage.Window;
 import javafx.application.Platform;
 import it.tidalwave.ui.core.BoundProperty;
 import it.tidalwave.ui.core.role.Displayable;
@@ -71,9 +73,9 @@ public class ButtonBindings extends DelegateSupport
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
-    public ButtonBindings (@Nonnull final Executor executor)
+    public ButtonBindings (@Nonnull final Executor executor, @Nonnull final Supplier<Window> mainWindow)
       {
-        super(executor);
+        super(executor, mainWindow);
       }
 
     /***********************************************************************************************************************************************************

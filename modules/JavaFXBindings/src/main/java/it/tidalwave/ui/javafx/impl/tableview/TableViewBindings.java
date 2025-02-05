@@ -28,12 +28,14 @@ package it.tidalwave.ui.javafx.impl.tableview;
 import jakarta.annotation.Nonnull;
 import java.util.Optional;
 import java.util.concurrent.Executor;
+import java.util.function.Supplier;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.Window;
 import javafx.util.Callback;
 import it.tidalwave.ui.core.role.PresentationModel;
 import it.tidalwave.ui.javafx.impl.common.CellBinder;
@@ -62,9 +64,9 @@ public class TableViewBindings extends DelegateSupport
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
-    public TableViewBindings (@Nonnull final Executor executor, @Nonnull final CellBinder cellBinder)
+    public TableViewBindings (@Nonnull final Executor executor, @Nonnull final CellBinder cellBinder, @Nonnull final Supplier<Window> mainWindow)
       {
-        super(executor);
+        super(executor, mainWindow);
         cellFactory = ignored -> new AsObjectTableCell<>(cellBinder);
       }
 

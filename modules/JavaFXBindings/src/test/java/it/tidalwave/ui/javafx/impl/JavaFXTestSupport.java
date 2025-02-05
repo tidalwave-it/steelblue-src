@@ -31,6 +31,8 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.function.Supplier;
+import javafx.stage.Window;
 import javafx.application.Platform;
 import lombok.extern.slf4j.Slf4j;
 
@@ -44,6 +46,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public abstract class JavaFXTestSupport extends TestNGApplicationTest
   {
+    protected Supplier<Window> windowSupplier = () -> null;
+
     /***********************************************************************************************************************************************************
      * Safely runs a task, ensuring that is executed in the JavaFX thread, and wait for the completion.
      * @param     name      the name of the task, used in logs

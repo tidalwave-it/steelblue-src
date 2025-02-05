@@ -28,6 +28,7 @@ package it.tidalwave.ui.javafx.impl;
 import jakarta.annotation.Nonnull;
 import java.util.concurrent.Executor;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import javafx.beans.property.Property;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
@@ -87,31 +88,18 @@ public class DefaultJavaFXBinder implements JavaFXBinder
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
-    public DefaultJavaFXBinder (@Nonnull final Executor executor)
+    public DefaultJavaFXBinder (@Nonnull final Executor executor, @Nonnull final Supplier<Window> mainWindowSupplier)
       {
         this.executor = executor;
         final var cellBinder = new DefaultCellBinder(executor);
-        buttonBindings = new ButtonBindings(executor);
-        comboBoxBindings = new ComboBoxBindings(executor, cellBinder);
-        treeItemBindings = new TreeViewBindings(executor, cellBinder);
-        tableViewBindings = new TableViewBindings(executor, cellBinder);
-        treeTableViewBindings = new TreeTableViewBindings(executor, cellBinder);
-        listViewBindings = new ListViewBindings(executor, cellBinder);
-        dialogBindings = new DialogBindings(executor);
-        fileChooserBindings = new FileChooserBindings(executor);
-      }
-
-    /***********************************************************************************************************************************************************
-     * {@inheritDoc}
-     **********************************************************************************************************************************************************/
-    @Override
-    public void setMainWindow (@Nonnull final Window mainWindow)
-      {
-        enforceFxApplicationThread();
-        treeItemBindings.setMainWindow(mainWindow);
-        tableViewBindings.setMainWindow(mainWindow);
-        dialogBindings.setMainWindow(mainWindow);
-        fileChooserBindings.setMainWindow(mainWindow);
+        buttonBindings = new ButtonBindings(executor, mainWindowSupplier);
+        comboBoxBindings = new ComboBoxBindings(executor, cellBinder, mainWindowSupplier);
+        treeItemBindings = new TreeViewBindings(executor, cellBinder, mainWindowSupplier);
+        tableViewBindings = new TableViewBindings(executor, cellBinder, mainWindowSupplier);
+        treeTableViewBindings = new TreeTableViewBindings(executor, cellBinder, mainWindowSupplier);
+        listViewBindings = new ListViewBindings(executor, cellBinder, mainWindowSupplier);
+        dialogBindings = new DialogBindings(executor, mainWindowSupplier);
+        fileChooserBindings = new FileChooserBindings(executor, mainWindowSupplier);
       }
 
     /***********************************************************************************************************************************************************

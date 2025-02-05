@@ -28,6 +28,7 @@ package it.tidalwave.ui.javafx.impl.dialog;
 import jakarta.annotation.Nonnull;
 import java.util.Optional;
 import java.util.concurrent.Executor;
+import java.util.function.Supplier;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -41,6 +42,7 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
+import javafx.stage.Window;
 import javafx.application.Platform;
 import it.tidalwave.ui.core.UserNotificationWithFeedback;
 import it.tidalwave.ui.javafx.impl.common.DelegateSupport;
@@ -93,9 +95,9 @@ public class DialogBindings extends DelegateSupport
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
-    public DialogBindings (@Nonnull final Executor executor)
+    public DialogBindings (@Nonnull final Executor executor, @Nonnull final Supplier<Window> mainWindow)
       {
-        super(executor);
+        super(executor, mainWindow);
       }
 
     /***********************************************************************************************************************************************************
@@ -111,7 +113,7 @@ public class DialogBindings extends DelegateSupport
 
 //                final Dialog<ButtonType> dialog = new Dialog<>();
             final Dialog<ButtonType> dialog = new Alert(Alert.AlertType.NONE);
-            dialog.initOwner(mainWindow);
+            dialog.initOwner(mainWindow.get());
             dialog.setTitle(notification.getCaption());
             dialog.setResizable(false);
             final var dialogPane = dialog.getDialogPane();

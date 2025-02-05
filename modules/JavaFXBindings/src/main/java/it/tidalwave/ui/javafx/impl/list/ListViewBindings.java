@@ -29,11 +29,13 @@ import jakarta.annotation.Nonnull;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.Executor;
+import java.util.function.Supplier;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.stage.Window;
 import javafx.util.Callback;
 import it.tidalwave.ui.core.role.PresentationModel;
 import it.tidalwave.ui.core.role.UserAction;
@@ -68,9 +70,9 @@ public class ListViewBindings extends DelegateSupport
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
-    public ListViewBindings (@Nonnull final Executor executor, @Nonnull final CellBinder cellBinder)
+    public ListViewBindings (@Nonnull final Executor executor, @Nonnull final CellBinder cellBinder, @Nonnull final Supplier<Window> mainWindow)
       {
-        super(executor);
+        super(executor, mainWindow);
         cellFactory = listView -> new AsObjectListCell<>(cellBinder);
       }
 

@@ -62,7 +62,7 @@ public class TreeViewBindingsTest extends BindingTestSupport<TreeView<Presentati
     @Override
     protected void setup (@Nonnull final DefaultCellBinder cellBinder)
       {
-        underTest = new TreeViewBindings(executor, cellBinder);
+        underTest = new TreeViewBindings(executor, cellBinder, windowSupplier);
       }
 
     /**********************************************************************************************************************************************************/

@@ -28,10 +28,10 @@ package it.tidalwave.ui.javafx.impl.common;
 import jakarta.annotation.Nonnull;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executor;
+import java.util.function.Supplier;
 import javafx.scene.effect.BoxBlur;
 import javafx.stage.Window;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 /***************************************************************************************************************************************************************
  *
@@ -44,8 +44,8 @@ public abstract class DelegateSupport
     @Nonnull
     protected final Executor executor;
 
-    @Setter
-    protected Window mainWindow;
+    @Nonnull
+    protected final Supplier<Window> mainWindow;
 
     /***********************************************************************************************************************************************************
      * Runs the given (@link Callable} while disabling the given {@link Window}.

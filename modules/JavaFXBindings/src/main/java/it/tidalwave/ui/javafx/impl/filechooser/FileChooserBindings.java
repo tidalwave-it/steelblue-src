@@ -28,10 +28,12 @@ package it.tidalwave.ui.javafx.impl.filechooser;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import java.util.concurrent.Executor;
+import java.util.function.Supplier;
 import java.io.File;
 import java.nio.file.Path;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import javafx.stage.Window;
 import javafx.application.Platform;
 import it.tidalwave.ui.core.BoundProperty;
 import it.tidalwave.ui.core.UserNotificationWithFeedback;
@@ -50,9 +52,9 @@ public class FileChooserBindings extends DelegateSupport
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
-    public FileChooserBindings (@Nonnull final Executor executor)
+    public FileChooserBindings (@Nonnull final Executor executor, @Nonnull final Supplier<Window> mainWindow)
       {
-        super(executor);
+        super(executor, mainWindow);
       }
 
     /***********************************************************************************************************************************************************
@@ -69,7 +71,7 @@ public class FileChooserBindings extends DelegateSupport
         fileChooser.setInitialDirectory(selectedFile.get().toFile());
 
         // It seems we need to take care of modality: https://javafx-jira.kenai.com/browse/RT-13949
-        final var file = runWhileDisabling(mainWindow, () -> fileChooser.showOpenDialog(mainWindow));
+        final var file = runWhileDisabling(mainWindow.get(), () -> fileChooser.showOpenDialog(mainWindow.get()));
 
         notifyFile(file, notification, selectedFile);
       }
@@ -88,7 +90,7 @@ public class FileChooserBindings extends DelegateSupport
         directoryChooser.setInitialDirectory(selectedFolder.get().toFile());
 
         // It seems we need to take care of modality: https://javafx-jira.kenai.com/browse/RT-13949
-        final var file = runWhileDisabling(mainWindow, () -> directoryChooser.showDialog(mainWindow));
+        final var file = runWhileDisabling(mainWindow.get(), () -> directoryChooser.showDialog(mainWindow.get()));
 
         notifyFile(file, notification, selectedFolder);
       }

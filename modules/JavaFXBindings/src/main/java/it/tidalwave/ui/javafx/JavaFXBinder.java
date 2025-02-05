@@ -47,7 +47,6 @@ import javafx.scene.control.TreeTableView;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.Window;
 import it.tidalwave.ui.core.BoundProperty;
 import it.tidalwave.ui.core.UserNotification;
 import it.tidalwave.ui.core.UserNotificationWithFeedback;
@@ -63,13 +62,6 @@ import it.tidalwave.ui.javafx.role.CustomGraphicProvider;
  **************************************************************************************************************************************************************/
 public interface JavaFXBinder
   {
-    /***********************************************************************************************************************************************************
-     * Sets the main window. This operation must be performed before any other method is called. This operation is automatically performed by the SteelBlue
-     * runtime.
-     * @param   window      the main window
-     **********************************************************************************************************************************************************/
-    public void setMainWindow (@Nonnull Window window);
-
     /***********************************************************************************************************************************************************
      * Binds a button to a {@link UserAction}. The following roles o the action are used:
      * <ul>
