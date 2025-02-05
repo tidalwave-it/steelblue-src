@@ -27,9 +27,9 @@ package it.tidalwave.ui.javafx.impl;
 
 import jakarta.annotation.Nonnull;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import it.tidalwave.ui.core.annotation.Assemble;
 import it.tidalwave.ui.core.annotation.PresentationAssembler;
 import it.tidalwave.ui.core.message.PowerOffEvent;
@@ -71,12 +71,6 @@ public class AbstractJavaFXSpringApplicationTest
           {
             // don't System.exit()
           }
-
-        @Nonnull
-        private ThreadPoolTaskExecutor getExecutor()
-          {
-            return executor;
-          }
       }
 
     static class MockPresentationDelegate
@@ -94,7 +88,11 @@ public class AbstractJavaFXSpringApplicationTest
     /**********************************************************************************************************************************************************/
     @BeforeMethod @SuppressWarnings("unchecked")
     public void setup()
+            throws NoSuchFieldException, IllegalAccessException
       {
+        final var field = AbstractJavaFXSpringApplication.class.getDeclaredField("constructionGuard");
+        field.setAccessible(true);
+        ((AtomicBoolean)field.get(null)).set(false);
         applicationContext = mock(ConfigurableApplicationContext.class);
         messageBus = mock(MessageBus.class);
         when(applicationContext.containsBean(APPLICATION_MESSAGE_BUS_BEAN_NAME)).thenReturn(false);

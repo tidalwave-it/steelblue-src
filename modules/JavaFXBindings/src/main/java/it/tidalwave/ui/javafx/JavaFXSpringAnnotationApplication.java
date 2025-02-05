@@ -35,13 +35,16 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import it.tidalwave.ui.core.annotation.EnableMessageBus;
-import it.tidalwave.ui.javafx.impl.DefaultJavaFXPanelGroupControl;
 import it.tidalwave.ui.javafx.impl.AbstractJavaFXSpringApplication;
+import it.tidalwave.ui.javafx.impl.DefaultJavaFXPanelGroupControl;
+import net.bytebuddy.ByteBuddy;
+import net.bytebuddy.description.annotation.AnnotationDescription;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import it.tidalwave.util.PreferencesHandler;
 import it.tidalwave.messagebus.MessageBus;
 import it.tidalwave.messagebus.spi.SimpleMessageBus;
+import lombok.Setter;
 
 /***************************************************************************************************************************************************************
  *
@@ -56,12 +59,15 @@ public class JavaFXSpringAnnotationApplication extends AbstractJavaFXSpringAppli
     /***********************************************************************************************************************************************************
      * Base bean factory.
      **********************************************************************************************************************************************************/
-    private class Beans
+    private static class Beans
       {
+        @Setter
+        private static AbstractJavaFXSpringApplication application;
+
         @Bean
         public ThreadPoolTaskExecutor javafxBinderExecutor()
           {
-            return executor;
+            return application.getExecutor();
           }
 
         @Bean
@@ -73,13 +79,13 @@ public class JavaFXSpringAnnotationApplication extends AbstractJavaFXSpringAppli
         @Bean
         public JavaFXToolBarControl toolBarControl()
           {
-            return toolBarControl;
+            return application.getToolBarControl();
           }
 
         @Bean
         public JavaFXMenuBarControl menuBarControl()
           {
-            return menuBarControl;
+            return application.getMenuBarControl();
           }
 
         @Bean
@@ -124,8 +130,10 @@ public class JavaFXSpringAnnotationApplication extends AbstractJavaFXSpringAppli
     @Override @Nonnull
     protected ConfigurableApplicationContext createApplicationContext()
       {
-        final var mainClass = getClass();
-        final var componentClasses = new ArrayList<>(List.of(mainClass, Beans.class));
+        Beans.setApplication(this);
+        // Don't pass getClass() to the ApplicationContext or it will be instantiated — for the second time, since JavaFX launch() already did it.
+        // Instead, create a synthetic class carrying on all its annotations, so the needed features of Spring will be activated.
+        final var componentClasses = new ArrayList<>(List.of(createSyntheticClassWithAnnotations(getClass()), Beans.class));
 
         if (getClass().isAnnotationPresent(EnableMessageBus.class))
           {
@@ -133,7 +141,22 @@ public class JavaFXSpringAnnotationApplication extends AbstractJavaFXSpringAppli
             componentClasses.add(MessageBusBeans.class);
           }
 
-        log.info("Scanning beans from {}", mainClass);
         return new AnnotationConfigApplicationContext(componentClasses.toArray(Class<?>[]::new));
+      }
+
+    /***********************************************************************************************************************************************************
+     *
+     **********************************************************************************************************************************************************/
+    @Nonnull
+    public static Class<?> createSyntheticClassWithAnnotations (@Nonnull final Class<?> clazz)
+      {
+        var fluent = new ByteBuddy().subclass(Object.class).name(clazz.getPackageName() + ".AnnotationCarrier");
+
+        for (final var annotation : clazz.getAnnotations())
+          {
+            fluent = fluent.annotateType(AnnotationDescription.ForLoadedAnnotation.of(annotation));
+          }
+
+        return fluent.make().load(clazz.getClassLoader()).getLoaded();
       }
   }

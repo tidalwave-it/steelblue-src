@@ -25,11 +25,14 @@
  */
 package it.tidalwave.ui.javafx;
 
+import java.util.concurrent.atomic.AtomicBoolean;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import it.tidalwave.ui.core.annotation.EnableMessageBus;
+import it.tidalwave.ui.javafx.impl.AbstractJavaFXSpringApplication;
 import org.assertj.core.api.Assertions;
 import it.tidalwave.util.PreferencesHandler;
 import it.tidalwave.messagebus.MessageBus;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import static it.tidalwave.ui.javafx.JavaFXSpringAnnotationApplication.APPLICATION_MESSAGE_BUS_BEAN_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -48,6 +51,16 @@ public class JavaFXSpringAnnotationApplicationTest
     @EnableMessageBus
     static class TestApplicationWithEnableMessageBus extends TestApplication
       {
+      }
+
+    /**********************************************************************************************************************************************************/
+    @BeforeMethod
+    public void setup()
+            throws NoSuchFieldException, IllegalAccessException
+      {
+        final var field = AbstractJavaFXSpringApplication.class.getDeclaredField("constructionGuard");
+        field.setAccessible(true);
+        ((AtomicBoolean)field.get(null)).set(false);
       }
 
     /**********************************************************************************************************************************************************/

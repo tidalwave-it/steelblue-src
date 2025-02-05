@@ -35,6 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import javafx.scene.Parent;
@@ -65,6 +66,7 @@ import it.tidalwave.util.PreferencesHandler;
 import it.tidalwave.util.TypeSafeMap;
 import it.tidalwave.util.annotation.VisibleForTesting;
 import it.tidalwave.messagebus.MessageBus;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.With;
 import static java.util.Objects.requireNonNull;
@@ -151,13 +153,17 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
     @Nullable
     protected Window mainWindow;
 
-    protected final ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+    @Getter
+    private final ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
 
-    protected final JavaFXBinder javaFxBinder = new DefaultJavaFXBinder(executor, () -> requireNonNull(mainWindow, "mainWindow not set"));
+    @Getter
+    private final JavaFXBinder javaFxBinder = new DefaultJavaFXBinder(executor, () -> requireNonNull(mainWindow, "mainWindow not set"));
 
-    protected final JavaFXToolBarControl toolBarControl = new DefaultJavaFXToolBarControl();
+    @Getter
+    private final JavaFXToolBarControl toolBarControl = new DefaultJavaFXToolBarControl();
 
-    protected final JavaFXMenuBarControl menuBarControl = new DefaultJavaFXMenuBarControl();
+    @Getter
+    private final JavaFXMenuBarControl menuBarControl = new DefaultJavaFXMenuBarControl();
 
     // Don't use Lombok and its static logger - give Main a chance to initialize things
     private final Logger log = LoggerFactory.getLogger(AbstractJavaFXSpringApplication.class);
@@ -165,6 +171,8 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
     private ConfigurableApplicationContext applicationContext;
 
     private Optional<MessageBus> messageBus = Optional.empty();
+
+    private static final AtomicBoolean constructionGuard = new AtomicBoolean(false);
 
     /***********************************************************************************************************************************************************
      * Launches the application.
@@ -208,6 +216,11 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
      **********************************************************************************************************************************************************/
     protected AbstractJavaFXSpringApplication()
       {
+        if (constructionGuard.getAndSet(true)) // See STB-142
+          {
+            throw new IllegalStateException("Instantiated more than once");
+          }
+
         executor.setWaitForTasksToCompleteOnShutdown(false);
         executor.setAwaitTerminationMillis(2000); // FIXME
         executor.setThreadNamePrefix("ui-service-pool-");
@@ -253,6 +266,7 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
         System.setProperty("it.tidalwave.util.spring.ClassScanner.basePackages", "it");
         applicationContext = createApplicationContext();
         applicationContext.registerShutdownHook(); // this actually seems not working, onClosing() does
+        log.info(">>>> application context created with beans: {}", Arrays.toString(applicationContext.getBeanDefinitionNames()));
 
         if (applicationContext.containsBean(APPLICATION_MESSAGE_BUS_BEAN_NAME))
           {

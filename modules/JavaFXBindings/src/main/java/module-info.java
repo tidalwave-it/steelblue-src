@@ -41,6 +41,9 @@ module it.tidalwave.ui.javafx
     requires transitive org.jfxtras.styles.jmetro;
     requires spring.beans;
     requires spring.context;
+    requires jdk.compiler;
+    requires spring.aspects;
+    requires net.bytebuddy;
     exports it.tidalwave.ui.javafx;
     exports it.tidalwave.ui.javafx.role;
     opens it.tidalwave.ui.javafx to spring.core, javafx.graphics, javafx.fxml;

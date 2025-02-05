@@ -29,7 +29,6 @@ import jakarta.annotation.Nonnull;
 import javafx.util.Duration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
 import it.tidalwave.ui.example.presentation.MainPanelPresentationControl;
@@ -44,7 +43,6 @@ import it.tidalwave.ui.javafx.JavaFXSpringApplication;
  *
  **************************************************************************************************************************************************************/
 // START SNIPPET: annotations
-@Configuration
 @EnableSpringConfigured
 @EnableAspectJAutoProxy
 @ComponentScan(basePackages = "it.tidalwave")
