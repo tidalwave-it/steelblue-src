@@ -34,7 +34,7 @@
     <parent>
         <groupId>it.tidalwave.superpom</groupId>
         <artifactId>superpom</artifactId>
-        <version>5.16</version>
+        <version>5.17</version>
         <relativePath />
     </parent>
 
@@ -76,6 +76,9 @@ that is mostly independent of the UI technology; so testing is easier, and it is
         <tidalwave.issues>STB</tidalwave.issues>
         <tidalwave.github.readonly.url>https://github.com/tidalwave-it/steelblue-src</tidalwave.github.readonly.url>
         <tidalwave.github.browse.url>https://github.com/tidalwave-it/steelblue-src</tidalwave.github.browse.url>
+
+        <!-- FIXME: 4.9.3.0 has this regression: https://github.com/spotbugs/spotbugs/issues/3350 - wait for 4.9.4.0 -->
+        <tft.spotbugs-maven-plugin.version>4.8.6.6</tft.spotbugs-maven-plugin.version>
     </properties>
 
     <dependencyManagement>
