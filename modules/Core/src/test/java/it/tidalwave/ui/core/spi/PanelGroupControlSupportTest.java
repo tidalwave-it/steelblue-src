@@ -114,8 +114,12 @@ public class PanelGroupControlSupportTest
       }
 
     @Nonnull
-    private static PanelGroupProviderSupport<MockNode> createMock (@Nonnull final Group group, @Nonnull final String name)
+    private static PanelGroupProviderSupport<MockNode> createMock (@Nonnull final Group group, @Nonnull final String label)
       {
-        return new PanelGroupProviderSupport<>(group, name, new Object(), MockNode::new) {};
+        return new PanelGroupProviderSupport<>(PanelGroupProviderSupport.<MockNode>parameters()
+                                               .group(group)
+                                               .label(label)
+                                               .presentation(new Object())
+                                               .supplier(MockNode::new)) {};
       }
   }

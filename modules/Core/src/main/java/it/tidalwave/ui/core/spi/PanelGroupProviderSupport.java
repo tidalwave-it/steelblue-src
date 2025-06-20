@@ -30,8 +30,11 @@ import java.util.function.Supplier;
 import it.tidalwave.ui.core.PanelGroupControl.Group;
 import it.tidalwave.ui.core.PanelGroupProvider;
 import org.apiguardian.api.API;
+import it.tidalwave.util.BundleUtilities;
 import it.tidalwave.util.LazySupplier;
+import lombok.Builder;
 import lombok.Getter;
+import static it.tidalwave.ui.core.PanelGroupControl.DefaultGroups.LEFT;
 import static org.apiguardian.api.API.Status.EXPERIMENTAL;
 
 /***************************************************************************************************************************************************************
@@ -46,6 +49,51 @@ import static org.apiguardian.api.API.Status.EXPERIMENTAL;
 @API(status = EXPERIMENTAL)
 public abstract class PanelGroupProviderSupport<T> implements PanelGroupProvider<T>
   {
+    /***********************************************************************************************************************************************************
+     * Constructor parameters for {@link PanelGroupProviderSupport}.
+     * @param <T>   the concrete type of the UI control
+     * @since       3.0-ALPHA-5
+     **********************************************************************************************************************************************************/
+    @Builder @Getter
+    public static class Parameters<T>
+      {
+        /** The group. */
+        @Nonnull @Builder.Default
+        private final Group group = LEFT;
+
+        /** The label. */
+        @Nonnull @Builder.Default
+        private final String label = "";
+
+        /** The presentation object. */
+        @Nonnull @Builder.Default
+        private final Object presentation = new Object();
+
+        /** The supplier of the UI control */
+        @Nonnull @Builder.Default
+        private final Supplier<T> supplier = (Supplier<T>)(Object)DUMMY_SUPPLIER;
+
+        /*******************************************************************************************************************************************************
+         * Customisation of the Lombok-generated builder.
+         ******************************************************************************************************************************************************/
+        public static class ParametersBuilder<T>
+          {
+            /***************************************************************************************************************************************************
+             * Sets a localised label.
+             * @param   clazz     the owner of the bundle
+             * @param   key       the key of the resource inside the bundle
+             * @param   params    the parameters (used if the string in the bundle is a {@code String} format)
+             **************************************************************************************************************************************************/
+            @Nonnull
+            public ParametersBuilder<T> labelFromBundle (@Nonnull final Class<?> clazz, @Nonnull final String key, @Nonnull final Object ... params)
+              {
+                return label(BundleUtilities.getMessage(clazz, key, params));
+              }
+          }
+      }
+
+    private static final Supplier<?> DUMMY_SUPPLIER = Object::new;
+
     @Getter @Nonnull
     private final Group group;
 
@@ -59,21 +107,35 @@ public abstract class PanelGroupProviderSupport<T> implements PanelGroupProvider
     private final LazySupplier<T> lazySupplier;
 
     /***********************************************************************************************************************************************************
-     * Creates a new instance with the given parameter.
-     * @param   group         the group
-     * @param   label         the label of the provided object
-     * @param   presentation  the presentation object
-     * @param   supplier      the supplier of the UI control
+     * {@return a new parameter builder}
+     * @param <T>   the concrete type of the UI control
+     * @see         Parameters
+     * @since       3.0-ALPHA-5
      **********************************************************************************************************************************************************/
-    protected PanelGroupProviderSupport (@Nonnull final Group group,
-                                         @Nonnull final String label,
-                                         @Nonnull final Object presentation,
-                                         @Nonnull final Supplier<T> supplier)
+    @Nonnull
+    public static <T> Parameters.ParametersBuilder<T> parameters()
       {
-        this.group = group;
-        this.label = label;
-        this.presentation = presentation;
-        this.lazySupplier = LazySupplier.of(supplier);
+        return PanelGroupProviderSupport.Parameters.builder();
+      }
+
+    /***********************************************************************************************************************************************************
+     * Creates a new instance with the given parameters.
+     * @param       parametersBuilder    the parameters' builder
+     * @since       3.0-ALPHA-5
+     **********************************************************************************************************************************************************/
+    protected PanelGroupProviderSupport (@Nonnull final Parameters.ParametersBuilder<T> parametersBuilder)
+      {
+        final var parameters = parametersBuilder.build();
+
+        if (parameters.getSupplier() == DUMMY_SUPPLIER)
+          {
+            throw new IllegalArgumentException("You did not specify a supplier");
+          }
+
+        this.group = parameters.getGroup();
+        this.label = parameters.getLabel();
+        this.presentation = parameters.getPresentation();
+        this.lazySupplier = LazySupplier.of(parameters.getSupplier());
       }
 
     /***********************************************************************************************************************************************************

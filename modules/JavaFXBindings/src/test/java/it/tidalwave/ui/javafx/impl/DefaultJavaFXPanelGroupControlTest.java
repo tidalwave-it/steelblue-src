@@ -310,9 +310,13 @@ public class DefaultJavaFXPanelGroupControlTest extends JavaFXTestSupport
 
     /**********************************************************************************************************************************************************/
     @Nonnull
-    private static PanelGroupProvider<Node> createMockPanelGroupProvider (@Nonnull final String name, @Nonnull final MockPresentation presentation)
+    private static PanelGroupProvider<Node> createMockPanelGroupProvider (@Nonnull final String label, @Nonnull final MockPresentation presentation)
       {
-        return new PanelGroupProviderSupport<>(LEFT, name, presentation, presentation.nad::getNode) {};
+        return new PanelGroupProviderSupport<>(PanelGroupProviderSupport.<Node>parameters()
+                                                .group(LEFT)
+                                                .label(label)
+                                                .presentation(presentation)
+                                                .supplier(presentation.nad::getNode)) {};
       }
 
     /**********************************************************************************************************************************************************/
