@@ -94,8 +94,7 @@ public class DefaultJavaFXPanelGroupControl extends PanelGroupControlSupport<Anc
     @Override
     public void show (@Nonnull final Object requestor)
       {
-        enforceFxApplicationThread();
-        expanderByNode.getOrDefault(findNode(requestor), DO_NOTHING).run();
+        Platform.runLater(expanderByNode.getOrDefault(findNode(requestor), DO_NOTHING));
       }
 
     /***********************************************************************************************************************************************************
