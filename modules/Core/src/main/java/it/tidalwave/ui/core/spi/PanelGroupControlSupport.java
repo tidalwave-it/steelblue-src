@@ -74,7 +74,7 @@ public abstract class PanelGroupControlSupport<T, S> implements As, PanelGroupCo
     @Nonnull
     private final Optional<MessageBus> messageBus;
 
-    /** The listener to the message bus. */
+    /** The listener to the message bus - stored to a field otherwise weak listeners will lose it. */
     private final MessageBus.Listener<PanelShowRequest> messageListener = this::onShowRequest;
 
     /***********************************************************************************************************************************************************
