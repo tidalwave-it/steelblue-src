@@ -25,6 +25,7 @@
  */
 package it.tidalwave.ui.core.message;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -38,7 +39,7 @@ import lombok.ToString;
  * @author      Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
-@RequiredArgsConstructor @Getter @ToString
+@RequiredArgsConstructor @Getter @ToString @EqualsAndHashCode
 public class PanelShowRequest
   {
     private final Object requestor;

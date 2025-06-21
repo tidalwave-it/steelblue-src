@@ -29,6 +29,7 @@ import jakarta.annotation.Nonnull;
 import jakarta.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -37,6 +38,8 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import it.tidalwave.ui.core.annotation.EnableMessageBus;
 import it.tidalwave.ui.javafx.impl.AbstractJavaFXSpringApplication;
 import it.tidalwave.ui.javafx.impl.DefaultJavaFXPanelGroupControl;
+import it.tidalwave.ui.util.UserActionFactory;
+import it.tidalwave.ui.util.impl.DefaultUserActionFactory;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.description.annotation.AnnotationDescription;
 import org.slf4j.Logger;
@@ -92,6 +95,12 @@ public class JavaFXSpringAnnotationApplication extends AbstractJavaFXSpringAppli
         public JavaFXPanelGroupControl panelGroupControl (@Nonnull final BeanFactory beanFactory)
           {
             return new DefaultJavaFXPanelGroupControl(beanFactory);
+          }
+
+        @Bean
+        public UserActionFactory userActionFactory (@Nonnull @Named(APPLICATION_MESSAGE_BUS_BEAN_NAME) final Optional<MessageBus> messageBus)
+          {
+            return new DefaultUserActionFactory(messageBus);
           }
       }
 

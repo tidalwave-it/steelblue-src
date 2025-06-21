@@ -143,6 +143,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>it.tidalwave.thesefoolishthings</groupId>
+            <artifactId>it-tidalwave-messagebus-spring</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.testfx</groupId>
             <artifactId>testfx-core</artifactId>
             <scope>test</scope>

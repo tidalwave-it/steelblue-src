@@ -36,7 +36,8 @@ module it.tidalwave.ui.core
     requires spring.beans;
     requires transitive it.tidalwave.util;
     requires transitive it.tidalwave.role;
-    requires it.tidalwave.messagebus; // not transitive, since it's optional
+    requires it.tidalwave.messagebus;        // not transitive, since it's optional
+    requires it.tidalwave.messagebus.spring; // not transitive, since it's optional
     exports it.tidalwave.ui.core;
     exports it.tidalwave.ui.core.annotation;
     exports it.tidalwave.ui.core.function;
@@ -44,5 +45,8 @@ module it.tidalwave.ui.core
     exports it.tidalwave.ui.core.role;
     exports it.tidalwave.ui.core.role.spi;
     exports it.tidalwave.ui.core.spi;
+    exports it.tidalwave.ui.util;
+    exports it.tidalwave.ui.util.impl; // FIXME - required only to it.tidalwave.ui.javafx
     opens it.tidalwave.ui.core.spi to spring.core;
+    opens it.tidalwave.ui.util.impl to it.tidalwave.messagebus.spring, spring.core;
   }

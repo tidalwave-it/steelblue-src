@@ -47,7 +47,12 @@
         <dependency>
             <groupId>it.tidalwave.thesefoolishthings</groupId>
             <artifactId>it-tidalwave-messagebus</artifactId>
-            <scope>provided</scope> <!-- only for javadoc -->
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>it.tidalwave.thesefoolishthings</groupId>
+            <artifactId>it-tidalwave-messagebus-spring</artifactId>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>it.tidalwave.thesefoolishthings</groupId>
