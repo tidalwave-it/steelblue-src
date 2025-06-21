@@ -38,6 +38,7 @@ import javafx.scene.control.Accordion;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.application.Platform;
 import org.springframework.beans.factory.BeanFactory;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.tidalwave.ui.core.PanelGroupControl;
@@ -132,7 +133,7 @@ public class DefaultJavaFXPanelGroupControl extends PanelGroupControlSupport<Anc
     protected void onShowRequest (@Nonnull final PanelShowRequest panelShowRequest)
       {
         log.info("onShowRequest({})", panelShowRequest);
-        expanderByNode.getOrDefault(findNode(panelShowRequest.getRequestor()), DO_NOTHING).run();
+        Platform.runLater(expanderByNode.getOrDefault(findNode(panelShowRequest.getRequestor()), DO_NOTHING));
       }
 
     /***********************************************************************************************************************************************************
