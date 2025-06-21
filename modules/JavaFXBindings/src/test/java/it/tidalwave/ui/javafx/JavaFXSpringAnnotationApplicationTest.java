@@ -30,7 +30,6 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import it.tidalwave.ui.core.annotation.EnableMessageBus;
 import it.tidalwave.ui.javafx.impl.AbstractJavaFXSpringApplication;
 import it.tidalwave.ui.util.UserActionFactory;
-import org.assertj.core.api.Assertions;
 import it.tidalwave.util.PreferencesHandler;
 import it.tidalwave.messagebus.MessageBus;
 import org.testng.annotations.BeforeMethod;
@@ -92,11 +91,11 @@ public class JavaFXSpringAnnotationApplicationTest
         // when
         final var applicationContext = underTest.createApplicationContext();
         // then
-        Assertions.assertThat(applicationContext.getBean("javafxBinderExecutor", ThreadPoolTaskExecutor.class)).isNotNull();
-        Assertions.assertThat(applicationContext.getBean("preferencesHandler", PreferencesHandler.class)).isNotNull();
-        Assertions.assertThat(applicationContext.getBean("toolBarControl", JavaFXToolBarControl.class)).isNotNull();
-        Assertions.assertThat(applicationContext.getBean("menuBarControl", JavaFXMenuBarControl.class)).isNotNull();
-        Assertions.assertThat(applicationContext.getBean("userActionFactory", UserActionFactory.class)).isNotNull();
-        Assertions.assertThat(applicationContext.getBean(APPLICATION_MESSAGE_BUS_BEAN_NAME, MessageBus.class)).isNotNull();
+        assertThat(applicationContext.getBean("javafxBinderExecutor", ThreadPoolTaskExecutor.class)).isNotNull();
+        assertThat(applicationContext.getBean("preferencesHandler", PreferencesHandler.class)).isNotNull();
+        assertThat(applicationContext.getBean("toolBarControl", JavaFXToolBarControl.class)).isNotNull();
+        assertThat(applicationContext.getBean("menuBarControl", JavaFXMenuBarControl.class)).isNotNull();
+        assertThat(applicationContext.getBean("userActionFactory", UserActionFactory.class)).isNotNull();
+        assertThat(applicationContext.getBean(APPLICATION_MESSAGE_BUS_BEAN_NAME, MessageBus.class)).isNotNull();
       }
   }
