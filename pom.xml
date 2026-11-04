@@ -50,7 +50,7 @@ that is mostly independent of the UI technology; so testing is easier, and it is
     </distributionManagement>
     <properties>
         <tft.maven.requiredJdk>[21, 22)</tft.maven.requiredJdk>
-        <scm.repo.url>ssh://git@bitbucket.org/tidalwave/steelblue-src.git</scm.repo.url>
+        <scm.repo.url>ssh://git@ssh.bitbucket.org/tidalwave/steelblue-src.git</scm.repo.url>
         <scm.repo.readonly.url>https://bitbucket.org/tidalwave/steelblue-src</scm.repo.readonly.url>
         <scm.repo.browse.url>https://bitbucket.org/tidalwave/steelblue-src/src</scm.repo.browse.url>
         <tidalwave.project.url>https://tidalwave.bitbucket.io/steelblue</tidalwave.project.url>
