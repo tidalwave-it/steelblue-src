@@ -30,12 +30,12 @@
     <name>SteelBlue (modules)</name>
     <description>SteelBlue (modules)</description>
     <properties>
-        <tft.javac.source>11</tft.javac.source>
-        <tft.javac.target>11</tft.javac.target>
-        <tft.javac.release>11</tft.javac.release>
+        <tft.javac.source>17</tft.javac.source>
+        <tft.javac.target>17</tft.javac.target>
+        <tft.javac.release>17</tft.javac.release>
         <thesefoolishthings.version>5.0-ALPHA-4</thesefoolishthings.version>
-        <tft.javafx.version>11.0.1</tft.javafx.version>
-        <tft.openjfx-monocle.version>11.0.2</tft.openjfx-monocle.version>
+        <tft.javafx.version>17.0.21</tft.javafx.version>
+        <tft.openjfx-monocle.version>17.0.10</tft.openjfx-monocle.version>
         <jmetro.version>11.6.14</jmetro.version>
         <tft.byte-buddy.version>1.18.16</tft.byte-buddy.version>
         <tft.modulePathInTests>false</tft.modulePathInTests>
