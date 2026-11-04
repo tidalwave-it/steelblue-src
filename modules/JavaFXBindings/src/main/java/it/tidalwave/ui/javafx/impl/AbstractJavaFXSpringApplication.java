@@ -304,11 +304,7 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
         executor.execute(() ->
           {
             // applicationContext.close();
-            Platform.runLater(() ->
-              {
-                Platform.exit();
-                exit();
-              });
+            Platform.runLater(this::exit);
           });
       }
     /***********************************************************************************************************************************************************
@@ -316,6 +312,7 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
      **********************************************************************************************************************************************************/
     protected void exit()
       {
+        Platform.exit();
         System.exit(0);
       }
     /***********************************************************************************************************************************************************
