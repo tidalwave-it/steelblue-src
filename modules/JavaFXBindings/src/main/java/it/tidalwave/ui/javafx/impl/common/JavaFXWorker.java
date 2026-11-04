@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl.common;
-
 import javax.annotation.Nonnegative;
 import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
@@ -45,7 +44,6 @@ import lombok.extern.slf4j.Slf4j;
 import static it.tidalwave.ui.javafx.impl.Logging.INDENT;
 import static java.util.Collections.emptyList;
 import static javafx.collections.FXCollections.*;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -55,7 +53,6 @@ import static javafx.collections.FXCollections.*;
 public class JavaFXWorker
   {
     private static final As.Type<SimpleComposite<PresentationModel>> _PresentationModel_Composite_ = As.type(Composite.class);
-
     public static <T> void run (@Nonnull final Executor executor,  @Nonnull final Supplier<T> backgroundSupplier, @Nonnull final Consumer<T> javaFxFinalizer)
       {
         try
@@ -72,13 +69,11 @@ public class JavaFXWorker
             log.error("Background task failed: {}", e.getMessage());
           }
       }
-
     @Nonnull
     public static ObservableList<PresentationModel> childrenPm (@Nonnull final PresentationModel pm)
       {
         return childrenPm(pm, 0);
       }
-
     @Nonnull
     public static ObservableList<PresentationModel> childrenPm (@Nonnull final PresentationModel pm, @Nonnegative final int depth)
       {
@@ -87,7 +82,6 @@ public class JavaFXWorker
         composite.ifPresent(c -> Logging.logObject(indent, composite));
         final var items = composite.map(c -> c.findChildren().results()).orElse(emptyList());
         final var badItems = extractBadItems(items);
-
         if (!badItems.isEmpty()) // defensive
           {
             log.error("Child object are not PresentationModel: (only 10 are shown)");
@@ -96,11 +90,9 @@ public class JavaFXWorker
             badItems.stream().limit(10).forEach(item -> log.error("    {}", item));
             return emptyObservableList();
           }
-
         Logging.logObjects(indent, items);
         return observableArrayList(items);
       }
-
     @Nonnull
     private static List<Object> extractBadItems (@Nonnull final List<PresentationModel> items)
       {
@@ -114,4 +106,3 @@ public class JavaFXWorker
 //                    .collect(toList());
       }
   }
-

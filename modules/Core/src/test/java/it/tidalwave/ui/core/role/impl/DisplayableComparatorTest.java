@@ -24,13 +24,11 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role.impl;
-
 import jakarta.annotation.Nonnull;
 import it.tidalwave.ui.core.role.Displayable;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import static org.assertj.core.api.Assertions.assertThat;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -42,7 +40,6 @@ public class DisplayableComparatorTest
     private final Displayable b  = new DefaultDisplayable("b", "b");
     private final Displayable c1 = new DefaultDisplayable("c", "c");
     private final Displayable c2 = new DefaultDisplayable("c", "c");
-
     @Test(dataProvider = "data")
     public void test (@Nonnull final Displayable d1, @Nonnull final Displayable d2, final int expectedResult)
       {
@@ -53,7 +50,6 @@ public class DisplayableComparatorTest
         // then
         assertThat(actualResult).isEqualTo(expectedResult);
       }
-
     @DataProvider
     private Object[][] data()
       {

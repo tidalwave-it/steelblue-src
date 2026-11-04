@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role.impl;
-
 import jakarta.annotation.Nonnull;
 import java.beans.PropertyChangeSupport;
 import java.util.Collection;
@@ -39,7 +38,6 @@ import lombok.Setter;
 import lombok.experimental.Delegate;
 import lombok.extern.slf4j.Slf4j;
 import static it.tidalwave.util.ShortNames.shortId;
-
 /***************************************************************************************************************************************************************
  *
  * A default implementation of {@link PresentationModel}.
@@ -52,18 +50,13 @@ public class DefaultPresentationModel implements PresentationModel
   {
     @Getter @Setter
     private static boolean verboseToString = Boolean.getBoolean(P_VERBOSE_TOSTRING);
-
     @Nonnull
     private final Object owner;
-
     @Delegate
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-
     @Delegate
     private final MutableListenerSupport mls = new MutableListenerSupport(pcs);
-
     private final As as;
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -72,7 +65,6 @@ public class DefaultPresentationModel implements PresentationModel
         this.owner = owner;
         as = As.forObject(owner, roles);
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -81,7 +73,6 @@ public class DefaultPresentationModel implements PresentationModel
       {
         return maybeAs(roleType).orElseThrow(() -> new AsException(roleType));
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -94,20 +85,16 @@ public class DefaultPresentationModel implements PresentationModel
           {
             return Optional.of(roleType.cast(pcs));
           }
-
         final Optional<T> t = as.maybeAs(roleType);
-
         if (t.isPresent())
           {
             return t;
           }
-
         if (owner instanceof As)
           {
             try
               {
                 final var role = ((As)owner).as(roleType);
-
                 if (role != null) // do check it for improper implementations or partial mocks
                   {
                     return Optional.of(role);
@@ -118,10 +105,8 @@ public class DefaultPresentationModel implements PresentationModel
                 // fallback
               }
           }
-
         return Optional.empty();
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -129,22 +114,18 @@ public class DefaultPresentationModel implements PresentationModel
     public <T> Collection<T> asMany (@Nonnull final Class<? extends T> roleType)
       {
         final Collection<T> result = as.asMany(roleType);
-
         // The problem here is that we want only to add local roles in owner; but calling owner.as() will also
         // find again the global roles that were discovered by AsSupport.
         if (roleType.isAssignableFrom(owner.getClass()))
           {
             result.add(roleType.cast(owner));
           }
-
         if (owner instanceof As)
           {
             result.addAll(((As)owner).asMany(roleType));
           }
-
         return result;
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -155,15 +136,13 @@ public class DefaultPresentationModel implements PresentationModel
           {
             pcs.removePropertyChangeListener(listener);
           }
-
         mls.removeAllListeners();
         asMany(NamedCallback.class).stream()
                                    .filter(c -> c.getName().equals(CALLBACK_DISPOSE))
                                    .forEach(callback -> wrap(callback, "While calling 'dispose' callbacks"));
       }
-
     /***********************************************************************************************************************************************************
-     * 
+     *
      **********************************************************************************************************************************************************/
     private static void wrap (@Nonnull final Callback callback, @Nonnull final String logMessage)
       {
@@ -176,7 +155,6 @@ public class DefaultPresentationModel implements PresentationModel
             log.error(logMessage, t);
           }
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      * This is unavoidably called by TreeCell renderers, even though the value is later overridden; so this method should be really fast.

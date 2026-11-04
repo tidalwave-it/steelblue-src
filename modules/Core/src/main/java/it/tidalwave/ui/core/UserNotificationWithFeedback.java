@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core;
-
 import javax.annotation.concurrent.Immutable;
 import jakarta.annotation.Nonnull;
 import it.tidalwave.util.Callback;
@@ -35,7 +34,6 @@ import lombok.SneakyThrows;
 import lombok.ToString;
 import lombok.With;
 import static it.tidalwave.util.BundleUtilities.getMessage;
-
 /***************************************************************************************************************************************************************
  *
  * This class models a notification that will be presented to a user, and a feedback is expected (confirmation or cancellation).
@@ -56,10 +54,8 @@ public class UserNotificationWithFeedback extends UserNotification
       {
         @With
         private final Callback onConfirm;
-
         @With
         private final Callback onCancel;
-
         /*******************************************************************************************************************************************************
          * {@return {@code true} if the current instance has a callback for confirmation}.
          ******************************************************************************************************************************************************/
@@ -67,7 +63,6 @@ public class UserNotificationWithFeedback extends UserNotification
           {
             return onConfirm != Callback.EMPTY;
           }
-
         /*******************************************************************************************************************************************************
          * {@return {@code true} if the current instance has a callback for cancellation}.
          ******************************************************************************************************************************************************/
@@ -75,7 +70,6 @@ public class UserNotificationWithFeedback extends UserNotification
           {
             return onCancel != Callback.EMPTY;
           }
-
         /*******************************************************************************************************************************************************
          * Callback method invoked when the user confirms an operation.
          * @throws  Exception  in cases of error
@@ -87,7 +81,6 @@ public class UserNotificationWithFeedback extends UserNotification
           {
             onConfirm.call();
           }
-
         /*******************************************************************************************************************************************************
          * Callback method invoked when the user cancels an operation.
          * @throws  Exception  in cases of error
@@ -100,10 +93,8 @@ public class UserNotificationWithFeedback extends UserNotification
             onCancel.call();
           }
       }
-
     @Nonnull
     protected final Feedback feedback;
-
     /***********************************************************************************************************************************************************
      * @param text          the notification text
      * @param caption       the notification caption
@@ -114,7 +105,6 @@ public class UserNotificationWithFeedback extends UserNotification
         super(text, caption);
         this.feedback = feedback;
       }
-
     /***********************************************************************************************************************************************************
      * {@return a notification with empty caption and text}.
      **********************************************************************************************************************************************************/
@@ -123,7 +113,6 @@ public class UserNotificationWithFeedback extends UserNotification
       {
         return new UserNotificationWithFeedback("", "", feedback());
       }
-
     /***********************************************************************************************************************************************************
      * {@return a notification with a caption}.
      * @param  caption       the caption
@@ -133,7 +122,6 @@ public class UserNotificationWithFeedback extends UserNotification
       {
         return new UserNotificationWithFeedback(text, caption, feedback);
       }
-
     /***********************************************************************************************************************************************************
      * {@return a notification with a caption from a bundle}.
      * @param  bundleClass   the class where to search the resource bundle from
@@ -141,11 +129,10 @@ public class UserNotificationWithFeedback extends UserNotification
      * @param  params        some (optional) parameters to the resource
      **********************************************************************************************************************************************************/
     @Override @Nonnull
-    public UserNotificationWithFeedback withCaption (@Nonnull final Class<?> bundleClass, @Nonnull final String resourceName, @Nonnull final Object ... params)
+    public UserNotificationWithFeedback withCaption (@Nonnull final Class<?> bundleClass, @Nonnull final String resourceName, @Nonnull final Object... params)
       {
         return new UserNotificationWithFeedback(text, getMessage(bundleClass, resourceName, params), feedback);
       }
-
     /***********************************************************************************************************************************************************
      * {@return a notification with a text}.
      * @param  text          the text
@@ -155,7 +142,6 @@ public class UserNotificationWithFeedback extends UserNotification
       {
         return new UserNotificationWithFeedback(text, caption, feedback);
       }
-
     /***********************************************************************************************************************************************************
      * {@return a notification with a text from a bundle}.
      * @param  bundleClass   the class where to search the resource bundle from
@@ -163,11 +149,10 @@ public class UserNotificationWithFeedback extends UserNotification
      * @param  params        some (optional) parameters to the resource
      **********************************************************************************************************************************************************/
     @Override @Nonnull
-    public UserNotificationWithFeedback withText (@Nonnull final Class<?> bundleClass, @Nonnull final String resourceName, @Nonnull final Object ... params)
+    public UserNotificationWithFeedback withText (@Nonnull final Class<?> bundleClass, @Nonnull final String resourceName, @Nonnull final Object... params)
       {
         return new UserNotificationWithFeedback(getMessage(bundleClass, resourceName, params), caption, feedback);
       }
-
     /***********************************************************************************************************************************************************
      * {@return a notification {@link Feedback}}.
      * @param  feedback    the {@code Feedback} to associate
@@ -177,7 +162,6 @@ public class UserNotificationWithFeedback extends UserNotification
       {
         return new UserNotificationWithFeedback(text, caption, feedback);
       }
-
     /***********************************************************************************************************************************************************
      * Notifies a confirmation to the user notification.
      * @throws  Exception  in cases of error
@@ -187,7 +171,6 @@ public class UserNotificationWithFeedback extends UserNotification
       {
         feedback.onConfirm();
       }
-
     /***********************************************************************************************************************************************************
      * Notifies a cancellation to the user notification.
      * @throws  Exception  in cases of error
@@ -197,7 +180,6 @@ public class UserNotificationWithFeedback extends UserNotification
       {
         feedback.onCancel();
       }
-
     /***********************************************************************************************************************************************************
      * {@return a new {@code Feedback} that does nothing}. This method should be chained with {@code withOnConfirm()} and/or {@code withOnCancel(Callback)} to
      * specify the relative callbacks.

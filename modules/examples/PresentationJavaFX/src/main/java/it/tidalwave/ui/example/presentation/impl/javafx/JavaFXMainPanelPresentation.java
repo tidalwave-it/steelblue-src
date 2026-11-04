@@ -24,13 +24,11 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.example.presentation.impl.javafx;
-
 import org.springframework.stereotype.Component;
 import it.tidalwave.ui.example.presentation.MainPanelPresentation;
 import it.tidalwave.ui.javafx.NodeAndDelegate;
 import lombok.Getter;
 import lombok.experimental.Delegate;
-
 /***************************************************************************************************************************************************************
  *
  * The default implementation of the presentation, which is instantiated by Spring, is not the JavaFX controller, but
@@ -51,7 +49,6 @@ public class JavaFXMainPanelPresentation implements MainPanelPresentation
   {
     @Getter
     private final NodeAndDelegate<? extends MainPanelPresentation> nad = NodeAndDelegate.of(getClass());
-
     @Delegate
     private final MainPanelPresentation delegate = nad.getDelegate();
   }

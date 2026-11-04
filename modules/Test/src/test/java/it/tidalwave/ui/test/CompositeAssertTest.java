@@ -24,14 +24,12 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.test;
-
 import java.util.List;
 import it.tidalwave.util.Finder;
 import it.tidalwave.role.SimpleComposite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import static org.assertj.core.api.Assertions.assertThat;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -40,13 +38,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class CompositeAssertTest
   {
     private CompositeAssert<Mock> underTest;
-
     private Mock childA;
-
     private Mock childB;
-
     private Mock childC;
-
     /**********************************************************************************************************************************************************/
     @BeforeMethod
     public void setup()
@@ -57,7 +51,6 @@ public class CompositeAssertTest
         final var composite = SimpleComposite.of(Finder.ofSupplier(() -> List.of(childA, childB, childC)));
         underTest = CompositeAssert.of(Mock.class, composite);
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void testGood()
@@ -68,7 +61,6 @@ public class CompositeAssertTest
         assertThat(enumerator.itemType).isEqualTo(Mock.class);
         assertThat(enumerator.items).containsExactly(childA, childB, childC);
       }
-
     /**********************************************************************************************************************************************************/
     @Test(expectedExceptions = AssertionError.class)
     public void testBad()

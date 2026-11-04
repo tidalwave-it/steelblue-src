@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import jakarta.annotation.Nonnull;
@@ -75,7 +74,6 @@ import static it.tidalwave.util.CollectionUtils.concat;
 import static it.tidalwave.util.FunctionalCheckedExceptionWrappers.*;
 import static it.tidalwave.util.ShortNames.shortIds;
 import static lombok.AccessLevel.PRIVATE;
-
 /***************************************************************************************************************************************************************
  *
  * A base class for all variants of JavaFX applications with Spring.
@@ -87,10 +85,8 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
   {
     /** Configures the JMetro style, light mode. @since 3.0-ALPHA-1 */
     public static final Consumer<Scene> STYLE_METRO_LIGHT = scene ->  new JMetro(Style.LIGHT).setScene(scene);
-
     /** Configures the JMetro style, dark mode.  @since 3.0-ALPHA-1 */
     public static final Consumer<Scene> STYLE_METRO_DARK = scene ->  new JMetro(Style.DARK).setScene(scene);
-
     /***********************************************************************************************************************************************************
      * The initialisation parameters to pass to {@link #launch(Class, InitParameters)}.
      * @since   1.1-ALPHA-6
@@ -100,39 +96,30 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
       {
         @Nonnull
         private final String[] args;
-
         @Nonnull
         private final String applicationName;
-
         @Nonnull
         private final String logFolderPropertyName;
-
         private final boolean implicitExit;
-
         @Nonnull
         private final TypeSafeMap propertyMap;
-
         @Nonnull
         private final List<Consumer<Scene>> sceneFinalizers;
-
         @Nonnull
         public <T> InitParameters withProperty (@Nonnull final Key<T> key, @Nonnull final T value)
           {
             return new InitParameters(args, applicationName, logFolderPropertyName, implicitExit, propertyMap.with(key, value), sceneFinalizers);
           }
-
         @Nonnull
         public InitParameters withSceneFinalizer (@Nonnull final Consumer<Scene> stageFinalizer)
           {
             return new InitParameters(args, applicationName, logFolderPropertyName, implicitExit, propertyMap, concat(sceneFinalizers, stageFinalizer));
           }
-
         private void validate()
           {
             requireNotEmpty(applicationName, "applicationName");
             requireNotEmpty(logFolderPropertyName, "logFolderPropertyName");
           }
-
         private static void requireNotEmpty (@Nullable final String name, @Nonnull final String message)
           {
             if (name == null || name.isEmpty())
@@ -141,39 +128,25 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
               }
           }
       }
-
     public static final String APPLICATION_MESSAGE_BUS_BEAN_NAME = "applicationMessageBus";
-
     private static final Map<Class<?>, Object> BEANS = new HashMap<>();
-
     private static final int QUEUE_CAPACITY = 10000;
-
     private static InitParameters initParameters;
-
     @Nullable
     protected Window mainWindow;
-
     @Getter
     private final ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-
     @Getter
     private final JavaFXBinder javaFxBinder = new DefaultJavaFXBinder(executor, () -> requireNonNull(mainWindow, "mainWindow not set"));
-
     @Getter
     private final JavaFXToolBarControl toolBarControl = new DefaultJavaFXToolBarControl();
-
     @Getter
     private final JavaFXMenuBarControl menuBarControl = new DefaultJavaFXMenuBarControl();
-
     // Don't use Lombok and its static logger - give Main a chance to initialize things
     private final Logger log = LoggerFactory.getLogger(AbstractJavaFXSpringApplication.class);
-
     private ConfigurableApplicationContext applicationContext;
-
     private Optional<MessageBus> messageBus = Optional.empty();
-
     private static final AtomicBoolean constructionGuard = new AtomicBoolean(false);
-
     /***********************************************************************************************************************************************************
      * Launches the application.
      * @param   appClass          the class of the application to instantiate
@@ -201,7 +174,6 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
             System.exit(-1);
           }
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -210,7 +182,6 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
       {
         return Collections.unmodifiableMap(BEANS);
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -220,7 +191,6 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
           {
             throw new IllegalStateException("Instantiated more than once");
           }
-
         executor.setWaitForTasksToCompleteOnShutdown(false);
         executor.setAwaitTerminationMillis(2000); // FIXME
         executor.setThreadNamePrefix("ui-service-pool-");
@@ -234,7 +204,6 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
         BEANS.put(JavaFXMenuBarControl.class, menuBarControl);
         BEANS.put(PreferencesHandler.class, PreferencesHandler.getInstance());
       }
-
     /***********************************************************************************************************************************************************
      * {@return an empty set of parameters} to populate and pass to {@link #launch(Class, InitParameters)}
      * @since   1.1-ALPHA-6
@@ -244,7 +213,6 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
       {
         return new InitParameters(new String[0], "", "", true, TypeSafeMap.newInstance(), List.of());
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -253,7 +221,6 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
       {
         return NodeAndDelegate.of(getClass(), applicationFxml);
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -267,19 +234,16 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
         applicationContext = createApplicationContext();
         applicationContext.registerShutdownHook(); // this actually seems not working, onClosing() does
         log.info(">>>> application context created with beans: {}", Arrays.toString(applicationContext.getBeanDefinitionNames()));
-
         if (applicationContext.containsBean(APPLICATION_MESSAGE_BUS_BEAN_NAME))
           {
             messageBus = Optional.of(applicationContext.getBean(APPLICATION_MESSAGE_BUS_BEAN_NAME, MessageBus.class));
           }
       }
-
     /***********************************************************************************************************************************************************
      * {@return a created application context.}
      **********************************************************************************************************************************************************/
     @Nonnull
     protected abstract ConfigurableApplicationContext createApplicationContext();
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -290,7 +254,6 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
         initParameters.sceneFinalizers.forEach(f -> f.accept(scene));
         return scene;
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -301,7 +264,6 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
         this.mainWindow = stage;
         onStageCreated2(applicationNad);
       }
-
     /***********************************************************************************************************************************************************
      * This method is separated to make testing simpler (it does not depend on JavaFX stuff).
      * @param   applicationNad
@@ -312,12 +274,10 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
         final var delegate = applicationNad.getDelegate();
         final var actualDelegate = getActualDelegate(delegate);
         log.info("Application presentation delegate: {} --- actual: {}", delegate, actualDelegate);
-
         if (actualDelegate.getClass().getAnnotation(PresentationAssembler.class) != null)
           {
             callAssemble(actualDelegate);
           }
-
         callPresentationAssemblers();
         executor.execute(() ->
           {
@@ -325,7 +285,6 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
             messageBus.ifPresent(mb -> mb.publish(new PowerOnEvent())); // must be after onStageCreated()
           });
       }
-
     /***********************************************************************************************************************************************************
      * Invoked when the {@link Stage} is created and the {@link ApplicationContext} has been initialized. Typically, the main class overrides this, retrieves
      * a reference to the main controller and boots it. This method is executed in a background thread.
@@ -334,7 +293,6 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
     protected void onStageCreated (@Nonnull final ApplicationContext applicationContext)
       {
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -353,7 +311,6 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
               });
           });
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -361,7 +318,6 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
       {
         System.exit(0);
       }
-
     /***********************************************************************************************************************************************************
      * Finds all classes annotated with {@link PresentationAssembler} and invokes methods annotated with {@link Assemble}.
      **********************************************************************************************************************************************************/
@@ -369,7 +325,6 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
       {
         applicationContext.getBeansWithAnnotation(PresentationAssembler.class).values().forEach(this::callAssemble);
       }
-
     /***********************************************************************************************************************************************************
      * Call a method annotated with {@link Assemble} in the given object.
      * @param     assembler       the assembler
@@ -381,7 +336,6 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
               .filter(_p(m -> m.getDeclaredAnnotation(Assemble.class) != null))
               .forEach(_c(m -> invokeInjecting(m, assembler, this::resolveBean)));
       }
-
     /***********************************************************************************************************************************************************
      * Instantiates an object of the given class performing dependency injections through the constructor.
      * TODO: possibly replace with a Spring utility doing method injection.
@@ -400,7 +354,6 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
             throw new RuntimeException(e);
           }
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -409,7 +362,6 @@ public abstract class AbstractJavaFXSpringApplication extends JavaFXApplicationW
       {
         return type.cast(Optional.ofNullable(BEANS.get(type)).orElseGet(() -> applicationContext.getBean(type)));
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/

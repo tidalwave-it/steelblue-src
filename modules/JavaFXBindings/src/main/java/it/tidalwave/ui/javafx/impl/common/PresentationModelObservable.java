@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl.common;
-
 import jakarta.annotation.Nonnull;
 import java.util.function.Supplier;
 import javafx.beans.value.ObservableValueBase;
@@ -34,7 +33,6 @@ import it.tidalwave.ui.core.role.PresentationModel;
 import it.tidalwave.util.As;
 import it.tidalwave.role.Aggregate;
 import lombok.RequiredArgsConstructor;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -44,13 +42,10 @@ import lombok.RequiredArgsConstructor;
 public final class PresentationModelObservable extends ObservableValueBase<PresentationModel>
   {
     private static final As.Type<Aggregate<PresentationModel>> _PresentationModelAggregate_ = As.type(Aggregate.class);
-
     @Nonnull
     private final Supplier<PresentationModel> rowPresentationModelSupplier;
-
     @Nonnull
     private final Supplier<String> columnKeySupplier;
-
     @Override @Nonnull
     public PresentationModel getValue()
       {
@@ -61,13 +56,11 @@ public final class PresentationModelObservable extends ObservableValueBase<Prese
                         .map(columnPm -> PresentationModelAsDelegateDecorator.decorating(columnPm, rowPm))
                         .orElse(PresentationModel.empty());
       }
-
     @Nonnull
     public static PresentationModelObservable of (@Nonnull final TableColumn.CellDataFeatures<PresentationModel, ?> cell)
       {
         return new PresentationModelObservable(cell::getValue, () -> cell.getTableColumn().getText());
       }
-
     @Nonnull
     public static PresentationModelObservable of (@Nonnull final TreeTableColumn.CellDataFeatures<PresentationModel, ?> cell)
       {

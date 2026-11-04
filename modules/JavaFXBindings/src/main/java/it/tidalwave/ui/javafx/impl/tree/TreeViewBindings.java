@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl.tree;
-
 import jakarta.annotation.Nonnull;
 import java.util.Optional;
 import java.util.concurrent.Executor;
@@ -38,7 +37,6 @@ import it.tidalwave.ui.javafx.impl.common.CellBinder;
 import it.tidalwave.ui.javafx.impl.common.TreeItemDelegateSupport;
 import lombok.extern.slf4j.Slf4j;
 import static it.tidalwave.ui.javafx.impl.DefaultJavaFXBinder.enforceFxApplicationThread;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -48,7 +46,6 @@ import static it.tidalwave.ui.javafx.impl.DefaultJavaFXBinder.enforceFxApplicati
 public class TreeViewBindings extends TreeItemDelegateSupport
   {
     private final Callback<TreeView<PresentationModel>, TreeCell<PresentationModel>> cellFactory;
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -57,7 +54,6 @@ public class TreeViewBindings extends TreeItemDelegateSupport
         super(executor, mainWindow);
         cellFactory = ignored -> new AsObjectTreeCell<>(cellBinder);
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/

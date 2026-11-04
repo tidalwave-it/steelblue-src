@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl.treetable;
-
 import jakarta.annotation.Nonnull;
 import java.util.Optional;
 import java.util.concurrent.Executor;
@@ -40,7 +39,6 @@ import it.tidalwave.ui.javafx.impl.common.PresentationModelObservable;
 import it.tidalwave.ui.javafx.impl.common.TreeItemDelegateSupport;
 import lombok.extern.slf4j.Slf4j;
 import static it.tidalwave.ui.javafx.impl.DefaultJavaFXBinder.enforceFxApplicationThread;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -50,7 +48,6 @@ import static it.tidalwave.ui.javafx.impl.DefaultJavaFXBinder.enforceFxApplicati
 public class TreeTableViewBindings extends TreeItemDelegateSupport
   {
     private final Callback<TreeTableColumn<PresentationModel, PresentationModel>, TreeTableCell<PresentationModel, PresentationModel>> cellFactory;
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -59,7 +56,6 @@ public class TreeTableViewBindings extends TreeItemDelegateSupport
         super(executor, mainWindow);
         cellFactory = ignored -> new AsObjectTreeTableCell<>(cellBinder);
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -75,7 +71,6 @@ public class TreeTableViewBindings extends TreeItemDelegateSupport
         bindSelectionListener(treeTableView.getSelectionModel().selectedItemProperty());
         callback.ifPresent(Runnable::run); // FIXME: thread?
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/

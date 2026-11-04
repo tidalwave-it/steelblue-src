@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl.tree;
-
 import jakarta.annotation.Nonnull;
 import java.util.List;
 import java.util.Optional;
@@ -42,7 +41,6 @@ import static java.util.stream.Collectors.*;
 import static java.util.stream.IntStream.rangeClosed;
 import static org.testng.Assert.*;
 import static org.mockito.Mockito.*;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -51,20 +49,17 @@ import static org.mockito.Mockito.*;
 public class TreeViewBindingsTest extends BindingTestSupport<TreeView<PresentationModel>>
   {
     private TreeViewBindings underTest;
-
     /**********************************************************************************************************************************************************/
     public TreeViewBindingsTest()
       {
         super(TreeView::new);
       }
-
     /**********************************************************************************************************************************************************/
     @Override
     protected void setup (@Nonnull final DefaultCellBinder cellBinder)
       {
         underTest = new TreeViewBindings(executor, cellBinder, windowSupplier);
       }
-
     /**********************************************************************************************************************************************************/
     @Test(groups = "display")
     public void must_have_the_proper_presentation_models_when_not_expanded()
@@ -75,7 +70,6 @@ public class TreeViewBindingsTest extends BindingTestSupport<TreeView<Presentati
         final var actual = control.getRoot().getChildren().stream().map(TreeItem::getValue).collect(toList());
         assertEquals(actual, List.of());
       }
-
     /**********************************************************************************************************************************************************/
     @Test(groups = "display")
     public void must_have_the_proper_presentation_models_when_expanded()
@@ -87,7 +81,6 @@ public class TreeViewBindingsTest extends BindingTestSupport<TreeView<Presentati
         final var actual = control.getRoot().getChildren().stream().map(TreeItem::getValue).collect(toList());
         assertEquals(actual, pm.as(_CompositeOfPresentationModel_).findChildren().results());
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -101,7 +94,6 @@ public class TreeViewBindingsTest extends BindingTestSupport<TreeView<Presentati
         final var texts = findTextsFrom(control.getSkin(), s -> !s.isEmpty());
         assertEquals(texts, List.of());
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -117,7 +109,6 @@ public class TreeViewBindingsTest extends BindingTestSupport<TreeView<Presentati
         final var expected = rangeClosed(1, 10).mapToObj(i -> "Item #" + i).collect(toList());
         assertEquals(texts, expected);
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -138,7 +129,6 @@ public class TreeViewBindingsTest extends BindingTestSupport<TreeView<Presentati
         verify(selectables[3]).select();
         rangeClosed(0, 9).filter(i -> i != 3).forEach(i -> verifyNoInteractions(selectables[i]));
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -159,7 +149,6 @@ public class TreeViewBindingsTest extends BindingTestSupport<TreeView<Presentati
         verify(selectable, times(1)).select();
         verifyNoMoreInteractions(selectable);
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/

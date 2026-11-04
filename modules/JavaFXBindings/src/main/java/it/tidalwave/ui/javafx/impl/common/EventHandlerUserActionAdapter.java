@@ -24,14 +24,12 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl.common;
-
 import jakarta.annotation.Nonnull;
 import java.util.concurrent.Executor;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import it.tidalwave.ui.core.role.UserAction;
 import lombok.RequiredArgsConstructor;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -42,14 +40,11 @@ public class EventHandlerUserActionAdapter implements EventHandler<ActionEvent>
   {
     @Nonnull
     private final Executor executor;
-
     @Nonnull
     private final UserAction action;
-
     @Override
     public void handle (@Nonnull final ActionEvent event)
       {
         executor.execute(action::actionPerformed);
       }
   }
-

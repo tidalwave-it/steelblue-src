@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.message;
-
 import javax.annotation.concurrent.Immutable;
 import jakarta.annotation.Nonnull;
 import java.util.Map;
@@ -32,7 +31,6 @@ import it.tidalwave.util.Key;
 import it.tidalwave.util.TypeSafeMap;
 import lombok.Getter;
 import lombok.ToString;
-
 /***************************************************************************************************************************************************************
  *
  * A message that notifies that the system has been just powered on.
@@ -47,7 +45,6 @@ public final class PowerOnEvent
   {
     @Nonnull
     private final TypeSafeMap properties;
-
     /***********************************************************************************************************************************************************
      * Creates a new instance.
      **********************************************************************************************************************************************************/
@@ -55,7 +52,6 @@ public final class PowerOnEvent
       {
         this(Map.of());
       }
-
     /***********************************************************************************************************************************************************
      * Creates a new instance with a map of properties.
      * @param  properties   the properties

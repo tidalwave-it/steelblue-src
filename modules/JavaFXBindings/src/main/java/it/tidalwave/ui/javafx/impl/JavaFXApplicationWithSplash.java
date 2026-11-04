@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl;
-
 import jakarta.annotation.Nonnull;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -44,7 +43,6 @@ import it.tidalwave.util.Key;
 import it.tidalwave.util.PreferencesHandler;
 import lombok.Getter;
 import lombok.Setter;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -53,48 +51,31 @@ import lombok.Setter;
 public abstract class JavaFXApplicationWithSplash extends Application
   {
     private static final String K_BASE_NAME = "it.tidalwave.ui.javafx";
-
     /** A property representing the initial main window size as a percentual of the screen size. */
     public static final Key<Double> K_INITIAL_SIZE = Key.of(K_BASE_NAME + ".initialSize", Double.class);
-
     /** Whether the application should start maximized. */
     public static final Key<Boolean> K_MAXIMIZED = Key.of(K_BASE_NAME + ".maximized", Boolean.class);
-
     /** Whether the application should start at full screen. */
     public static final Key<Boolean> K_FULL_SCREEN = Key.of(K_BASE_NAME + ".fullScreen", Boolean.class);
-
     /** Whether the application should always stay at full screen. */
     public static final Key<Boolean> K_FULL_SCREEN_LOCKED = Key.of(K_BASE_NAME + ".fullScreenLocked", Boolean.class);
-
     /** The minimum duration of the splash screen. */
     public static final Key<Duration> K_MIN_SPLASH_DURATION = Key.of(K_BASE_NAME + ".minSplashDuration", Duration.class);
-
     /** Whether invocations to presentation delegate methods should be logged at debug level. */
     public static final Key<Boolean> K_LOG_DELEGATE_INVOCATIONS = Key.of(K_BASE_NAME + ".logDelegateInvocations", Boolean.class);
-
     private static final String DEFAULT_APPLICATION_FXML = "Application.fxml";
-
     private static final String DEFAULT_SPLASH_FXML = "Splash.fxml";
-
     private static final Duration DEFAULT_MIN_SPLASH_DURATION = Duration.seconds(2);
-
     // Don't use Slf4j and its static logger - give Main a chance to initialize things
     private final Logger log = LoggerFactory.getLogger(JavaFXApplicationWithSplash.class);
-
     private Splash splash;
-
     private boolean maximized;
-
     private boolean fullScreen;
-
     private boolean fullScreenLocked;
-
     @Getter @Setter
     protected String applicationFxml = DEFAULT_APPLICATION_FXML;
-
     @Getter @Setter
     protected String splashFxml = DEFAULT_SPLASH_FXML;
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -108,50 +89,42 @@ public abstract class JavaFXApplicationWithSplash extends Application
         fullScreen = preferencesHandler.getProperty(K_FULL_SCREEN).orElse(false);
         fullScreenLocked = preferencesHandler.getProperty(K_FULL_SCREEN_LOCKED).orElse(false);
         maximized = preferencesHandler.getProperty(K_MAXIMIZED).orElse(false);
-
         final var splashStage = new Stage(StageStyle.TRANSPARENT);
         stage.setMaximized(maximized);
 //        splashStage.setMaximized(maximized); FIXME: doesn't work
         configureFullScreen(stage);
 //        configureFullScreen(splashStage); FIXME: deadlocks JDK 1.8.0_40
-
         if (!maximized && !fullScreen)
           {
             splashStage.centerOnScreen();
           }
-
         final var splashCreationTime = System.currentTimeMillis();
         splash.show(splashStage);
         // No executors available here
         final var thread = new Thread(() -> initializeInBackground(stage, splashStage, splashCreationTime), "initializer");
         thread.start();
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
     protected void onStageCreated (@Nonnull final Stage stage, @Nonnull final NodeAndDelegate<?> applicationNad)
       {
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
     @Nonnull
     protected abstract NodeAndDelegate<?> createParent();
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
     protected abstract void initializeInBackground();
-
     /***********************************************************************************************************************************************************
      * Invoked when the main {@link Stage} is being closed. This method is called in the JavaFX thread.
      **********************************************************************************************************************************************************/
     protected void onCloseRequest()
       {
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -160,7 +133,6 @@ public abstract class JavaFXApplicationWithSplash extends Application
       {
         return new Scene(parent);
       }
-
     /***********************************************************************************************************************************************************
      * Calls {@link #initializeInBackground()} and then {@link #afterInitializationCompleted(Stage, Stage, long)} in the JavaFX thread.
      * @param   stage                 the main {@code Stage}
@@ -179,7 +151,6 @@ public abstract class JavaFXApplicationWithSplash extends Application
             log.error("", t);
           }
       }
-
     /***********************************************************************************************************************************************************
      * Called after the initialisation in background has been completed, this method dismisses the splash {@link Stage} and brings the main {@code Stage} to
      * view.
@@ -202,20 +173,17 @@ public abstract class JavaFXApplicationWithSplash extends Application
         stage.setHeight(scale * screenSize.getHeight());
         stage.show();
         splashStage.toFront();
-
         final var duration = preferencesHandler.getProperty(K_MIN_SPLASH_DURATION).orElse(DEFAULT_MIN_SPLASH_DURATION);
         final var delay = Math.max(0, splashCreationTime + duration.toMillis() - System.currentTimeMillis());
         final var dismissSplash = new Timeline(new KeyFrame(Duration.millis(delay), e -> splash.dismiss()));
         dismissSplash.play();
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
     private void configureFullScreen (@Nonnull final Stage stage)
       {
         stage.setFullScreen(fullScreen);
-
         if (fullScreen && fullScreenLocked)
           {
             stage.setFullScreenExitHint("");

@@ -24,12 +24,10 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role.spi;
-
 import it.tidalwave.util.NotFoundException;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import static org.assertj.core.api.Assertions.assertThat;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -38,13 +36,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class DefaultUserActionProviderTest
   {
     private DefaultUserActionProvider underTest;
-
     @BeforeMethod
     public void setup()
       {
         underTest = new DefaultUserActionProvider();
       }
-
     @Test
     public void must_return_no_actions()
       {
@@ -53,7 +49,6 @@ public class DefaultUserActionProviderTest
         // then
         assertThat(actions).isEmpty();
       }
-
     @Test(expectedExceptions = NotFoundException.class)
     public void must_return_no_default_action()
       throws NotFoundException

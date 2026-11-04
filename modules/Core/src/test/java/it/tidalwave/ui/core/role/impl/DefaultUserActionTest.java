@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role.impl;
-
 import java.util.List;
 import it.tidalwave.ui.core.role.Displayable;
 import it.tidalwave.util.Callback;
@@ -32,7 +31,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -42,7 +40,6 @@ import static org.mockito.Mockito.*;
 public class DefaultUserActionTest
   {
     private final Callback callback = () -> log.info("CALLBACK");
-
     /**********************************************************************************************************************************************************/
     @Test
     public void test_toString_without_Displayable()
@@ -54,7 +51,6 @@ public class DefaultUserActionTest
         // then
         assertThat(string).isEqualTo("DefaultUserAction@" + Integer.toHexString(System.identityHashCode(underTest)));
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void test_toString_with_Displayable()
@@ -66,7 +62,6 @@ public class DefaultUserActionTest
         // then
         assertThat(string).isEqualTo("DefaultUserAction[\"Action\"]");
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void test_toString_with_broken_Displayable()

@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl;
-
 import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +48,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -62,9 +60,7 @@ public class UserActionProviderContextMenuBuilderTest
       {
         @Nonnull @Delegate
         private final ExecutorService delegate;
-
         protected final List<AssertionError> assertionErrors = new ArrayList<>();
-
         @Override @Nonnull
         public Future<?> submit (final Runnable task)
           {
@@ -81,22 +77,15 @@ public class UserActionProviderContextMenuBuilderTest
                });
           }
       }
-
     private DefaultCellBinder underTest;
-
     private List<UserAction> actions;
-
     private RoleCollector roleMapWithoutUserActionProvider;
-
     private RoleCollector roleMapWithUserActionProvider;
-
     private TestExecutorService executorService;
-
     private void checkThread()
       {
         assertThat(Platform.isFxApplicationThread()).withFailMessage("Must not be in the FX thread!").isFalse();
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -106,12 +95,10 @@ public class UserActionProviderContextMenuBuilderTest
         SystemRoleFactory.reset();
         ContextManager.set(new DefaultContextManagerProvider()); // TODO: possibly drop this
         actions = new ArrayList<>();
-
         for (var i = 0; i < 10; i++)
           {
             actions.add(spy(UserAction.of(this::checkThread, Displayable.of("Action #" + i))));
           }
-
         final UserActionProvider userActionProvider = new DefaultUserActionProvider()
           {
             @Override @Nonnull
@@ -120,16 +107,12 @@ public class UserActionProviderContextMenuBuilderTest
                 return actions;
               }
           };
-
         roleMapWithoutUserActionProvider = new RoleCollector();
         roleMapWithUserActionProvider = new RoleCollector();
         roleMapWithUserActionProvider.put(UserActionProvider.class, userActionProvider);
-
         executorService = new TestExecutorService(Executors.newSingleThreadExecutor());
-
         underTest = new DefaultCellBinder(executorService);
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -141,7 +124,6 @@ public class UserActionProviderContextMenuBuilderTest
         // then
         assertThat(menuItems).isNotNull().isEmpty();
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -152,7 +134,6 @@ public class UserActionProviderContextMenuBuilderTest
         final var menuItems = underTest.createMenuItems(roleMapWithUserActionProvider);
         // then
         assertThat(menuItems).isNotNull().hasSize(actions.size());
-
         for (var i = 0; i < menuItems.size(); i++)
           {
             final var menuItem = menuItems.get(i);
@@ -160,7 +141,6 @@ public class UserActionProviderContextMenuBuilderTest
             assertThat(menuItem.getText()).isEqualTo("Action #" + i);
           }
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -172,21 +152,17 @@ public class UserActionProviderContextMenuBuilderTest
         final var menuItems = underTest.createMenuItems(roleMapWithUserActionProvider);
         // then
         assertThat(menuItems).isNotNull().hasSize(actions.size());
-
         for (final var menuItem : menuItems)
           {
             menuItem.getOnAction().handle(new ActionEvent());
           }
-
         executorService.shutdown();
         executorService.awaitTermination(10L, TimeUnit.SECONDS);
-
         for (var i = 0; i < menuItems.size(); i++)
           {
             verify(actions.get(i), times(1)).actionPerformed();
 //            verifyNoMoreInteractions(actions.get(i));
           }
-
         if (!executorService.assertionErrors.isEmpty())
           {
             throw executorService.assertionErrors.get(0);

@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl;
-
 import java.lang.reflect.InvocationTargetException;
 import jakarta.annotation.Nonnull;
 import java.util.Arrays;
@@ -57,7 +56,6 @@ import static it.tidalwave.ui.javafx.impl.AbstractJavaFXSpringApplication.APPLIC
 import static java.util.Comparator.*;
 import static java.util.stream.Collectors.*;
 import static it.tidalwave.util.CollectionUtils.concatAll;
-
 /***************************************************************************************************************************************************************
  *
  * The JavaFX implementation of {@link PanelGroupControl}.
@@ -70,16 +68,12 @@ import static it.tidalwave.util.CollectionUtils.concatAll;
 public class DefaultJavaFXPanelGroupControl extends PanelGroupControlSupport<AnchorPane, Node> implements JavaFXPanelGroupControl
   {
     private static final Runnable DO_NOTHING = () -> {};
-
     /** A map associating to each managed {@code Node} a callback that makes it visible. */
     private final Map<Node, Runnable> expanderByNode = new IdentityHashMap<>();
-
     /* A map associating to each managed {@Code Node} the group it belongs to. */
     private final Map<Node, Group> groupByNode = new IdentityHashMap<>();
-
     /* A map associating to each managed {@Code Node} its provider. */
     private final Map<Node, PanelGroupProvider<Node>> providerByNode = new IdentityHashMap<>();
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -87,7 +81,6 @@ public class DefaultJavaFXPanelGroupControl extends PanelGroupControlSupport<Anc
       {
         super(beanFactory, APPLICATION_MESSAGE_BUS_BEAN_NAME);
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -96,7 +89,6 @@ public class DefaultJavaFXPanelGroupControl extends PanelGroupControlSupport<Anc
       {
         Platform.runLater(expanderByNode.getOrDefault(findNode(requestor), DO_NOTHING));
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -110,7 +102,6 @@ public class DefaultJavaFXPanelGroupControl extends PanelGroupControlSupport<Anc
         enforceFxApplicationThread();
         final var options = concatAll(globalOptions, groupOptions.getOrDefault(group, List.of()));
         panelProviders.forEach(p -> providerByNode.put(p.getComponent(), p));
-
         if (!options.contains(ALWAYS_WRAP) && panelProviders.size() == 1)
           {
             addDirectly(group, panelProviders, topContainer, options);
@@ -124,7 +115,6 @@ public class DefaultJavaFXPanelGroupControl extends PanelGroupControlSupport<Anc
             addInStackPane(group, panelProviders, topContainer, options);
           }
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -134,7 +124,6 @@ public class DefaultJavaFXPanelGroupControl extends PanelGroupControlSupport<Anc
         log.info("onShowRequest({})", panelShowRequest);
         Platform.runLater(expanderByNode.getOrDefault(findNode(panelShowRequest.getRequestor()), DO_NOTHING));
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -147,7 +136,6 @@ public class DefaultJavaFXPanelGroupControl extends PanelGroupControlSupport<Anc
         groupByNode.put(node, group);
         log.info("{}: options: {} --- no wrapper for {}", group, options, node);
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -175,7 +163,6 @@ public class DefaultJavaFXPanelGroupControl extends PanelGroupControlSupport<Anc
                                    Optional.ofNullable(expanded).map(TitledPane::getContent)));
         log.info("{}: options: {} --- Accordion for {}", group, options, titlePanes);
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -198,12 +185,10 @@ public class DefaultJavaFXPanelGroupControl extends PanelGroupControlSupport<Anc
                     fireUpdateMessages(visible ? Optional.empty() : Optional.of(n),
                                        visible ? Optional.of(n) : Optional.empty()));
           });
-
         stackPane.setVisible(!nodes.isEmpty());
         stackPane.getChildren().setAll(nodes);
         log.info("{}: options: {} --- StackPane for {}", group, options, nodes);
       }
-
     /***********************************************************************************************************************************************************
      * Fires update messages after a change.
      * @param     hiddenNode         the old node
@@ -214,7 +199,6 @@ public class DefaultJavaFXPanelGroupControl extends PanelGroupControlSupport<Anc
         hiddenNode.ifPresent(n -> publish(new PanelHiddenNotification(providerByNode.get(n).getPresentation(), groupByNode.get(n))));
         shownNode.ifPresent(n -> publish(new PanelShownNotification(providerByNode.get(n).getPresentation(), groupByNode.get(n))));
       }
-
     /***********************************************************************************************************************************************************
      * {@return a {@link Node} extracted from a presentation}. If the presentation is not a {@code Node} itself, it is searched for a method returning
      * {@link NodeAndDelegate}.
@@ -227,7 +211,6 @@ public class DefaultJavaFXPanelGroupControl extends PanelGroupControlSupport<Anc
           {
             return (Node)presentation;
           }
-
         final var method = Arrays.stream(presentation.getClass().getDeclaredMethods())
                                  .filter(m -> m.getReturnType().equals(NodeAndDelegate.class))
                                  .findFirst()
@@ -244,7 +227,6 @@ public class DefaultJavaFXPanelGroupControl extends PanelGroupControlSupport<Anc
             throw new RuntimeException(message, e);
           }
       }
-
     /***********************************************************************************************************************************************************
      * {@return a {@link TitledPane} wrapping the panel provided by the given provider.
      * @param   panelGroupProvider   the provider
@@ -259,7 +241,6 @@ public class DefaultJavaFXPanelGroupControl extends PanelGroupControlSupport<Anc
         titledPane.setContent(panelGroupProvider.getComponent());
         return titledPane;
       }
-
     /***********************************************************************************************************************************************************
      * Puts the given {@link Node} inside an {@link AnchorPane}.
      * @param   anchorPane    the {@code AnchorPane}

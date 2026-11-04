@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.test;
-
 import jakarta.annotation.Nonnull;
 import org.springframework.util.function.ThrowingSupplier;
 import it.tidalwave.ui.core.role.Displayable;
@@ -33,7 +32,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static lombok.AccessLevel.PROTECTED;
-
 /***************************************************************************************************************************************************************
  *
  * Assertions for the {@link Displayable} role.
@@ -48,7 +46,6 @@ public class DisplayableAssert
     /** The Displayable under inspection. */
     @Nonnull
     protected final Displayable displayable;
-
     /***********************************************************************************************************************************************************
      * Asserts that the object under inspection has the given display name.
      * @param   displayName     the display name
@@ -59,7 +56,6 @@ public class DisplayableAssert
       {
         return withDisplayName(displayName.get());
       }
-
     /***********************************************************************************************************************************************************
      * Asserts that the object under inspection has the given display name.
      * @param   displayName     the display name

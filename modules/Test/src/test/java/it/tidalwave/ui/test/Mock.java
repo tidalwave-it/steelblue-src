@@ -24,13 +24,11 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.test;
-
 import jakarta.annotation.Nonnull;
 import it.tidalwave.util.As;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Delegate;
-
 /***************************************************************************************************************************************************************
  *
  * @author Fabrizio Giudici
@@ -42,7 +40,6 @@ public class Mock implements As
   {
     @Nonnull
     private final String name;
-
     @Delegate
     private final As asSupport = As.forObject(this);
   }

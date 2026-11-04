@@ -24,12 +24,10 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role;
-
 import jakarta.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Collections;
 import it.tidalwave.util.RoleFactory;
-
 /***************************************************************************************************************************************************************
  *
  * A factory that creates a default {@link PresentationModel}.
@@ -43,7 +41,6 @@ public interface PresentationModelFactory
   {
     /** Shortcut for {@link it.tidalwave.util.As}. */
     public static final Class<PresentationModelFactory> _PresentationModelFactory_ = PresentationModelFactory.class;
-
     /***********************************************************************************************************************************************************
      * Creates a new instance of {@link PresentationModel} with some roles or role factories.
      *
@@ -54,7 +51,6 @@ public interface PresentationModelFactory
      **********************************************************************************************************************************************************/
     @Nonnull
     public PresentationModel createPresentationModel (@Nonnull Object datum, @Nonnull Collection<Object> roles);
-
     /***********************************************************************************************************************************************************
      * Creates a new instance of {@link PresentationModel}.
      *

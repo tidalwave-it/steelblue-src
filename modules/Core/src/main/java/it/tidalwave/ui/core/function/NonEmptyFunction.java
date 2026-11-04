@@ -24,10 +24,8 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.function;
-
 import jakarta.annotation.Nonnull;
 import it.tidalwave.ui.core.ChangingSource;
-
 /***************************************************************************************************************************************************************
  *
  * @since   2.0-ALPHA-1
@@ -41,12 +39,10 @@ public class NonEmptyFunction extends UnaryBoundFunctionSupport<String, Boolean>
       {
         return new NonEmptyFunction(source);
       }
-
     private NonEmptyFunction (@Nonnull final ChangingSource<String> source)
       {
         super(source);
       }
-
     @Override
     protected void onSourceChange (@Nonnull final String oldSourceValue, @Nonnull final String newSourceValue)
       {
@@ -54,7 +50,6 @@ public class NonEmptyFunction extends UnaryBoundFunctionSupport<String, Boolean>
         value = function(newSourceValue);
         fireValueChanged(oldValue, (boolean)value);
       }
-
     @Override @Nonnull
     protected Boolean function (final String value)
       {

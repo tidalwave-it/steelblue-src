@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx;
-
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import it.tidalwave.ui.core.annotation.EnableMessageBus;
@@ -36,7 +35,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import static it.tidalwave.ui.javafx.JavaFXSpringAnnotationApplication.APPLICATION_MESSAGE_BUS_BEAN_NAME;
 import static org.assertj.core.api.Assertions.assertThat;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -47,12 +45,10 @@ public class JavaFXSpringAnnotationApplicationTest
     static class TestApplication extends JavaFXSpringAnnotationApplication
       {
       }
-
     @EnableMessageBus
     static class TestApplicationWithEnableMessageBus extends TestApplication
       {
       }
-
     /**********************************************************************************************************************************************************/
     @BeforeMethod
     public void setup()
@@ -62,7 +58,6 @@ public class JavaFXSpringAnnotationApplicationTest
         field.setAccessible(true);
         ((AtomicBoolean)field.get(null)).set(false);
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void test_ApplicationContext()
@@ -80,7 +75,6 @@ public class JavaFXSpringAnnotationApplicationTest
         assertThat(applicationContext.getBean("userActionFactory", UserActionFactory.class)).isNotNull();
         assertThat(applicationContext.containsBean(APPLICATION_MESSAGE_BUS_BEAN_NAME)).isFalse();
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void test_ApplicationContext_with_EnableMessageBus()

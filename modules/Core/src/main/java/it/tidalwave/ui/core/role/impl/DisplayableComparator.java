@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role.impl;
-
 import jakarta.annotation.Nonnull;
 import java.text.Collator;
 import java.util.Comparator;
@@ -32,7 +31,6 @@ import java.io.Serializable;
 import it.tidalwave.ui.core.role.Displayable;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-
 /***************************************************************************************************************************************************************
  *
  * A {@link Comparator} for classes implementing the {@link Displayable} role.
@@ -46,15 +44,12 @@ import lombok.NoArgsConstructor;
 public final class DisplayableComparator implements Comparator<Displayable>, Serializable
   {
     private static final long serialVersionUID = 434703962103322234L;
-
     private static final DisplayableComparator INSTANCE = new DisplayableComparator();
-
     @Nonnull
     public static DisplayableComparator getInstance()
       {
         return INSTANCE;
       }
-
     @Override
     public int compare (@Nonnull final Displayable d1, @Nonnull final Displayable d2)
       {

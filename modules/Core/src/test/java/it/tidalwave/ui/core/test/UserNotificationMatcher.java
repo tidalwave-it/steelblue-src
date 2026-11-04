@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.test;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import java.util.regex.Pattern;
@@ -33,7 +32,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mockito.ArgumentMatcher;
 import static lombok.AccessLevel.PACKAGE;
-
 /***************************************************************************************************************************************************************
  *
  * @stereotype  mockito matcher
@@ -47,10 +45,8 @@ public class UserNotificationMatcher implements ArgumentMatcher<UserNotification
   {
     @Nonnull
     private final String captionRegex;
-
     @Nonnull
     private final String textRegex;
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -61,7 +57,6 @@ public class UserNotificationMatcher implements ArgumentMatcher<UserNotification
                 && Pattern.matches(captionRegex, notification.getCaption())
                 && Pattern.matches(textRegex, notification.getText());
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/

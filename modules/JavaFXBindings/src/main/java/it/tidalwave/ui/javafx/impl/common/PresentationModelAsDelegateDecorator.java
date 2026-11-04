@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl.common;
-
 import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,7 +36,6 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Delegate;
-
 /***************************************************************************************************************************************************************
  *
  * A decorator for {@link PresentationModel} that also searches for roles in a specified delegate as a fallback.
@@ -53,22 +51,18 @@ public class PresentationModelAsDelegateDecorator implements PresentationModel
   {
     @Delegate(excludes = As.class) @Nonnull
     private final PresentationModel pmDelegate;
-
     private final As asDelegate;
-
     @Nonnull
     public static PresentationModel decorating (@Nonnull final PresentationModel pmDelegate,
                                                 @Nonnull final As asDelegate)
       {
         return new PresentationModelAsDelegateDecorator(pmDelegate, asDelegate);
       }
-
     @Override @Nonnull
     public <T> T as (@Nonnull final Class<? extends T> type)
       {
         return maybeAs(type).orElseThrow(() -> new AsException(type));
       }
-
     @Override @Nonnull
     public <T> Optional<T> maybeAs (@Nonnull final Class<? extends T> type)
       {
@@ -76,14 +70,12 @@ public class PresentationModelAsDelegateDecorator implements PresentationModel
         return t.isPresent() ? t : asDelegate.maybeAs(type);
         // .or(() -> (Optional<T>)asDelegate.maybeAs(type));
       }
-
     @Override @Nonnull
     public <T> Collection<T> asMany (@Nonnull final Class<? extends T> type)
       {
         final List<T> results = new ArrayList<>();
         results.addAll(pmDelegate.asMany(type));
         results.addAll(asDelegate.asMany(type));
-
         return results;
       }
   }

@@ -24,12 +24,10 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core;
-
 import jakarta.annotation.Nonnull;
 import java.beans.PropertyChangeListener;
 import org.apiguardian.api.API;
 import static org.apiguardian.api.API.Status.EXPERIMENTAL;
-
 /***************************************************************************************************************************************************************
  *
  * An interface that describes the capability of mutate status and of supporting listeners. Both old-style {@link PropertyChangeListener} and a new
@@ -60,34 +58,29 @@ public interface Mutable
      * @param  listener   the listener
      **********************************************************************************************************************************************************/
     public void addPropertyChangeListener (@Nonnull PropertyChangeListener listener);
-
     /***********************************************************************************************************************************************************
      * Registers a {@link PropertyChangeListener} for the given property.
      * @param propertyName  the name of the property
      * @param listener      the listener
      **********************************************************************************************************************************************************/
     public void addPropertyChangeListener (@Nonnull String propertyName, @Nonnull PropertyChangeListener listener);
-
     /***********************************************************************************************************************************************************
      * Unregisters a {@link PropertyChangeListener}.
      * @param  listener   the listener
      **********************************************************************************************************************************************************/
     public void removePropertyChangeListener (@Nonnull PropertyChangeListener listener);
-
     /***********************************************************************************************************************************************************
      * Removes a {@link PropertyChangeListener} for the given property.
      * @param propertyName  the name of the property
      * @param listener      the listener
      **********************************************************************************************************************************************************/
     public void removePropertyChangeListener (@Nonnull String propertyName, @Nonnull PropertyChangeListener listener);
-
     /***********************************************************************************************************************************************************
      * Returns all the bound {@link PropertyChangeListener}s.
      * @return              the listeners
      **********************************************************************************************************************************************************/
     @Nonnull
     public PropertyChangeListener[] getPropertyChangeListeners();
-
     /***********************************************************************************************************************************************************
      * Returns the bound {@link PropertyChangeListener}s for the given property.
      * @param propertyName  the name of the property
@@ -95,21 +88,18 @@ public interface Mutable
      **********************************************************************************************************************************************************/
     @Nonnull
     public PropertyChangeListener[] getPropertyChangeListeners (@Nonnull String propertyName);
-
     /***********************************************************************************************************************************************************
      * Checks whether the given property has been bound to listeners.
      * @param propertyName  the name of the property
      * @return              {@code true} if the property is bound
      **********************************************************************************************************************************************************/
     public boolean hasListeners (@Nonnull String propertyName);
-
     /***********************************************************************************************************************************************************
      * Registers a {@link MutableListener}.
      * @param  <T>        the type of the listener
      * @param  listener   the listener
      **********************************************************************************************************************************************************/
     public <T> void addListener (@Nonnull final MutableListener<T> listener);
-
     /***********************************************************************************************************************************************************
      * Registers a {@link MutableListener}. This method is needed to allow the compiler to infer the correct type of lambdas.
      * @param  <T>        the type of the listener
@@ -119,7 +109,6 @@ public interface Mutable
       {
         addListener(listener);
       }
-
     /***********************************************************************************************************************************************************
      * Registers a {@link MutableListener}. This method is needed to allow the compiler to infer the correct type of lambdas.
      * @param  <T>        the type of the listener
@@ -129,7 +118,6 @@ public interface Mutable
       {
         addListener(listener);
       }
-
     /***********************************************************************************************************************************************************
      * Unregisters a {@link MutableListener}.
      * @param  <T>        the type of the listener

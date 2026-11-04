@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.test;
-
 import java.util.List;
 import java.util.function.Consumer;
 import org.testng.annotations.BeforeMethod;
@@ -33,7 +32,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.ThrowingConsumer;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
-
 /***************************************************************************************************************************************************************
  *
  * Assertions for children elements.
@@ -44,13 +42,9 @@ import static org.mockito.Mockito.*;
 public class ItemsAssertTest
   {
     private Mock mock1;
-
     private Mock mock2;
-
     private Mock mock3;
-
     private List<Mock> items;
-
     /**********************************************************************************************************************************************************/
     @BeforeMethod
     public void setup()
@@ -60,7 +54,6 @@ public class ItemsAssertTest
         mock3 = Mock.newInstance("mock3");
         items = List.of(mock1, mock2, mock3);
       }
-
     /**********************************************************************************************************************************************************/
     @Test @SuppressWarnings("unchecked")
     public void test_withEachItem()
@@ -79,7 +72,6 @@ public class ItemsAssertTest
         assertThat(fluent.items).containsExactly(mock1, mock2, mock3);
         assertThat(fluent.nextItemSatisfyingCalled).isFalse();
       }
-
     /**********************************************************************************************************************************************************/
     @Test @SuppressWarnings("unchecked")
     public void test_withEachItemSatisfying()
@@ -100,7 +92,6 @@ public class ItemsAssertTest
         assertThat(fluent.items).containsExactly(mock1, mock2, mock3);
         assertThat(fluent.nextItemSatisfyingCalled).isFalse();
       }
-
     /**********************************************************************************************************************************************************/
     @Test @SuppressWarnings("unchecked")
     public void test_withAll()
@@ -116,7 +107,6 @@ public class ItemsAssertTest
         assertThat(fluent.items).containsExactly(mock1, mock2, mock3);
         assertThat(fluent.nextItemSatisfyingCalled).isFalse();
       }
-
     /**********************************************************************************************************************************************************/
     @Test @SuppressWarnings("unchecked")
     public void test_withNextItemSatisfying()
@@ -134,7 +124,6 @@ public class ItemsAssertTest
         assertThat(fluent.items).containsExactly(mock2, mock3);
         assertThat(fluent.nextItemSatisfyingCalled).isTrue();
       }
-
     /**********************************************************************************************************************************************************/
     @Test @SuppressWarnings("unchecked")
     public void test_proper_invocation_order()
@@ -147,7 +136,6 @@ public class ItemsAssertTest
                  .withNextItemSatisfying(consumer);
         // then
       }
-
     /**********************************************************************************************************************************************************/
     @Test(expectedExceptions = IllegalStateException.class,
             expectedExceptionsMessageRegExp = "Move withEachItemSatisfying\\(\\) before calls to withNextItemSatisfying\\(\\) because items have been consumed")

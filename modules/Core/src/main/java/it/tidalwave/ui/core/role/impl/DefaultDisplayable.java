@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role.impl;
-
 import jakarta.annotation.Nonnull;
 import java.util.Collections;
 import java.util.HashMap;
@@ -34,7 +33,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.io.Serializable;
 import it.tidalwave.ui.core.role.Displayable;
-
 /***************************************************************************************************************************************************************
  *
  * A default implementation of {@link Displayable} which a single, immutable display name in {@code Locale.ENGLISH} language.
@@ -48,16 +46,12 @@ import it.tidalwave.ui.core.role.Displayable;
 public class DefaultDisplayable implements Displayable, Serializable
   {
     private static final long serialVersionUID = 45345436345634734L;
-
     @Nonnull
     private final String displayName;
-
     @Nonnull
     private final String toStringName;
-
     @Nonnull
     private final Map<Locale, String> displayNameMap = new HashMap<>();
-
     /***********************************************************************************************************************************************************
      * Creates an instance with a given display name.
      *
@@ -67,7 +61,6 @@ public class DefaultDisplayable implements Displayable, Serializable
       {
         this(displayName, "???");
       }
-
     /***********************************************************************************************************************************************************
      * Creates an instance with a given display name in {@code Locale.ENGLISH} and an explicit identifier for
      * {@code toString()}.
@@ -81,7 +74,6 @@ public class DefaultDisplayable implements Displayable, Serializable
         this.toStringName = toStringName;
         displayNameMap.put(Locale.getDefault(), displayName);
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -90,7 +82,6 @@ public class DefaultDisplayable implements Displayable, Serializable
       {
         return displayName;
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -99,7 +90,6 @@ public class DefaultDisplayable implements Displayable, Serializable
       {
         return displayNameMap.get(locale);
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -108,7 +98,6 @@ public class DefaultDisplayable implements Displayable, Serializable
       {
         return new TreeSet<>(displayNameMap.keySet());
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -117,7 +106,6 @@ public class DefaultDisplayable implements Displayable, Serializable
       {
         return Collections.unmodifiableMap(displayNameMap);
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/

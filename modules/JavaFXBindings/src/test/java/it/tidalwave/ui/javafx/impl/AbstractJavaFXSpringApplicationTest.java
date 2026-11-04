@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl;
-
 import jakarta.annotation.Nonnull;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -46,7 +45,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import static it.tidalwave.ui.javafx.JavaFXSpringAnnotationApplication.APPLICATION_MESSAGE_BUS_BEAN_NAME;
 import static org.mockito.Mockito.*;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -59,32 +57,24 @@ public class AbstractJavaFXSpringApplicationTest
       {
         @Nonnull
         private final ConfigurableApplicationContext mockApplicationContext;
-
         @Override @Nonnull
         protected ConfigurableApplicationContext createApplicationContext()
           {
             return mockApplicationContext;
           }
-
         @Override
         protected void exit()
           {
             // don't System.exit()
           }
       }
-
     static class MockPresentationDelegate
       {
       }
-
     private Fixture underTest;
-
     private ConfigurableApplicationContext applicationContext;
-
     private MessageBus messageBus;
-
     private NodeAndDelegate<MockPresentationDelegate> nad;
-
     /**********************************************************************************************************************************************************/
     @BeforeMethod @SuppressWarnings("unchecked")
     public void setup()
@@ -102,7 +92,6 @@ public class AbstractJavaFXSpringApplicationTest
         PreferencesHandler.setAppName("test");
         underTest = new Fixture(applicationContext);
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void must_not_fire_PowerOnEvent_when_MessageBus_not_present()
@@ -115,7 +104,6 @@ public class AbstractJavaFXSpringApplicationTest
         // then
         verifyNoInteractions(messageBus);
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void must_fire_PowerOnEvent_when_MessageBus_present()
@@ -131,7 +119,6 @@ public class AbstractJavaFXSpringApplicationTest
         verify(messageBus).publish(any(PowerOnEvent.class));
         verifyNoMoreInteractions(messageBus);
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void must_not_fire_PowerOffEvent_when_MessageBus_not_present()
@@ -143,7 +130,6 @@ public class AbstractJavaFXSpringApplicationTest
         // then
         verifyNoInteractions(messageBus);
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void must_fire_PowerOffEvent_when_MessageBus_present()
@@ -158,11 +144,9 @@ public class AbstractJavaFXSpringApplicationTest
         verify(messageBus).publish(any(PowerOffEvent.class));
         verifyNoMoreInteractions(messageBus);
       }
-
     /**********************************************************************************************************************************************************/
     private static class Bean1 {}
     private static class Bean2 {}
-
     @PresentationAssembler
     private static class PresentationDelegateAssembler extends MockPresentationDelegate
       {
@@ -177,7 +161,6 @@ public class AbstractJavaFXSpringApplicationTest
             // body not needed for tests
           }
       }
-
     @PresentationAssembler
     private static class SpringComponentAssembler
       {
@@ -192,7 +175,6 @@ public class AbstractJavaFXSpringApplicationTest
             // body not needed for tests
           }
       }
-
     @Test
     public void musts_call_assembler_methods()
       {

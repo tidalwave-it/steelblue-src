@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl;
-
 import jakarta.annotation.Nonnull;
 import java.util.List;
 import javafx.scene.control.Button;
@@ -36,7 +35,6 @@ import it.tidalwave.ui.javafx.JavaFXBinder;
 import it.tidalwave.ui.javafx.JavaFXToolBarControl;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 /***************************************************************************************************************************************************************
  *
  * The JavaFX implementation for {@link ToolBarControl}.
@@ -58,7 +56,6 @@ public class DefaultJavaFXToolBarControl extends ToolBarControlSupport<JavaFXBin
         binder.bind(button, action);
         return button;
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/

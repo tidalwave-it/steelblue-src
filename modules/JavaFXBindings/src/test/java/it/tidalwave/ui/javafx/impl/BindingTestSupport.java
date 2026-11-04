@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import java.util.List;
@@ -52,7 +51,6 @@ import org.testng.annotations.BeforeMethod;
 import static it.tidalwave.ui.core.role.spi.PresentationModelCollectors.toCompositePresentationModel;
 import static java.util.stream.Collectors.*;
 import static org.mockito.Mockito.*;
-
 /***************************************************************************************************************************************************************
  *
  * @author Fabrizio Giudici
@@ -69,27 +67,19 @@ public abstract class BindingTestSupport<T extends Node> extends JavaFXTestSuppo
       {
         @Nonnull
         private final String name;
-
         @Override @Nonnull
         public String toString()
           {
             return name;
           }
       }
-
     @Nonnull
     private final Supplier<T> supplier;
-
     protected T control;
-
     protected ExecutorService executor;
-
     protected Runnable callBack;
-
     protected PresentationModel pm;
-
     private StackPane stackPane;
-
     /***********************************************************************************************************************************************************
      * Prepares the {@link Stage for the test}.
      **********************************************************************************************************************************************************/
@@ -103,12 +93,10 @@ public abstract class BindingTestSupport<T extends Node> extends JavaFXTestSuppo
         runSafelyAndWait("start", executor, () -> {}); // wait for tasks completed
         callBack = mock(Runnable.class);
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
     protected abstract void setup (@Nonnull final DefaultCellBinder cellBinder);
-
     /**********************************************************************************************************************************************************/
     @BeforeMethod(groups = "display")
     public void setup()
@@ -122,7 +110,6 @@ public abstract class BindingTestSupport<T extends Node> extends JavaFXTestSuppo
             setup(cellBinder);
           });
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -133,7 +120,6 @@ public abstract class BindingTestSupport<T extends Node> extends JavaFXTestSuppo
                         .mapToObj(ListViewBindingsTest::createPresentationModel)
                         .collect(toCompositePresentationModel());
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -145,8 +131,6 @@ public abstract class BindingTestSupport<T extends Node> extends JavaFXTestSuppo
         doAnswer(invocation -> { log.info("Invoked selectable #{}", i); return null; }).when(selectable).select();
         return PresentationModel.of(new Datum("Datum #" + i), List.of(displayable, selectable));
       }
-
-
     /***********************************************************************************************************************************************************
      * {@return a list of strings containing the texts from the cells of skin.
      * @param     skin    the skin
@@ -158,7 +142,6 @@ public abstract class BindingTestSupport<T extends Node> extends JavaFXTestSuppo
           {
             return ((Parent)node).getChildrenUnmodifiable().stream().flatMap(c -> findTextsFrom(c, filter).stream()).collect(toList());
           }
-
         return (node instanceof Text ? List.of(((Text)node).getText()) : List.<String>of()).stream().filter(filter).collect(toList());
 //        return node.lookupAll(selector)
 //                   .stream()
@@ -167,7 +150,6 @@ public abstract class BindingTestSupport<T extends Node> extends JavaFXTestSuppo
 //                   .map(Labeled::getText)
 //                   .collect(toList());
       }
-
     /***********************************************************************************************************************************************************
      * {@return a list of strings containing the texts from the cells of skin.
      * @param     skin    the skin
@@ -179,7 +161,6 @@ public abstract class BindingTestSupport<T extends Node> extends JavaFXTestSuppo
           {
             return List.of();
           }
-
         return ((SkinBase<?>)skin).getChildren()
                                   .stream()
                                   .flatMap(c -> findTextsFrom(c, filter).stream())

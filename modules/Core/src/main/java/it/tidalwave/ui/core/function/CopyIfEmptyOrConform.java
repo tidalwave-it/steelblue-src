@@ -24,10 +24,8 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.function;
-
 import jakarta.annotation.Nonnull;
 import it.tidalwave.ui.core.ChangingSource;
-
 /***************************************************************************************************************************************************************
  *
  * @since   2.0-ALPHA-1
@@ -41,12 +39,10 @@ public class CopyIfEmptyOrConform extends WeakCopyFunctionSupport<String>
       {
         return new CopyIfEmptyOrConform(source);
       }
-
     private CopyIfEmptyOrConform (@Nonnull final ChangingSource<String> sourceProperty)
       {
         super(sourceProperty);
       }
-
     @Override
     protected boolean shouldChange (@Nonnull final String oldValue, @Nonnull final String newValue)
       {

@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.util.impl;
-
 import jakarta.annotation.Nonnull;
 import java.util.Optional;
 import it.tidalwave.ui.core.BoundProperty;
@@ -41,7 +40,6 @@ import static it.tidalwave.ui.core.PanelGroupControl.DefaultGroups.LEFT;
 import static it.tidalwave.ui.core.role.Displayable._Displayable_;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -53,11 +51,8 @@ public class DefaultUserActionFactoryTest
     private final String label = "Test Panel";
     private final MenuIndex menuIndex = MenuIndex.FILE;
     private final String mainMenu = "File";
-
     private DefaultUserActionFactory underTest;
-
     private MessageBus messageBus;
-
     /**********************************************************************************************************************************************************/
     @BeforeMethod
     public void setUp()
@@ -65,7 +60,6 @@ public class DefaultUserActionFactoryTest
         messageBus = mock(MessageBus.class);
         underTest = new DefaultUserActionFactory(Optional.of(messageBus));
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void must_properly_create_action_with_MenuIndex_and_label()
@@ -81,7 +75,6 @@ public class DefaultUserActionFactoryTest
         assertDisplayable(action, label);
         assertThat(action.enabled()).isEqualTo(BoundProperty.of(true));
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void must_properly_create_action_with_MenuIndex_and_label_from_bundle()
@@ -97,7 +90,6 @@ public class DefaultUserActionFactoryTest
         assertDisplayable(action, label);
         assertThat(action.enabled()).isEqualTo(BoundProperty.of(true));
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void must_properly_create_action_with_MainMenu_and_label()
@@ -113,7 +105,6 @@ public class DefaultUserActionFactoryTest
         assertDisplayable(action, label);
         assertThat(action.enabled()).isEqualTo(BoundProperty.of(true));
       }
-
     // TODO: following variant tests can be rewritten as tests of UserActionParameters
     /**********************************************************************************************************************************************************/
     @Test
@@ -130,7 +121,6 @@ public class DefaultUserActionFactoryTest
         assertDisplayable(action, label);
         assertThat(action.enabled()).isEqualTo(BoundProperty.of(true));
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void created_UserAction_must_fire_a_PanelShowRequest()
@@ -146,7 +136,6 @@ public class DefaultUserActionFactoryTest
         verify(messageBus).publish(new PanelShowRequest(presentation));
         verifyNoMoreInteractions(messageBus);
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void must_disable_action_bound_to_shown_panel()
@@ -168,7 +157,6 @@ public class DefaultUserActionFactoryTest
         assertThat(action2.enabled()).isEqualTo(BoundProperty.of(true));
         assertThat(action3.enabled()).isEqualTo(BoundProperty.of(true));
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void must_enable_action_bound_to_hidden_panel()
@@ -191,7 +179,6 @@ public class DefaultUserActionFactoryTest
         assertThat(action2.enabled()).isEqualTo(BoundProperty.of(true));
         assertThat(action3.enabled()).isEqualTo(BoundProperty.of(true));
       }
-
     /**********************************************************************************************************************************************************/
     private void assertDisplayable (@Nonnull final UserAction action, @Nonnull final String label)
       {

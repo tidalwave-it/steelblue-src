@@ -24,12 +24,10 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core;
-
 import jakarta.annotation.Nonnull;
 import java.util.Arrays;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-
 /***************************************************************************************************************************************************************
  *
  * A model for the application menubar.
@@ -51,19 +49,16 @@ public interface MenuBarControl<B, MB>
         SELECT("Select", 3),
         VIEW("View", 4),
         HELP("Help", 999);
-
         /** {@return the position of the menu with the given label}.
          *  @param label  the label */
         public static int findPosition (@Nonnull final String label)
           {
             return Arrays.stream(values()).filter(i -> i.getLabel().equals(label)).findFirst().map(MenuIndex::getIndex).orElse(-1);
           }
-
         @Nonnull
         private final String label;
         private final int index;
       }
-
     /***********************************************************************************************************************************************************
      *
      * A role that describes the placement of a menu item.
@@ -78,11 +73,9 @@ public interface MenuBarControl<B, MB>
       {
         /** Shortcut for {@link it.tidalwave.util.As}. */
         public static final Class<MenuPlacement> _MenuItemPlacement_ = MenuPlacement.class;
-
         @Nonnull
         private String path;
       }
-
     /***********************************************************************************************************************************************************
      * Populates the menu bar with menus.
      * @param   binder    the binder

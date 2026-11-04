@@ -24,11 +24,9 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role;
-
 import jakarta.annotation.Nonnull;
 import it.tidalwave.ui.core.Mutable;
 import javax.swing.Icon;
-
 /***************************************************************************************************************************************************************
  *
  * A specialized {@link it.tidalwave.ui.core.role.IconProvider} which is mutable and fires {@code PropertyChangeEvent}s.
@@ -44,10 +42,8 @@ public interface MutableIconProvider extends IconProvider, Mutable
   {
     /** Shortcut for {@link it.tidalwave.util.As}. */
     public static final Class<MutableIconProvider> _MutableIconProvider_ = MutableIconProvider.class;
-
     /** The property name for icon. */
     public static final String PROP_ICON = "icon";
-
     /***********************************************************************************************************************************************************
      * Sets the icon. Note that implementations don't actually need to do something in this method: for instance,
      * a valid {@code MutableIconProvider} can autonomously change icon in function of time (e.g. a blinking icon) or

@@ -24,14 +24,12 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl.tree;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import javafx.scene.control.cell.TextFieldTreeCell;
 import it.tidalwave.ui.javafx.impl.common.AsObjectStringConverter;
 import it.tidalwave.ui.javafx.impl.common.CellBinder;
 import it.tidalwave.util.As;
-
 /***************************************************************************************************************************************************************
  *
  * A specialisation of {@link TextFieldTreeCell} which binds to an {@link As}-capable item.
@@ -43,13 +41,11 @@ public class AsObjectTreeCell<T extends As> extends TextFieldTreeCell<T>
   {
     @Nonnull
     private final CellBinder cellBinder;
-
     public AsObjectTreeCell (@Nonnull final CellBinder cellBinder)
       {
         super(AsObjectStringConverter.getInstance()); // Required for STB-123
         this.cellBinder = cellBinder;
       }
-
     @Override
     public void updateItem (@Nullable final T item, final boolean empty)
       {

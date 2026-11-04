@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.test;
-
 import jakarta.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.List;
@@ -37,7 +36,6 @@ import lombok.RequiredArgsConstructor;
 import static org.apiguardian.api.API.Status.EXPERIMENTAL;
 import static java.util.stream.Collectors.*;
 import static lombok.AccessLevel.PRIVATE;
-
 /***************************************************************************************************************************************************************
  *
  * A mock implementation of {@link SystemRoleFactory} for tests. It should be created by passing triples that associate a class type, a role type and a
@@ -68,7 +66,6 @@ public final class MockSystemRoleFactory implements SystemRoleFactory
   {
     @Nonnull
     private final Map<Pair<Class<?>, Class<?>>, Function<Object, List<?>>> rolesByType;
-
     /***********************************************************************************************************************************************************
      * {@return a new instance of the factory}.
      **********************************************************************************************************************************************************/
@@ -77,7 +74,6 @@ public final class MockSystemRoleFactory implements SystemRoleFactory
       {
         return of(Map.of());
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -90,7 +86,6 @@ public final class MockSystemRoleFactory implements SystemRoleFactory
                                    .flatMap(e -> e.getValue().apply(owner).stream())
                                    .collect(toList());
       }
-
     /***********************************************************************************************************************************************************
      * {@return a new factory that supports the given owner and role type}.
      * @param   <T>             the static type of the owner

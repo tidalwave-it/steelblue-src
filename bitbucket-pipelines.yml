@@ -1,5 +1,4 @@
 image: tidalwave/jdk21:maven-3.9.9-temurin-21-1
-
 clone:
   # SonarQube Cloud scanner needs the full history to assign issues properly
   depth: full

@@ -24,14 +24,12 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.example.model;
-
 import jakarta.annotation.Nonnull;
 import it.tidalwave.ui.core.role.Displayable;
 import it.tidalwave.util.As;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.Delegate;
-
 /***************************************************************************************************************************************************************
  *
  * A simple datum class with a DCI role: {@link Displayable}, which contains the entity display name,
@@ -47,14 +45,10 @@ public class SimpleDciEntity implements As
   {
     @Delegate
     private final As asDelegate;
-
     @Nonnull
     private final String name;
-
     private final int attribute1;
-
     private final int attribute2;
-
     public SimpleDciEntity (@Nonnull final String id, final int attribute1, final int attribute2)
       {
         this.name = id;

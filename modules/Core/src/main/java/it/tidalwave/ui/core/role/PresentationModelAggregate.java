@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role;
-
 import jakarta.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Optional;
@@ -33,7 +32,6 @@ import it.tidalwave.role.Aggregate;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
-
 /***************************************************************************************************************************************************************
  *
  * A specialisation of {@link Aggregate}{@code <PresentationModel>} which offers a convenience method for aggregating
@@ -48,7 +46,6 @@ public class PresentationModelAggregate implements Aggregate<PresentationModel>
   {
     @Nonnull
     private final Aggregate<PresentationModel> delegate;
-
     /***********************************************************************************************************************************************************
      * Creates a new, empty instance.
      *
@@ -59,7 +56,6 @@ public class PresentationModelAggregate implements Aggregate<PresentationModel>
       {
         return new PresentationModelAggregate(Aggregate.newInstance());
       }
-
     /***********************************************************************************************************************************************************
      * Adds another {@link PresentationModel} with the given roles, associated to the given name. With a plain
      * {@link Aggregate}{@code <PresentationModel>} the code would be:
@@ -85,7 +81,6 @@ public class PresentationModelAggregate implements Aggregate<PresentationModel>
       {
         return new PresentationModelAggregate(delegate.with(name, PresentationModel.of("", roles)));
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -94,7 +89,6 @@ public class PresentationModelAggregate implements Aggregate<PresentationModel>
       {
         return delegate.getByName(name);
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/

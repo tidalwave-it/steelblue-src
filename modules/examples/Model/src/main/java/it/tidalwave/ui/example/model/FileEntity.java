@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.example.model;
-
 import javax.annotation.Nonnegative;
 import javax.annotation.concurrent.Immutable;
 import jakarta.annotation.Nonnull;
@@ -50,7 +49,6 @@ import static java.util.Collections.emptyList;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.*;
 import static it.tidalwave.util.FunctionalCheckedExceptionWrappers.*;
-
 /***************************************************************************************************************************************************************
  *
  * A class that models a file with its attributes and children.
@@ -64,11 +62,9 @@ public class FileEntity implements As, Displayable
     /** The path of the file.*/
     @Nonnull
     private final Path path;
-
     /** Support object for implementing {@link As} functions.*/
     @Delegate
     private final As delegate;
-
     /***********************************************************************************************************************************************************
      * Creates a new instance related to the given path.
      * @param   path    the path
@@ -80,7 +76,6 @@ public class FileEntity implements As, Displayable
         delegate = As.forObject(this, Files.isDirectory(path) ? List.of(SimpleComposite.of(Finder.ofSupplier(_s(() -> filesIn(path))))) : emptyList());
       }
     // END SNIPPET: constructor
-
     /***********************************************************************************************************************************************************
      * {@return a new instance} related to the given path.
      * @param   path    the path
@@ -92,7 +87,6 @@ public class FileEntity implements As, Displayable
         return new FileEntity(path);
       }
     // END SNIPPET: constructor
-
     /***********************************************************************************************************************************************************
      * {@return the display name}. It's a static implementation of the {@link Displayable} role.
      **********************************************************************************************************************************************************/
@@ -101,7 +95,6 @@ public class FileEntity implements As, Displayable
       {
         return Optional.ofNullable(path.getFileName()).map(Path::toString).orElse("/");
       }
-
     /***********************************************************************************************************************************************************
      * {@return the creation date-time} of the file.
      * @throws  IOException if the file does not exist or cannot be accessed
@@ -112,7 +105,6 @@ public class FileEntity implements As, Displayable
       {
         return toZoneDateTime(getBasicFileAttributes().creationTime());
       }
-
     /***********************************************************************************************************************************************************
      * {@return the last access date-time} of the file.
      * @throws  IOException if the file does not exist or cannot be accessed
@@ -123,7 +115,6 @@ public class FileEntity implements As, Displayable
       {
         return toZoneDateTime(getBasicFileAttributes().lastAccessTime());
       }
-
     /***********************************************************************************************************************************************************
      * {@return the last modified date-time} of the file.
      * @throws  IOException if the file does not exist or cannot be accessed
@@ -134,7 +125,6 @@ public class FileEntity implements As, Displayable
       {
         return toZoneDateTime(getBasicFileAttributes().lastModifiedTime());
       }
-
     /***********************************************************************************************************************************************************
      * {@return the size} of the file.
      * @throws  IOException if the file does not exist or cannot be accessed
@@ -145,7 +135,6 @@ public class FileEntity implements As, Displayable
       {
         return Files.size(path);
       }
-
     /***********************************************************************************************************************************************************
      * {@return the basic attributes} of the file.
      * @throws  IOException if the file does not exist or cannot be accessed
@@ -156,7 +145,6 @@ public class FileEntity implements As, Displayable
       {
         return Files.getFileAttributeView(path, BasicFileAttributeView.class).readAttributes();
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -169,7 +157,6 @@ public class FileEntity implements As, Displayable
             return stream.sorted(comparing(Path::toString)).map(FileEntity::of).collect(toList());
           }
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/

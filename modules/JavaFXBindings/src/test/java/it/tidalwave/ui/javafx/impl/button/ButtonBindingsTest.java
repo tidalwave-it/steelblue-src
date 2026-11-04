@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl.button;
-
 import jakarta.annotation.Nonnull;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -49,7 +48,6 @@ import org.testng.annotations.Test;
 import org.mockito.stubbing.Answer;
 import static org.testfx.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
-
 /***************************************************************************************************************************************************************
  *
  * WARNING: for this to work on macOS, the application running the test (i.e. the Terminal or IntelliJ IDEA) must have the proper permissions. See
@@ -64,19 +62,12 @@ import static org.mockito.Mockito.*;
 public class ButtonBindingsTest extends JavaFXTestSupport
   {
     private Button button;
-
     private DefaultJavaFXBinder underTest;
-
     private UserAction userAction;
-
     private UserAction userActionWithoutDisplayable;
-
     private Callback callback;
-
     private ExecutorService executorService;
-
     private final Displayable displayable = Displayable.of("new label");
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -96,7 +87,6 @@ public class ButtonBindingsTest extends JavaFXTestSupport
         userAction = UserAction.of(callback, List.of(displayable));
         userActionWithoutDisplayable = UserAction.of(callback);
       }
-
     /***********************************************************************************************************************************************************
      * Shut down the executor service to prevent the thing from hanging at the end of the process.
      **********************************************************************************************************************************************************/
@@ -106,7 +96,6 @@ public class ButtonBindingsTest extends JavaFXTestSupport
         log.info("shutting down {}... ", executorService);
         executorService.shutdownNow();
       }
-
     /***********************************************************************************************************************************************************
      * Prepares the {@link Stage for the test}.
      **********************************************************************************************************************************************************/
@@ -118,14 +107,12 @@ public class ButtonBindingsTest extends JavaFXTestSupport
         stage.show();
         stage.setAlwaysOnTop(true);
       }
-
     /**********************************************************************************************************************************************************/
     @Test(groups="display", expectedExceptions = IllegalStateException.class)
     public void bind_button_must_throw_exception_when_invoked_in_the_wrong_thread()
       {
         underTest.bind(button, userAction);
       }
-
     /**********************************************************************************************************************************************************/
     @Test(groups = "display")
     public void bind_button_to_Displayable_action_must_assign_label()
@@ -135,7 +122,6 @@ public class ButtonBindingsTest extends JavaFXTestSupport
         // then
         assertThat(button).hasText("new label");
       }
-
     /**********************************************************************************************************************************************************/
     @Test(groups = "display")
     public void bind_button_to_not_Displayable_action_must_not_assign_label()
@@ -145,7 +131,6 @@ public class ButtonBindingsTest extends JavaFXTestSupport
         // then
         assertThat(button).hasText("original label");
       }
-
     /**********************************************************************************************************************************************************/
     @Test(groups="display", dataProvider = "falseTrue")
     public void bind_button_must_assign_correct_initial_enablement (final boolean enabled)
@@ -164,7 +149,6 @@ public class ButtonBindingsTest extends JavaFXTestSupport
             assertThat(button).isDisabled();
           }
       }
-
     /**********************************************************************************************************************************************************/
     @Test(groups = "display")
     public void button_enablement_must_be_bound_to_UserAction_enablement()
@@ -184,7 +168,6 @@ public class ButtonBindingsTest extends JavaFXTestSupport
         assertThat(enabled2).withFailMessage("Wrong second enablement").isFalse();
         assertThat(enabled3).withFailMessage("Wrong third enablement").isTrue();
       }
-
     /**********************************************************************************************************************************************************/
     @Test(groups = "display")
     public void bound_button_must_invoke_callback()
@@ -198,7 +181,6 @@ public class ButtonBindingsTest extends JavaFXTestSupport
         waitForThread();
         verify(callback).call();
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -209,7 +191,6 @@ public class ButtonBindingsTest extends JavaFXTestSupport
         executorService.shutdown();
         executorService.awaitTermination(1L, TimeUnit.SECONDS);
       }
-
     /**********************************************************************************************************************************************************/
     @DataProvider
     public static Object[][] falseTrue()

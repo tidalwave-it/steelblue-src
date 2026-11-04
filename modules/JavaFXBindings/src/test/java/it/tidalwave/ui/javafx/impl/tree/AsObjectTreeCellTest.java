@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl.tree;
-
 import jakarta.annotation.Nonnull;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -41,7 +40,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -50,9 +48,7 @@ import static org.mockito.Mockito.*;
 public class AsObjectTreeCellTest extends JavaFXTestSupport
   {
     private AsObjectTreeCell<As> underTest;
-
     private ExecutorService executorService;
-
     /**********************************************************************************************************************************************************/
     @Override
     public void start (@Nonnull final Stage stage)
@@ -64,14 +60,12 @@ public class AsObjectTreeCellTest extends JavaFXTestSupport
         stage.show();
         stage.setAlwaysOnTop(true);
       }
-
     /**********************************************************************************************************************************************************/
     @BeforeMethod(groups = "display")
     public void setup()
       {
         SystemRoleFactory.reset();
       }
-
     /**********************************************************************************************************************************************************/
     @Test(groups = "display")
     public void must_set_text_from_Displayable_when_non_empty()
@@ -84,7 +78,6 @@ public class AsObjectTreeCellTest extends JavaFXTestSupport
         // then
         assertThat(underTest.getText()).isEqualTo("foo");
       }
-
     /**********************************************************************************************************************************************************/
     @Test(groups = "display")
     public void must_set_empty_text_when_empty()
@@ -97,6 +90,5 @@ public class AsObjectTreeCellTest extends JavaFXTestSupport
         // then
         assertThat(underTest.getText()).isEmpty();
       }
-
     // TODO: test setting of ContextMenu
   }

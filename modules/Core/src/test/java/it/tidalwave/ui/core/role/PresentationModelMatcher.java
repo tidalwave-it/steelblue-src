@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role;
-
 import javax.annotation.concurrent.NotThreadSafe;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
@@ -37,7 +36,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.mockito.ArgumentMatcher;
 import static java.util.stream.Collectors.*;
 import static it.tidalwave.util.ShortNames.*;
-
 /***************************************************************************************************************************************************************
  *
  * An {@link ArgumentMatcher} for {@link PresentationModel}.
@@ -51,11 +49,8 @@ import static it.tidalwave.util.ShortNames.*;
 public class PresentationModelMatcher implements ArgumentMatcher<PresentationModel>
   {
     private final StringBuilder pmDescription = new StringBuilder("PresentationModel");
-
     private String separator = "";
-
     private final List<Class<?>> expectedRoleTypes = new ArrayList<>();
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -67,7 +62,6 @@ public class PresentationModelMatcher implements ArgumentMatcher<PresentationMod
         separator = ", ";
         return this;
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -78,7 +72,6 @@ public class PresentationModelMatcher implements ArgumentMatcher<PresentationMod
           {
             return false;
           }
-
         for (final var roleType : expectedRoleTypes)
           {
             try
@@ -90,21 +83,17 @@ public class PresentationModelMatcher implements ArgumentMatcher<PresentationMod
                 final var actualRoles = pm.asMany(Object.class);
                 final Collection<Class<?>> actualRoleTypes =
                         actualRoles.stream().map(Object::getClass).collect(toList());
-
                 log.error("Failed matching: expected roles types:");
                 expectedRoleTypes.forEach(ert -> log.error("        {}", shortName(ert)));
                 log.error("Failed matching: actual roles types:");
                 actualRoleTypes.forEach(art -> log.error("        {}", shortName(art, true)));
                 log.error("Failed matching: actual roles:");
                 actualRoles.forEach(ar -> log.error("        {}", shortId(ar)));
-
                 return false;
               }
           }
-
         return true;
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/

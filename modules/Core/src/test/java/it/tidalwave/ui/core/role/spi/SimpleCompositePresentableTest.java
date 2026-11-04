@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role.spi;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import java.util.ArrayList;
@@ -48,7 +47,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static java.util.Collections.emptyList;
 import static it.tidalwave.util.Parameters.r;
 import static org.testng.Assert.*;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -58,37 +56,31 @@ import static org.testng.Assert.*;
 public class SimpleCompositePresentableTest
   {
     /***********************************************************************************************************************************************************
-     * 
+     *
      **********************************************************************************************************************************************************/
     public static class MockDatum implements As, Identifiable
       {
         @Getter @Nonnull
         private final Id id;
-
         @Nullable
         private SimpleComposite<MockDatum> composite;
-
         @Getter
         private List<MockDatum> children = new ArrayList<>();
-
         private MockDatum (@Nonnull final String id)
           {
             this.id = new Id(id);
           }
-
         @Nonnull
         private MockDatum withChildren (@Nonnull final MockDatum... children)
           {
             return withChildren(List.of(children));
           }
-
         @Nonnull
         private MockDatum withChildren (@Nonnull final List<MockDatum> children)
           {
             composite = SimpleComposite.ofCloned(this.children = children);
             return this;
           }
-
         @Override @Nonnull
         public <T> Optional<T> maybeAs (@Nonnull final Class<? extends T> roleType)
           {
@@ -96,7 +88,6 @@ public class SimpleCompositePresentableTest
                     ? Optional.of(roleType.cast(composite))
                     : Optional.empty();
           }
-
         @Override @Nonnull
         public <T> Collection<T> asMany (@Nonnull final Class<? extends T> roleType)
           {
@@ -104,26 +95,22 @@ public class SimpleCompositePresentableTest
               {
                 return new ArrayList<>(List.of(roleType.cast(composite)));
               }
-
             return new ArrayList<>();
           }
-
         @Override @Nonnull
         public String toString()
           {
             return String.format("MockDatum(%s)", id);
           }
       }
-
     /***********************************************************************************************************************************************************
-     * 
+     *
      **********************************************************************************************************************************************************/
     private static class MockRole1
       {
       }
-
     /***********************************************************************************************************************************************************
-     * 
+     *
      **********************************************************************************************************************************************************/
     @Getter @RequiredArgsConstructor
     static class MockRole2
@@ -131,9 +118,8 @@ public class SimpleCompositePresentableTest
         @Nonnull
         private final MockDatum datum;
       }
-
     /***********************************************************************************************************************************************************
-     * 
+     *
      **********************************************************************************************************************************************************/
     private static class MockRoleFactory implements RoleFactory<MockDatum, MockRole2>
       {
@@ -143,18 +129,16 @@ public class SimpleCompositePresentableTest
             return Optional.of(new MockRole2(datum));
           }
       }
-
     /***********************************************************************************************************************************************************
-     * 
+     *
      **********************************************************************************************************************************************************/
     @BeforeMethod
     public void setup()
       {
         SystemRoleFactory.reset();
       }
-
     /***********************************************************************************************************************************************************
-     * 
+     *
      **********************************************************************************************************************************************************/
     @Test
     public void must_create_a_PresentationModel_containing_the_proper_children()
@@ -163,13 +147,10 @@ public class SimpleCompositePresentableTest
         final var c1 = new MockDatum("c1");
         final var c2 = new MockDatum("c2");
         final var c3 = new MockDatum("c3");
-
         final var b1 = new MockDatum("b1").withChildren(c1, c2, c3);
         final var b2 = new MockDatum("b2");
         final var b3 = new MockDatum("b3");
-
         final var a = new MockDatum("a").withChildren(b1, b2, b3);
-
         final var underTest = new SimpleCompositePresentable(a, new DefaultPresentationModelFactory());
         final var role1 = new MockRole1();
         final var roleFactory = new MockRoleFactory();
@@ -178,9 +159,8 @@ public class SimpleCompositePresentableTest
         // then
         assertProperPresentationModel("", pm, a);
       }
-
     /***********************************************************************************************************************************************************
-     * 
+     *
      **********************************************************************************************************************************************************/
     @SuppressWarnings("DataFlowIssue")
     private void assertProperPresentationModel (@Nonnull final String indent,
@@ -190,24 +170,18 @@ public class SimpleCompositePresentableTest
         log.debug("assertProperPresentationModel() - {} {}, {}", indent, pm, datum);
         pm.as(MockRole1.class);                   // must not throw AsException
         final var role = pm.as(MockRole2.class); // must not throw AsException
-
         assertThat(role.getDatum()).isSameAs(datum);
-
         final var childrenPm = pm.maybeAs(_CompositeOfPresentationModel_)
                                  .map(c -> c.findChildren().results())
                                  .orElse(emptyList());
         final var notPMs = new ArrayList<>(childrenPm);
         notPMs.removeIf(PresentationModel.class::isInstance); // required defensive
-
         if (!notPMs.isEmpty())
           {
             fail("Unexpected objects that are not PresentationModel: " + notPMs);
           }
-
         final var childrenData = datum.getChildren();
-
         assertThat(childrenPm).hasSize(childrenData.size());
-
         for (var i = 0; i < childrenPm.size(); i++)
           {
             assertProperPresentationModel(indent + "    ", childrenPm.get(i), childrenData.get(i));

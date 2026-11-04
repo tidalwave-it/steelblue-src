@@ -24,11 +24,9 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl;
-
 import it.tidalwave.ui.core.spi.TestUserActions;
 import it.tidalwave.ui.javafx.JavaFXBinder;
 import static org.mockito.Mockito.*;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -37,13 +35,9 @@ import static org.mockito.Mockito.*;
 public class UserActionsTestSupport<T, C> extends JavaFXTestSupport
   {
     protected final TestUserActions a = new TestUserActions();
-
     protected T underTest;
-
     protected C control;
-
     private JavaFXBinder binder;
-
     protected void createBinder()
       {
         binder = mock(JavaFXBinder.class);

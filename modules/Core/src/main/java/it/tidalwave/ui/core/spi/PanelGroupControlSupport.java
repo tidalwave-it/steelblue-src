@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.spi;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
@@ -49,7 +48,6 @@ import lombok.extern.slf4j.Slf4j;
 import static org.apiguardian.api.API.Status.EXPERIMENTAL;
 import static java.util.stream.Collectors.*;
 import static it.tidalwave.util.ShortNames.shortIds;
-
 /***************************************************************************************************************************************************************
  *
  * A support implementation of {@link PanelGroupControl}.
@@ -66,17 +64,13 @@ public abstract class PanelGroupControlSupport<T, S> implements As, PanelGroupCo
   {
     @Delegate @Nonnull
     private final As delegate = As.forObject(this);
-
     @Nonnull
     private final Function<As, Collection<PanelGroupProvider<S>>> pgProvider;
-
     /** The message bus, if present on the system. */
     @Nonnull
     private final Optional<MessageBus> messageBus;
-
     /** The listener to the message bus - stored to a field otherwise weak listeners will lose it. */
     private final MessageBus.Listener<PanelShowRequest> messageListener = this::onShowRequest;
-
     /***********************************************************************************************************************************************************
      * This class doesn't rely on the @SimpleSubscriber/@ListensTo annotations to avoid having a dependency on the MessageBus runtime, so it dynamically
      * queries a {@link BeanFactory}.
@@ -86,7 +80,6 @@ public abstract class PanelGroupControlSupport<T, S> implements As, PanelGroupCo
       {
         this(PanelGroupControlSupport::defaultPanelGroupProviders, beanFactory, messageBusBeanName);
       }
-
     /***********************************************************************************************************************************************************
      * Constructor for tets.
      **********************************************************************************************************************************************************/
@@ -98,7 +91,6 @@ public abstract class PanelGroupControlSupport<T, S> implements As, PanelGroupCo
         this.pgProvider = pgProvider;
         messageBus = getMessageBus(beanFactory, messageBusBeanName);
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -111,16 +103,13 @@ public abstract class PanelGroupControlSupport<T, S> implements As, PanelGroupCo
         log.debug("Providers by placement:");
         providersByGroup.forEach((placement, provider) -> log.debug(">>>> {}: {}", placement, shortIds(provider)));
         final var unboundGroups = providersByGroup.keySet().stream().filter(p -> !topContainersByGroup.containsKey(p)).collect(toList());
-
         if (!unboundGroups.isEmpty())
           {
             throw new IllegalArgumentException("No top container(s) provider for " + unboundGroups);
           }
-
         providersByGroup.forEach((group, providers) ->
             assemble(group, providers, topContainersByGroup.get(group), configuration.getGroupOptions(), configuration.getOptions()));
       }
-
     /***********************************************************************************************************************************************************
      * Assemble a set of panes for the given group.
      * @param   group               the {@code Group}
@@ -134,12 +123,10 @@ public abstract class PanelGroupControlSupport<T, S> implements As, PanelGroupCo
                                       @Nonnull final T topContainer,
                                       @Nonnull final Map<Group, List<Options>> groupOptions,
                                       @Nonnull final List<Options> options);
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
     protected abstract void onShowRequest (@Nonnull PanelShowRequest panelShowRequest);
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -147,7 +134,6 @@ public abstract class PanelGroupControlSupport<T, S> implements As, PanelGroupCo
       {
         messageBus.ifPresent(mb -> mb.publish(message));
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -156,7 +142,6 @@ public abstract class PanelGroupControlSupport<T, S> implements As, PanelGroupCo
       {
         messageBus.ifPresent(mb -> mb.subscribe(PanelShowRequest.class, messageListener));
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -165,7 +150,6 @@ public abstract class PanelGroupControlSupport<T, S> implements As, PanelGroupCo
       {
         messageBus.ifPresent(mb -> mb.unsubscribe(messageListener));
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -182,7 +166,6 @@ public abstract class PanelGroupControlSupport<T, S> implements As, PanelGroupCo
             return Optional.empty();
           }
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/

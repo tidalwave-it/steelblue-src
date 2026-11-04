@@ -24,13 +24,11 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl.treetable;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import javafx.scene.control.TreeTableCell;
 import it.tidalwave.ui.javafx.impl.common.CellBinder;
 import it.tidalwave.util.As;
-
 /***************************************************************************************************************************************************************
  *
  * A specialisation of {@link TreeTableCell} which binds to an {@link As}-capable item.
@@ -42,12 +40,10 @@ class AsObjectTreeTableCell<T extends As> extends TreeTableCell<T, T>
   {
     @Nonnull
     private final CellBinder cellBinder;
-
     public AsObjectTreeTableCell (@Nonnull final CellBinder cellBinder)
       {
         this.cellBinder = cellBinder;
       }
-
     @Override
     public void updateItem (@Nullable final T item, final boolean empty)
       {

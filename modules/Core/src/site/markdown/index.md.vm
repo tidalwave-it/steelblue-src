@@ -23,133 +23,59 @@
  *
  * *************************************************************************************************************************************************************
  *#
-
 #[[##]]# Introduction
-
 ${project.description}
-
 [Javadoc](apidocs/index.html)
-
-
 #[[##]]# Table of contents
-
 <!-- MACRO{toc|section=0|fromDepth=1|toDepth=4} -->
-
-
-
 #[[###]]# Roles
-
 TBD
-
-
 #[[####]]# Displayable
-
 ![UML](apidocs/it/tidalwave/ui/core/role/Displayable.svg)
-
 This role models something that can be displayed as a text.
-
-
 #[[####]]# MutableDisplayable
-
 ![UML](apidocs/it/tidalwave/ui/core/role/MutableDisplayable.svg)
-
 This is mutable a variant of `Displayable`, that is the related property can be changed and change listeners are supported.
-
-
 #[[####]]# PlainTextDisplayable
-
 ![UML](apidocs/it/tidalwave/ui/core/role/PlainTextDisplayable.svg)
-
 This specialisation of `Displayable` makes it clear that the rendered string is a plain text.
-
-
 #[[####]]# HtmlDisplayable
-
 ![UML](apidocs/it/tidalwave/ui/core/role/HtmlDisplayable.svg)
-
 This specialisation of `Displayable` makes it clear that the rendered string is a HTML text.
-
-
-
-
-
 #[[####]]# Changeable
-
 ![UML](apidocs/it/tidalwave/ui/core/role/Changeable.svg)
-
 This role models something that can be changed.
-
-
 #[[####]]# IconProvider, MutableIconProvider
-
 ![UML](apidocs/it/tidalwave/ui/core/role/IconProvider.svg)
 ![UML](apidocs/it/tidalwave/ui/core/role/MutableIconProvider.svg)
-
 These roles model something that can have an icon. The mutable version supports change listeners.
-
-
-
 #[[####]]# UserAction
-
 ![UML](apidocs/it/tidalwave/ui/core/role/UserAction.svg)
-
 This role represents a callback that can be attached to a UI component that can be activated with a mouse click, such as a button or a menu itme.
 It can have in turn further roles (typically at least a `Displayable` and an `IconProvider`) and an enabled/disabled property.
-
-
 #[[####]]# UserActionProvider
-
 ![UML](apidocs/it/tidalwave/ui/core/role/UserActionProvider.svg)
-
 This role is a factory of `UserAction`s.
-
-
 #[[####]]# Selectable
-
 ![UML](apidocs/it/tidalwave/ui/core/role/Selectable.svg)
-
 This role represents a callback that can be attached to a UI component that contains a list of items that can be selected.
-
-
 #[[####]]# Styleable
-
 ![UML](apidocs/it/tidalwave/ui/core/role/Styleable.svg)
-
 This role represents something that can have a style attached to it, for controlling some aspect of rendering; for instance, a lefT/right/center text
 justification, or a font style such as bold or italic.
-
-
 #[[####]]# Visibility
-
 ![UML](apidocs/it/tidalwave/ui/core/role/Visibility.svg)
-
 This role represents something that can be made visible or invisible.
-
-
 #[[###]]# PresentationModel
-
 The `PresentationModel` is a specific role that works as an adapter between the model classes and a UI. It is basically a bag of roles, partly coming from
 the adapter object, and partly added in second moment.
-
-
 #[[####]]# PresentationModel
-
 ![UML](apidocs/it/tidalwave/ui/core/role/PresentationModel.svg)
 TBD
-
-
 #[[####]]# PresentationModelAggregate
-
 This role is an aggregate of `PresentationModel`s associated to a name. It is suitable for modelling data that must be rendered on a table or a treeview.
-
-
 ![UML](apidocs/it/tidalwave/ui/core/role/PresentationModelAggregate.svg)
 TBD
-
-
 #[[####]]# PresentationModelFactory
-
 ![UML](apidocs/it/tidalwave/ui/core/role/PresentationModelFactory.svg)
 TBD
-
-

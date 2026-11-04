@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl.list;
-
 import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -40,7 +39,6 @@ import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.rangeClosed;
 import static org.testng.Assert.assertEquals;
 import static org.mockito.Mockito.*;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -49,20 +47,17 @@ import static org.mockito.Mockito.*;
 public class ListViewBindingsTest extends BindingTestSupport<ListView<PresentationModel>>
   {
     private ListViewBindings underTest;
-
     /**********************************************************************************************************************************************************/
     public ListViewBindingsTest()
       {
         super(ListView::new);
       }
-
     /**********************************************************************************************************************************************************/
     @Override
     protected void setup (@Nonnull final DefaultCellBinder cellBinder)
       {
         underTest = new ListViewBindings(executor, cellBinder, windowSupplier);
       }
-
     /**********************************************************************************************************************************************************/
     @Test(groups = "display")
     public void must_have_the_proper_presentation_models()
@@ -72,7 +67,6 @@ public class ListViewBindingsTest extends BindingTestSupport<ListView<Presentati
         // then
         assertEquals(new ArrayList<>(control.getItems()), pm.as(_CompositeOfPresentationModel_).findChildren().results());
       }
-
     /**********************************************************************************************************************************************************/
     @Test(groups = "display", enabled = false) // FIXME:
     public void must_have_the_proper_cell_texts()
@@ -84,7 +78,6 @@ public class ListViewBindingsTest extends BindingTestSupport<ListView<Presentati
         final var expected = rangeClosed(1, 10).mapToObj(i -> "Item #" + i).collect(toList());
         assertEquals(texts, expected);
       }
-
     /**********************************************************************************************************************************************************/
     @Test(groups = "display")
     public void must_have_the_proper_selection()
@@ -98,7 +91,6 @@ public class ListViewBindingsTest extends BindingTestSupport<ListView<Presentati
         verify(selectables[4]).select();
         rangeClosed(0, 9).filter(i -> i != 4).forEach(i -> verifyNoInteractions(selectables[i]));
       }
-
     // TODO: assert callbacks are not in the JavaFX thread
     // TODO: test context menus
   }

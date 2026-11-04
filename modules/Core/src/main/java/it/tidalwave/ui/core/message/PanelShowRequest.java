@@ -24,12 +24,10 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.message;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
-
 /***************************************************************************************************************************************************************
  *
  * A message requesting to show the given presentation. The requestor must expose a public method that returns a {@link it.tidalwave.ui.javafx.NodeAndDelegate}.

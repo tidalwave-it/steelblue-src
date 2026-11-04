@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.example.presentation.impl;
-
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -38,7 +37,6 @@ import static it.tidalwave.ui.core.role.Selectable._Selectable_;
 import static it.tidalwave.ui.test.AsAssert.assertThat;
 import static it.tidalwave.util.LocalizedDateTimeFormatters.getDateTimeFormatterFor;
 import static org.mockito.Mockito.*;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -47,7 +45,6 @@ import static org.mockito.Mockito.*;
 public class FileEntityPresentableTest
   {
     private static final DateTimeFormatter FORMATTER = getDateTimeFormatterFor(FormatStyle.SHORT, Locale.getDefault());
-
     @Test
     public void test()
       throws Exception

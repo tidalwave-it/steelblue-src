@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import java.util.concurrent.CountDownLatch;
@@ -35,7 +34,6 @@ import java.util.function.Supplier;
 import javafx.stage.Window;
 import javafx.application.Platform;
 import lombok.extern.slf4j.Slf4j;
-
 /***************************************************************************************************************************************************************
  *
  * A support class for all JavaFX integration tests with TestFX.
@@ -47,7 +45,6 @@ import lombok.extern.slf4j.Slf4j;
 public abstract class JavaFXTestSupport extends TestNGApplicationTest
   {
     protected Supplier<Window> windowSupplier = () -> null;
-
     /***********************************************************************************************************************************************************
      * Safely runs a task, ensuring that is executed in the JavaFX thread, and wait for the completion.
      * @param     name      the name of the task, used in logs
@@ -57,7 +54,6 @@ public abstract class JavaFXTestSupport extends TestNGApplicationTest
       {
         runSafelyAndWait(name, null, runnable);
       }
-
     /***********************************************************************************************************************************************************
      * Safely runs a task, ensuring that is executed in the JavaFX thread, and wait for the completion. This version also waits for the executor service to
      * complete all pending tasks.
@@ -68,7 +64,6 @@ public abstract class JavaFXTestSupport extends TestNGApplicationTest
     protected void runSafelyAndWait (@Nonnull final String name, @Nullable final ExecutorService executor, @Nonnull final Runnable runnable)
       {
         log.info("runSafelyAndWait({})", name);
-
         if (Platform.isFxApplicationThread())
           {
             runnable.run();
@@ -78,17 +73,14 @@ public abstract class JavaFXTestSupport extends TestNGApplicationTest
             Platform.runLater(runnable);
             waitForJavaFXJobsDone(name);
           }
-
         for (int i = 0; i < 10; i++)
           {
             if (executor != null)
               {
                 waitForExecutorJobsDone(name, executor);
               }
-
             waitForJavaFXJobsDone(name); // possibly submitted by the JavaFX thread.
           }
-
         try
           {
             Thread.sleep(1000); // give time for the UI component to be seen in attended tests
@@ -98,7 +90,6 @@ public abstract class JavaFXTestSupport extends TestNGApplicationTest
             throw new RuntimeException(e);
           }
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -110,7 +101,6 @@ public abstract class JavaFXTestSupport extends TestNGApplicationTest
         waitForLatch(latch);
         log.info(">>>> [{}] executor completed...", name);
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -125,7 +115,6 @@ public abstract class JavaFXTestSupport extends TestNGApplicationTest
             log.info(">>>> [{}] JavaFX thread completed...", name);
           }
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/

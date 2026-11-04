@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl.common;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import java.util.concurrent.Executor;
@@ -36,7 +35,6 @@ import it.tidalwave.ui.core.role.Selectable;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import static it.tidalwave.ui.core.role.Selectable._Selectable_;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -47,33 +45,28 @@ public class ChangeListenerSelectableAdapter implements ChangeListener<Presentat
   {
     @Nonnull
     protected final Executor executor;
-
     @Nonnull
     public ChangeListener<TreeItem<PresentationModel>> asTreeItemChangeListener()
       {
         return this::onTreeItemChanged;
       }
-
     private void onTreeItemChanged (@Nullable final ObservableValue<? extends TreeItem<PresentationModel>> observable,
                                     @Nullable final TreeItem<PresentationModel> oldValue,
                                     @Nullable final TreeItem<PresentationModel> newValue)
       {
         changed(null, safe(oldValue), safe(newValue));
       }
-
     @Override
     public void changed (@Nullable final ObservableValue<? extends PresentationModel> ov,
                          @Nullable final PresentationModel oldPm,
                          @Nullable final PresentationModel newPm)
       {
         log.trace("changed({}, {}, {})", ov, oldPm, newPm);
-
         if (newPm != null) // no selection
           {
             executor.execute(() -> newPm.maybeAs(_Selectable_).ifPresent(Selectable::select));
           }
       }
-
     @Nullable
     private static PresentationModel safe (@Nullable final TreeItem<PresentationModel> value)
       {

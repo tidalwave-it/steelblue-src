@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl.common;
-
 import jakarta.annotation.Nonnull;
 import java.beans.PropertyChangeListener;
 import java.util.List;
@@ -45,7 +44,6 @@ import static it.tidalwave.ui.core.role.Visibility._Visibility_;
 import static it.tidalwave.ui.javafx.impl.DefaultJavaFXBinder.enforceFxApplicationThread;
 import static it.tidalwave.ui.javafx.impl.common.JavaFXWorker.childrenPm;
 import static java.util.stream.Collectors.*;
-
 /***************************************************************************************************************************************************************
  *
  * Some common stuff for both {@code TreeView} and {@code TreeTableView}.
@@ -58,9 +56,7 @@ public class TreeItemDelegateSupport extends DelegateSupport
   {
     @Getter // for testing
     private final ChangeListenerSelectableAdapter selectionListener = new ChangeListenerSelectableAdapter(executor);
-
     private final ObsoletePresentationModelDisposer presentationModelDisposer = new ObsoletePresentationModelDisposer();
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -68,7 +64,6 @@ public class TreeItemDelegateSupport extends DelegateSupport
       {
         super(executor, mainWindow);
       }
-
     /***********************************************************************************************************************************************************
      * Sets the children for a {@link TreeItem}.
      * @param   parentItem  the {@code TreeItem}
@@ -80,7 +75,6 @@ public class TreeItemDelegateSupport extends DelegateSupport
                          () -> childrenPm(parentItem.getValue(), depth),
                          items -> parentItem.getChildren().setAll(createTreeItems(items, depth)));
       }
-
     /***********************************************************************************************************************************************************
      * {@return a list of {@link TreeItem}s populated with the given items}.
      * @param   depth       the depth level (used only for logging)
@@ -91,7 +85,6 @@ public class TreeItemDelegateSupport extends DelegateSupport
         enforceFxApplicationThread();
         return items.stream().map(childPm -> createTreeItem(childPm, depth)).collect(toList());
       }
-
     /***********************************************************************************************************************************************************
      * Creates a single {@link TreeItem} for the given the {@link PresentationModel}. When the {@code PresentationModel} fires the
      * {@link PresentationModel#PROPERTY_CHILDREN} property change event, children are recreated.
@@ -104,16 +97,13 @@ public class TreeItemDelegateSupport extends DelegateSupport
       {
         enforceFxApplicationThread();
         final TreeItem<PresentationModel> item = new PresentationModelTreeItem(pm);
-
         final PropertyChangeListener recreateChildrenOnUpdateListener = ignored -> Platform.runLater(() ->
           {
             log.debug("On recreateChildrenOnUpdateListener");
             setChildren(item, depth + 1);
             item.setExpanded(true);
           });
-
         pm.addPropertyChangeListener(PresentationModel.PROPERTY_CHILDREN, recreateChildrenOnUpdateListener);
-
         item.expandedProperty().addListener((observable, oldValue, newValue) ->
           {
             if (newValue)
@@ -121,10 +111,8 @@ public class TreeItemDelegateSupport extends DelegateSupport
                 setChildren(item, depth + 1);
               }
           });
-
         return item;
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -134,7 +122,6 @@ public class TreeItemDelegateSupport extends DelegateSupport
         rootProperty.addListener(presentationModelDisposer);
         rootProperty.set(createTreeItem(pm, 0));
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -143,7 +130,6 @@ public class TreeItemDelegateSupport extends DelegateSupport
         selectedItemProperty.removeListener(selectionListener.asTreeItemChangeListener());
         selectedItemProperty.addListener(selectionListener.asTreeItemChangeListener());
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/

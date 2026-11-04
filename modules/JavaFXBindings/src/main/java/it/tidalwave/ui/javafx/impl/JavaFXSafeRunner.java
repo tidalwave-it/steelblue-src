@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl;
-
 import jakarta.annotation.Nonnull;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
@@ -34,7 +33,6 @@ import javafx.application.Platform;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -45,7 +43,6 @@ public final class JavaFXSafeRunner
   {
     private static final String P_TIMEOUT = DefaultNodeAndDelegate.class.getName() + ".initTimeout";
     private static final int INITIALIZER_TIMEOUT = Integer.getInteger(P_TIMEOUT, 10);
-
     /***********************************************************************************************************************************************************
      * {@return the value provided by the given {@link Callable}, running it in the JavaFX thread}.
      * @param   callable    the callable
@@ -58,7 +55,6 @@ public final class JavaFXSafeRunner
           {
             return callable.call();
           }
-
         final var latch = new CountDownLatch(1);
         final var result = new AtomicReference<T>();
         final var exception = new AtomicReference<Throwable>();
@@ -79,11 +75,9 @@ public final class JavaFXSafeRunner
                 latch.countDown();
               }
           });
-
         try
           {
             log.debug("Waiting for JavaFX thread...");
-
             if (!latch.await(INITIALIZER_TIMEOUT, TimeUnit.SECONDS))
               {
                 throw new RuntimeException(timeoutMessage);
@@ -95,12 +89,10 @@ public final class JavaFXSafeRunner
             Thread.currentThread().interrupt();
             throw new RuntimeException(e);
           }
-
         if (exception.get() != null)
           {
             throw exception.get();
           }
-
         return result.get();
       }
   }

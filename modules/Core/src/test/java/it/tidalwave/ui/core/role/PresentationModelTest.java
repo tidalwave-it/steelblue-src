@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +35,6 @@ import static it.tidalwave.ui.core.role.Presentable._Presentable_;
 import static org.assertj.core.api.Assertions.assertThat;
 import static it.tidalwave.util.test.MoreAnswers.CALLS_DEFAULT_METHODS;
 import static org.mockito.Mockito.*;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -45,17 +43,12 @@ import static org.mockito.Mockito.*;
 public class PresentationModelTest
   {
     private static interface MockRole1 {}
-
     private static interface MockRole2 {}
-
     private final MockRole1 mockRole1 = mock(MockRole1.class);
-
     private final MockRole2 mockRole2 = mock(MockRole2.class);
-
     private final Collection<Object> roles = List.of(mockRole1, mockRole2);
-
     /***********************************************************************************************************************************************************
-     * 
+     *
      **********************************************************************************************************************************************************/
     // START SNIPPET: setup
     @BeforeClass
@@ -64,9 +57,8 @@ public class PresentationModelTest
         SystemRoleFactory.reset();
       }
     // END SNIPPET: setup
-
     /***********************************************************************************************************************************************************
-     * 
+     *
      **********************************************************************************************************************************************************/
     @Test
     public void test_ofMaybePresentable_without_Presentable()
@@ -79,9 +71,8 @@ public class PresentationModelTest
         assertThat(actualPm.as(MockRole1.class)).isSameAs(mockRole1);
         assertThat(actualPm.as(MockRole2.class)).isSameAs(mockRole2);
       }
-
     /***********************************************************************************************************************************************************
-     * 
+     *
      **********************************************************************************************************************************************************/
     @Test
     public void test_ofMaybePresentable_with_Presentable()

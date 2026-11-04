@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.spi;
-
 import jakarta.annotation.Nonnull;
 import java.util.Collection;
 import java.util.List;
@@ -39,7 +38,6 @@ import org.testng.annotations.Test;
 import static it.tidalwave.ui.core.PanelGroupControl.DefaultGroups.*;
 import static it.tidalwave.ui.core.PanelGroupControl.Options.*;
 import static org.mockito.Mockito.*;
-
 /***************************************************************************************************************************************************************
  *
  * @author      Fabrizio Giudici
@@ -48,16 +46,13 @@ import static org.mockito.Mockito.*;
 public class PanelGroupControlSupportTest
   {
     private static class MockPanel {}
-
     private static class MockNode {}
-
     static class Fixture extends PanelGroupControlSupport<MockPanel, MockNode>
       {
         private Fixture (@Nonnull final Function<As, Collection<PanelGroupProvider<MockNode>>> pgProvider)
           {
             super(pgProvider, mock(BeanFactory.class), "");
           }
-
         @Override
         protected void assemble (@Nonnull final Group group,
                                  @Nonnull final List<? extends PanelGroupProvider<MockNode>> panelProviders,
@@ -67,20 +62,17 @@ public class PanelGroupControlSupportTest
           {
             // not needed in tests
           }
-
         @Override
         protected void onShowRequest (@Nonnull final PanelShowRequest panelShowRequest)
           {
             // not needed in tests
           }
-
         @Override
         public void show (@Nonnull final Object object)
           {
             // not needed in tests
           }
       }
-
     @Test @SuppressWarnings("unchecked")
     public void test()
       {
@@ -112,7 +104,6 @@ public class PanelGroupControlSupportTest
         verify(underTest).assemble(eq(CENTER), eq(List.of(ppCenter1, ppCenter2)), same(panelCenter), any(Map.class), any(List.class));
         verify(underTest).assemble(eq(BOTTOM), eq(List.of(ppBottom1, ppBottom2)), same(panelBottom), any(Map.class), any(List.class));
       }
-
     @Nonnull
     private static PanelGroupProviderSupport<MockNode> createMock (@Nonnull final Group group, @Nonnull final String label)
       {

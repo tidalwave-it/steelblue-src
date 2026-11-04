@@ -24,12 +24,10 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.test;
-
 import it.tidalwave.ui.core.role.Displayable;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import static org.assertj.core.api.Assertions.assertThat;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -38,7 +36,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class DisplayableAssertTest
   {
     private DisplayableAssert underTest;
-
     /**********************************************************************************************************************************************************/
     @BeforeMethod
     public void setup()
@@ -46,7 +43,6 @@ public class DisplayableAssertTest
         final var displayable = Displayable.of("foo bar");
         underTest = DisplayableAssert.of(displayable);
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void testGood1()
@@ -56,7 +52,6 @@ public class DisplayableAssertTest
         // then
         assertThat(fluent).isSameAs(underTest);
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void testGood2()
@@ -66,7 +61,6 @@ public class DisplayableAssertTest
         // then
         assertThat(fluent).isSameAs(underTest);
       }
-
     /**********************************************************************************************************************************************************/
     @Test(expectedExceptions = AssertionError.class)
     public void testBad()

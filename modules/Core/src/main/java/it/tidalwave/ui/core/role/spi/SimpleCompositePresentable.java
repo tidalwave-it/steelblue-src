@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role.spi;
-
 import jakarta.annotation.Nonnull;
 import java.util.Collection;
 import java.util.List;
@@ -43,7 +42,6 @@ import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.*;
 import static it.tidalwave.util.ShortNames.*;
 import static it.tidalwave.role.SimpleComposite._SimpleComposite_;
-
 /***************************************************************************************************************************************************************
  *
  * An implementation of {@link Presentable} for datum instances having the {@link SimpleComposite} role.
@@ -57,18 +55,14 @@ import static it.tidalwave.role.SimpleComposite._SimpleComposite_;
 public class SimpleCompositePresentable implements Presentable
   {
     private static final As.Type<SimpleComposite<As>> _SimpleAsComposite_ = As.type(SimpleComposite.class);
-
     @RequiredArgsConstructor
     public static class SCPFinder extends SimpleFinderSupport<PresentationModel>
       {
         // private static final long serialVersionUID = -3235827383866946732L;
-
         @Nonnull
         private final SimpleCompositePresentable scp;
-
         @Nonnull
         private final Collection<Object> roles;
-
         public SCPFinder (@Nonnull final SCPFinder other, @Nonnull final Object override)
           {
             super(other, override);
@@ -76,7 +70,6 @@ public class SimpleCompositePresentable implements Presentable
             this.scp = source.scp;
             this.roles = source.roles;
           }
-
         @Override @Nonnull
         protected List<PresentationModel> computeResults()
           {
@@ -94,16 +87,12 @@ public class SimpleCompositePresentable implements Presentable
               });
           }
       }
-
     @Nonnull
     private final As datum;
-
     // This is not @Injected to avoid a dependency on Spring AOP
     @Nonnull
     private final PresentationModelFactory defaultPresentationModelFactory;
-
     private final ContextSnapshot contextSnapshot;
-
     /***********************************************************************************************************************************************************
      * @param datum     the owner
      **********************************************************************************************************************************************************/
@@ -111,7 +100,6 @@ public class SimpleCompositePresentable implements Presentable
       {
         this(datum, new DefaultPresentationModelFactory());
       }
-
     /***********************************************************************************************************************************************************
      * @param datum                             the owner
      * @param defaultPresentationModelFactory   the {@code PresentationModelFactory}
@@ -123,7 +111,6 @@ public class SimpleCompositePresentable implements Presentable
         this.defaultPresentationModelFactory = defaultPresentationModelFactory;
         contextSnapshot = new ContextSnapshot(datum);
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -132,7 +119,6 @@ public class SimpleCompositePresentable implements Presentable
       {
         return internalCreatePresentationModel(datum, roles);
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -141,21 +127,17 @@ public class SimpleCompositePresentable implements Presentable
                                                                @Nonnull final Collection<Object> roles)
       {
         final var pmFinder = new SCPFinder(this, roles);
-
         return contextSnapshot.runWithContexts(new Task<>()
           {
             @Override @Nonnull
             public PresentationModel run()
               {
                 final var r = RoleFactory.resolveFactories(datum, roles);
-
                 if (datum.maybeAs(_SimpleComposite_).isPresent())
                   {
                     r.add(SimpleComposite.of(pmFinder));
                   }
-
                 log.trace(">>>> r for {}: {}", shortId(datum), shortIds(r));
-
                 return defaultPresentationModelFactory.createPresentationModel(datum, r);
               }
           });

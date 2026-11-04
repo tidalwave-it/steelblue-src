@@ -24,12 +24,10 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import org.apiguardian.api.API;
 import static org.apiguardian.api.API.Status.EXPERIMENTAL;
-
 /***************************************************************************************************************************************************************
  *
  * A listener of a mutable property.

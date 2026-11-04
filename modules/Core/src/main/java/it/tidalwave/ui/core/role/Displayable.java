@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role;
-
 import jakarta.annotation.Nonnull;
 import java.util.Comparator;
 import java.util.Locale;
@@ -39,7 +38,6 @@ import it.tidalwave.ui.core.role.impl.DefaultDisplayable;
 import it.tidalwave.ui.core.role.impl.DisplayableComparator;
 import it.tidalwave.util.As;
 import static it.tidalwave.util.BundleUtilities.getMessage;
-
 /***************************************************************************************************************************************************************
  *
  * The role of an object which can provide its own display name.
@@ -56,12 +54,10 @@ public interface Displayable
   {
     /** Shortcut for {@link it.tidalwave.util.As}. */
     public static final Class<Displayable> _Displayable_ = Displayable.class;
-
     /***********************************************************************************************************************************************************
      * A default {@code Displayable} with an empty display name.
      **********************************************************************************************************************************************************/
     public static final Displayable DEFAULT = new DefaultDisplayable("", "DEFAULT");
-
     /***********************************************************************************************************************************************************
      * Returns the display name in the current {@link java.util.Locale}.
      *
@@ -69,7 +65,6 @@ public interface Displayable
      **********************************************************************************************************************************************************/
     @Nonnull
     public String getDisplayName();
-
     /***********************************************************************************************************************************************************
      * Returns the display name in the given {@link Locale}.
      * @param    locale       the {@code Locale}
@@ -81,7 +76,6 @@ public interface Displayable
       {
         return getDisplayName();
       }
-
     /***********************************************************************************************************************************************************
      * Returns all the display names in {@link Map} where they are indexed by {@code Locale}.
      * @since                 2.0-ALPHA-2
@@ -92,7 +86,6 @@ public interface Displayable
       {
         return Map.of();
       }
-
     /***********************************************************************************************************************************************************
      * Returns the supported {@code Locale}s.
      * @since                 2.0-ALPHA-2
@@ -103,7 +96,6 @@ public interface Displayable
       {
         return new TreeSet<>();
       }
-
     /***********************************************************************************************************************************************************
      * Sends the display name in the current {@link java.util.Locale} to a given customer.
      *
@@ -115,7 +107,6 @@ public interface Displayable
       {
         consumer.accept(getDisplayName());
       }
-
     /***********************************************************************************************************************************************************
      * Creates an instance with a given display name.
      *
@@ -128,7 +119,6 @@ public interface Displayable
       {
         return of(displayName, "???");
       }
-
     /***********************************************************************************************************************************************************
      * Creates an instance with a given display name iand an explicit label for  {@code toString()}.
      *
@@ -142,7 +132,6 @@ public interface Displayable
       {
         return new DefaultDisplayable(displayName, toStringName);
       }
-
     /***********************************************************************************************************************************************************
      * Creates an instance from a {@link Supplier}{@code <String>}. The supplier is invoked each time
      * {@link #getDisplayName()} is called.
@@ -157,7 +146,6 @@ public interface Displayable
       {
         return supplier::get;
       }
-
     /***********************************************************************************************************************************************************
      * Creates an instance from a {@link Function}{@code <T, String>} and a generic object that the function is applied
      * to. The function is invoked each time {@link #getDisplayName()} is called.
@@ -174,7 +162,6 @@ public interface Displayable
       {
         return () -> function.apply(object);
       }
-
     /***********************************************************************************************************************************************************
      * Creates a {@link Displayable} from a resource bundle. The bundle resource file is named {@code Bundle.properties} and it should be placed in the same
      * package as the owner class.
@@ -188,7 +175,6 @@ public interface Displayable
       {
         return new DefaultDisplayable(getMessage(ownerClass, key));
       }
-
     /***********************************************************************************************************************************************************
      * Returns a {@link Comparator} for comparing two instances of {@code Displayable}.
      *
@@ -200,7 +186,6 @@ public interface Displayable
       {
         return DisplayableComparator.getInstance();
       }
-
     /***********************************************************************************************************************************************************
      * Returns a {@link Comparator} for comparing two instances of objects implementing {@code As} that contain the
      * {@code Displayable} role.
@@ -213,7 +198,6 @@ public interface Displayable
       {
         return AsDisplayableComparator.getInstance();
       }
-
     /***********************************************************************************************************************************************************
      * Renders the attached object into a {@link String}. The method accepts optional parameters that can be used to control the format of the rendering; they
      * are usually specific of the object attached to this role.
@@ -221,18 +205,17 @@ public interface Displayable
      * @return       the string
      **********************************************************************************************************************************************************/
     @Nonnull
-    public default String render (@Nonnull final Object ... args)
+    public default String render (@Nonnull final Object... args)
       {
         return getDisplayName();
       }
-
     /***********************************************************************************************************************************************************
      * Renders the attached object providing the string tu a {@link Consumer}. The method accepts optional parameters that can be used to control the format of
      * the rendering; they are usually specific of the object attached to this role.
      * @param  consumer        the {@code Consumer} to append to
      * @param  args            optional rendering parameters
      **********************************************************************************************************************************************************/
-    public default void renderTo (@Nonnull final Consumer<? super String> consumer, @Nonnull final Object ... args)
+    public default void renderTo (@Nonnull final Consumer<? super String> consumer, @Nonnull final Object... args)
       {
         consumer.accept(render(args));
       }

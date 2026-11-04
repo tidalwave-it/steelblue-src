@@ -1,54 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-
     *********************************************************************************************************************
-
     SteelBlue: DCI User Interfaces
     http://tidalwave.it/projects/steelblue
-
     Copyright (C) 2015 - 2025 by Tidalwave s.a.s. (http://tidalwave.it)
-
     *********************************************************************************************************************
-
     Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
     the License. You may obtain a copy of the License at
-
         http://www.apache.org/licenses/LICENSE-2.0
-
     Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
     an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the License for the
     specific language governing permissions and limitations under the License.
-
     *********************************************************************************************************************
-
     git clone https://bitbucket.org/tidalwave/steelblue-src
     git clone https://github.com/tidalwave-it/steelblue-src
-
     *********************************************************************************************************************
-
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>it.tidalwave.steelblue</groupId>
         <artifactId>steelblue</artifactId>
         <version>3.0-ALPHA-6-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-
     <artifactId>it-tidalwave-ui-modules</artifactId>
     <version>3.0-ALPHA-6-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>SteelBlue (modules)</name>
     <description>SteelBlue (modules)</description>
-
     <properties>
         <tft.javac.source>11</tft.javac.source>
         <tft.javac.target>11</tft.javac.target>
         <tft.javac.release>11</tft.javac.release>
-
         <thesefoolishthings.version>5.0-ALPHA-3</thesefoolishthings.version>
         <tft.javafx.version>11.0.1</tft.javafx.version>
         <tft.openjfx-monocle.version>11.0.2</tft.openjfx-monocle.version>
@@ -59,7 +43,6 @@
         <tft.profile.metrics.checkstyleGoal /> <!-- FIXME: checkstyle crashes with module-info.java -->
         <tft.checkstyle.skip>true</tft.checkstyle.skip>
     </properties>
-
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -76,13 +59,11 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
             <dependency>
                 <groupId>org.jfxtras</groupId>
                 <artifactId>jmetro</artifactId>
                 <version>${jmetro.version}</version>
             </dependency>
-
             <!-- Should activate by itself with JDK 11+, but it fails with Jenkins Maven integration. -->
             <dependency>
                 <groupId>org.openjfx</groupId>
@@ -104,7 +85,6 @@
                 <artifactId>javafx-web</artifactId>
                 <version>${tft.javafx.version}</version>
             </dependency>
-
             <!-- For convergence. -->
             <dependency>
                 <groupId>net.bytebuddy</groupId>
@@ -113,7 +93,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -133,7 +112,6 @@
             <groupId>org.apiguardian</groupId>
             <artifactId>apiguardian-api</artifactId>
         </dependency>
-
         <!-- TEST DEPENDENCIES -->
         <dependency>
             <groupId>org.testng</groupId>
@@ -173,7 +151,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
@@ -190,12 +167,10 @@
             </plugin>
          </plugins>
     </build>
-
     <modules>
         <module>Core</module>
         <module>JavaFXBindings</module>
         <module>Test</module>
         <module>examples</module>
     </modules>
-
 </project>

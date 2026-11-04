@@ -24,14 +24,12 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role.spi;
-
 import jakarta.annotation.Nonnull;
 import java.beans.PropertyChangeSupport;
 import it.tidalwave.ui.core.role.MutableIconProvider;
 import it.tidalwave.ui.core.role.impl.MutableListenerSupport;
 import javax.swing.Icon;
 import lombok.experimental.Delegate;
-
 /***************************************************************************************************************************************************************
  *
  * A convenient support for implementing a {@link it.tidalwave.ui.core.role.MutableIconProvider}.
@@ -45,10 +43,8 @@ public abstract class MutableIconProviderSupport implements MutableIconProvider
   {
     @Delegate
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-
     @Delegate
     private final MutableListenerSupport mls = new MutableListenerSupport(pcs);
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      *
@@ -59,7 +55,6 @@ public abstract class MutableIconProviderSupport implements MutableIconProvider
     public void setIcon (@Nonnull final Icon icon)
       {
       }
-
     /***********************************************************************************************************************************************************
      * Fires the event notifying that {@link #PROP_ICON} has been changed.
      *

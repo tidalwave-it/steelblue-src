@@ -24,12 +24,10 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl.common;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import javafx.scene.control.cell.TextFieldListCell;
 import it.tidalwave.util.As;
-
 /***************************************************************************************************************************************************************
  *
  * A specialisation of {@link TextFieldListCell} which binds to an {@link As}-capable item.
@@ -41,13 +39,11 @@ public class AsObjectListCell<T extends As> extends TextFieldListCell<T>
   {
     @Nonnull
     private final CellBinder cellBinder;
-
     public AsObjectListCell (@Nonnull final CellBinder cellBinder)
       {
         super(AsObjectStringConverter.getInstance()); // Required for STB-123
         this.cellBinder = cellBinder;
       }
-
     @Override
     public void updateItem (@Nullable final T item, final boolean empty)
       {

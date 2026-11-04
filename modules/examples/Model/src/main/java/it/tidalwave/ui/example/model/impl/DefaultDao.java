@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.example.model.impl;
-
 import jakarta.annotation.Nonnull;
 import java.util.Collection;
 import java.util.List;
@@ -37,7 +36,6 @@ import it.tidalwave.ui.example.model.FileEntity;
 import it.tidalwave.ui.example.model.SimpleDciEntity;
 import it.tidalwave.ui.example.model.SimpleEntity;
 import static java.util.stream.Collectors.*;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -51,7 +49,6 @@ public class DefaultDao implements Dao // FIXME: rename to Model
       {
         return IntStream.rangeClosed(1, 1000).mapToObj(Integer::toString).map(SimpleEntity::new).collect(toList());
       }
-
     @Override @Nonnull
     public Collection<SimpleDciEntity> getDciEntities()
       {
@@ -64,7 +61,6 @@ public class DefaultDao implements Dao // FIXME: rename to Model
             return new SimpleDciEntity(name, attr1, attr2);
           }).toList();
       }
-
     @Override @Nonnull
     public Collection<FileEntity> getFiles()
       {

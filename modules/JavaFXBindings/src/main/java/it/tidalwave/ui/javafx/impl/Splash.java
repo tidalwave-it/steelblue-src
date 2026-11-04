@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl;
-
 import jakarta.annotation.Nonnull;
 import java.util.function.Function;
 import java.io.IOException;
@@ -39,7 +38,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -50,17 +48,12 @@ public class Splash
   {
     @Nonnull
     private final Object application;
-
     @Nonnull
     private final String fxml;
-
     @Nonnull
     private final Function<Parent, Scene> sceneFactory;
-
     private Pane splashPane;
-
     private Stage splashStage;
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -77,7 +70,6 @@ public class Splash
             log.warn("No Splash.fxml", e);
           }
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -88,7 +80,6 @@ public class Splash
         splashStage.setScene(splashScene);
         splashStage.show();
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -97,13 +88,11 @@ public class Splash
 //        loadProgress.progressProperty().unbind();
 //        loadProgress.setProgress(1);
 //        progressText.setText("Done.");
-
         final var start = new KeyFrame(Duration.ZERO, new KeyValue(splashStage.opacityProperty(), 1.0));
         final var end = new KeyFrame(Duration.millis(500), new KeyValue(splashStage.opacityProperty(), 0.0));
         final var slideAnimation = new Timeline(start, end);
         slideAnimation.setOnFinished(event -> splashStage.close());
         slideAnimation.play();
-
 //         FIXME: fade transition really doesn't work: it fades out the pane, but the stage is opaque.
 //        final FadeTransition fadeSplash = new FadeTransition(Duration.seconds(0.5), splashPane);
 //        fadeSplash.setFromValue(1.0);

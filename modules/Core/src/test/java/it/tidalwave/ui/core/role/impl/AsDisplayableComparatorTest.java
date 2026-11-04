@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role.impl;
-
 import jakarta.annotation.Nonnull;
 import java.util.Comparator;
 import java.util.List;
@@ -34,7 +33,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static it.tidalwave.util.mock.MockAsFactory.mockWithAs;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -46,7 +44,6 @@ public class AsDisplayableComparatorTest
     private final As b  = createMockAs(new DefaultDisplayable("b", "b"));
     private final As c1 = createMockAs(new DefaultDisplayable("c", "c"));
     private final As c2 = createMockAs(new DefaultDisplayable("c", "c"));
-
     @Test(dataProvider = "data")
     public void test (@Nonnull final As a1, @Nonnull final As a2, final int expectedResult)
       {
@@ -57,13 +54,11 @@ public class AsDisplayableComparatorTest
         // then
         assertThat(actualResult).isEqualTo(expectedResult);
       }
-
     @Nonnull
     private static As createMockAs (@Nonnull final Displayable displayable)
       {
         return mockWithAs(As.class, List.of(displayable));
       }
-
     @DataProvider
     private Object[][] data()
       {

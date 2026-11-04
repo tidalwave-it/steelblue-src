@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.test;
-
 import jakarta.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.function.Consumer;
@@ -35,7 +34,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import static lombok.AccessLevel.PRIVATE;
-
 /***************************************************************************************************************************************************************
  *
  * A factory class to create testing matchers.
@@ -58,7 +56,6 @@ public final class UserNotificationWithFeedbackTestHelper
       {
         return new UserNotificationMatcher(captionRegex, textRegex);
       }
-
     /***********************************************************************************************************************************************************
      * Creates a {@link UserNotificationWithFeedback} matcher for the given caption and text.
      * @param   captionRegex    the regular expression that should match the caption
@@ -70,7 +67,6 @@ public final class UserNotificationWithFeedbackTestHelper
       {
         return new UserNotificationWithFeedbackMatcher(captionRegex, textRegex);
       }
-
     /***********************************************************************************************************************************************************
      * An {@link Answer} that triggers a confirmation to a {@link UserNotificationWithFeedback}.
      * @return  the {@code Answer}
@@ -79,7 +75,6 @@ public final class UserNotificationWithFeedbackTestHelper
       {
         return CONFIRM;
       }
-
     /***********************************************************************************************************************************************************
      * An {@link Answer} that does a thing and then triggers a confirmation to a {@link UserNotificationWithFeedback}.
      * @param   thingToDo   the thing to do
@@ -94,7 +89,6 @@ public final class UserNotificationWithFeedbackTestHelper
             return CONFIRM.answer(invocationOnMock);
           };
       }
-
     /***********************************************************************************************************************************************************
      * An {@link Answer} that triggers a cancellation to a {@link UserNotificationWithFeedback}.
      * @return  the {@code Answer}
@@ -103,9 +97,8 @@ public final class UserNotificationWithFeedbackTestHelper
       {
         return CANCEL;
       }
-
     /***********************************************************************************************************************************************************
-     * 
+     *
      **********************************************************************************************************************************************************/
     private static final Answer<Void> CONFIRM = invocation ->
       {
@@ -114,9 +107,8 @@ public final class UserNotificationWithFeedbackTestHelper
         notification.confirm();
         return null;
       };
-
     /***********************************************************************************************************************************************************
-     * 
+     *
      **********************************************************************************************************************************************************/
     private static final Answer<Void> CANCEL = invocation ->
       {
@@ -125,9 +117,8 @@ public final class UserNotificationWithFeedbackTestHelper
         notification.cancel();
         return null;
       };
-
     /***********************************************************************************************************************************************************
-     * 
+     *
      **********************************************************************************************************************************************************/
     @Nonnull
     private static UserNotificationWithFeedback findNotification (@Nonnull final InvocationOnMock invocation)

@@ -24,16 +24,14 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.role;
-
 import jakarta.annotation.Nonnull;
 import javafx.scene.Node;
-
 /***************************************************************************************************************************************************************
  *
  * A Role for data that provides their own {@link Node} for rendering.
- * 
+ *
  * @stereotype  Role
- * 
+ *
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
@@ -41,7 +39,6 @@ import javafx.scene.Node;
   {
     /** Shortcut for {@link it.tidalwave.util.As}. */
     public static final Class<CustomGraphicProvider> _CustomGraphicProvider_ = CustomGraphicProvider.class;
-    
     @Nonnull
     public Node getGraphic();
   }

@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl.list;
-
 import jakarta.annotation.Nonnull;
 import java.util.List;
 import java.util.Optional;
@@ -51,7 +50,6 @@ import static it.tidalwave.ui.javafx.impl.DefaultJavaFXBinder.enforceFxApplicati
 import static it.tidalwave.ui.javafx.impl.common.JavaFXWorker.childrenPm;
 import static javafx.collections.FXCollections.observableArrayList;
 import static javafx.scene.input.KeyCode.*;
-
 /***************************************************************************************************************************************************************
  *
  * This class takes care of bindings related to {@link ListView}.
@@ -64,9 +62,7 @@ public class ListViewBindings extends DelegateSupport
   {
     @Nonnull
     private final Callback<ListView<PresentationModel>, ListCell<PresentationModel>> cellFactory;
-
     private final ChangeListener<PresentationModel> changeListener = new ChangeListenerSelectableAdapter(executor);
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -75,7 +71,6 @@ public class ListViewBindings extends DelegateSupport
         super(executor, mainWindow);
         cellFactory = listView -> new AsObjectListCell<>(cellBinder);
       }
-
     /***********************************************************************************************************************************************************
      * Binds a {@link ListView}.
      * @param   listView            the {@code ListView}
@@ -94,7 +89,6 @@ public class ListViewBindings extends DelegateSupport
                 // TODO: must call the default action - but should we look up it again?
                 // Otherwise emulate mouse double click on the cell
                 log.debug("ListView onKeyPressed: {}", selectedPm);
-
                 executor.execute(() ->
                   {
                     // TODO: it would be nicer to retrieve the cell and its associated RoleCollector?
@@ -103,7 +97,6 @@ public class ListViewBindings extends DelegateSupport
                   });
               }
           });
-
         final var selectedProperty = listView.getSelectionModel().selectedItemProperty();
         selectedProperty.removeListener(changeListener);
         listView.setItems(observableArrayList()); // quick clear in case of long operations FIXME doesn't work
@@ -111,7 +104,6 @@ public class ListViewBindings extends DelegateSupport
                          () -> childrenPm(pm),
                          items -> finalizeBinding(listView, items, selectedProperty, callback));
       }
-
     /***********************************************************************************************************************************************************
      * Finalizes binding in the JavaFX thread and eventually invokes a callback.
      * @param   listView            the {@link ListView}

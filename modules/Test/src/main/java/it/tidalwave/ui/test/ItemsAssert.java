@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.test;
-
 import java.lang.reflect.Array;
 import jakarta.annotation.Nonnull;
 import java.util.List;
@@ -36,7 +35,6 @@ import lombok.ToString;
 import org.mockito.ThrowingConsumer;
 import static it.tidalwave.ui.test.AsAssert.assertThat;
 import static lombok.AccessLevel.PRIVATE;
-
 /***************************************************************************************************************************************************************
  *
  * Assertions for items of {@link it.tidalwave.role.Composite} and {@link it.tidalwave.role.Aggregate}.
@@ -51,14 +49,11 @@ public class ItemsAssert<T extends As>
     /** The type of items. */
     @Nonnull
     protected final Class<T> itemType;
-
     /** The items. */
     @Nonnull
     protected final List<T> items;
-
     /** Whether {@link #withNextItemSatisfying(ThrowingConsumer)} has been already called in the current chain. */
     protected final boolean nextItemSatisfyingCalled;
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -67,7 +62,6 @@ public class ItemsAssert<T extends As>
       {
         return of(itemType, items, false);
       }
-
     /***********************************************************************************************************************************************************
      * Enumerates all children of the current object so assertions can be enforced on them.
      * This method can be used in a chain that includes one or multiple calls to {@link #withNextItemSatisfying(ThrowingConsumer)}, but only before them.
@@ -81,7 +75,6 @@ public class ItemsAssert<T extends As>
         items.forEach(consumer);
         return new ItemsAssert<>(itemType, items, nextItemSatisfyingCalled);
       }
-
     /***********************************************************************************************************************************************************
      * Enumerates all children of the current object so assertions can be enforced on them.
      * This method can be used in a chain that includes one or multiple calls to {@link #withNextItemSatisfying(ThrowingConsumer)}, but only before them.
@@ -95,7 +88,6 @@ public class ItemsAssert<T extends As>
         items.forEach(i -> consumer.accept(assertThat(i)));
         return new ItemsAssert<>(itemType, items, nextItemSatisfyingCalled);
       }
-
     /***********************************************************************************************************************************************************
      * Provides all children of the current object so assertions can be enforced on them.
      * This method can be used in a chain that includes one or multiple calls to {@link #withNextItemSatisfying(ThrowingConsumer)}, but only before them.
@@ -110,7 +102,6 @@ public class ItemsAssert<T extends As>
         consumer.accept(items.toArray((T[])Array.newInstance(itemType, items.size())));
         return new ItemsAssert<>(itemType, items, nextItemSatisfyingCalled);
       }
-
     /***********************************************************************************************************************************************************
      * Provides the next child of this object so assertions can be enforced on them. Further chained calls of this method will provide further children.
      * @param   consumer        the consumer of the child
@@ -122,7 +113,6 @@ public class ItemsAssert<T extends As>
         consumer.accept(assertThat(items.get(0)));
         return new ItemsAssert<>(itemType, items.subList(1, items.size()), true);
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/

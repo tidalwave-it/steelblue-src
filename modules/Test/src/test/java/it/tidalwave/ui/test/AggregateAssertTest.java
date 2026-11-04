@@ -24,13 +24,11 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.test;
-
 import java.util.Map;
 import it.tidalwave.role.Aggregate;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import static org.assertj.core.api.Assertions.assertThat;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -39,13 +37,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class AggregateAssertTest
   {
     private AggregateAssert<Mock> underTest;
-
     private Mock aggregateA;
-
     private Mock aggregateB;
-
     private Mock aggregateC;
-
     /**********************************************************************************************************************************************************/
     @BeforeMethod
     public void setup()
@@ -56,7 +50,6 @@ public class AggregateAssertTest
         final var aggregate = Aggregate.of(Map.of("a", aggregateA, "b", aggregateB, "c", aggregateC));
         underTest = AggregateAssert.of(Mock.class, aggregate);
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void test_good()
@@ -67,7 +60,6 @@ public class AggregateAssertTest
         assertThat(enumerator.itemType).isEqualTo(Mock.class);
         assertThat(enumerator.items).containsExactly(aggregateA, aggregateB, aggregateC);
       }
-
     /**********************************************************************************************************************************************************/
     @Test(expectedExceptions = AssertionError.class)
     public void test_bad()

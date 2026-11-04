@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.example.presentation.javafx;
-
 import jakarta.annotation.Nonnull;
 import javafx.util.Duration;
 import org.springframework.context.ApplicationContext;
@@ -34,7 +33,6 @@ import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
 import it.tidalwave.ui.example.presentation.MainPanelPresentationControl;
 import it.tidalwave.ui.javafx.JavaFXSpringAnnotationApplication;
 import it.tidalwave.ui.javafx.JavaFXSpringApplication;
-
 /***************************************************************************************************************************************************************
  *
  * The main class extends {@link JavaFXSpringApplication} and invokes a starting method on a controller that boots the application.
@@ -73,7 +71,6 @@ public class Main extends JavaFXSpringAnnotationApplication
                        .withProperty(K_INITIAL_SIZE, 0.8));                            // initial windows size (in percentage)
       }
     // END SNIPPET: main
-
     /***********************************************************************************************************************************************************
      * This method retrieves a reference to the main controller and boots it.
      **********************************************************************************************************************************************************/

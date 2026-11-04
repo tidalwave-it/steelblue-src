@@ -24,12 +24,10 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl.common;
-
 import jakarta.annotation.Nonnull;
 import javafx.scene.control.TreeItem;
 import it.tidalwave.ui.core.role.PresentationModel;
 import static it.tidalwave.role.Composite._Composite_;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -41,11 +39,9 @@ public class PresentationModelTreeItem extends TreeItem<PresentationModel>
       {
         super(pm);
       }
-
     @Override
     public boolean isLeaf()
       {
         return getValue().maybeAs(_Composite_).isEmpty();
       }
   }
-

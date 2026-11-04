@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl;
-
 import javafx.stage.Stage;
 import javafx.application.Application;
 import javafx.application.HostServices;
@@ -36,7 +35,6 @@ import org.testfx.framework.junit5.ApplicationFixture;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -51,7 +49,6 @@ public abstract class TestNGApplicationTest extends FxRobot implements Applicati
         FxToolkit.registerPrimaryStage();
         return FxToolkit.setupApplication(appClass, appArgs);
       }
-
     @BeforeMethod
     public final void internalBefore()
             throws Exception
@@ -59,38 +56,31 @@ public abstract class TestNGApplicationTest extends FxRobot implements Applicati
         FxToolkit.registerPrimaryStage();
         FxToolkit.setupApplication(() -> new ApplicationAdapter(this));
       }
-
     @AfterMethod
     public final void internalAfter()
             throws Exception
       {
         FxToolkit.cleanupAfterTest(this, new ApplicationAdapter(this));
       }
-
     public void init()
       {
       }
-
     public void start (Stage stage)
       {
       }
-
     public void stop()
       {
       }
-
     /** @deprecated */
     @Deprecated
     public final HostServices getHostServices() {
       throw new UnsupportedOperationException();
     }
-
     /** @deprecated */
     @Deprecated
     public final Application.Parameters getParameters() {
       throw new UnsupportedOperationException();
     }
-
     /** @deprecated */
     @Deprecated
     public final void notifyPreloader(Preloader.PreloaderNotification notification) {

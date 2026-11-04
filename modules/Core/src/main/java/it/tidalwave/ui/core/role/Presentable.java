@@ -24,14 +24,12 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role;
-
 import jakarta.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Collections;
 import it.tidalwave.ui.core.role.impl.DefaultPresentable;
 import it.tidalwave.util.Parameters;
 import static it.tidalwave.util.Parameters.r;
-
 /***************************************************************************************************************************************************************
  *
  * The role of an object that can be presented on a UI, thus is capable of creating a {@link PresentationModel}.
@@ -47,7 +45,6 @@ public interface Presentable
   {
     /** Shortcut for {@link it.tidalwave.util.As}. */
     public static final Class<Presentable> _Presentable_ = Presentable.class;
-
     /***********************************************************************************************************************************************************
      * Creates a {@link PresentationModel}.
      *
@@ -58,7 +55,6 @@ public interface Presentable
       {
         return createPresentationModel(Collections.emptyList());
       }
-
     /***********************************************************************************************************************************************************
      * Creates a {@link PresentationModel} with some roles.
      *
@@ -68,7 +64,6 @@ public interface Presentable
      **********************************************************************************************************************************************************/
     @Nonnull
     public PresentationModel createPresentationModel (@Nonnull Collection<Object> instanceRoles);
-
     /***********************************************************************************************************************************************************
      * Creates a {@link PresentationModel} with a single role.
      *
@@ -82,7 +77,6 @@ public interface Presentable
         Parameters.mustNotBeArrayOrCollection(instanceRole, "instanceRole");
         return createPresentationModel(r(instanceRole));
       }
-
     /***********************************************************************************************************************************************************
      * Creates a default {@link Presentable} for the given object.
      *

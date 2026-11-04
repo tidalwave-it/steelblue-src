@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role.spi;
-
 import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -40,7 +39,6 @@ import it.tidalwave.role.Composite;
 import it.tidalwave.role.SimpleComposite;
 import static it.tidalwave.ui.core.role.Presentable._Presentable_;
 import static it.tidalwave.util.Parameters.r;
-
 /***************************************************************************************************************************************************************
  *
  * A {@link java.util.stream.Collector} which collects a {@link Stream} of {@link PresentationModel}s into a single
@@ -54,18 +52,17 @@ public class PresentationModelCollectors extends ArrayListCollectorSupport<Prese
   {
     @Nonnull
     private final Collection<Object> roles = new ArrayList<>();
-    
     /***********************************************************************************************************************************************************
      * A {@link java.util.stream.Collector} which collects a {@link Stream} of {@link PresentationModel}s into a single
      * {@code PresentationModel} with a {@link Composite} role containing them. In other words:
-     * 
+     *
      * <pre>
-     * List&lt;PresentationModel&gt; pms = ...
+     * List&lt;PresentationModel&gt; pms =...
      * PresentationModel compositePm = pms.stream().collect(toCompositePresentationModel());
      * // same contents as childrenPms
      * List&lt;PresentationModel&gt; childrenPms = compositePm.as(_Composite_).findChildren().results();
      * </pre>
-     * 
+     *
      * @param   roles   some extra roles included in the resulting {@code PresentationModel}
      * @return          a {@code PresentationModel}
      * @since   3.2-ALPHA-3 (refactored)
@@ -75,19 +72,17 @@ public class PresentationModelCollectors extends ArrayListCollectorSupport<Prese
       {
         return new PresentationModelCollectors(roles);
       }
-
     @Nonnull
     public static PresentationModelCollectors toCompositePresentationModel()
       {
         return toCompositePresentationModel((Collection<Object>)Collections.emptyList());
       }
-
     /***********************************************************************************************************************************************************
      * A facility method that creates a composite {@link PresentationModel} out of an iterable (which means an array,
      * a collection or a stream) of objects implementing {@link As}. For each  object in the iterable, its {@code
      * PresentationModel} is created by means of invoking its {@link it.tidalwave.ui.core.role.Presentable} role. Then all
      * the {@code PresentationModel}s are aggregated into the composite.
-     * 
+     *
      * A function which creates specific roles for each {@code PresentationModel} can be specified. The function can
      * return a single role or multiple roles in form of an array {@code Object[]}.
      *
@@ -105,9 +100,8 @@ public class PresentationModelCollectors extends ArrayListCollectorSupport<Prese
                             .map(o -> o.as(_Presentable_).createPresentationModel(r(roleCreator.apply(o))))
                             .collect(toCompositePresentationModel());
       }
-
     /***********************************************************************************************************************************************************
-     * A facility simplified version of 
+     * A facility simplified version of
      * {@link #toCompositePresentationModel(java.lang.Iterable, java.util.function.Function)}.
      *
      * @param   <T>             the type of the objects
@@ -119,16 +113,14 @@ public class PresentationModelCollectors extends ArrayListCollectorSupport<Prese
       {
         return toCompositePresentationModel(i, o -> new Object[0]);
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
-    @Override @Nonnull 
-    public Function<List<PresentationModel>, PresentationModel> finisher() 
+    @Override @Nonnull
+    public Function<List<PresentationModel>, PresentationModel> finisher()
       {
         return childrenPms -> PresentationModel.of("", r(roles, SimpleComposite.ofCloned(childrenPms)));
       }
-    
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/

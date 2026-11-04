@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core;
-
 import java.beans.PropertyChangeSupport;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -32,7 +31,6 @@ import it.tidalwave.ui.core.role.impl.MutableListenerSupport;
 import lombok.experimental.Delegate;
 import org.testng.annotations.Test;
 import static org.mockito.Mockito.*;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -44,17 +42,14 @@ public class MutableTest
       {
         @Delegate
         private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-
         @Delegate
         private final MutableListenerSupport mls = new MutableListenerSupport(pcs);
       }
-
     @FunctionalInterface
     static interface TriConsumer<T, S, U>
       {
         public void accept (T t, S s, U u);
       }
-
     @Test @SuppressWarnings("unchecked")
     public void test_listeners()
       {

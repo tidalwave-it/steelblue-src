@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl.tableview;
-
 import jakarta.annotation.Nonnull;
 import java.util.Optional;
 import java.util.concurrent.Executor;
@@ -46,7 +45,6 @@ import it.tidalwave.ui.javafx.impl.common.PresentationModelObservable;
 import lombok.extern.slf4j.Slf4j;
 import static it.tidalwave.ui.javafx.impl.DefaultJavaFXBinder.enforceFxApplicationThread;
 import static it.tidalwave.ui.javafx.impl.common.JavaFXWorker.childrenPm;
-
 /***************************************************************************************************************************************************************
  *
  * This class takes care of bindings related to {@link TableView}.
@@ -58,9 +56,7 @@ import static it.tidalwave.ui.javafx.impl.common.JavaFXWorker.childrenPm;
 public class TableViewBindings extends DelegateSupport
   {
     private final Callback<TableColumn<PresentationModel, PresentationModel>, TableCell<PresentationModel, PresentationModel>> cellFactory;
-
     private final ChangeListener<PresentationModel> changeListener = new ChangeListenerSelectableAdapter(executor);
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -69,7 +65,6 @@ public class TableViewBindings extends DelegateSupport
         super(executor, mainWindow);
         cellFactory = ignored -> new AsObjectTableCell<>(cellBinder);
       }
-
     /***********************************************************************************************************************************************************
      * Binds a {@link TableView}.
      * @param   tableView           the {@code TableView}
@@ -86,7 +81,6 @@ public class TableViewBindings extends DelegateSupport
                          () -> childrenPm(pm),
                          items -> finalizeBinding(tableView, items, selectedProperty, callback));
       }
-
     /***********************************************************************************************************************************************************
      * Finalizes binding in the JavaFX thread and eventually invokes a callback.
      * @param   tableView           the {@link TableView}
@@ -110,7 +104,6 @@ public class TableViewBindings extends DelegateSupport
             column.setCellValueFactory(PresentationModelObservable::of);
             column.setCellFactory(cellFactory);
           });
-
         callback.ifPresent(Runnable::run);
       }
   }

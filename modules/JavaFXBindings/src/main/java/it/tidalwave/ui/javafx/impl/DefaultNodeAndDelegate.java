@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl;
-
 import jakarta.annotation.Nonnull;
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -38,7 +37,6 @@ import lombok.extern.slf4j.Slf4j;
 import static it.tidalwave.ui.javafx.impl.DefaultJavaFXBinder.enforceFxApplicationThread;
 import static it.tidalwave.ui.javafx.impl.JavaFXSafeRunner.runSafelyAndWait;
 import static it.tidalwave.util.ReflectionUtils.*;
-
 /***************************************************************************************************************************************************************
  *
  * The implementation of {@link NodeAndDelegate}.
@@ -51,10 +49,8 @@ public class DefaultNodeAndDelegate<T> implements NodeAndDelegate<T>
   {
     @Nonnull
     private final Node node;
-
     @Nonnull
     private final T delegate;
-
     /***********************************************************************************************************************************************************
      * Creates a {@link NodeAndDelegate} for the given presentation class. The FXML resource name is inferred by default, For instance, is the class is named
      * {@code JavaFXFooBarPresentation}, the resource name is {@code FooBar.fxml} and searched in the same packages as the class.
@@ -71,7 +67,6 @@ public class DefaultNodeAndDelegate<T> implements NodeAndDelegate<T>
                              + ".fxml";
         return of(presentationClass, resource);
       }
-
     /***********************************************************************************************************************************************************
      * Creates a {@link NodeAndDelegate} for the given presentation class.
      * @param   presentationClass   the class of the presentation for which the resources must be created.
@@ -94,7 +89,6 @@ public class DefaultNodeAndDelegate<T> implements NodeAndDelegate<T>
             throw new RuntimeException(e);
           }
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -111,12 +105,10 @@ public class DefaultNodeAndDelegate<T> implements NodeAndDelegate<T>
             final T jfxController = loader.getController();
             injectDependencies(jfxController, AbstractJavaFXSpringApplication.getBeans());
             final var interfaces = jfxController.getClass().getInterfaces();
-
             if (interfaces.length == 0)
               {
                 log.warn("{} has no interface: not creating safe proxy", jfxController.getClass());
               }
-
             final T delegate = (interfaces.length > 0) ? JavaFXSafeProxy.of(jfxController, interfaces) : jfxController;
             log.debug(">>>> load({}, {}) completed", clazz, resource);
             return new DefaultNodeAndDelegate<>(node, delegate);

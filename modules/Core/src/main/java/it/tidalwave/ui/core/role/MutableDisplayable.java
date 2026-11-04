@@ -24,13 +24,11 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role;
-
 import jakarta.annotation.Nonnull;
 import java.util.Locale;
 import java.util.Map;
 import it.tidalwave.ui.core.Mutable;
 import it.tidalwave.ui.core.role.impl.DefaultMutableDisplayable;
-
 /***************************************************************************************************************************************************************
  *
  * A specialized {@link it.tidalwave.ui.core.role.Displayable} which is mutable (that is, its display name can be changed)
@@ -47,20 +45,16 @@ public interface MutableDisplayable extends Displayable, Mutable
   {
     /** Shortcut for {@link it.tidalwave.util.As}. */
     public static final Class<MutableDisplayable> _MutableDisplayable_ = MutableDisplayable.class;
-
     /** The property name for displayName */
     public static final String PROP_DISPLAY_NAME = "displayName";
-
     /** The property name for displayNames */
     public static final String PROP_DISPLAY_NAMES = "displayNames";
-
     /***********************************************************************************************************************************************************
      * Sets the display name in {@code Locale.ENGLISH}.
      *
      * @param  displayName  the display name
      **********************************************************************************************************************************************************/
     public void setDisplayName (@Nonnull String displayName);
-
     /***********************************************************************************************************************************************************
      * Sets the display name in the given {@code Locale}.
      *
@@ -68,14 +62,12 @@ public interface MutableDisplayable extends Displayable, Mutable
      * @param  locale       the locale
      **********************************************************************************************************************************************************/
     public void setDisplayName (@Nonnull String displayName, @Nonnull Locale locale);
-
     /***********************************************************************************************************************************************************
      * Sets a bag of display names for a number of {@code Locale}s.
      *
      * @param  displayNames  the display names
      **********************************************************************************************************************************************************/
     public void setDisplayNames (@Nonnull Map<Locale, String> displayNames);
-
     /***********************************************************************************************************************************************************
      * Creates an instance with an initial given display name in {@code Locale.ENGLISH}.
      *
@@ -88,7 +80,6 @@ public interface MutableDisplayable extends Displayable, Mutable
       {
         return of(displayName, "???");
       }
-
     /***********************************************************************************************************************************************************
      * Creates an instance with an initial given display name in {@code Locale.ENGLISH} and an explicit identifier for
      * {@code toString()}.

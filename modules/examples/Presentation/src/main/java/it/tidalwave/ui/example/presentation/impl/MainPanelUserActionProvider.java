@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.example.presentation.impl;
-
 import jakarta.annotation.Nonnull;
 import java.util.List;
 import it.tidalwave.ui.core.MenuBarControl;
@@ -33,7 +32,6 @@ import it.tidalwave.ui.core.role.UserAction;
 import it.tidalwave.ui.core.role.spi.DefaultUserActionProvider;
 import it.tidalwave.dci.annotation.DciRole;
 import lombok.RequiredArgsConstructor;
-
 /***************************************************************************************************************************************************************
  *
  * This class declares which actions should be bound to toolbar buttons.
@@ -47,7 +45,6 @@ public class MainPanelUserActionProvider extends DefaultUserActionProvider
   {
     @Nonnull
     private final DefaultMainPanelPresentationControl pc;
-
     @Override @Nonnull
     public List<UserAction> getActions()
       {

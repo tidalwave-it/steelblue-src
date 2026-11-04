@@ -24,15 +24,13 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role;
-
 import jakarta.annotation.Nonnull;
 import java.util.Collection;
 import it.tidalwave.ui.core.role.impl.DefaultStyleable;
-
 /***************************************************************************************************************************************************************
  *
  * A role which declares a set of styles for rendering.
- * 
+ *
  * @stereotype Role
  *
  * @since   2.0-ALPHA-1
@@ -44,10 +42,8 @@ public interface Styleable
   {
     /** Shortcut for {@link it.tidalwave.util.As}. */
     public static final Class<Styleable> _Styleable_ = Styleable.class;
-    
     @Nonnull
     public Collection<String> getStyles();
-
     /***********************************************************************************************************************************************************
      * Creates a new instance from a collection of strings
      *
@@ -60,7 +56,6 @@ public interface Styleable
       {
         return new DefaultStyleable(styles);
       }
-
     /***********************************************************************************************************************************************************
      * Creates a new instance from a collection of strings
      *
@@ -69,7 +64,7 @@ public interface Styleable
      * @since             3.2-ALPHA-2
      **********************************************************************************************************************************************************/
     @Nonnull
-    public static Styleable of (@Nonnull final String ... styles)
+    public static Styleable of (@Nonnull final String... styles)
       {
         return new DefaultStyleable(styles);
       }

@@ -24,13 +24,11 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role.impl;
-
 import java.beans.PropertyChangeSupport;
 import it.tidalwave.ui.core.MutableListener;
 import org.testng.annotations.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
-
 /***************************************************************************************************************************************************************
  *
  * @author      Fabrizio Giudici
@@ -56,7 +54,6 @@ public class MutableListenerSupportTest
         verify(listener).changed(same(source), eq("old"),  eq("new"));
         verifyNoInteractions(anotherListener);
       }
-
     /**********************************************************************************************************************************************************/
     @Test @SuppressWarnings("unchecked")
     public void test_generic_listener()
@@ -73,7 +70,6 @@ public class MutableListenerSupportTest
         verify(listener).changed(same(source), eq("old"),  eq("new"));
         assertThat(underTest.adapterMap).containsKey(listener);
       }
-
     /**********************************************************************************************************************************************************/
     @Test @SuppressWarnings("unchecked")
     public void test_remove_listener()

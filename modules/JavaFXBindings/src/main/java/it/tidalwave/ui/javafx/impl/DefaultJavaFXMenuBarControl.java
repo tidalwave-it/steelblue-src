@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl;
-
 import jakarta.annotation.Nonnull;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -36,7 +35,6 @@ import it.tidalwave.ui.javafx.JavaFXBinder;
 import it.tidalwave.ui.javafx.JavaFXMenuBarControl;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 /***************************************************************************************************************************************************************
  *
  * The JavaFX implementation for {@link MenuBarControl}.
@@ -57,7 +55,6 @@ public class DefaultJavaFXMenuBarControl extends MenuBarControlSupport<JavaFXBin
         menuBar.useSystemMenuBarProperty().set(true); // FIXME: only if macOS?
         super.populate(binder, menuBar);
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -66,7 +63,6 @@ public class DefaultJavaFXMenuBarControl extends MenuBarControlSupport<JavaFXBin
       {
         return new Menu(label);
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -75,7 +71,6 @@ public class DefaultJavaFXMenuBarControl extends MenuBarControlSupport<JavaFXBin
       {
         menuBar.getMenus().add(menu);
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/

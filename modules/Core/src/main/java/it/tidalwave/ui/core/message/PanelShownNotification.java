@@ -24,11 +24,9 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.message;
-
 import jakarta.annotation.Nonnull;
 import it.tidalwave.ui.core.PanelGroupControl;
 import it.tidalwave.ui.core.role.impl.AbstractPanelNotification;
-
 /***************************************************************************************************************************************************************
  *
  * A message notifying that a panel has been shown.

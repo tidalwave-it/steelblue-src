@@ -24,10 +24,8 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.function;
-
 import jakarta.annotation.Nonnull;
 import it.tidalwave.ui.core.ChangingSource;
-
 /***************************************************************************************************************************************************************
  *
  * @since   2.0-ALPHA-1
@@ -39,26 +37,21 @@ public abstract class UnaryBoundFunctionSupport<T, R> extends BoundFunctionSuppo
   {
     @Nonnull
     private final ChangingSource<T> source;
-
     protected R value;
-
     @SuppressWarnings("unchecked")
     protected UnaryBoundFunctionSupport (@Nonnull final ChangingSource<T> source)
       {
         this.source = source;
         source.addPropertyChangeListener(event -> onSourceChange((T)event.getOldValue(), (T)event.getNewValue()));
       }
-
     protected void onSourceChange (@Nonnull final T oldSourceValue, @Nonnull final T newSourceValue)
       {
         final var oldValue = function(oldSourceValue);
         value = function(newSourceValue);
         fireValueChanged(oldValue, value);
       }
-
     @Nonnull
     protected abstract R function (final T value);
-
     @Override @Nonnull
     public final R get()
       {

@@ -23,94 +23,53 @@
  *
  * *************************************************************************************************************************************************************
  *#
-
 #[[##]]# Introduction
-
 ${project.description}
-
 The fine-grain decomposition of entities that is typical of the SteelBlue DCI architecture tends to make test code longer, because it is necessary to
 navigate through a few references to obtain (and assert) object attributes. For instance, while in plain code to access the display name of an object is
 usually as simple as:
-
 ```java
 assertThat(entity.getDisplayName()).isEqualTo("Leonardo da Vinci");
 ```
-
 with DCI it becomes:
-
 <!-- MACRO{snippet|id=displayable|file=${project.basedir}/src/test/java/it/tidalwave/ui/test/ExamplesTest.java} -->
-
 Indeed a good test probably should be a bit more complex because the `Displayable` role might not be not available, so its presence should be first probed.
 A small set of tools in the style of AssertJ make it possible to simplify code. For instance, asserting the display name of an entity is as simple as:
-
 <!-- MACRO{snippet|id=hasDisplayable1|file=${project.basedir}/src/test/java/it/tidalwave/ui/test/ExamplesTest.java} -->
-
 or even:
-
 <!-- MACRO{snippet|id=hasDisplayable2|file=${project.basedir}/src/test/java/it/tidalwave/ui/test/ExamplesTest.java} -->
-
 and the proper diagnostics is produced which clearly explains whether the role is missing or the display name is not the expected one.
-
-
 #[[###]]# UserActionProvider
-
 The advantage of the ad-hoc test framework is much more evident when more complex relationships are probed. For instance the following code:
-
 <!-- MACRO{snippet|id=hasUserActionProvider|file=${project.basedir}/src/test/java/it/tidalwave/ui/test/ExamplesTest.java} -->
-
 is quite compact and asserts that `pm1` is associated to a `UserActionProvider` role, which in turn has got two `UserAction`s, with the `Show bio` and
 `Show picture gallery` display names.
-
-
 #[[###]]# Composite
-
 The code below:
-
 <!-- MACRO{snippet|id=hasComposite1|file=${project.basedir}/src/test/java/it/tidalwave/ui/test/ExamplesTest.java} -->
-
 ensures that `pm2` has got a `Composite` role of `PresentationModel`s, which two children:
  + the former has got `Leonardo da Vinci` as the display name and an associated `UserActionProvider` with two actions, having `Show bio` and
    `Show picture gallery` display names.
  + the latter has got `Michelangelo Buonarroti` as the display name and an the same action of the previous item.
-
 Indeed, the fact that usually all the children in a composite `PresentationModel` are provided with the same actions lead to redundancy in test code; common
 assertions can be enforced by using the `withEachItemSatisfying()` method, and the test shortens:
-
 <!-- MACRO{snippet|id=hasComposite2|file=${project.basedir}/src/test/java/it/tidalwave/ui/test/ExamplesTest.java} -->
-
-
 #[[###]]# Aggregate
-
 The code below:
-
 <!-- MACRO{snippet|id=hasAggregate|file=${project.basedir}/src/test/java/it/tidalwave/ui/test/ExamplesTest.java} -->
-
 ensures that `pm3` has got an `Aggregate` role of `PresentationModel`s associated to names `firstName`, `lastName` and `birthDate`, with three items whose
 display names are `Michelangelo`, `Buonarroti` and `March 6, 1475`.
-
 `withEachChildSatisfying()` can be used with `Aggregate` too, as in the previous example.
-
-
 #[[###]]# MockSystemRoleFactory
-
 This class is a mock implementation of `SystemRoleFactory` useful in tests, for simple cases, when one doesn't want to set up the whole class scanning
 infrastructure. It must be created by registering triples made of a datum class, a role class and a factory function that instantiates the role; the function
 argument is the owner of the role instances to create.
-
 <!-- MACRO{snippet|id=MockSystemRoleFactory|file=${project.basedir}/src/test/java/it/tidalwave/ui/test/ExamplesTest.java} -->
-
 `Painter` is an `As`-capable class such as:
-
 <!-- MACRO{snippet|id=Painter|file=${project.basedir}/src/test/java/it/tidalwave/ui/test/ExamplesTest.java} -->
-
 the followed code will work in tests:
-
 <!-- MACRO{snippet|id=as|file=${project.basedir}/src/test/java/it/tidalwave/ui/test/ExamplesTest.java} -->
-
 Note the `SystemRoleFactory.set()` and `SystemRoleFactory.reset()` calls used to install and uninstall the factory; they should be used before and after
 each test (typically in methods annotated with TestNG `@BeforeMethod`/`@AfterMethod` or equivalent).
-
-
 #[[###]]# Javadoc
-
 [Javadoc](apidocs/it.tidalwave.ui.test/it/tidalwave/ui/test/package-summary.html)

@@ -24,14 +24,12 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role.spi;
-
 import jakarta.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
 import it.tidalwave.ui.core.role.UserAction;
 import it.tidalwave.ui.core.role.UserActionProvider;
 import it.tidalwave.util.NotFoundException;
-
 /***************************************************************************************************************************************************************
  *
  * A default implementation of {@link UserActionProvider} which returns no actions.
@@ -52,7 +50,6 @@ public class DefaultUserActionProvider implements UserActionProvider
       {
         return Collections.emptyList();
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/

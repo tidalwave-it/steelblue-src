@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl.tree;
-
 import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +34,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -44,9 +42,7 @@ import static org.mockito.Mockito.*;
 public class ObsoletePresentationModelDisposerTest
   {
     private ObsoletePresentationModelDisposer underTest;
-
     private List<PresentationModel> allPMs;
-
     @BeforeMethod
     public void setup()
       {
@@ -54,7 +50,6 @@ public class ObsoletePresentationModelDisposerTest
         underTest = new ObsoletePresentationModelDisposer();
         allPMs = new ArrayList<>();
       }
-
     @Test
     public void changed_must_dispose_all_PresentationModels()
       {
@@ -70,14 +65,12 @@ public class ObsoletePresentationModelDisposerTest
             verifyNoMoreInteractions(pm);
           }
       }
-
     @Nonnull
     private TreeItem<PresentationModel> createTreeItemWithChildren (final int level)
       {
         final var pm = mock(PresentationModel.class);
         allPMs.add(pm);
         final var treeItem = new TreeItem<>(pm);
-
         if (level < 3)
           {
             for (var n = 0; n < 4; n++)
@@ -85,7 +78,6 @@ public class ObsoletePresentationModelDisposerTest
                 treeItem.getChildren().add(createTreeItemWithChildren(level + 1));
               }
           }
-
         return treeItem;
       }
   }

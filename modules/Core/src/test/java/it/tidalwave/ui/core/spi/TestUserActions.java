@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.spi;
-
 import jakarta.annotation.Nonnull;
 import java.util.List;
 import it.tidalwave.ui.core.MenuBarControl;
@@ -32,7 +31,6 @@ import it.tidalwave.ui.core.role.Displayable;
 import it.tidalwave.ui.core.role.UserAction;
 import it.tidalwave.util.Callback;
 import static org.mockito.Mockito.*;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -42,28 +40,20 @@ public class TestUserActions
   {
     @Nonnull
     public final UserAction actionFileOpen;
-
     @Nonnull
     public final UserAction actionFileClose;
-
     @Nonnull
     public final UserAction actionFileCloseAll;
-
     @Nonnull
     public final UserAction actionEditUndo;
-
     @Nonnull
     public final UserAction actionEditRedo;
-
     @Nonnull
     public final UserAction actionSelectSelectAll;
-
     @Nonnull
     public final UserAction actionSelectDeselect;
-
     @Nonnull
     public final UserAction actionNoMenuBar;
-
     public TestUserActions()
       {
         actionFileOpen = createAction("Open", "File");
@@ -75,7 +65,6 @@ public class TestUserActions
         actionSelectDeselect = createAction("Deselect", "Select");
         actionNoMenuBar = UserAction.of(mock(Callback.class), List.of(Displayable.of("foo bar")));
       }
-
     @Nonnull
     private static UserAction createAction (@Nonnull final String displayName, @Nonnull final String path)
       {

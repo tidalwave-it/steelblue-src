@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl.common;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import java.util.List;
@@ -47,7 +46,6 @@ import static it.tidalwave.ui.core.role.Styleable._Styleable_;
 import static it.tidalwave.ui.core.role.UserActionProvider._UserActionProvider_;
 import static it.tidalwave.ui.javafx.role.CustomGraphicProvider._CustomGraphicProvider_;
 import static java.util.stream.Collectors.*;
-
 /***************************************************************************************************************************************************************
  *
  * An implementation of {@link CellBinder} that extracts information from a {@link UserActionProvider}.
@@ -60,12 +58,9 @@ public class DefaultCellBinder implements CellBinder
   {
     /** Roles to preload, so they are computed in the background thread. */
     private static final List<Class<?>> PRELOADING_ROLE_TYPES = List.of(_Displayable_, _UserActionProvider_, _Styleable_, _CustomGraphicProvider_);
-
     private static final String ROLE_STYLE_PREFIX = "-rs-";
-
     @Nonnull
     private final Executor executor;
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -73,7 +68,6 @@ public class DefaultCellBinder implements CellBinder
     public void bind (@Nonnull final Cell<?> cell, @Nullable final As item, final boolean empty)
       {
         log.trace("bind({}, {}, {})", cell, item, empty);
-
         if (!empty && (item != null))
           {
             JavaFXWorker.run(executor,
@@ -90,7 +84,6 @@ public class DefaultCellBinder implements CellBinder
             // cell.getStyleClass().clear();
           }
       }
-
     /***********************************************************************************************************************************************************
      * Binds everything provided by the given {@link RoleCollector} to the given {@link Cell}.
      * @param     cell            the {@code Cell}
@@ -103,7 +96,6 @@ public class DefaultCellBinder implements CellBinder
         bindContextMenu(cell, roles);
         bindStyles(cell.getStyleClass(), roles);
       }
-
     /***********************************************************************************************************************************************************
      * Binds the text and eventual custom {@link javafx.scene.Node} provided by the given {@link RoleCollector} to the given {@link Cell}.
      * @param     cell            the {@code Cell}
@@ -118,7 +110,6 @@ public class DefaultCellBinder implements CellBinder
         cell.setGraphic(graphic);
         cell.setText(text);
       }
-
     /***********************************************************************************************************************************************************
      * Binds the default {@link UserAction}s provided by the given {@link RoleCollector} as the default action of the given {@link Cell} (activated by double
      * click or key pressure).
@@ -133,13 +124,11 @@ public class DefaultCellBinder implements CellBinder
             cell.setOnKeyPressed(event ->
               {
                 log.debug("onKeyPressed: {}", event);
-
                 if (event.getCode().equals(KeyCode.SPACE))
                   {
                     executor.execute(defaultAction::actionPerformed);
                   }
               });
-
             // FIXME: depends on mouse click, won't handle keyboard
             cell.setOnMouseClicked(event ->
               {
@@ -150,7 +139,6 @@ public class DefaultCellBinder implements CellBinder
               });
           });
       }
-
     /***********************************************************************************************************************************************************
      * Binds the {@link UserAction}s provided by the given {@link RoleCollector} as items of the contextual menu of a {@link Cell}.
      * @param     cell            the {@code Cell}
@@ -161,7 +149,6 @@ public class DefaultCellBinder implements CellBinder
         final var menuItems = createMenuItems(roles);
         cell.setContextMenu(menuItems.isEmpty() ? null : new ContextMenu(menuItems.toArray(new MenuItem[0])));
       }
-
     /***********************************************************************************************************************************************************
      * Adds all the styles provided by the given {@link RoleCollector} to a {@link ObservableList} of styles.
      * @param     styleClasses    the destination where to add styles
@@ -181,7 +168,6 @@ public class DefaultCellBinder implements CellBinder
                            .collect(toList()));
         styleClasses.setAll(styles);
       }
-
     /***********************************************************************************************************************************************************
      * Create a list of {@link MenuItem}s for each action provided by the given {@link RoleCollector}. Don't directly return a ContextMenu otherwise it will be
      * untestable.
@@ -196,7 +182,6 @@ public class DefaultCellBinder implements CellBinder
                     .map(this::createMenuItem)
                     .collect(toList());
       }
-
     /***********************************************************************************************************************************************************
      * Creates a {@link MenuItem} bound to the given action.
      * @param     action          the action

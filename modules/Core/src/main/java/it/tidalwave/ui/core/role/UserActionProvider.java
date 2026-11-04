@@ -24,12 +24,10 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role;
-
 import jakarta.annotation.Nonnull;
 import java.util.List;
 import java.util.Optional;
 import it.tidalwave.util.NotFoundException;
-
 /***************************************************************************************************************************************************************
  *
  * A role that provides {@link UserAction}s.
@@ -44,7 +42,6 @@ public interface UserActionProvider
   {
     /** Shortcut for {@link it.tidalwave.util.As}. */
     public static final Class<UserActionProvider> _UserActionProvider_ = UserActionProvider.class;
-
     /***********************************************************************************************************************************************************
      * Returns a collection of {@link UserAction}s.
      *
@@ -52,7 +49,6 @@ public interface UserActionProvider
      **********************************************************************************************************************************************************/
     @Nonnull
     public List<UserAction> getActions();
-
     /***********************************************************************************************************************************************************
      * Returns the default action, if available.
      *
@@ -64,7 +60,6 @@ public interface UserActionProvider
     @Nonnull @Deprecated
     public UserAction getDefaultAction()
       throws NotFoundException;
-
     /***********************************************************************************************************************************************************
      * Returns the default action, if available.
      *
@@ -83,7 +78,6 @@ public interface UserActionProvider
             return Optional.empty();
           }
       }
-
     /***********************************************************************************************************************************************************
      * Factory method which creates an instance out of an array of {@link UserAction}s. The first one is considered the
      * default action.
@@ -93,7 +87,7 @@ public interface UserActionProvider
      * @return              the {@code UserActionProvider}
      **********************************************************************************************************************************************************/
     @Nonnull
-    public static UserActionProvider of (@Nonnull final UserAction ... actions)
+    public static UserActionProvider of (@Nonnull final UserAction... actions)
       {
         return new UserActionProvider()
           {
@@ -102,7 +96,6 @@ public interface UserActionProvider
               {
                 return List.of(actions);
               }
-
             @Override @Nonnull
             public UserAction getDefaultAction()
               throws NotFoundException
@@ -111,7 +104,6 @@ public interface UserActionProvider
                   {
                     throw new NotFoundException();
                   }
-
                 return actions[0];
               }
           };

@@ -24,13 +24,11 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role.spi;
-
 import jakarta.annotation.Nonnull;
 import java.util.Collection;
 import it.tidalwave.ui.core.role.PresentationModel;
 import it.tidalwave.ui.core.role.PresentationModelFactory;
 import it.tidalwave.ui.core.role.impl.DefaultPresentationModel;
-
 /***************************************************************************************************************************************************************
  *
  * An implementation of {@link PresentationModelFactory} that creates instances of {@link DefaultPresentationModel}.

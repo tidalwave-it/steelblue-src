@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl.common;
-
 import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -42,7 +41,6 @@ import lombok.extern.slf4j.Slf4j;
 import static it.tidalwave.ui.core.role.UserActionProvider._UserActionProvider_;
 import static java.util.stream.Collectors.*;
 import static it.tidalwave.util.ShortNames.*;
-
 /***************************************************************************************************************************************************************
  *
  * This class collects a bag of roles from a source. It is used to preload roles in a generic thread before using them in a JavaFX thread.
@@ -54,11 +52,9 @@ import static it.tidalwave.util.ShortNames.*;
 public class RoleCollector
   {
     private final Map<Class<?>, List<Object>> roleMapByTipe = new HashMap<>();
-
     /** The default user action, which is the first action of the first {@link it.tidalwave.ui.core.role.UserActionProvider}. */
     @Getter @Nonnull
     private final Optional<UserAction> defaultUserAction;
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -66,7 +62,6 @@ public class RoleCollector
       {
         defaultUserAction = Optional.empty();
       }
-
     /***********************************************************************************************************************************************************
      * Creates a new instances for the given source and role types.
      * @param   source        the source
@@ -79,17 +74,14 @@ public class RoleCollector
           {
             throw new IllegalStateException("RoleCollector must not be instantiated in the JavaFX thread");
           }
-
         if (log.isTraceEnabled())
           {
             log.trace("ctor({}, {})", source, shortNames(roleTypes));
           }
-
         roleTypes.forEach(roleType -> copyRoles(source, roleType));
         // TODO: perhaps it could be associated to a dummy key, instead of being returned by a getter?
         defaultUserAction = getMany(_UserActionProvider_).stream().flatMap(a -> a.getOptionalDefaultAction().stream()).findFirst();
       }
-
     /***********************************************************************************************************************************************************
      * Adds a role. This method is useful for tests.
      * @param   roleType      the type of the role
@@ -99,7 +91,6 @@ public class RoleCollector
       {
         putMany(roleType, List.of(role));
       }
-
     /***********************************************************************************************************************************************************
      * Adds roles. This method is useful for tests.
      * @param   roleType      the type of the role
@@ -109,7 +100,6 @@ public class RoleCollector
       {
         roleMapByTipe.put(roleType, new ArrayList<>(roles));
       }
-
     /***********************************************************************************************************************************************************
      * {@return a role of thw given type, if present}. If multiple roles for the same type are present, the first is returned.
      * @param   roleType      the type of the role
@@ -119,7 +109,6 @@ public class RoleCollector
       {
         return getMany(roleType).stream().findFirst();
       }
-
     /***********************************************************************************************************************************************************
      * {@return multiple roles of thw given type}.
      * @param   roleType      the type of the role
@@ -129,7 +118,6 @@ public class RoleCollector
       {
         return new CopyOnWriteArrayList<>((Collection<? extends R>)roleMapByTipe.getOrDefault(roleType, List.of()));
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -138,7 +126,6 @@ public class RoleCollector
       {
         return roleMapByTipe.entrySet().stream().map(this::toString).collect(joining(", ", "RoleCollector(", ")"));
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -147,7 +134,6 @@ public class RoleCollector
       {
         return shortName(entry.getKey()) + ": " + shortIds(entry.getValue());
       }
-
     /***********************************************************************************************************************************************************
      * Copy roles of the given type.
      * @param   source        the source

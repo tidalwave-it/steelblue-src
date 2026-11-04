@@ -24,14 +24,12 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.test;
-
 import java.util.List;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import org.testng.annotations.Test;
 import static org.assertj.core.api.Assertions.assertThat;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -41,22 +39,16 @@ public class MockSystemRoleFactoryTest
   {
     static class Mock1 {}
     static class Mock2 {}
-
     static interface Role1 {}
     static interface Role2 {}
-
     @RequiredArgsConstructor @Getter @ToString
     static class MockRole1a implements Role1 { final Object owner; }
-
     @RequiredArgsConstructor @Getter @ToString
     static class MockRole1b implements Role1 { final Object owner; }
-
     @RequiredArgsConstructor @Getter @ToString
     static class MockRole2a implements Role2 { final Object owner; }
-
     @RequiredArgsConstructor @Getter @ToString
     static class MockRole2b implements Role2 { final Object owner; }
-
     @Test
     public void test()
       {

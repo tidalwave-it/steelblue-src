@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.example.presentation.impl;
-
 import jakarta.annotation.Nonnull;
 import java.util.List;
 import java.nio.file.Path;
@@ -47,7 +46,6 @@ import static it.tidalwave.ui.core.role.Selectable._Selectable_;
 import static it.tidalwave.ui.core.test.UserNotificationWithFeedbackTestHelper.*;
 import static it.tidalwave.ui.test.AsAssert.assertThat;
 import static org.mockito.Mockito.*;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -57,13 +55,9 @@ public class DefaultMainPanelPresentationControlTest
   {
     // START SNIPPET: mocks
     private Dao dao;
-
     private MainPanelPresentation presentation;
-
     private DefaultMainPanelPresentationControl underTest;
-
     private MainPanelPresentation.Bindings bindings;
-
     @BeforeMethod
     public void setup()
       {
@@ -77,7 +71,6 @@ public class DefaultMainPanelPresentationControlTest
         bindings = captureBindings.getValue();
       }
     // END SNIPPET: mocks
-
     /**********************************************************************************************************************************************************/
     // START SNIPPET: test_buttonAction
     @Test
@@ -95,7 +88,6 @@ public class DefaultMainPanelPresentationControlTest
         assertThat(bindings.textProperty).isEqualTo("2");
       }
     // END SNIPPET: test_buttonAction
-
     /**********************************************************************************************************************************************************/
     // START SNIPPET: test_actionDialogOk_confirm
     @Test
@@ -112,7 +104,6 @@ public class DefaultMainPanelPresentationControlTest
         verifyNoMoreInteractions(presentation);
       }
     // END SNIPPET: test_actionDialogOk_confirm
-
     /**********************************************************************************************************************************************************/
     @Test
     public void test_actionDialogCancelOk_confirm()
@@ -127,7 +118,6 @@ public class DefaultMainPanelPresentationControlTest
         verify(presentation).notify("Pressed ok");
         verifyNoMoreInteractions(presentation);
       }
-
     /**********************************************************************************************************************************************************/
     // START SNIPPET: test_actionDialogCancelOk_cancel
     @Test
@@ -144,7 +134,6 @@ public class DefaultMainPanelPresentationControlTest
         verifyNoMoreInteractions(presentation);
       }
     // END SNIPPET: test_actionDialogCancelOk_cancel
-
     /**********************************************************************************************************************************************************/
     // START SNIPPET: test_actionPickFile_confirm
     @Test @SuppressWarnings("unchecked")
@@ -165,7 +154,6 @@ public class DefaultMainPanelPresentationControlTest
         verifyNoMoreInteractions(presentation);
       }
     // END SNIPPET: test_actionPickFile_confirm
-
     /**********************************************************************************************************************************************************/
     @Test @SuppressWarnings("unchecked")
     public void test_actionPickFile_cancel()
@@ -181,7 +169,6 @@ public class DefaultMainPanelPresentationControlTest
         verify(presentation).notify("Selection cancelled");
         verifyNoMoreInteractions(presentation);
       }
-
     /**********************************************************************************************************************************************************/
     @Test @SuppressWarnings("unchecked")
     public void test_actionPickDirectory_confirm()
@@ -197,7 +184,6 @@ public class DefaultMainPanelPresentationControlTest
         //verify(presentation).notify("Selected directory: " + home);
         //verifyNoMoreInteractions(presentation);
       }
-
     /**********************************************************************************************************************************************************/
     @Test @SuppressWarnings("unchecked")
     public void test_actionPickDirectory_cancel()
@@ -213,7 +199,6 @@ public class DefaultMainPanelPresentationControlTest
         verify(presentation).notify("Selection cancelled");
         verifyNoMoreInteractions(presentation);
       }
-
     /**********************************************************************************************************************************************************/
     // START SNIPPET: test_start
     @Test
@@ -225,7 +210,6 @@ public class DefaultMainPanelPresentationControlTest
         final var fe = FileEntity.of(Path.of("src/test/resources/test-file.txt"));
         final var fes = spy(fe);
         doReturn(new FileEntityPresentable(fe)).when(fes).as(_Presentable_);
-
         // TODO: should create lists with more than 1 element...
         when(dao.getSimpleEntities()).thenReturn(List.of(simpleEntity));
         when(dao.getDciEntities()).thenReturn(List.of(simpleDciEntity));
@@ -267,7 +251,6 @@ public class DefaultMainPanelPresentationControlTest
                                     //.withNextItemSatisfying(j -> j.hasDisplayNameOf("12/18/24 11:28 am")));
         // FIXME verifyNoMoreInteractions(presentation);
       }
-
     /**********************************************************************************************************************************************************/
     @Nonnull
     private AsAssert<As> commonPmAssertions (@Nonnull final PresentationModel pm,
@@ -275,11 +258,9 @@ public class DefaultMainPanelPresentationControlTest
                                              @Nonnull final String expectedToString)
       {
         assertThat(pm).hasDisplayName(expectedDisplayName);
-
         final var selectable = pm.as(_Selectable_);
         selectable.select();
         verify(presentation).notify("Selected " + expectedToString);
-
         assertThat(pm).hasUserActionProvider()
                           .withActionCount(3)
                           .withAll(actions ->
@@ -291,7 +272,6 @@ public class DefaultMainPanelPresentationControlTest
             actions[2].actionPerformed();
             verify(presentation).notify("Action 3 on " + expectedToString);
           });
-
         return assertThat(pm); // trick to allow chaining assertions
       }
     // END SNIPPET: test_start

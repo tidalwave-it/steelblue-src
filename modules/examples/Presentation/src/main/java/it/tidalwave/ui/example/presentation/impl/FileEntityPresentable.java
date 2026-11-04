@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.example.presentation.impl;
-
 import jakarta.annotation.Nonnull;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -41,7 +40,6 @@ import lombok.extern.slf4j.Slf4j;
 import static it.tidalwave.util.FunctionalCheckedExceptionWrappers.*;
 import static it.tidalwave.util.LocalizedDateTimeFormatters.getDateTimeFormatterFor;
 import static it.tidalwave.util.Parameters.r;
-
 /***************************************************************************************************************************************************************
  *
  * A {@link it.tidalwave.ui.core.role.Presentable} implementation for {@link FileEntity}, creates a {@link PresentationModel}
@@ -58,16 +56,13 @@ public class FileEntityPresentable extends SimpleCompositePresentable
   {
     private static final DateTimeFormatter FORMATTER = getDateTimeFormatterFor(FormatStyle.SHORT, Locale.getDefault());
     private static final String RIGHT_ALIGNED = "right-aligned";
-
     @Nonnull
     private final FileEntity owner;
-
     public FileEntityPresentable (@Nonnull final FileEntity owner)
       {
         super(owner);
         this.owner = owner;
       }
-
     @Override @Nonnull
     public PresentationModel createPresentationModel (@Nonnull final Collection<Object> roles)
       {

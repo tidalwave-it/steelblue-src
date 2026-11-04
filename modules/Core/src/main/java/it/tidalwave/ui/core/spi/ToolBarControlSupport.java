@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.spi;
-
 import jakarta.annotation.Nonnull;
 import java.util.Collection;
 import java.util.List;
@@ -40,7 +39,6 @@ import lombok.extern.slf4j.Slf4j;
 import static it.tidalwave.ui.core.role.UserActionProvider._UserActionProvider_;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.*;
-
 /***************************************************************************************************************************************************************
  *
  * A support implementation for {@link ToolBarControl}.
@@ -57,11 +55,9 @@ public abstract class ToolBarControlSupport<B, T, BT> implements ToolBarControl<
   {
     @Delegate
     private final As as = As.forObject(this);
-
     /** The default supplier of {@link UserAction}s, can be injected for testing. */
     @Nonnull
     protected final Supplier<Collection<? extends UserAction>> userActionsSupplier;
-
     /***********************************************************************************************************************************************************
      * Default constructor.
      **********************************************************************************************************************************************************/
@@ -69,7 +65,6 @@ public abstract class ToolBarControlSupport<B, T, BT> implements ToolBarControl<
       {
         userActionsSupplier = () -> maybeAs(_UserActionProvider_).map(UserActionProvider::getActions).orElse(emptyList());
       }
-
     /***********************************************************************************************************************************************************
      * Populates the menu bar with menus.
      * @param   binder    the binder
@@ -84,7 +79,6 @@ public abstract class ToolBarControlSupport<B, T, BT> implements ToolBarControl<
                                    .collect(toList());
         addButtonsToToolBar(toolBar, buttons);
       }
-
     /***********************************************************************************************************************************************************
      * Creates a button bound to the given {@link UserAction}.
      *
@@ -94,7 +88,6 @@ public abstract class ToolBarControlSupport<B, T, BT> implements ToolBarControl<
      **********************************************************************************************************************************************************/
     @Nonnull
     protected abstract BT createButton (@Nonnull B binder, @Nonnull UserAction action);
-
     /***********************************************************************************************************************************************************
      * Adds buttons to the toolbar.
      * @param   toolBar   the toolbar

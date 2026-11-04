@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl;
-
 import jakarta.annotation.Nonnull;
 import java.util.concurrent.Executor;
 import java.util.function.Function;
@@ -49,7 +48,6 @@ import it.tidalwave.ui.javafx.impl.treetable.TreeTableViewBindings;
 import lombok.experimental.Delegate;
 import lombok.extern.slf4j.Slf4j;
 import static java.util.Objects.requireNonNull;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -59,33 +57,23 @@ import static java.util.Objects.requireNonNull;
 public class DefaultJavaFXBinder implements JavaFXBinder
   {
     private final Executor executor;
-
     private static final String FX_BACKGROUND_COLOR_PINK = "-fx-background-color: pink";
-
     @Delegate
     private final ButtonBindings buttonBindings;
-
     @Delegate
     private final TreeViewBindings treeItemBindings;
-
     @Delegate
     private final TableViewBindings tableViewBindings;
-
     @Delegate
     private final TreeTableViewBindings treeTableViewBindings;
-
     @Delegate
     private final ListViewBindings listViewBindings;
-
     @Delegate
     private final ComboBoxBindings comboBoxBindings;
-
     @Delegate
     private final DialogBindings dialogBindings;
-
     @Delegate
     private final FileChooserBindings fileChooserBindings;
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -102,7 +90,6 @@ public class DefaultJavaFXBinder implements JavaFXBinder
         dialogBindings = new DialogBindings(executor, mainWindowSupplier);
         fileChooserBindings = new FileChooserBindings(executor, mainWindowSupplier);
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -112,7 +99,6 @@ public class DefaultJavaFXBinder implements JavaFXBinder
         enforceFxApplicationThread();
         source.addListener((_1, _2, newValue) -> executor.execute(() -> target.set(adapter.apply(newValue))));
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -126,7 +112,6 @@ public class DefaultJavaFXBinder implements JavaFXBinder
         property2.addListener((_1, _2, newValue) -> executor.execute(() -> property1.set(adapter.apply(newValue))));
         property1.addPropertyChangeListener(evt -> Platform.runLater(() -> property2.setValue(reverseAdapter.apply((T)evt.getNewValue()))));
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -139,13 +124,10 @@ public class DefaultJavaFXBinder implements JavaFXBinder
         requireNonNull(textField, "textField");
         requireNonNull(textProperty, "textProperty");
         requireNonNull(validProperty, "validProperty");
-
         textField.textProperty().bindBidirectional(new PropertyAdapter<>(executor, textProperty));
-
         // FIXME: weak listener
         validProperty.addPropertyChangeListener(ignored -> textField.setStyle(validProperty.get() ? "" : FX_BACKGROUND_COLOR_PINK));
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/

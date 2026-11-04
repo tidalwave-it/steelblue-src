@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.util.impl;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
@@ -44,7 +43,6 @@ import it.tidalwave.util.annotation.VisibleForTesting;
 import it.tidalwave.messagebus.MessageBus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 /***************************************************************************************************************************************************************
  *
  * The default implementation of {@link UserActionFactory}.
@@ -57,17 +55,12 @@ public class DefaultUserActionFactory implements UserActionFactory
   {
     @Nonnull
     private final Optional<MessageBus> messageBus;
-
     private final IdentityHashMap<Object, UserAction> actionsByRequestor = new IdentityHashMap<>();
-
     private final Collection<Object> currentlyShownPanels = new ArrayList<>();
-
     /** The listener to the message bus - stored to a field otherwise weak listeners will lose it. */
     private final MessageBus.Listener<PanelShownNotification> panelShownNotificationListener = this::onPanelShown;
-
     /** The listener to the message bus - stored to a field otherwise weak listeners will lose it. */
     private final MessageBus.Listener<PanelHiddenNotification> panelHiddenNotificationListener = this::onPanelHidden;
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -77,7 +70,6 @@ public class DefaultUserActionFactory implements UserActionFactory
         messageBus.ifPresentOrElse(ignored -> {}, () -> log.warn("NO MESSAGEBUS, action won't work"));
         return UserActionParameters.builder().callback(this::createViewAction).presentation(presentation);
       }
-
     /***********************************************************************************************************************************************************
      * Registers listeners if message bus is present. Since message bus dependency is optional, we can't rely on annotations, which require Aspect support.
      **********************************************************************************************************************************************************/
@@ -87,7 +79,6 @@ public class DefaultUserActionFactory implements UserActionFactory
         messageBus.ifPresent(m -> m.subscribe(PanelShownNotification.class, panelShownNotificationListener));
         messageBus.ifPresent(m -> m.subscribe(PanelHiddenNotification.class, panelHiddenNotificationListener));
       }
-
     /***********************************************************************************************************************************************************
      * Unregisters listeners if message bus is present. Since message bus dependency is optional, we can't rely on annotations, which require Aspect support.
      **********************************************************************************************************************************************************/
@@ -97,7 +88,6 @@ public class DefaultUserActionFactory implements UserActionFactory
         messageBus.ifPresent(m -> m.unsubscribe(panelShownNotificationListener));
         messageBus.ifPresent(m -> m.unsubscribe(panelHiddenNotificationListener));
       }
-
     /***********************************************************************************************************************************************************
      * {@return a new {@UserAction} created out of the given parameters}. This method is called back by {@code build()}.
      * @param     parameters      the parameters
@@ -113,7 +103,6 @@ public class DefaultUserActionFactory implements UserActionFactory
         userAction.enabled().set(!currentlyShownPanels.contains(presentation));
         return userAction;
       }
-    
     /***********************************************************************************************************************************************************
      * Receives notification that a panel has been shown.
      * @param     notification  the notification
@@ -125,7 +114,6 @@ public class DefaultUserActionFactory implements UserActionFactory
         Optional.ofNullable(actionsByRequestor.get(notification.getTarget())).ifPresent(a -> a.enabled().set(false));
 //        actionsByRequestor.forEach((requestor, action) -> action.enabled().set(requestor != notification.getTarget()));
       }
-
     /***********************************************************************************************************************************************************
      * Receives notification that a panel has been hidden.
      * @param     notification  the notification
@@ -136,7 +124,6 @@ public class DefaultUserActionFactory implements UserActionFactory
         currentlyShownPanels.remove(notification.getTarget());
         Optional.ofNullable(actionsByRequestor.get(notification.getTarget())).ifPresent(a -> a.enabled().set(true));
       }
-
     /***********************************************************************************************************************************************************
      * Fires a request for showing up the given presentation.
      * @param     presentation  the presentation

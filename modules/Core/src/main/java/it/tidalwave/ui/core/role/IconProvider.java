@@ -24,13 +24,11 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role;
-
 import javax.annotation.Nonnegative;
 import jakarta.annotation.Nonnull;
 import java.awt.image.BufferedImage;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-
 /***************************************************************************************************************************************************************
  *
  * The role of an object that can provide an icon for rendering.
@@ -47,21 +45,18 @@ public interface IconProvider
   {
     /** Shortcut for {@link it.tidalwave.util.As}. */
     public static final Class<IconProvider> _IconProvider_ = IconProvider.class;
-
     /***********************************************************************************************************************************************************
      * A default {@code IconProvider} with an empty icon.
      **********************************************************************************************************************************************************/
     public static final IconProvider DEFAULT = new IconProvider()
       {
         private final Icon EMPTY_ICON = new ImageIcon(new BufferedImage(16, 16, BufferedImage.TYPE_4BYTE_ABGR));
-
         @Override @Nonnull
         public Icon getIcon (@Nonnegative final int size)
           {
             return EMPTY_ICON;
           }
       };
-
     /***********************************************************************************************************************************************************
      * Returns the icon for this object. Note that the {@code size} parameter is just a hint to allow implementations
      * to pick the correctly sized icon in an optimized fashion. In particular, implementations should try to do their

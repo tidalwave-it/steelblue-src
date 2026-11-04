@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.test;
-
 import jakarta.annotation.Nonnull;
 import org.apiguardian.api.API;
 import it.tidalwave.util.As;
@@ -33,7 +32,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static lombok.AccessLevel.PROTECTED;
-
 /***************************************************************************************************************************************************************
  *
  * Assertions for the {@link it.tidalwave.role.Composite} role.
@@ -48,11 +46,9 @@ public class CompositeAssert<T extends As>
     /** The type of the composite. */
     @Nonnull
     protected final Class<T> compositeType;
-
     /** The Composite under inspection. */
     @Nonnull
     protected final SimpleComposite<T> composite;
-
     /***********************************************************************************************************************************************************
      * Asserts that the object under inspection has the given number of items.
      * @param   count           the expected count of children

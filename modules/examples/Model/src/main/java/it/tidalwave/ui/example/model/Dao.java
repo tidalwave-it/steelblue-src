@@ -24,10 +24,8 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.example.model;
-
 import jakarta.annotation.Nonnull;
 import java.util.Collection;
-
 /***************************************************************************************************************************************************************
  *
  * A simple DAO for the examples.
@@ -41,11 +39,9 @@ public interface Dao
     /** {@return a collection of simple entities} that are POJOs. */
     @Nonnull
     public Collection<SimpleEntity> getSimpleEntities();
-
     /** {@return a collection of entities} supporting DCI roles. */
     @Nonnull
     public Collection<SimpleDciEntity> getDciEntities();
-
     /** {@return a collection of file entities}. */
     @Nonnull
     public Collection<FileEntity> getFiles();

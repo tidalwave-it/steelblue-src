@@ -24,13 +24,11 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role.impl;
-
 import jakarta.annotation.Nonnull;
 import java.util.Collection;
 import it.tidalwave.ui.core.role.Presentable;
 import it.tidalwave.ui.core.role.PresentationModel;
 import lombok.RequiredArgsConstructor;
-
 /***************************************************************************************************************************************************************
  *
  * An implementation of {@link Presentable}.
@@ -45,7 +43,6 @@ public class DefaultPresentable implements Presentable
   {
     @Nonnull
     private final Object datum;
-
     /***********************************************************************************************************************************************************
      *{@inheritDoc}
      **********************************************************************************************************************************************************/

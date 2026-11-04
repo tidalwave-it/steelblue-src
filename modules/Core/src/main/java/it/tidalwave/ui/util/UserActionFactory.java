@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.util;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import java.util.List;
@@ -38,7 +37,6 @@ import it.tidalwave.util.BundleUtilities;
 import lombok.Builder;
 import lombok.Getter;
 import static org.apiguardian.api.API.Status.EXPERIMENTAL;
-
 /***************************************************************************************************************************************************************
  *
  * A facility that creates commonly used {@link UserAction}s.
@@ -55,25 +53,19 @@ public interface UserActionFactory
       {
         // @Nonnull FIXME make it private
         private final Function<UserActionParameters, UserAction> callback;
-
         @Nonnull @Builder.Default @Getter
         private final Object presentation = new Object();
-
         @Nullable @Builder.Default
         private final MenuIndex menuIndex = null;
-
         @Nullable @Builder.Default
         private final String menuPlacement = null;
-
         @Nullable @Builder.Default @Getter
         private final String label = null;
-
         @Nonnull
         public MenuBarControl.MenuPlacement getComputedMenuPlacement()
           {
             return MenuBarControl.MenuPlacement.under(menuIndex == null ? Objects.requireNonNull(menuPlacement) : menuIndex.getLabel());
           }
-
         /*******************************************************************************************************************************************************
          * Customisation of the Lombok-generated builder.
          ******************************************************************************************************************************************************/
@@ -87,7 +79,6 @@ public interface UserActionFactory
               {
                 return buildBuilder().build();
               }
-
             /***************************************************************************************************************************************************
              * {@return the new {@link UserAction} as a singleton list}
              **************************************************************************************************************************************************/
@@ -96,7 +87,6 @@ public interface UserActionFactory
               {
                 return List.of(build());
               }
-
             /***************************************************************************************************************************************************
              * Sets a localised label.
              * @param   clazz     the owner of the bundle
@@ -104,12 +94,11 @@ public interface UserActionFactory
              * @param   params    the parameters (used if the string in the bundle is a {@code String} format)
              **************************************************************************************************************************************************/
             @Nonnull
-            public UserActionParametersBuilder labelFromBundle (@Nonnull final Class<?> clazz, @Nonnull final String key, @Nonnull final Object ... params)
+            public UserActionParametersBuilder labelFromBundle (@Nonnull final Class<?> clazz, @Nonnull final String key, @Nonnull final Object... params)
               {
                 return label(BundleUtilities.getMessage(clazz, key, params));
               }
           }
-
         /*******************************************************************************************************************************************************
          *
          ******************************************************************************************************************************************************/
@@ -119,7 +108,6 @@ public interface UserActionFactory
             return callback.apply(this);
           }
       }
-
     /***********************************************************************************************************************************************************
      * Creates an action that shows the given presentation in a panel group.
      * The action only works if a message bus is installed on the system.

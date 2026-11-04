@@ -24,12 +24,10 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx;
-
 import jakarta.annotation.Nonnull;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import it.tidalwave.ui.javafx.impl.DefaultNodeAndDelegate;
-
 /***************************************************************************************************************************************************************
  *
  * This facility class create a thread-safe proxy for the JavaFX delegate (controller). Thread-safe means that it can
@@ -125,7 +123,6 @@ public interface NodeAndDelegate<T>
       {
         return DefaultNodeAndDelegate.of(presentationClass);
       }
-
     /***********************************************************************************************************************************************************
      * Creates a {@link NodeAndDelegate} for the given presentation class.
      * @param   presentationClass   the class of the presentation for which the resources must be created.
@@ -136,10 +133,8 @@ public interface NodeAndDelegate<T>
       {
         return DefaultNodeAndDelegate.of(presentationClass, fxmlResourcePath);
       }
-
     @Nonnull
     public Node getNode();
-
     @Nonnull
     public T getDelegate();
   }

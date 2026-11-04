@@ -24,11 +24,9 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.test;
-
 import it.tidalwave.ui.core.role.Styleable;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -37,7 +35,6 @@ import org.testng.annotations.Test;
 public class StyleableAssertTest
   {
     private StyleableAssert underTest;
-
     /**********************************************************************************************************************************************************/
     @BeforeMethod
     public void setup()
@@ -45,7 +42,6 @@ public class StyleableAssertTest
         final var styleable = Styleable.of("style-1", "style-2", "style-3");
         underTest = StyleableAssert.of(styleable);
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void testGood()
@@ -53,7 +49,6 @@ public class StyleableAssertTest
         // when
         underTest.withExactStyles("style-1", "style-2", "style-3");
       }
-
     /**********************************************************************************************************************************************************/
     @Test(expectedExceptions = AssertionError.class)
     public void testBad()

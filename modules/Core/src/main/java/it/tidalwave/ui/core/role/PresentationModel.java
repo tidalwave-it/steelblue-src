@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role;
-
 import jakarta.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Collections;
@@ -39,7 +38,6 @@ import it.tidalwave.role.SimpleComposite;
 import static it.tidalwave.ui.core.role.Presentable._Presentable_;
 import static org.apiguardian.api.API.Status.EXPERIMENTAL;
 import static it.tidalwave.util.Parameters.r;
-
 /***************************************************************************************************************************************************************
  *
  * TODO: As the NetBeans Node, it should allow children, have event listeners for children added/removed/changed.
@@ -54,29 +52,21 @@ public interface PresentationModel extends As, Mutable
   {
     /** Shortcut for {@link it.tidalwave.util.As}. */
     public static final Class<PresentationModel> _PresentationModel_ = PresentationModel.class;
-
     /** Shortcut for {@link it.tidalwave.util.As}. */
     public static final As.Type<SimpleComposite<PresentationModel>> _CompositeOfPresentationModel_ = As.type(SimpleComposite.class);
-
     /** Shortcut for {@link it.tidalwave.util.As}. */
     public static final As.Type<Aggregate<PresentationModel>> _AggregateOfPresentationModel_ = new As.Type<>(Aggregate.class);
-
     public static final String PROPERTY_CHILDREN = "children";
-
     /** This is an undocumented feature. If you add a {@link NamedCallback} with this name as a role in this object, it will be called back when
         {@link #dispose()} is called. */
     public static final String CALLBACK_DISPOSE = "dispose";
-
     public static final String P_VERBOSE_TOSTRING = PresentationModel.class.getCanonicalName() + ".verboseToString";
-
     public static final String PARAM_OWNER = "owner";
     public static final String PARAM_ROLE = "role";
-
     /***********************************************************************************************************************************************************
      * Disposes this object.
      **********************************************************************************************************************************************************/
     public void dispose();
-
     /***********************************************************************************************************************************************************
      * {@return a new instance given an owner and no roles}.
      * @param   owner   the owner
@@ -88,7 +78,6 @@ public interface PresentationModel extends As, Mutable
         Parameters.mustNotBeArrayOrCollection(owner, PARAM_OWNER);
         return of(owner, Collections.emptyList());
       }
-
     /***********************************************************************************************************************************************************
      * {@return a new instance given an owner and a single role}.
      * @param   owner   the owner
@@ -102,7 +91,6 @@ public interface PresentationModel extends As, Mutable
         Parameters.mustNotBeArrayOrCollection(role, PARAM_ROLE);
         return of(owner, r(role));
       }
-
     /***********************************************************************************************************************************************************
      * {@return a new instance given an owner and multiple roles}.
      * @param   owner   the owner
@@ -116,7 +104,6 @@ public interface PresentationModel extends As, Mutable
         Parameters.mustNotBeArrayOrCollection(owner, PARAM_OWNER);
         return new DefaultPresentationModel(owner, roles);
       }
-
     /***********************************************************************************************************************************************************
      * {@return an empty instance (no roles, with the exception of a dummy {@link Displayable})}.
      * @since           3.2-ALPHA-3
@@ -127,7 +114,6 @@ public interface PresentationModel extends As, Mutable
         // TODO: cache a singleton, but don't do eager initialization (e.g. a final static), as it would deadlock
         return of("", Displayable.of("<empty presentation model>"));
       }
-
     /***********************************************************************************************************************************************************
      * {@return a new instance from an owner which might have the {@link Presentable} role}. If it is present, it is called to create the
      * {@code PresentationModel}; otherwise a default one is created. Additional roles are added.
@@ -144,7 +130,6 @@ public interface PresentationModel extends As, Mutable
                     .map(p -> p.createPresentationModel(roles))
                     .orElseGet(() -> of(owner, roles));
       }
-
     /***********************************************************************************************************************************************************
      * {@return a new instance from an owner which might have the {@link Presentable} role}. If it is present, it is called to create the
      * {@code PresentationModel}; otherwise a default one is created.
@@ -157,7 +142,6 @@ public interface PresentationModel extends As, Mutable
       {
         return ofMaybePresentable(owner, Collections.emptyList());
       }
-
     /***********************************************************************************************************************************************************
      * Sets the verbose mode for {@link java.lang.Object#toString} implementations of {@code PresentationModel}. Looking at the implementation of
      * {@link javafx.scene.control.cell.DefaultTreeCell}, the code always calls {@code toString()} during an update, even though the text value is later
@@ -172,7 +156,6 @@ public interface PresentationModel extends As, Mutable
       {
         DefaultPresentationModel.setVerboseToString(verbose);
       }
-
     /***********************************************************************************************************************************************************
      * {@return the verbose mode for {@link java.lang.Object#toString} implementations of {@code PresentationModel}}.
      * @since           2.0-ALPHA-4

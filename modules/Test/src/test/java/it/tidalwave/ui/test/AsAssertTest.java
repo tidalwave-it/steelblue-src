@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.test;
-
 import jakarta.annotation.Nonnull;
 import java.util.Map;
 import it.tidalwave.ui.core.BoundProperty;
@@ -39,7 +38,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.testng.annotations.Test;
 import static org.assertj.core.api.Assertions.assertThat;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -55,7 +53,6 @@ public class AsAssertTest
         final var assertAs = AsAssert.assertThat(mock);
         assertThat(assertAs.object).isSameAs(mock);
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void test_assertThat_with_BoundProperty()
@@ -64,7 +61,6 @@ public class AsAssertTest
         final var objectAssert = AsAssert.assertThat(property);
         objectAssert.isEqualTo("foo bar");
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void test_hasDisplayable()
@@ -77,7 +73,6 @@ public class AsAssertTest
         // then
         assertThat(displayableAssert.displayable).isSameAs(displayable);
       }
-
     /**********************************************************************************************************************************************************/
     @Test(expectedExceptions = AssertionError.class)
     public void test_hasDisplayable_failure()
@@ -89,7 +84,6 @@ public class AsAssertTest
         // then
         // failure
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void test_hasDisplayName_1()
@@ -101,7 +95,6 @@ public class AsAssertTest
         // then
         // no failure
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void test_hasDisplayName_2()
@@ -113,7 +106,6 @@ public class AsAssertTest
         // then
         // no failure
       }
-
     /**********************************************************************************************************************************************************/
     @Test(expectedExceptions = AssertionError.class)
     public void test_hasDisplayName_bad()
@@ -125,7 +117,6 @@ public class AsAssertTest
         // then
         // failure
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void test_hasStyleable()
@@ -138,7 +129,6 @@ public class AsAssertTest
         // then
         assertThat(styleableAssert.styleable).isSameAs(styleable);
       }
-
     /**********************************************************************************************************************************************************/
     @Test(expectedExceptions = AssertionError.class)
     public void test_hasStyleable_failure()
@@ -148,7 +138,6 @@ public class AsAssertTest
         // when
         AsAssert.assertThat(mock).hasStyleable();
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void test_hasCompositeOf ()
@@ -162,7 +151,6 @@ public class AsAssertTest
         assertThat(compositeAssert.compositeType).isEqualTo(Mock.class);
         assertThat(compositeAssert.composite).isSameAs(composite);
       }
-
     /**********************************************************************************************************************************************************/
     @Test(expectedExceptions = AssertionError.class)
     public void test_hasCompositeOf_failure ()
@@ -172,7 +160,6 @@ public class AsAssertTest
         // when
         AsAssert.assertThat(mock).hasCompositeOf(Mock.class);
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void test_hasAggregateOf()
@@ -186,7 +173,6 @@ public class AsAssertTest
         assertThat(aggregateAssert.aggregateType).isEqualTo(Mock.class);
         assertThat(aggregateAssert.aggregate).isSameAs(aggregate);
       }
-
     /**********************************************************************************************************************************************************/
     @Test(expectedExceptions = AssertionError.class)
     public void test_hasAggregateOf_failure ()
@@ -196,7 +182,6 @@ public class AsAssertTest
         // when
         AsAssert.assertThat(mock).hasAggregateOf(Mock.class);
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void test_hasUserActionProvider()
@@ -209,7 +194,6 @@ public class AsAssertTest
         // then
         assertThat(userActionProviderAssert.userActionProvider).isSameAs(userActionProvider);
       }
-
     /**********************************************************************************************************************************************************/
     @Test(expectedExceptions = AssertionError.class)
     public void test_hasUserActionProvider_failure()
@@ -219,7 +203,6 @@ public class AsAssertTest
         // when
         AsAssert.assertThat(mock).hasUserActionProvider();
       }
-
     /**********************************************************************************************************************************************************/
     @RequiredArgsConstructor @Getter
     static class Role
@@ -227,7 +210,6 @@ public class AsAssertTest
         @Nonnull
         private final String attribute;
       }
-
     @Test
     public void test_hasRole()
       {

@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role.impl;
-
 import jakarta.annotation.Nonnull;
 import java.util.Collection;
 import it.tidalwave.ui.core.BoundProperty;
@@ -37,7 +36,6 @@ import lombok.experimental.Accessors;
 import lombok.experimental.Delegate;
 import lombok.extern.slf4j.Slf4j;
 import static it.tidalwave.ui.core.role.Displayable._Displayable_;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -48,13 +46,10 @@ public class DefaultUserAction implements UserAction
   {
     @Getter @Accessors(fluent = true)
     private final BoundProperty<Boolean> enabled = new BoundProperty<>(true);
-
     @Delegate @Nonnull
     private final As as;
-
     @Nonnull
     private final Callback callback;
-
     /***********************************************************************************************************************************************************
      * @since 3.2-ALPHA-1 (was previously in {@code UserAction8}
      * @since  3.2-ALPHA-3 (refactored)
@@ -64,7 +59,6 @@ public class DefaultUserAction implements UserAction
         this.callback = callback;
         this.as = As.forObject(this, roles);
       }
-
     /***********************************************************************************************************************************************************
      * @since 3.2-ALPHA-1 (was previously in {@code UserAction8}
      * @since  3.2-ALPHA-3 (refactored)
@@ -74,7 +68,6 @@ public class DefaultUserAction implements UserAction
       {
         return new DefaultUserAction(callback, roles);
       }
-
     @Override
     public void actionPerformed() // FIXME: change with composition
       {
@@ -87,7 +80,6 @@ public class DefaultUserAction implements UserAction
             log.error("", e);
           }
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -96,7 +88,6 @@ public class DefaultUserAction implements UserAction
       {
         final var id = "@" + Integer.toHexString(System.identityHashCode(this));
         var details = id;
-
         try
           {
             details = this.maybeAs(_Displayable_)
@@ -108,7 +99,6 @@ public class DefaultUserAction implements UserAction
             details += ",broken";
             log.error("In DefaultDisplayable.toString()", e);
           }
-
         return String.format("DefaultUserAction%s", details);
       }
   }

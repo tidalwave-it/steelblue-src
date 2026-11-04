@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.test;
-
 import jakarta.annotation.Nonnull;
 import org.springframework.util.function.ThrowingSupplier;
 import it.tidalwave.ui.core.BoundProperty;
@@ -41,7 +40,6 @@ import static it.tidalwave.ui.core.role.UserActionProvider._UserActionProvider_;
 import static it.tidalwave.role.Aggregate._Aggregate_;
 import static it.tidalwave.role.SimpleComposite._SimpleComposite_;
 import static lombok.AccessLevel.PROTECTED;
-
 /***************************************************************************************************************************************************************
  *
  * Assertions for UI core.
@@ -56,7 +54,6 @@ public class AsAssert<T extends As>
     /** The object under inspection. */
     @Nonnull
     protected final T object;
-
     /***********************************************************************************************************************************************************
      * Starts a sequence of assertions on the given object.
      * @param   object          the object
@@ -67,7 +64,6 @@ public class AsAssert<T extends As>
       {
         return new AsAssert<>(object);
       }
-
     /***********************************************************************************************************************************************************
      * Starts a sequence of assertions on the given object.
      * @param   captor          the object, provided as a mockito {@link ArgumentCaptor}
@@ -78,7 +74,6 @@ public class AsAssert<T extends As>
       {
         return new AsAssert<>(captor.getValue());
       }
-
     /***********************************************************************************************************************************************************
      * Starts a sequence of assertions on the given property.
      * @param   <T>             the static type of the property
@@ -91,7 +86,6 @@ public class AsAssert<T extends As>
         Assertions.assertThat(property).isNotNull();
         return Assertions.assertThat(property.get());
       }
-
     /***********************************************************************************************************************************************************
      * Asserts that the object under inspection has a {@link it.tidalwave.ui.core.role.Displayable} role.
      * @return                  an object for fluent further assertions
@@ -101,7 +95,6 @@ public class AsAssert<T extends As>
       {
         return DisplayableAssert.of(getRole(As.type(_Displayable_)));
       }
-
     /***********************************************************************************************************************************************************
      * Asserts that the object under inspection has the given display name.
      * @param   displayName     the display name
@@ -113,20 +106,17 @@ public class AsAssert<T extends As>
         hasDisplayable().withDisplayName(displayName);
         return this;
       }
-
     /***********************************************************************************************************************************************************
      * Asserts that the object under inspection has the given display name.
      * @param   displayName     the display name
      * @return                  an object for fluent further assertions
      **********************************************************************************************************************************************************/
-
     @Nonnull
     public AsAssert<T> hasDisplayName (@Nonnull final ThrowingSupplier<String> displayName)
       {
         hasDisplayable().withDisplayName(displayName);
         return this;
       }
-
     /***********************************************************************************************************************************************************
      * Asserts that the object under inspection has a {@link it.tidalwave.ui.core.role.Styleable} role.
      * @return                  an object for fluent further assertions
@@ -136,7 +126,6 @@ public class AsAssert<T extends As>
       {
         return StyleableAssert.of(getRole(As.type(_Styleable_)));
       }
-
     /***********************************************************************************************************************************************************
      * Asserts that the object under inspection has a {@link it.tidalwave.role.SimpleComposite} role of the given type
      * @param   <C>             the static type of the composite
@@ -148,7 +137,6 @@ public class AsAssert<T extends As>
       {
         return CompositeAssert.of(compositeType, getRole(As.type(_SimpleComposite_)));
       }
-
     /***********************************************************************************************************************************************************
      * Asserts that the object under inspection has a {@link it.tidalwave.role.Aggregate} role of the given type
      * @param   <C>             the static type of the aggregate
@@ -160,7 +148,6 @@ public class AsAssert<T extends As>
       {
         return AggregateAssert.of(aggregateType, getRole(As.type(_Aggregate_)));
       }
-
     /***********************************************************************************************************************************************************
      * Asserts that the object under inspection has a {@link it.tidalwave.ui.core.role.UserActionProvider} role.
      * @return                  an object for fluent further assertions
@@ -170,7 +157,6 @@ public class AsAssert<T extends As>
       {
         return UserActionProviderAssert.of(getRole(As.type(_UserActionProvider_)));
       }
-
     /***********************************************************************************************************************************************************
      * Asserts that the object under inspection has the given role.
      * @param   <R>             the static type of the role
@@ -182,7 +168,6 @@ public class AsAssert<T extends As>
       {
         return hasRole(As.type(roleType));
       }
-
     /***********************************************************************************************************************************************************
      * Asserts that the object under inspection has the given role.
      * @param   <R>             the static type of the role
@@ -194,7 +179,6 @@ public class AsAssert<T extends As>
       {
         return Assertions.assertThat(getRole(roleType));
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/

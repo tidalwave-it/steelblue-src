@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.spi;
-
 import jakarta.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Comparator;
@@ -42,7 +41,6 @@ import lombok.extern.slf4j.Slf4j;
 import static it.tidalwave.ui.core.MenuBarControl.MenuPlacement._MenuItemPlacement_;
 import static it.tidalwave.ui.core.role.UserActionProvider._UserActionProvider_;
 import static java.util.stream.Collectors.*;
-
 /***************************************************************************************************************************************************************
  *
  * A support implementation for {@link MenuBarControl}.
@@ -59,11 +57,9 @@ public abstract class MenuBarControlSupport<B, MB, M> implements MenuBarControl<
   {
     @Delegate
     private final As as = As.forObject(this);
-
     /** The default supplier of {@link UserAction}s, can be injected for testing. */
     @Nonnull
     protected final Supplier<Collection<? extends UserAction>> userActionsSupplier;
-
     /***********************************************************************************************************************************************************
      * Default constructor.
      **********************************************************************************************************************************************************/
@@ -71,7 +67,6 @@ public abstract class MenuBarControlSupport<B, MB, M> implements MenuBarControl<
       {
         userActionsSupplier = () -> asMany(_UserActionProvider_).stream().flatMap(ap -> ap.getActions().stream()).collect(toList());
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -90,24 +85,20 @@ public abstract class MenuBarControlSupport<B, MB, M> implements MenuBarControl<
             log.debug("Binding {} to menu item {}", p.a, menuPath);
             addMenuItemToMenu(menu, binder, p.a);
           });
-
         menuMapByLabel.entrySet().stream().sorted(menuComparator()).forEach(e -> addMenuToMenuBar(menuBar, e.getValue()));
       }
-
     /***********************************************************************************************************************************************************
      * {@return a new menu with the given label}.
      * @param   label     the label
      **********************************************************************************************************************************************************/
     @Nonnull
     protected abstract M createMenu (@Nonnull final String label);
-
     /***********************************************************************************************************************************************************
      * Adds a menu to the menu bar.
      * @param   menuBar   the menu bar
      * @param   menu      the menu
      **********************************************************************************************************************************************************/
     protected abstract void addMenuToMenuBar (@Nonnull final MB menuBar, @Nonnull final M menu);
-
     /***********************************************************************************************************************************************************
      * Adds to the given menu a new item bound to the given {@link UserAction}.
      * @param   menu      the menu
@@ -115,7 +106,6 @@ public abstract class MenuBarControlSupport<B, MB, M> implements MenuBarControl<
      * @param   action    the user action
      **********************************************************************************************************************************************************/
     protected abstract void addMenuItemToMenu (@Nonnull final M menu, @Nonnull final B binder, @Nonnull final UserAction action);
-
     /***********************************************************************************************************************************************************
      * {@return a {@link Comparator } for menus}
      **********************************************************************************************************************************************************/

@@ -24,11 +24,9 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core;
-
 import org.testng.annotations.Test;
 import static it.tidalwave.ui.core.UserNotification.notification;
 import static org.assertj.core.api.Assertions.assertThat;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -45,7 +43,6 @@ public class UserNotificationTest
         assertThat(underTest.getText()).isEmpty();
         assertThat(underTest.getCaption()).isEmpty();
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void test_notification_with_hardwired_attributes()
@@ -57,7 +54,6 @@ public class UserNotificationTest
         assertThat(underTest.getText()).isEqualTo("text");
         assertThat(underTest.getCaption()).isEqualTo("caption");
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void test_notification_with_bundle_attributes()

@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl;
-
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -39,7 +38,6 @@ import lombok.extern.slf4j.Slf4j;
 import static it.tidalwave.ui.javafx.impl.JavaFXSafeRunner.runSafelyAndWait;
 import static java.util.Arrays.asList;
 import static it.tidalwave.util.CollectionUtils.concat;
-
 /***************************************************************************************************************************************************************
  *
  * An {@link InvocationHandler} that safely wraps all method calls with {@link Platform#runLater(Runnable)}. The caller
@@ -65,13 +63,10 @@ public class JavaFXSafeProxy implements InvocationHandler
         @Nonnull
         public Object __getProxiedObject();
       }
-
     @Getter @Setter
     private static boolean logDelegateInvocations;
-
     @Nonnull @Getter @Setter
     private Object delegate;
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -82,7 +77,6 @@ public class JavaFXSafeProxy implements InvocationHandler
         final var contextClassLoader = Thread.currentThread().getContextClassLoader();
         return (T)Proxy.newProxyInstance(contextClassLoader, augmentedInterfaces, new JavaFXSafeProxy(target));
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -94,44 +88,36 @@ public class JavaFXSafeProxy implements InvocationHandler
           {
             return delegate;
           }
-
         final var result = runSafelyAndWait(() ->
           {
             if (logDelegateInvocations)
               {
                 logInvocation(delegate.getClass(), method, args);
               }
-
             return method.invoke(delegate, args);
           });
-
         return method.getReturnType().equals(void.class) ? null : result;
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
     private static void logInvocation (@Nonnull final Class<?> clazz, @Nonnull final Method method, @Nonnull final Object[] args)
       {
         final var logger = LoggerFactory.getLogger(clazz);
-
         if (logger.isDebugEnabled())
           {
             final var builder = new StringBuilder();
             builder.append(method.getName());
             builder.append("(");
             var separator = "";
-
             for (final Object arg : args)
               {
                 builder.append(separator);
                 builder.append(arg != null ? arg.toString() : null);
                 separator = ", ";
               }
-
             builder.append(")");
             logger.debug(builder.toString());
           }
       }
   }
-

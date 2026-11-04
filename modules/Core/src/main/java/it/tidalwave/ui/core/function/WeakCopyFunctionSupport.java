@@ -24,12 +24,10 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.function;
-
 import jakarta.annotation.Nonnull;
 import it.tidalwave.ui.core.ChangingSource;
 import it.tidalwave.ui.core.role.Changeable;
 import lombok.extern.slf4j.Slf4j;
-
 /***************************************************************************************************************************************************************
  *
  * Changes the destination only at a certain condition in function of the target.
@@ -43,33 +41,27 @@ public abstract class WeakCopyFunctionSupport<T> extends UnaryBoundFunctionSuppo
   {
     @Nonnull
     protected T targetValue;
-
     protected WeakCopyFunctionSupport (@Nonnull final ChangingSource<T> source)
       {
         super(source);
       }
-
     @Override
     protected void onSourceChange (@Nonnull final T oldSourceValue, @Nonnull final T newSourceValue)
       {
         final var oldValue = function(oldSourceValue);
         final var newValue = function(newSourceValue);
-
         if (shouldChange(oldValue, newValue))
           {
             value = newValue;
             fireValueChanged(oldValue, newValue);
           }
       }
-
     @Override
     public void set (final T value)
       {
         this.targetValue = value;
       }
-
     protected abstract boolean shouldChange (T oldValue, T newValue);
-
     @Override @Nonnull
     protected T function (@Nonnull final T value)
       {

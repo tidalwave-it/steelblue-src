@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.spi;
-
 import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,45 +36,38 @@ import org.testng.annotations.Test;
 import static it.tidalwave.ui.core.role.Displayable._Displayable_;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
-
 class BinderMock2
   {
   }
-
 @Getter @RequiredArgsConstructor
 class ToolbarMock
   {
     @Nonnull
     private final List<ButtonMock> items = new ArrayList<>();
   }
-
 @Getter @RequiredArgsConstructor
 class ButtonMock
   {
     @Nonnull
     private final String text;
   }
-
 class Fixture extends ToolBarControlSupport<BinderMock2, ToolbarMock, ButtonMock>
   {
     public Fixture (@Nonnull final Supplier<Collection<? extends UserAction>> userActionsSupplier)
       {
         super(userActionsSupplier);
       }
-
     @Override @Nonnull
     protected ButtonMock createButton (@Nonnull final BinderMock2 binder, @Nonnull final UserAction action)
       {
         return new ButtonMock(action.as(_Displayable_).getDisplayName());
       }
-
     @Override
     protected void addButtonsToToolBar (@Nonnull final ToolbarMock toolBar, @Nonnull final List<ButtonMock> buttons)
       {
         toolBar.getItems().addAll(buttons);
       }
   }
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -84,7 +76,6 @@ class Fixture extends ToolBarControlSupport<BinderMock2, ToolbarMock, ButtonMock
 public class ToolBarControlSupportTest
   {
     private final TestUserActions a = new TestUserActions();
-
     @Test
     public void test_populate()
       {
@@ -100,7 +91,6 @@ public class ToolBarControlSupportTest
         final var button1 = buttons.get(0);
         final var button2 = buttons.get(1);
         final var button3 = buttons.get(2);
-
         assertThat(button1.getText()).isEqualTo("Open");
         assertThat(button2.getText()).isEqualTo("Close");
         assertThat(button3.getText()).isEqualTo("Close all");

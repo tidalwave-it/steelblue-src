@@ -23,9 +23,7 @@
  *
  * *************************************************************************************************************************************************************
  */
-
 package it.tidalwave.ui.test;
-
 import jakarta.annotation.Nonnull;
 import it.tidalwave.ui.core.role.Styleable;
 import org.apiguardian.api.API;
@@ -33,7 +31,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static lombok.AccessLevel.PROTECTED;
-
 /***************************************************************************************************************************************************************
  *
  * Assertions for the {@link Styleable} role.
@@ -48,12 +45,11 @@ public class StyleableAssert
     /** The Styleable under inspection. */
     @Nonnull
     protected final Styleable styleable;
-
     /***********************************************************************************************************************************************************
      * Assert that the object under inspection contains all the given styles.
      * @param   styles        the styles
      **********************************************************************************************************************************************************/
-    public void withExactStyles (@Nonnull final String ... styles)
+    public void withExactStyles (@Nonnull final String... styles)
       {
         assertThat(styleable.getStyles()).containsExactlyInAnyOrder(styles);
       }

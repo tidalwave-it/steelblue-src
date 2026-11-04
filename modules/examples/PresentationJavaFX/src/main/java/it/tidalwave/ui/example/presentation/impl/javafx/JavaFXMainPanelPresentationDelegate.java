@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.example.presentation.impl.javafx;
-
 import jakarta.annotation.Nonnull;
 import java.nio.file.Path;
 import javafx.fxml.FXML;
@@ -43,7 +42,6 @@ import it.tidalwave.ui.example.presentation.MainPanelPresentation;
 import it.tidalwave.ui.javafx.JavaFXBinder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 /***************************************************************************************************************************************************************
  *
  * The JavaFX controller just works as a dumb object with SteelBlue: it must implement in the most simple way each
@@ -60,44 +58,31 @@ public class JavaFXMainPanelPresentationDelegate implements MainPanelPresentatio
     // This facility provides all the methods to bind JavaFX controls to DCI roles.
     @Nonnull
     private final JavaFXBinder binder;
-
     @FXML
     private Button btButton;
-
     @FXML
     private Button btDialogOk;
-
     @FXML
     private Button btDialogOkCancel;
-
     @FXML
     private Button btPickFile;
-
     @FXML
     private Button btPickDirectory;
-
     @FXML
     private TextField tfTextField;
-
     @FXML
     private ListView<PresentationModel> lvListView;
-
     @FXML
     private ComboBox<PresentationModel> cbComboBox;
-
     @FXML
     private TableView<PresentationModel> tvTableView;
-
     @FXML
     private TreeView<PresentationModel> tvTreeView;
-
     @FXML
     private TreeTableView<PresentationModel> ttvTreeTableView;
-
     @FXML
     private TextArea taLog;
     // END SNIPPET: fields
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -113,7 +98,6 @@ public class JavaFXMainPanelPresentationDelegate implements MainPanelPresentatio
         binder.bindBidirectionally(tfTextField, bindings.textProperty, bindings.booleanProperty);
       }
     // END SNIPPET: bind
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -130,7 +114,6 @@ public class JavaFXMainPanelPresentationDelegate implements MainPanelPresentatio
         binder.bind(ttvTreeTableView, pmFileEntities, () -> log.info("Finished setup of ttvTreeTableView"));
       }
     // END SNIPPET: populate
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -141,7 +124,6 @@ public class JavaFXMainPanelPresentationDelegate implements MainPanelPresentatio
         binder.showInModalDialog(notification);
       }
     // END SNIPPET: notify1
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -152,7 +134,6 @@ public class JavaFXMainPanelPresentationDelegate implements MainPanelPresentatio
         taLog.appendText(message + "\n");
       }
     // END SNIPPET: notify2
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -164,7 +145,6 @@ public class JavaFXMainPanelPresentationDelegate implements MainPanelPresentatio
         binder.openFileChooserFor(notification, selectedFile);
       }
     // END SNIPPET: pickFile
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/

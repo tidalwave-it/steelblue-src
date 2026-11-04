@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl.button;
-
 import jakarta.annotation.Nonnull;
 import java.util.Collection;
 import java.util.List;
@@ -60,7 +59,6 @@ import static it.tidalwave.ui.core.role.UserActionProvider._UserActionProvider_;
 import static it.tidalwave.ui.javafx.impl.DefaultJavaFXBinder.enforceFxApplicationThread;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.*;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -69,7 +67,6 @@ import static java.util.stream.Collectors.*;
 public class ButtonBindings extends DelegateSupport
   {
     private static final As.Type<SimpleComposite<PresentationModel>>  _SimpleCompositePresentationModel_ = new As.Type<>(SimpleComposite.class);
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -77,7 +74,6 @@ public class ButtonBindings extends DelegateSupport
       {
         super(executor, mainWindow);
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -88,7 +84,6 @@ public class ButtonBindings extends DelegateSupport
         button.setOnAction(ignored -> executor.execute(action::actionPerformed));
         bindEnableProperty(button.disableProperty(), action.enabled());
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -99,7 +94,6 @@ public class ButtonBindings extends DelegateSupport
         menuItem.setOnAction(ignored -> executor.execute(action::actionPerformed));
         bindEnableProperty(menuItem.disableProperty(), action.enabled());
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -112,7 +106,6 @@ public class ButtonBindings extends DelegateSupport
         final var pmc = pm.as(_SimpleCompositePresentationModel_);
         children.setAll(pmc.findChildren().stream().map(cpm -> createToggleButton(cpm, prototypeStyleClass, group)).collect(toList()));
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -121,11 +114,9 @@ public class ButtonBindings extends DelegateSupport
         enforceFxApplicationThread();
         final var columnConstraints = gridPane.getColumnConstraints();
         final var children = gridPane.getChildren();
-
         columnConstraints.clear();
         children.clear();
         final var columnIndex = new AtomicInteger(0);
-
         actions.forEach(menuAction ->
           {
             final var column = new ColumnConstraints();
@@ -137,7 +128,6 @@ public class ButtonBindings extends DelegateSupport
             children.add(button);
           });
       }
-
     /***********************************************************************************************************************************************************
      * {@return a new {@code Button}} for the menu bar.
      **********************************************************************************************************************************************************/
@@ -151,10 +141,8 @@ public class ButtonBindings extends DelegateSupport
         GridPane.setValignment(button, VPos.CENTER);
         button.setPrefSize(Integer.MAX_VALUE, Integer.MAX_VALUE); // fill
         button.getStyleClass().add("mainMenuButton");
-
         return button;
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -168,15 +156,12 @@ public class ButtonBindings extends DelegateSupport
         button.getStyleClass().addAll(pm.maybeAs(_Styleable_).map(Styleable::getStyles).orElse(emptyList()));
         pm.maybeAs(_UserActionProvider_).flatMap(UserActionProvider::getOptionalDefaultAction)
           .ifPresent(action -> bind(button, action));
-
         if (group.getSelectedToggle() == null)
           {
             group.selectToggle(button);
           }
-
         return button;
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/

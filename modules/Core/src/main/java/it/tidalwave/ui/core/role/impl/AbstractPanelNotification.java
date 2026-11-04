@@ -24,13 +24,11 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role.impl;
-
 import jakarta.annotation.Nonnull;
 import it.tidalwave.ui.core.PanelGroupControl;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import static it.tidalwave.util.ShortNames.shortId;
-
 /***************************************************************************************************************************************************************
  *
  * A message notifying that a panel has been hidden.
@@ -44,10 +42,8 @@ public abstract class AbstractPanelNotification
   {
     @Nonnull
     private final Object target;
-
     @Nonnull
     private final PanelGroupControl.Group group;
-
     @Override @Nonnull
     public String toString()
       {

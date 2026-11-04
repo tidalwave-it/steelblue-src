@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl.common;
-
 import jakarta.annotation.Nonnull;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -38,15 +37,14 @@ import javafx.beans.value.ObservableValue;
 import javafx.application.Platform;
 import it.tidalwave.ui.core.BoundProperty;
 import lombok.extern.slf4j.Slf4j;
-
 /***************************************************************************************************************************************************************
  *
  * Adapts a {@link BoundProperty} to a JavaFX {@link Property}. It also takes care of threaring issues, making sure that
- * the JavaFX {@code Property} is updated in the JavaFX UI thread. Conversely, updates on the JavaFX 
+ * the JavaFX {@code Property} is updated in the JavaFX UI thread. Conversely, updates on the JavaFX
  * {@code BoundProperty} are executed in a separated thread provided by an {@link Executor}.
  *
  * TODO: javafx.beans.binding.BooleanExpression.booleanExpression(source)? Does it do threading?
- * 
+ *
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
@@ -55,22 +53,16 @@ public class PropertyAdapter<T> implements Property<T>
   {
     @Nonnull
     private final Executor executor;
-
     @Nonnull
     private final BoundProperty<T> delegate;
-
     // FIXME: WEAK LISTENER!!
     private final List<ChangeListener<? super T>> changeListeners = new ArrayList<>();
-    
     // FIXME: WEAK LISTENER!!
     private final List<InvalidationListener> invalidationListeners = new ArrayList<>();
-
     private T boundValue;
-
     private final PropertyChangeListener propertyChangeListener = event ->
       {
         log.trace("propertyChange({}) - bound value: {}", event, boundValue);
-        
         if (!Objects.equals(boundValue, event.getNewValue()))
           {
             boundValue = (T)event.getNewValue();
@@ -84,7 +76,6 @@ public class PropertyAdapter<T> implements Property<T>
               });
           }
     };
-
     public PropertyAdapter (@Nonnull final Executor executor, @Nonnull final BoundProperty<T> delegate)
       {
         this.executor = executor;
@@ -92,91 +83,77 @@ public class PropertyAdapter<T> implements Property<T>
         this.boundValue = delegate.get();
         delegate.addPropertyChangeListener(propertyChangeListener);
       }
-
     @Override
     public T getValue()
       {
         return delegate.get();
       }
-
     @Override
     public void setValue (final T value)
       {
         log.debug("setValue({})", value);
         boundValue = value;
-
         if (!Objects.equals(value, delegate.get()))
           {
             executor.execute(() -> delegate.set(value));
           }
       }
-
     @Override
     public void addListener (@Nonnull final ChangeListener<? super T> listener)
       {
         changeListeners.add(listener);
       }
-
     @Override
     public void removeListener (@Nonnull final ChangeListener<? super T> listener)
       {
         changeListeners.remove(listener);
       }
-
     @Override
     public void addListener (@Nonnull final InvalidationListener listener)
       {
         invalidationListeners.add(listener);
       }
-
     @Override
     public void removeListener (@Nonnull final InvalidationListener listener)
       {
         invalidationListeners.remove(listener);
       }
-
     @Override
     public void bind (final ObservableValue<? extends T> observable)
       {
         log.warn("bind({})", observable);
         throw new UnsupportedOperationException("Not supported yet.");
       }
-
     @Override
     public void unbind()
       {
         log.warn("unbind()");
         throw new UnsupportedOperationException("Not supported yet.");
       }
-
     @Override
     public boolean isBound()
       {
         log.warn("isBound()");
         throw new UnsupportedOperationException("Not supported yet.");
       }
-
     @Override
     public void bindBidirectional (final Property<T> other)
       {
         log.warn("bindBidirectional({})", other);
         throw new UnsupportedOperationException("Not supported yet.");
       }
-
     @Override
     public void unbindBidirectional (final Property<T> other)
       {
         log.warn("unbindBidirectional({})", other);
         throw new UnsupportedOperationException("Not supported yet.");
       }
-
     @Override
     public Object getBean()
       {
         log.warn("getBean()");
         throw new UnsupportedOperationException("Not supported yet.");
       }
-
     @Override
     public String getName()
       {

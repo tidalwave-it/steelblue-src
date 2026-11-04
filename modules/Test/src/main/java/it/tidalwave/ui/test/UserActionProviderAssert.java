@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.test;
-
 import jakarta.annotation.Nonnull;
 import it.tidalwave.ui.core.role.UserAction;
 import it.tidalwave.ui.core.role.UserActionProvider;
@@ -33,7 +32,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static lombok.AccessLevel.PROTECTED;
-
 /***************************************************************************************************************************************************************
  *
  * Assertions for the {@link UserActionProvider} role.
@@ -48,7 +46,6 @@ public class UserActionProviderAssert
     /** The UserActionProvider under inspection. */
     @Nonnull
     protected final UserActionProvider userActionProvider;
-
     /***********************************************************************************************************************************************************
      * Asserts that the object under inspection has the given number of actions.
      * @param   count           the expected count of actions

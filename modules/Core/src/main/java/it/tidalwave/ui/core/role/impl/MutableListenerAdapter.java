@@ -24,14 +24,12 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role.impl;
-
 import jakarta.annotation.Nonnull;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import it.tidalwave.ui.core.MutableListener;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
-
 /***************************************************************************************************************************************************************
  *
  * @since   2.0-ALPHA-2
@@ -43,7 +41,6 @@ public class MutableListenerAdapter<T> implements PropertyChangeListener
   {
     @Nonnull
     private final MutableListener<T> listener;
-
     @Override @SuppressWarnings("unchecked")
     public void propertyChange (@Nonnull final PropertyChangeEvent event)
       {

@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl.dialog;
-
 import jakarta.annotation.Nonnull;
 import java.util.Optional;
 import java.util.concurrent.Executor;
@@ -51,7 +50,6 @@ import it.tidalwave.util.Callback;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -65,10 +63,8 @@ public class DialogBindings extends DelegateSupport
       {
         @Nonnull
         private final WebView webView;
-
         @Nonnull
         private final String text;
-
         @Override
         public void changed (final ObservableValue<? extends String> observableValue, final String oldValue, final String newValue)
           {
@@ -78,7 +74,7 @@ public class DialogBindings extends DelegateSupport
                   {
                     try
                       {
-                        log.debug("Opening {} ...", newValue);
+                        log.debug("Opening {}...", newValue);
                         Desktop.getDesktop().browse(new URI(newValue));
                       }
                     catch (IOException | URISyntaxException e)
@@ -86,12 +82,10 @@ public class DialogBindings extends DelegateSupport
                         log.warn("", e);
                       }
                   });
-
                 webView.getEngine().loadContent(text);
               }
           }
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -99,7 +93,6 @@ public class DialogBindings extends DelegateSupport
       {
         super(executor, mainWindow);
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -110,7 +103,6 @@ public class DialogBindings extends DelegateSupport
         Platform.runLater(() ->
           {
             log.debug("modalDialog({}, {})", node, notification);
-
 //                final Dialog<ButtonType> dialog = new Dialog<>();
             final Dialog<ButtonType> dialog = new Alert(Alert.AlertType.NONE);
             dialog.initOwner(mainWindow.get());
@@ -118,7 +110,6 @@ public class DialogBindings extends DelegateSupport
             dialog.setResizable(false);
             final var dialogPane = dialog.getDialogPane();
             final var text = notification.getText();
-
             if (!text.startsWith("<html>"))
               {
                 dialog.setContentText(text);
@@ -135,7 +126,6 @@ public class DialogBindings extends DelegateSupport
                 // System.err.println("FILL " + label.getTextFill());
                 final var textColor = "white"; // FIXME
                 var backgroundColor = "#252525"; // FIXME
-
                 try
                   {
                     // Available in JDK 18+
@@ -147,7 +137,6 @@ public class DialogBindings extends DelegateSupport
                   {
                     log.trace("WebView.setPageFill() not available", e);
                   }
-
                 // FIXME
                 final var text2 = BundleUtilities.getMessage(getClass(),"htmlTemplate", text, textColor, backgroundColor, fontFamily);
                 // System.err.println(text2);
@@ -155,23 +144,17 @@ public class DialogBindings extends DelegateSupport
                 webView.getEngine().locationProperty().addListener(new UrlOpener(webView, text2));
                 dialogPane.setContent(webView);
               }
-
             final var feedback = notification.getFeedback();
             final var hasOnCancel = feedback.canCancel();
-
             final var buttonTypes = dialogPane.getButtonTypes();
             buttonTypes.clear();
             buttonTypes.add(ButtonType.OK);
-
             if (hasOnCancel)
               {
                 buttonTypes.add(ButtonType.CANCEL);
               }
-
 //                okButton.disableProperty().bind(new PropertyAdapter<>(valid)); // FIXME: doesn't work
-
             final var result = dialog.showAndWait();
-
             if (result.isEmpty())
               {
                 if (hasOnCancel)
@@ -200,7 +183,6 @@ public class DialogBindings extends DelegateSupport
               }
           });
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/

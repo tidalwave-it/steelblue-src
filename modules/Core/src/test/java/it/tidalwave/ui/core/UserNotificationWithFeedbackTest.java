@@ -24,14 +24,12 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core;
-
 import it.tidalwave.util.Callback;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import static it.tidalwave.ui.core.UserNotificationWithFeedback.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -40,9 +38,7 @@ import static org.mockito.Mockito.*;
 public class UserNotificationWithFeedbackTest
   {
     private Callback onConfirm;
-
     private Callback onCancel;
-
     /**********************************************************************************************************************************************************/
     @BeforeMethod
     public void setup()
@@ -50,7 +46,6 @@ public class UserNotificationWithFeedbackTest
         onConfirm = mock(Callback.class);
         onCancel = mock(Callback.class);
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void test_default_notification()
@@ -63,7 +58,6 @@ public class UserNotificationWithFeedbackTest
         assertThat(underTest.getFeedback().canCancel()).isFalse();
         assertThat(underTest.getFeedback().canConfirm()).isFalse();
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void test_notification_with_hardwired_attributes()
@@ -77,7 +71,6 @@ public class UserNotificationWithFeedbackTest
         assertThat(underTest.getFeedback().canCancel()).isFalse();
         assertThat(underTest.getFeedback().canConfirm()).isFalse();
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void test_notification_with_bundle_attributes()
@@ -91,7 +84,6 @@ public class UserNotificationWithFeedbackTest
         assertThat(underTest.getFeedback().canCancel()).isFalse();
         assertThat(underTest.getFeedback().canConfirm()).isFalse();
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void test_notification_with_confirm()
@@ -107,7 +99,6 @@ public class UserNotificationWithFeedbackTest
         verify(onConfirm).call();
         verifyNoInteractions(onCancel);
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void test_notification_with_cancel()

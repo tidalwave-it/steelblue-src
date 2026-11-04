@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl.combobox;
-
 import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +41,6 @@ import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.rangeClosed;
 import static org.testng.Assert.assertEquals;
 import static org.mockito.Mockito.*;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -51,20 +49,17 @@ import static org.mockito.Mockito.*;
 public class ComboBoxBindingsTest extends BindingTestSupport<ComboBox<PresentationModel>>
   {
     private ComboBoxBindings underTest;
-
     /**********************************************************************************************************************************************************/
     public ComboBoxBindingsTest()
       {
         super(ComboBox::new);
       }
-
     /**********************************************************************************************************************************************************/
     @Override
     protected void setup (@Nonnull final DefaultCellBinder cellBinder)
       {
         underTest = new ComboBoxBindings(executor, cellBinder, windowSupplier);
       }
-
     /**********************************************************************************************************************************************************/
     @Test(groups = "display")
     public void must_have_the_proper_presentation_models()
@@ -74,7 +69,6 @@ public class ComboBoxBindingsTest extends BindingTestSupport<ComboBox<Presentati
         // then
         assertEquals(new ArrayList<>(control.getItems()), pm.as(_CompositeOfPresentationModel_).findChildren().results());
       }
-
     /**********************************************************************************************************************************************************/
     @Test(groups = "display") @SuppressWarnings("unchecked")
     public void must_have_the_proper_cell_texts_when_not_hown()
@@ -86,7 +80,6 @@ public class ComboBoxBindingsTest extends BindingTestSupport<ComboBox<Presentati
         final var texts = findTextsFrom(skin.getPopupContent(), s -> !s.isEmpty());
         assertEquals(texts, List.of(), texts.toString());
       }
-
     /**********************************************************************************************************************************************************/
     @Test(groups = "display") @SuppressWarnings("unchecked")
     public void must_have_the_proper_cell_texts_when_shown()
@@ -100,7 +93,6 @@ public class ComboBoxBindingsTest extends BindingTestSupport<ComboBox<Presentati
         final var expected = rangeClosed(1, 10).mapToObj(i -> "Item #" + i).collect(toList());
         assertEquals(texts, expected, texts.toString());
       }
-
     /**********************************************************************************************************************************************************/
     @Test(groups = "display")
     public void must_have_the_proper_selection()
@@ -114,7 +106,6 @@ public class ComboBoxBindingsTest extends BindingTestSupport<ComboBox<Presentati
         verify(selectables[7]).select();
         rangeClosed(0, 9).filter(i -> i != 7).forEach(i -> verifyNoInteractions(selectables[i]));
       }
-
     // TODO: assert callbacks are not in the JavaFX thread
     // TODO: test context menus
   }

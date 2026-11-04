@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role.impl;
-
 import jakarta.annotation.Nonnull;
 import java.beans.PropertyChangeSupport;
 import java.util.IdentityHashMap;
@@ -32,7 +31,6 @@ import java.util.Map;
 import it.tidalwave.ui.core.MutableListener;
 import it.tidalwave.util.annotation.VisibleForTesting;
 import lombok.RequiredArgsConstructor;
-
 /***************************************************************************************************************************************************************
  *
  * @author      Fabrizio Giudici
@@ -43,9 +41,7 @@ public class MutableListenerSupport
   {
     @Nonnull
     private final PropertyChangeSupport pcs;
-
     @VisibleForTesting final Map<MutableListener<?>, MutableListenerAdapter<?>> adapterMap = new IdentityHashMap<>();
-
     /***********************************************************************************************************************************************************
      * Registers a {@link MutableListener}.
      * @param   listener        the listener
@@ -56,7 +52,6 @@ public class MutableListenerSupport
         adapterMap.put(listener, adapter);
         pcs.addPropertyChangeListener(adapter);
       }
-
     /***********************************************************************************************************************************************************
      * Registers a {@link MutableListener}.
      * @param   listener        the listener
@@ -68,7 +63,6 @@ public class MutableListenerSupport
         adapterMap.put(listener, adapter);
         pcs.addPropertyChangeListener(propertyName, adapter);
       }
-
     /***********************************************************************************************************************************************************
      * Unregisters a {@link MutableListener}.
      * @param   listener        the listener
@@ -76,13 +70,11 @@ public class MutableListenerSupport
     public <T> void removeListener (@Nonnull final MutableListener<T> listener)
       {
         final var adapter = adapterMap.remove(listener);
-
         if (adapter != null)
           {
             pcs.removePropertyChangeListener(adapter);
           }
       }
-
     /***********************************************************************************************************************************************************
      * Unregisters a {@link MutableListener}.
      * @param   listener        the listener
@@ -91,13 +83,11 @@ public class MutableListenerSupport
     public <T> void removeListener (@Nonnull final String propertyName, @Nonnull final MutableListener<T> listener)
       {
         final var adapter = adapterMap.remove(listener);
-
         if (adapter != null)
           {
             pcs.removePropertyChangeListener(propertyName, adapter);
           }
       }
-
     /***********************************************************************************************************************************************************
      * Unregisters all the {@link MutableListener}s.
      **********************************************************************************************************************************************************/
@@ -105,12 +95,10 @@ public class MutableListenerSupport
       {
         adapterMap.clear();
       }
-
     public <T> void fireChange (final T oldValue, final T newValue)
       {
         pcs.firePropertyChange("", oldValue, newValue);
       }
-
     public <T> void fireChange (@Nonnull final String propertyName, final T oldValue, final T newValue)
       {
         pcs.firePropertyChange(propertyName, oldValue, newValue);

@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role;
-
 import jakarta.annotation.Nonnull;
 import java.util.Locale;
 import java.util.function.Consumer;
@@ -33,7 +32,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -50,7 +48,6 @@ public class DisplayableTest
         assertThat(underTest.getDisplayName()).isEqualTo("foo bar");
         assertThat(underTest.toString()).matches("\\?\\?\\?@.*Displayable\\[\\]");
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void test_of_String_with_toString_name()
@@ -61,7 +58,6 @@ public class DisplayableTest
         assertThat(underTest.getDisplayName()).isEqualTo("foo bar");
         assertThat(underTest.toString()).matches("\\[toString\\]@.*Displayable\\[\\]");
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void test_of_supplier()
@@ -72,7 +68,6 @@ public class DisplayableTest
         assertThat(underTest.getDisplayName()).isEqualTo("foo bar");
         // assertThat(underTest.toString()).isEqualTo("???")));
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void test_of_function()
@@ -85,7 +80,6 @@ public class DisplayableTest
         assertThat(underTest.getDisplayName()).isEqualTo("foo bar");
         // assertThat(underTest.toString()).isEqualTo("???")));
       }
-
     /**********************************************************************************************************************************************************/
     @Test @SuppressWarnings("unchecked")
     public void test_renderTo()
@@ -98,7 +92,6 @@ public class DisplayableTest
         // then
         verify(consumer).accept("foo bar");
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void test_render()
@@ -110,7 +103,6 @@ public class DisplayableTest
         // then
         assertThat(result).isEqualTo("foo bar");
       }
-
     /**********************************************************************************************************************************************************/
     @Test(dataProvider = "i8n")
     public void must_read_the_displayName_from_the_bundle (@Nonnull final Locale locale, @Nonnull final String expected)
@@ -130,7 +122,6 @@ public class DisplayableTest
 //        assertThat(displayable.getDisplayName(Locale.ITALIAN)).isEqualTo("Italian")));
 //        assertThat(displayable.getDisplayName(Locale.FRENCH)).isEqualTo("French")));
       }
-
     @DataProvider
     private static Object[][] i8n()
       {

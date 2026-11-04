@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role.impl;
-
 import jakarta.annotation.Nonnull;
 import java.beans.PropertyChangeSupport;
 import java.util.Collections;
@@ -35,7 +34,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import it.tidalwave.ui.core.role.MutableDisplayable;
 import lombok.experimental.Delegate;
-
 /***************************************************************************************************************************************************************
  *
  * A default implementation of {@link MutableDisplayable} starting which a single display name in
@@ -51,21 +49,15 @@ import lombok.experimental.Delegate;
 public class DefaultMutableDisplayable implements MutableDisplayable
   {
     // private static final long serialVersionUID = 45345436345634734L;
-
     @Nonnull
     private final String toStringName;
-
     @Nonnull
     private final Map<Locale, String> displayNameMap = new HashMap<>();
-
     @Delegate
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-
     @Delegate
     private final MutableListenerSupport mls = new MutableListenerSupport(pcs);
-
     private final Locale defaultLocale = Locale.ENGLISH;
-
     /***********************************************************************************************************************************************************
      * Creates an instance with an initial given display name in {@code Locale.ENGLISH}.
      *
@@ -75,7 +67,6 @@ public class DefaultMutableDisplayable implements MutableDisplayable
       {
         this(displayName, "???");
       }
-
     /***********************************************************************************************************************************************************
      * Creates an instance with an initial given display name in {@code Locale.ENGLISH} and an explicit identifier for
      * {@code toString()}.
@@ -88,7 +79,6 @@ public class DefaultMutableDisplayable implements MutableDisplayable
         this.toStringName = toStringName;
         displayNameMap.put(defaultLocale, displayName);
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -97,7 +87,6 @@ public class DefaultMutableDisplayable implements MutableDisplayable
       {
         return getDisplayName(defaultLocale);
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -106,7 +95,6 @@ public class DefaultMutableDisplayable implements MutableDisplayable
       {
         return displayNameMap.get(locale);
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -115,7 +103,6 @@ public class DefaultMutableDisplayable implements MutableDisplayable
       {
         return new TreeSet<>(displayNameMap.keySet());
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -124,7 +111,6 @@ public class DefaultMutableDisplayable implements MutableDisplayable
       {
         return Collections.unmodifiableMap(displayNameMap);
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -135,7 +121,6 @@ public class DefaultMutableDisplayable implements MutableDisplayable
         setDisplayName(displayName, defaultLocale);
         pcs.firePropertyChange(PROP_DISPLAY_NAME, oldDisplayName, displayName);
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -146,7 +131,6 @@ public class DefaultMutableDisplayable implements MutableDisplayable
         displayNameMap.put(locale, displayName);
         pcs.firePropertyChange(PROP_DISPLAY_NAMES, oldDisplayNameMap, displayNameMap);
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -157,7 +141,6 @@ public class DefaultMutableDisplayable implements MutableDisplayable
         displayNameMap.putAll(displayNames);
         pcs.firePropertyChange(PROP_DISPLAY_NAMES, oldDisplayNameMap, displayNameMap);
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/

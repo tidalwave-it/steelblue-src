@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl;
-
 import jakarta.annotation.Nonnull;
 import java.util.Collection;
 import it.tidalwave.ui.core.role.Displayable;
@@ -35,7 +34,6 @@ import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import static java.util.stream.Collectors.*;
 import static it.tidalwave.util.ShortNames.shortName;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -45,11 +43,8 @@ import static it.tidalwave.util.ShortNames.shortName;
 public class Logging
   {
     public static final String INDENT = " ".repeat(100);
-
     private static final String P_LOG_CHILDREN = Logging.class.getName() + ".logCompositeChildren";
-
     private static final boolean LOG_CHILDREN = Boolean.getBoolean(P_LOG_CHILDREN);
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -59,7 +54,6 @@ public class Logging
           {
             return;
           }
-
         if (objects.isEmpty())
           {
             log.debug(">>>>{} <empty>", prefix);
@@ -72,7 +66,6 @@ public class Logging
               }
           }
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -82,11 +75,9 @@ public class Logging
           {
             return;
           }
-
         if (object instanceof Displayable)
           {
             var displayableName = "";
-
             try
               {
                 displayableName = ((Displayable)object).getDisplayName();
@@ -96,24 +87,20 @@ public class Logging
                 log.error("", e);
                 displayableName = "<ERROR>";
               }
-
             log.debug(">>>>     {}{}: {}", indent, shortName(object.getClass()), displayableName);
           }
         else
           {
             log.debug(">>>>     {}{}", indent, object);
           }
-
         if (object instanceof Aggregate)
           {
             final var aggregate = (Aggregate<?>)object;
             aggregate.getNames().forEach(name -> logObject(indent + "    " + name + ": ", aggregate.getByName(name).get()));
           }
-
         if (object instanceof Composite)
           {
             final var finder = ((Composite<?, ?>)object).findChildren();
-
             // this is optional because it would jeopardize incremental loading of tress and probably cause troubles
             if (!LOG_CHILDREN)
               {
@@ -124,7 +111,6 @@ public class Logging
                 logObjects(indent + "    ", finder.results().stream().filter(o -> o != object).collect(toList()));
               }
           }
-
         if (object instanceof As)
           {
             logObjects(indent + "    Role: ",

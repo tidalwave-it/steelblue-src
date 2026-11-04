@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl;
-
 import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +56,6 @@ import static it.tidalwave.ui.core.PanelGroupControl.Options.*;
 import static it.tidalwave.ui.javafx.impl.AbstractJavaFXSpringApplication.APPLICATION_MESSAGE_BUS_BEAN_NAME;
 import static org.testfx.assertions.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
-
 /***************************************************************************************************************************************************************
  *
  * @author      Fabrizio Giudici
@@ -71,27 +69,18 @@ public class DefaultJavaFXPanelGroupControlTest extends JavaFXTestSupport
       {
         @SuppressWarnings("unchecked")
         private final NodeAndDelegate<Node> nad = mock(NodeAndDelegate.class);
-
         private MockPresentation (@Nonnull final Node node)
           {
             when(nad.getNode()).thenReturn(node);
           }
       }
-
     private DefaultJavaFXPanelGroupControl underTest;
-
     private AnchorPane topContainer;
-
     private PanelGroupProvider<Node> provider1;
-
     private PanelGroupProvider<Node> provider2;
-
     private MockPresentation presentation1;
-
     private MockPresentation presentation2;
-
     private BeanFactory beanFactory;
-
     /***********************************************************************************************************************************************************
      * Prepares the {@link Stage for the test}.
      **********************************************************************************************************************************************************/
@@ -102,7 +91,6 @@ public class DefaultJavaFXPanelGroupControlTest extends JavaFXTestSupport
         stage.setScene(new Scene(new StackPane(topContainer), 800, 600));
         stage.show();
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -116,7 +104,6 @@ public class DefaultJavaFXPanelGroupControlTest extends JavaFXTestSupport
         provider1 = createMockPanelGroupProvider("Panel 1", presentation1);
         provider2 = createMockPanelGroupProvider("Panel 2", presentation2);
       }
-
     /**********************************************************************************************************************************************************/
     @Test(groups = "display")
     public void a_single_pane_should_be_added_directly()
@@ -127,7 +114,6 @@ public class DefaultJavaFXPanelGroupControlTest extends JavaFXTestSupport
         assertThat(new ArrayList<>(topContainer.getChildren())).containsExactly(provider1.getComponent());
         assertThat(provider1.getComponent()).isVisible();
       }
-
     /**********************************************************************************************************************************************************/
     @Test(groups = "display")
     public void a_single_pane_with_ALWAYS_WRAP_should_be_wrapped_in_StackPane()
@@ -144,7 +130,6 @@ public class DefaultJavaFXPanelGroupControlTest extends JavaFXTestSupport
         assertThat(stackPane).isVisible();
         assertThat(provider1.getComponent()).isInvisible();
       }
-
     /**********************************************************************************************************************************************************/
     @Test(groups = "display")
     public void a_single_pane_with_ALWAYS_WRAP_and_USE_ACCORDION_must_be_wrapped_in_TitlePane_and_placed_in_Accordion()
@@ -165,7 +150,6 @@ public class DefaultJavaFXPanelGroupControlTest extends JavaFXTestSupport
         assertThat(accordion).isVisible();
         assertThat(((Accordion)accordion).getExpandedPane()).isNull();
       }
-
     /**********************************************************************************************************************************************************/
     @Test(groups = "display")
     public void two_panes_with_same_selector_must_be_wrapped_in_StackPane()
@@ -184,7 +168,6 @@ public class DefaultJavaFXPanelGroupControlTest extends JavaFXTestSupport
         assertThat(provider1.getComponent()).isInvisible();
         assertThat(provider2.getComponent()).isInvisible();
       }
-
     /**********************************************************************************************************************************************************/
     @Test(groups = "display")
     public void two_panes_with_USE_ACCORDION_must_be_wrapped_in_TitlePane_and_placed_in_Accordion()
@@ -206,7 +189,6 @@ public class DefaultJavaFXPanelGroupControlTest extends JavaFXTestSupport
         assertThat(accordion).isVisible();
         assertThat(((Accordion)accordion).getExpandedPane()).isNull();
       }
-
     /**********************************************************************************************************************************************************/
     @Test(groups = "display", dependsOnMethods = "two_panes_with_same_selector_must_be_wrapped_in_StackPane")
     public void must_properly_show_when_StackPane_is_used()
@@ -219,7 +201,6 @@ public class DefaultJavaFXPanelGroupControlTest extends JavaFXTestSupport
         assertThat(provider1.getComponent()).isVisible();
         assertThat(provider2.getComponent()).isInvisible();
       }
-
     /**********************************************************************************************************************************************************/
     @Test(groups = "display", dependsOnMethods = "two_panes_with_USE_ACCORDION_must_be_wrapped_in_TitlePane_and_placed_in_Accordion")
     public void must_properly_show_when_Accordion_is_used()
@@ -233,7 +214,6 @@ public class DefaultJavaFXPanelGroupControlTest extends JavaFXTestSupport
         assertThat(accordion.getExpandedPane()).isNotNull();
         assertThat(accordion.getExpandedPane().getContent()).isSameAs(provider2.getComponent());
       }
-
     /**********************************************************************************************************************************************************/
     @Test(groups = "display", dataProvider = "showOptions")
     public void show_mush_publish_proper_messages_at_first (@Nonnull final List<PanelGroupControl.Options> options)
@@ -248,7 +228,6 @@ public class DefaultJavaFXPanelGroupControlTest extends JavaFXTestSupport
         assertThat(messages).allMatch(m -> m.getGroup().equals(LEFT));
         assertThat(messages[0]).isInstanceOf(PanelShownNotification.class).matches(m -> m.getTarget() == presentation1);
       }
-
     /**********************************************************************************************************************************************************/
     @Test(groups = "display", dataProvider = "showOptions")
     public void show_mush_publish_proper_messages (@Nonnull final List<PanelGroupControl.Options> options)
@@ -266,7 +245,6 @@ public class DefaultJavaFXPanelGroupControlTest extends JavaFXTestSupport
         assertThat(messages[0]).isInstanceOf(PanelHiddenNotification.class).matches(m -> m.getTarget() == presentation1);
         assertThat(messages[1]).isInstanceOf(PanelShownNotification.class).matches(m -> m.getTarget() == presentation2);
       }
-
     /**********************************************************************************************************************************************************/
     @Test(groups = "display")
     public void show_mush_publish_proper_messages_when_expanded_from_UI()
@@ -286,7 +264,6 @@ public class DefaultJavaFXPanelGroupControlTest extends JavaFXTestSupport
         assertThat(messages[0]).isInstanceOf(PanelHiddenNotification.class).matches(m -> m.getTarget() == presentation1);
         assertThat(messages[1]).isInstanceOf(PanelShownNotification.class).matches(m -> m.getTarget() == presentation2);
       }
-
     /**********************************************************************************************************************************************************/
     @Nonnull
     private static AbstractPanelNotification[] getMessageSequence (@Nonnull final MessageBus messageBus, final int wantedNumberOfInvocations)
@@ -295,7 +272,6 @@ public class DefaultJavaFXPanelGroupControlTest extends JavaFXTestSupport
         verify(messageBus, times(wantedNumberOfInvocations)).publish(messageCaptor.capture());
         return messageCaptor.getAllValues().toArray(AbstractPanelNotification[]::new);
       }
-
     /**********************************************************************************************************************************************************/
     @Nonnull
     private MessageBus createUnderTestWithMessageBus()
@@ -307,7 +283,6 @@ public class DefaultJavaFXPanelGroupControlTest extends JavaFXTestSupport
         underTest = new DefaultJavaFXPanelGroupControl(beanFactory);
         return messageBus;
       }
-
     /**********************************************************************************************************************************************************/
     @Nonnull
     private static PanelGroupProvider<Node> createMockPanelGroupProvider (@Nonnull final String label, @Nonnull final MockPresentation presentation)
@@ -318,7 +293,6 @@ public class DefaultJavaFXPanelGroupControlTest extends JavaFXTestSupport
                                                 .presentation(presentation)
                                                 .supplier(presentation.nad::getNode)) {};
       }
-
     /**********************************************************************************************************************************************************/
     @DataProvider
     private static Object[][] showOptions()

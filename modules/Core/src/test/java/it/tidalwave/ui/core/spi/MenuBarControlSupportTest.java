@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.spi;
-
 import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,54 +35,45 @@ import lombok.RequiredArgsConstructor;
 import org.testng.annotations.Test;
 import static it.tidalwave.ui.core.role.Displayable._Displayable_;
 import static org.assertj.core.api.Assertions.assertThat;
-
 class BinderMock
   {
   }
-
 @Getter @RequiredArgsConstructor
 class MenuBarMock
   {
     @Nonnull
     private final List<MenuMock> menus = new ArrayList<>();
   }
-
 @Getter @RequiredArgsConstructor
 class MenuMock
   {
     @Nonnull
     private final String text;
-
     @Nonnull
     private final List<MenuItemMock> items = new ArrayList<>();
   }
-
 @Getter @RequiredArgsConstructor
 class MenuItemMock
   {
     @Nonnull
     private final String text;
   }
-
 class UnderTest2 extends MenuBarControlSupport<BinderMock, MenuBarMock, MenuMock>
   {
     public UnderTest2 (@Nonnull final Supplier<Collection<? extends UserAction>> userActionsSupplier)
       {
         super(userActionsSupplier);
       }
-
     @Override @Nonnull
     protected MenuMock createMenu (@Nonnull final String label)
       {
         return new MenuMock(label);
       }
-
     @Override
     protected void addMenuToMenuBar (@Nonnull final MenuBarMock menuBar, @Nonnull final MenuMock menu)
       {
         menuBar.getMenus().add(menu);
       }
-
     @Override
     protected void addMenuItemToMenu (@Nonnull final MenuMock menu, @Nonnull final BinderMock binder, @Nonnull final UserAction action)
       {
@@ -91,7 +81,6 @@ class UnderTest2 extends MenuBarControlSupport<BinderMock, MenuBarMock, MenuMock
         menu.getItems().add(menuItem);
       }
   }
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -100,7 +89,6 @@ class UnderTest2 extends MenuBarControlSupport<BinderMock, MenuBarMock, MenuMock
 public class MenuBarControlSupportTest
   {
     private final TestUserActions a = new TestUserActions();
-
     @Test
     public void test_populate()
       {
@@ -117,32 +105,26 @@ public class MenuBarControlSupportTest
         final var menuFile = menus.get(0);
         final var menuEdit = menus.get(1);
         final var menuSelect = menus.get(2);
-
         final var menuFileItems = menuFile.getItems();
         assertThat(menuFileItems).hasSize(3);
         final var menuFileOpen = menuFileItems.get(0);
         final var menuFileClose = menuFileItems.get(1);
         final var menuFileCloseAll = menuFileItems.get(2);
-
         final var menuEditItems = menuEdit.getItems();
         assertThat(menuEditItems).hasSize(2);
         final var menuEditUndo = menuEditItems.get(0);
         final var menuEditRedo = menuEditItems.get(1);
-
         final var menuSelectItems = menuSelect.getItems();
         assertThat(menuSelectItems).hasSize(2);
         final var menuSelectSelectAll = menuSelectItems.get(0);
         final var menuSelectDeselect = menuSelectItems.get(1);
-
         assertThat(menuFile.getText()).isEqualTo("File");
         assertThat(menuFileOpen.getText()).isEqualTo("Open");
         assertThat(menuFileClose.getText()).isEqualTo("Close");
         assertThat(menuFileCloseAll.getText()).isEqualTo("Close all");
-
         assertThat(menuEdit.getText()).isEqualTo("Edit");
         assertThat(menuEditUndo.getText()).isEqualTo("Undo");
         assertThat(menuEditRedo.getText()).isEqualTo("Redo");
-
         assertThat(menuSelect.getText()).isEqualTo("Select");
         assertThat(menuSelectSelectAll.getText()).isEqualTo("Select all");
         assertThat(menuSelectDeselect.getText()).isEqualTo("Deselect");

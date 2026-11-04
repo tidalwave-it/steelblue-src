@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role;
-
 import java.util.stream.IntStream;
 import it.tidalwave.util.NotFoundException;
 import org.testng.annotations.Test;
@@ -34,7 +33,6 @@ import static java.util.stream.Collectors.*;
 import static it.tidalwave.util.StreamUtils.zip;
 import static org.testng.FileAssert.fail;
 import static org.mockito.Mockito.*;
-
 /***************************************************************************************************************************************************************
  *
  *
@@ -45,9 +43,7 @@ public class UserActionProviderTest
                                                   .mapToObj(i -> mock(UserAction.class))
                                                   .collect(toList())
                                                   .toArray(new UserAction[0]);
-
     private final UserAction[] NO_ACTIONS = new UserAction[0];
-
     @Test
     public void works_with_actions()
       throws NotFoundException
@@ -59,7 +55,6 @@ public class UserActionProviderTest
         assertThat(underTest.getDefaultAction()).isSameAs(ACTIONS[0]);
         assertThat(underTest.getOptionalDefaultAction().orElseThrow()).isSameAs(ACTIONS[0]);
       }
-
     @Test
     public void works_with_no_actions()
       {
@@ -68,7 +63,6 @@ public class UserActionProviderTest
         // then
         assertThat(underTest.getActions()).isEmpty();
         assertThat(underTest.getOptionalDefaultAction()).isNotPresent();
-
         try
           {
             underTest.getDefaultAction();

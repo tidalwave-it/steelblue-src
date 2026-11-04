@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl.common;
-
 import jakarta.annotation.Nonnull;
 import javafx.util.StringConverter;
 import it.tidalwave.ui.core.role.Displayable;
@@ -32,7 +31,6 @@ import it.tidalwave.util.As;
 import lombok.NoArgsConstructor;
 import static it.tidalwave.ui.core.role.Displayable._Displayable_;
 import static lombok.AccessLevel.PRIVATE;
-
 /***************************************************************************************************************************************************************
  *
  * @author Fabrizio Giudici
@@ -42,19 +40,16 @@ import static lombok.AccessLevel.PRIVATE;
 public class AsObjectStringConverter extends StringConverter<As>
   {
     private static final AsObjectStringConverter INSTANCE = new AsObjectStringConverter();
-
     @Nonnull @SuppressWarnings("unchecked")
     public static <T extends As> StringConverter<T> getInstance()
       {
         return (StringConverter<T>)INSTANCE;
       }
-
     @Override
     public String toString (final As object)
       {
         return object.maybeAs(_Displayable_).map(Displayable::getDisplayName).orElse("");
       }
-
     @Override
     public As fromString (final String string)
       {

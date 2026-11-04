@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role.impl;
-
 import it.tidalwave.util.As;
 import it.tidalwave.util.AsException;
 import it.tidalwave.util.mock.MockAsFactory;
@@ -34,7 +33,6 @@ import org.testng.annotations.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static it.tidalwave.util.Parameters.r;
 import static org.mockito.Mockito.*;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -45,42 +43,35 @@ public class DefaultPresentationModelTest
     private static interface Role1
       {
       }
-
     private static interface Role2
       {
       }
-
     private static interface Role3
       {
       }
-
     private Role1 localRole1;
     private Role2 localRole2;
     private Role2 role2InOwner;
     private Object ownerNoAs;
     private As ownerAsWithNoRoles;
     private As ownerAsWithRole2;
-
     /***********************************************************************************************************************************************************
-     * 
+     *
      **********************************************************************************************************************************************************/
     @BeforeMethod
     public void setup()
       {
         // Not called by tests, we only need it's there
         SystemRoleFactory.reset();
-
         localRole1 = mock(Role1.class);
         localRole2 = mock(Role2.class);
         role2InOwner = mock(Role2.class);
         ownerNoAs = new Object();
-
         ownerAsWithNoRoles = MockAsFactory.mockWithAs(As.class);
         ownerAsWithRole2 = MockAsFactory.mockWithAs(As.class, r(role2InOwner));
       }
-
     /***********************************************************************************************************************************************************
-     * 
+     *
      **********************************************************************************************************************************************************/
     @Test
     public void must_find_local_roles()
@@ -97,9 +88,8 @@ public class DefaultPresentationModelTest
         assertThat(ut2Role1).isSameAs(localRole1);
         assertThat(ut2Role2).isSameAs(localRole2);
       }
-
     /***********************************************************************************************************************************************************
-     * 
+     *
      **********************************************************************************************************************************************************/
     @Test(expectedExceptions = AsException.class)
     public void must_not_find_inexistent_role()
@@ -109,9 +99,8 @@ public class DefaultPresentationModelTest
         // when
         underTest.as(Role2.class);
       }
-
     /***********************************************************************************************************************************************************
-     * 
+     *
      **********************************************************************************************************************************************************/
     @Test(expectedExceptions = AsException.class)
     public void must_not_find_inexistent_role_bis()
@@ -121,9 +110,8 @@ public class DefaultPresentationModelTest
         // when
         underTest.as(Role1.class);
       }
-
     /***********************************************************************************************************************************************************
-     * 
+     *
      **********************************************************************************************************************************************************/
     @Test
     public void must_find_roles_in_owner()
@@ -135,9 +123,8 @@ public class DefaultPresentationModelTest
         // then
         assertThat(role2).isSameAs(role2InOwner);
       }
-
     /***********************************************************************************************************************************************************
-     * 
+     *
      **********************************************************************************************************************************************************/
     @Test
     public void must_give_priority_to_local_roles()
@@ -149,9 +136,8 @@ public class DefaultPresentationModelTest
         // then
         assertThat(role2).isSameAs(localRole2);
       }
-
     /***********************************************************************************************************************************************************
-     * 
+     *
      **********************************************************************************************************************************************************/
     @Test
     public void test_TFT_248_regression()

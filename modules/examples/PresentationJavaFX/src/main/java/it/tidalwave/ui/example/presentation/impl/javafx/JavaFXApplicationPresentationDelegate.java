@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.example.presentation.impl.javafx;
-
 import jakarta.annotation.Nonnull;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuBar;
@@ -35,7 +34,6 @@ import it.tidalwave.ui.core.annotation.PresentationAssembler;
 import it.tidalwave.ui.javafx.JavaFXBinder;
 import it.tidalwave.ui.javafx.JavaFXMenuBarControl;
 import it.tidalwave.ui.javafx.JavaFXToolBarControl;
-
 /***************************************************************************************************************************************************************
  *
  * This class is referred by Application.fxml and instantiated by the JavaFX runtime.
@@ -49,13 +47,10 @@ public class JavaFXApplicationPresentationDelegate
   {
     @FXML
     private BorderPane pnMainPane;
-
     @FXML
     private ToolBar tbToolBar;
-
     @FXML
     private MenuBar mbMenuBar;
-
     @Assemble
     public void assemble (@Nonnull final JavaFXBinder binder,
                           @Nonnull final JavaFXToolBarControl toolBarModel,

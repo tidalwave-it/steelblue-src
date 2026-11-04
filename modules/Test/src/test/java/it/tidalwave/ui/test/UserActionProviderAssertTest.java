@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.test;
-
 import it.tidalwave.ui.core.role.UserAction;
 import it.tidalwave.ui.core.role.UserActionProvider;
 import it.tidalwave.util.Callback;
@@ -32,7 +31,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -41,13 +39,9 @@ import static org.mockito.Mockito.*;
 public class UserActionProviderAssertTest
   {
     private UserActionProviderAssert underTest;
-
     private UserAction userAction1;
-
     private UserAction userAction2;
-
     private UserAction userAction3;
-
     /**********************************************************************************************************************************************************/
     @BeforeMethod
     public void setup()
@@ -58,7 +52,6 @@ public class UserActionProviderAssertTest
         final var userActionProvider = UserActionProvider.of(userAction1, userAction2, userAction3);
         underTest = UserActionProviderAssert.of(userActionProvider);
       }
-
     /**********************************************************************************************************************************************************/
     @Test
     public void testGood()
@@ -69,7 +62,6 @@ public class UserActionProviderAssertTest
         assertThat(enumerator.itemType).isEqualTo(UserAction.class);
         assertThat(enumerator.items).containsExactly(userAction1, userAction2, userAction3);
       }
-
     /**********************************************************************************************************************************************************/
     @Test(expectedExceptions = AssertionError.class)
     public void testBad()

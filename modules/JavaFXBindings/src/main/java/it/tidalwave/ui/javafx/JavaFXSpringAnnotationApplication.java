@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx;
-
 import jakarta.annotation.Nonnull;
 import jakarta.inject.Named;
 import java.util.ArrayList;
@@ -48,7 +47,6 @@ import it.tidalwave.util.PreferencesHandler;
 import it.tidalwave.messagebus.MessageBus;
 import it.tidalwave.messagebus.spi.SimpleMessageBus;
 import lombok.Setter;
-
 /***************************************************************************************************************************************************************
  *
  * A base class for JavaFX applications with use Spring annotation scanning.
@@ -66,44 +64,37 @@ public class JavaFXSpringAnnotationApplication extends AbstractJavaFXSpringAppli
       {
         @Setter
         private static AbstractJavaFXSpringApplication application;
-
         @Bean
         public ThreadPoolTaskExecutor javafxBinderExecutor()
           {
             return application.getExecutor();
           }
-
         @Bean
         public PreferencesHandler preferencesHandler()
           {
             return PreferencesHandler.getInstance();
           }
-
         @Bean
         public JavaFXToolBarControl toolBarControl()
           {
             return application.getToolBarControl();
           }
-
         @Bean
         public JavaFXMenuBarControl menuBarControl()
           {
             return application.getMenuBarControl();
           }
-
         @Bean
         public JavaFXPanelGroupControl panelGroupControl (@Nonnull final BeanFactory beanFactory)
           {
             return new DefaultJavaFXPanelGroupControl(beanFactory);
           }
-
         @Bean
         public UserActionFactory userActionFactory (@Nonnull @Named(APPLICATION_MESSAGE_BUS_BEAN_NAME) final Optional<MessageBus> messageBus)
           {
             return new DefaultUserActionFactory(messageBus);
           }
       }
-
     /***********************************************************************************************************************************************************
      * Auxiliary bean factory for message bus.
      **********************************************************************************************************************************************************/
@@ -120,19 +111,15 @@ public class JavaFXSpringAnnotationApplication extends AbstractJavaFXSpringAppli
             executor.setQueueCapacity(10);
             return executor;
           }
-
         @Bean(name = APPLICATION_MESSAGE_BUS_BEAN_NAME)
         public MessageBus applicationMessageBus (@Named(MESSAGE_BUS_EXECUTOR_BEAN_NAME) final ThreadPoolTaskExecutor executor)
           {
             return new SimpleMessageBus(executor);
           }
       }
-
     public static final String MESSAGE_BUS_EXECUTOR_BEAN_NAME = "applicationMessageBusExecutor";
-
     // Don't use Slf4j and its static logger - give Main a chance to initialize things
     private final Logger log = LoggerFactory.getLogger(JavaFXSpringAnnotationApplication.class);
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -143,16 +130,13 @@ public class JavaFXSpringAnnotationApplication extends AbstractJavaFXSpringAppli
         // Don't pass getClass() to the ApplicationContext or it will be instantiated — for the second time, since JavaFX launch() already did it.
         // Instead, create a synthetic class carrying on all its annotations, so the needed features of Spring will be activated.
         final var componentClasses = new ArrayList<>(List.of(createSyntheticClassWithAnnotations(getClass()), Beans.class));
-
         if (getClass().isAnnotationPresent(EnableMessageBus.class))
           {
             log.info("Detected @{}, enabling message bus", EnableMessageBus.class.getSimpleName());
             componentClasses.add(MessageBusBeans.class);
           }
-
         return new AnnotationConfigApplicationContext(componentClasses.toArray(Class<?>[]::new));
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -160,12 +144,10 @@ public class JavaFXSpringAnnotationApplication extends AbstractJavaFXSpringAppli
     public static Class<?> createSyntheticClassWithAnnotations (@Nonnull final Class<?> clazz)
       {
         var fluent = new ByteBuddy().subclass(Object.class).name(clazz.getPackageName() + ".AnnotationCarrier");
-
         for (final var annotation : clazz.getAnnotations())
           {
             fluent = fluent.annotateType(AnnotationDescription.ForLoadedAnnotation.of(annotation));
           }
-
         return fluent.make().load(clazz.getClassLoader()).getLoaded();
       }
   }

@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.example.presentation;
-
 import jakarta.annotation.Nonnull;
 import java.nio.file.Path;
 import it.tidalwave.ui.core.BoundProperty;
@@ -32,7 +31,6 @@ import it.tidalwave.ui.core.UserNotificationWithFeedback;
 import it.tidalwave.ui.core.role.PresentationModel;
 import it.tidalwave.ui.core.role.UserAction;
 import lombok.Builder;
-
 /***************************************************************************************************************************************************************
  *
  * This interface describes all the interactions with the presentation object.
@@ -54,32 +52,24 @@ public interface MainPanelPresentation
       {
         @Nonnull
         public final UserAction actionButton;
-
         @Nonnull
         public final UserAction actionDialogOk;
-
         @Nonnull
         public final UserAction actionDialogCancelOk;
-
         @Nonnull
         public final UserAction actionPickFile;
-
         @Nonnull
         public final UserAction actionPickDirectory;
-
         public final BoundProperty<String> textProperty = new BoundProperty<>("1");
-
         public final BoundProperty<Boolean> booleanProperty = new BoundProperty<>(true);
       }
     // END SNIPPET: bindings
-
     /***********************************************************************************************************************************************************
      * A presentation always exposes a {@code bind()} method which is invoked by the control and binds callbacks
      * and form fields. There is no requirement on the name and signature of the method.
      * @param   bindings          the container of bindings
      **********************************************************************************************************************************************************/
     public void bind (@Nonnull Bindings bindings);
-
     /***********************************************************************************************************************************************************
      * A presentation also exposes some {@code populateXYZ()} methods which are used to fill various parts of the UI
      * with model. Data structures are modelled by {@link PresentationModel}s. There is no requirement on the name of the
@@ -91,7 +81,6 @@ public interface MainPanelPresentation
     public void populate (@Nonnull PresentationModel pmSimpleEntities,
                           @Nonnull PresentationModel pmDciEntities,
                           @Nonnull PresentationModel pmFileEntities);
-
     /***********************************************************************************************************************************************************
      * When the control requires an interaction with the user in form of a dialog box with feedback (such as Ok/Cancel)
      * a method must be exposed which accepts a {@link UserNotificationWithFeedback}. There is no requirement on the
@@ -99,13 +88,11 @@ public interface MainPanelPresentation
      * @param   notification      the object managing the interaction
      **********************************************************************************************************************************************************/
     public void notify (@Nonnull UserNotificationWithFeedback notification);
-
     /***********************************************************************************************************************************************************
      * Displays a notification in the presentation.
      * @param  message            the text of the notification
      **********************************************************************************************************************************************************/
     public void notify (@Nonnull String message);
-
     /***********************************************************************************************************************************************************
      * Asks the user to pick a file.
      * @param   selectedFile      a property containing both the file to pre-select and later the piked file
@@ -113,7 +100,6 @@ public interface MainPanelPresentation
      **********************************************************************************************************************************************************/
     public void pickFile (@Nonnull BoundProperty<Path> selectedFile,
                           @Nonnull UserNotificationWithFeedback notification);
-
     /***********************************************************************************************************************************************************
      * Asks the user to pick a directory.
      * @param   selectedFolder    a property containing both the directory to pre-select and later the picked folder

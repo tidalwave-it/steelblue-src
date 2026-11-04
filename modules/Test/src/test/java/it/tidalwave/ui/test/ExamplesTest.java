@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.test;
-
 import jakarta.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +46,6 @@ import static it.tidalwave.ui.core.role.Displayable._Displayable_;
 import static it.tidalwave.ui.core.role.PresentationModel._PresentationModel_;
 import static it.tidalwave.ui.test.AsAssert.assertThat;
 import static org.mockito.Mockito.*;
-
 /***************************************************************************************************************************************************************
  *
  * @author Fabrizio Giudici
@@ -66,12 +64,10 @@ public class ExamplesTest
                                                                UserActionProvider.of(action1, action2)));
         final var pmM = PresentationModel.of(michelangelo, List.of(Displayable.of("Michelangelo Buonarroti"),
                                                                    UserActionProvider.of(action1, action2)));
-
         org.assertj.core.api.Assertions.
                 // START SNIPPET: displayable
                         assertThat(pmL.as(_Displayable_).getDisplayName()).isEqualTo("Leonardo da Vinci");
         // END SNIPPET: displayable
-
         // START SNIPPET: hasDisplayable1
         assertThat(pmL).hasDisplayable().withDisplayName("Leonardo da Vinci");
         // END SNIPPET: hasDisplayable1
@@ -84,7 +80,6 @@ public class ExamplesTest
                        .withNextItemSatisfying(i -> i.hasDisplayName("Show bio"))
                        .withNextItemSatisfying(i -> i.hasDisplayName("Show picture gallery"));
         // END SNIPPET: hasUserActionProvider
-
         final var pm2 = PresentationModel.of(leonardo, SimpleComposite.of(Finder.ofCloned(List.of(pmL, pmM))));
         // START SNIPPET: hasComposite1
         assertThat(pm2).hasCompositeOf(_PresentationModel_)
@@ -113,7 +108,6 @@ public class ExamplesTest
                        .withNextItemSatisfying(i -> i.hasDisplayName("Leonardo da Vinci"))
                        .withNextItemSatisfying(i -> i.hasDisplayName("Michelangelo Buonarroti"));
         // END SNIPPET: hasComposite2
-
         final var pmA = PresentationModel.of(leonardo, Displayable.of("Michelangelo"));
         final var pmB = PresentationModel.of(leonardo, Displayable.of("Buonarroti"));
         final var pmC = PresentationModel.of(leonardo, Displayable.of("March 6, 1475"));
@@ -128,7 +122,6 @@ public class ExamplesTest
                        .withNextItemSatisfying(i -> i.hasDisplayName("March 6, 1475"));
         // END SNIPPET: hasAggregate
       }
-
     @SuppressWarnings("this-escape")
     // START SNIPPET: Painter
     @RequiredArgsConstructor @Getter
@@ -136,12 +129,10 @@ public class ExamplesTest
       {
         @Delegate
         private final As asSupport = As.forObject(this);
-
         @Nonnull
         private final String name;
       }
     // END SNIPPET: Painter
-
     @Test
     public void test_example_code_2()
       {

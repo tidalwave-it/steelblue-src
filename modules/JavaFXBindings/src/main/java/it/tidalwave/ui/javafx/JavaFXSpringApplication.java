@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx;
-
 import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -33,7 +32,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import it.tidalwave.ui.javafx.impl.AbstractJavaFXSpringApplication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -43,7 +41,6 @@ public class JavaFXSpringApplication extends AbstractJavaFXSpringApplication
   {
     // Don't use Slf4j and its static logger - give Main a chance to initialize things
     private final Logger log = LoggerFactory.getLogger(JavaFXSpringApplication.class);
-
     /***********************************************************************************************************************************************************
      * Creates the application context.
      *
@@ -55,23 +52,19 @@ public class JavaFXSpringApplication extends AbstractJavaFXSpringApplication
         final var springConfigLocations = new ArrayList<String>();
         final var osName = System.getProperty("os.name", "").toLowerCase(Locale.getDefault());
         springConfigLocations.add("classpath*:/META-INF/*AutoBeans.xml");
-
         if (osName.contains("os x"))
           {
             springConfigLocations.add("classpath*:/META-INF/*AutoMacOSXBeans.xml");
           }
-
         if (osName.contains("linux"))
           {
             springConfigLocations.add("classpath*:/META-INF/*AutoLinuxBeans.xml");
           }
-
         if (osName.contains("windows"))
           {
             springConfigLocations.add("classpath*:/META-INF/*AutoWindowsBeans.xml");
           }
-
-        log.info("Loading Spring configuration from {} ...", springConfigLocations);
+        log.info("Loading Spring configuration from {}...", springConfigLocations);
         return new ClassPathXmlApplicationContext(springConfigLocations.toArray(new String[0]));
       }
   }

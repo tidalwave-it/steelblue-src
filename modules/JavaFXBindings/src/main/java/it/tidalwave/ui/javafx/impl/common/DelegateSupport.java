@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl.common;
-
 import jakarta.annotation.Nonnull;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executor;
@@ -32,7 +31,6 @@ import java.util.function.Supplier;
 import javafx.scene.effect.BoxBlur;
 import javafx.stage.Window;
 import lombok.RequiredArgsConstructor;
-
 /***************************************************************************************************************************************************************
  *
  * @author  Fabrizio Giudici
@@ -43,10 +41,8 @@ public abstract class DelegateSupport
   {
     @Nonnull
     protected final Executor executor;
-
     @Nonnull
     protected final Supplier<Window> mainWindow;
-
     /***********************************************************************************************************************************************************
      * Runs the given (@link Callable} while disabling the given {@link Window}.
      *
@@ -59,7 +55,6 @@ public abstract class DelegateSupport
         final var root = window.getScene().getRoot();
         final var effect = root.getEffect();
         final var disabled = root.isDisable();
-
         try
           {
             root.setDisable(true);
@@ -76,7 +71,6 @@ public abstract class DelegateSupport
             root.setDisable(disabled);
           }
       }
-
     /***********************************************************************************************************************************************************
      * TODO: delegate to a provider
      **********************************************************************************************************************************************************/
@@ -89,7 +83,6 @@ public abstract class DelegateSupport
         bb.setIterations(3);
         return bb;
       }
-
     /***********************************************************************************************************************************************************
      * TODO: delegate to a provider
      **********************************************************************************************************************************************************/

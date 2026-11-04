@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.test;
-
 import jakarta.annotation.Nonnull;
 import java.util.stream.Stream;
 import org.apiguardian.api.API;
@@ -35,7 +34,6 @@ import lombok.ToString;
 import static org.assertj.core.api.Assertions.assertThat;
 import static java.util.stream.Collectors.*;
 import static lombok.AccessLevel.PROTECTED;
-
 /***************************************************************************************************************************************************************
  *
  * Assertions for the {@link Aggregate} role.
@@ -50,18 +48,16 @@ public class AggregateAssert<T extends As>
     /** The type of the aggregate. */
     @Nonnull
     protected final Class<T> aggregateType;
-
     /** The Aggregate under inspection. */
     @Nonnull
     protected final Aggregate<T> aggregate;
-
     /***********************************************************************************************************************************************************
      * Asserts that the {@link Aggregate} under test contains all the items whose names are provided.
      * @param    names           the names
      * @return                   an object for fluent assertions
      **********************************************************************************************************************************************************/
     @Nonnull
-    public ItemsAssert<T> withExactItemNames (@Nonnull final String ... names)
+    public ItemsAssert<T> withExactItemNames (@Nonnull final String... names)
       {
         assertThat(aggregate.getNames()).containsExactlyInAnyOrder(names);
         return ItemsAssert.of(aggregateType, Stream.of(names).map(n -> aggregate.getByName(n).orElseThrow()).collect(toList()));

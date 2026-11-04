@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.example.presentation.impl;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.PostConstruct;
 import java.util.List;
@@ -56,7 +55,6 @@ import static it.tidalwave.ui.core.UserNotificationWithFeedback.*;
 import static it.tidalwave.ui.core.role.Presentable._Presentable_;
 import static it.tidalwave.ui.core.role.spi.PresentationModelCollectors.toCompositePresentationModel;
 import static it.tidalwave.util.Parameters.r;
-
 /***************************************************************************************************************************************************************
  *
  * @stereotype  Control
@@ -69,35 +67,28 @@ import static it.tidalwave.util.Parameters.r;
 public class DefaultMainPanelPresentationControl implements MainPanelPresentationControl
   {
     private static final Path USER_HOME = Paths.get(System.getProperty("user.home"));
-
     // START SNIPPET: injections
     @Nonnull
     private final Dao dao;
-
     @Nonnull
     private final MainPanelPresentation presentation;
     // END SNIPPET: injections
-
     // For each button on the presentation that can do something, a UserAction is provided.
     // START SNIPPET: userActions
     @Getter
     private final UserAction actionButton = UserAction.of(this::onButtonPressed,
                                                           Displayable.of("Press me"));
-
     @Getter
     private final UserAction actionDialogOk = UserAction.of(this::onButtonDialogOkPressed,
                                                             Displayable.of("Dialog with ok"));
-
     @Getter
     private final UserAction actionDialogCancelOk = UserAction.of(this::onButtonDialogOkCancelPressed, List.of(
                                                                   Displayable.of("Dialog with ok/cancel"),
                                                                   MenuPlacement.under("Tools")));
-
     @Getter
     private final UserAction actionPickFile = UserAction.of(this::onButtonPickFilePressed, List.of(
                                                             Displayable.of("Open file..."),
                                                             MenuPlacement.under("File")));
-
     @Getter
     private final UserAction actionPickDirectory = UserAction.of(this::onButtonPickDirectoryPressed, List.of(
                                                             Displayable.of("Open directory..."),
@@ -112,10 +103,8 @@ public class DefaultMainPanelPresentationControl implements MainPanelPresentatio
                                               .actionPickDirectory(actionPickDirectory)
                                               .build();
     // END SNIPPET: bindings
-
     // Then there can be a set of variables that represent the internal state of the control.
     @VisibleForTesting int status = 1;
-
     /***********************************************************************************************************************************************************
      * At {@link PostConstruct} time the control just performs the binding to the presentation.
      **********************************************************************************************************************************************************/
@@ -126,7 +115,6 @@ public class DefaultMainPanelPresentationControl implements MainPanelPresentatio
         presentation.bind(bindings);
       }
     // END SNIPPET: initialization
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      * This method demonstrates the typical idiom for populating model:
@@ -149,7 +137,6 @@ public class DefaultMainPanelPresentationControl implements MainPanelPresentatio
         presentation.populate(pmEnt1, pmEnt2, pmFiles);
       }
     // END SNIPPET: populate
-
     /***********************************************************************************************************************************************************
      * Alternatively to expose methods to a public interface, a pubsub facility can be used. This method is called back at application initialisation.
      * @param   event   the 'power on' event
@@ -161,7 +148,6 @@ public class DefaultMainPanelPresentationControl implements MainPanelPresentatio
         populate();
       }
     // END SNIPPET: onPowerOn
-
     /***********************************************************************************************************************************************************
      * Factory method for the PresentationModel of SimpleEntity instances.
      * It aggregates a few extra roles into the PresentationModel that are used by the control, such as callbacks
@@ -181,7 +167,6 @@ public class DefaultMainPanelPresentationControl implements MainPanelPresentatio
                                               UserActionProvider.of(action1, action2, action3)));
       }
     // END SNIPPET: pmSimpleEntity
-
     /***********************************************************************************************************************************************************
      * Factory method for the PresentationModel of SimpleDciEntity instances.
      **********************************************************************************************************************************************************/
@@ -202,9 +187,7 @@ public class DefaultMainPanelPresentationControl implements MainPanelPresentatio
         return PresentationModel.of(entity, r(aggregate, selectable, UserActionProvider.of(action1, action2, action3)));
       }
     // END SNIPPET: pmSimpleDciEntity
-
     // Below simple business methods, as per usual business.
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -216,7 +199,6 @@ public class DefaultMainPanelPresentationControl implements MainPanelPresentatio
         bindings.textProperty.set(Integer.toString(status));
       }
     // END SNIPPET: onButtonPressed
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -229,7 +211,6 @@ public class DefaultMainPanelPresentationControl implements MainPanelPresentatio
                 .withFeedback(feedback().withOnConfirm(() -> presentation.notify("Pressed ok"))));
       }
     // END SNIPPET: onButtonDialogOkPressed
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -243,7 +224,6 @@ public class DefaultMainPanelPresentationControl implements MainPanelPresentatio
                                         .withOnCancel(() -> presentation.notify("Pressed cancel"))));
       }
     // END SNIPPET: onButtonDialogOkCancelPressed
-
     /***********************************************************************************************************************************************************
      * This method demonstrates how to pick a file name by using the proper UI dialog.
      **********************************************************************************************************************************************************/
@@ -258,7 +238,6 @@ public class DefaultMainPanelPresentationControl implements MainPanelPresentatio
                                         .withOnCancel(() -> presentation.notify("Selection cancelled"))));
       }
     // END SNIPPET: onButtonPickFilePressed
-
     /***********************************************************************************************************************************************************
      * This method demonstrates how to pick a directory name by using the proper UI dialog.
      **********************************************************************************************************************************************************/
@@ -273,7 +252,6 @@ public class DefaultMainPanelPresentationControl implements MainPanelPresentatio
                                         .withOnCancel(() -> presentation.notify("Selection cancelled"))));
       }
     // END SNIPPET: onButtonPickDirectoryPressed
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -283,7 +261,6 @@ public class DefaultMainPanelPresentationControl implements MainPanelPresentatio
         presentation.notify("Selected " + object);
       }
     // END SNIPPET: onSelected
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -293,7 +270,6 @@ public class DefaultMainPanelPresentationControl implements MainPanelPresentatio
         presentation.notify("Action 1 on " + object);
       }
     // END SNIPPET: action1
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -301,7 +277,6 @@ public class DefaultMainPanelPresentationControl implements MainPanelPresentatio
       {
         presentation.notify("Action 2 on " + object);
       }
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/

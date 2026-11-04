@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role.impl;
-
 import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,13 +31,12 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import it.tidalwave.ui.core.role.Styleable;
 import lombok.ToString;
-
 /***************************************************************************************************************************************************************
  *
  * A default implementation of {@link Styleable}. This class is not part of the public API.
- * 
+ *
  * @stereotype Role
- * 
+ *
  * @author  Fabrizio Giudici
  *
  **************************************************************************************************************************************************************/
@@ -46,19 +44,16 @@ import lombok.ToString;
 public class DefaultStyleable implements Styleable
   {
     private final List<String> styles = new ArrayList<>();
-    
     public DefaultStyleable (@Nonnull final Collection<String> styles)
       {
         this.styles.addAll(styles);
       }
-    
-    public DefaultStyleable (@Nonnull final String ... styles)
+    public DefaultStyleable (@Nonnull final String... styles)
       {
         this(List.of(styles));
       }
-    
     @Override @Nonnull
-    public Collection<String> getStyles() 
+    public Collection<String> getStyles()
       {
         return new CopyOnWriteArrayList<>(styles);
       }

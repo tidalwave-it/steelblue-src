@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl.combobox;
-
 import jakarta.annotation.Nonnull;
 import java.util.List;
 import java.util.Optional;
@@ -52,7 +51,6 @@ import static it.tidalwave.ui.core.role.UserActionProvider._UserActionProvider_;
 import static it.tidalwave.ui.javafx.impl.DefaultJavaFXBinder.enforceFxApplicationThread;
 import static it.tidalwave.ui.javafx.impl.common.JavaFXWorker.childrenPm;
 import static javafx.scene.input.KeyCode.*;
-
 /***************************************************************************************************************************************************************
  *
  * This class takes care of bindings related to {@link ComboBox}.
@@ -65,11 +63,8 @@ public class ComboBoxBindings extends DelegateSupport
   {
     @Nonnull
     private final CellBinder cellBinder;
-
     private final Callback<ListView<PresentationModel>, ListCell<PresentationModel>> cellFactory;
-
     private final ChangeListener<PresentationModel> changeListener = new ChangeListenerSelectableAdapter(executor);
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
@@ -79,7 +74,6 @@ public class ComboBoxBindings extends DelegateSupport
         this.cellBinder = cellBinder;
         cellFactory = comboBox -> new AsObjectListCell<>(cellBinder);
       }
-
     /***********************************************************************************************************************************************************
      * Binds a combobox.
      * @param   comboBox            the {@link ComboBox}
@@ -100,14 +94,12 @@ public class ComboBoxBindings extends DelegateSupport
                 comboBox.show();
               }
           });
-
         final var selectedProperty = comboBox.getSelectionModel().selectedItemProperty();
         selectedProperty.removeListener(changeListener);
         JavaFXWorker.run(executor,
                          () -> childrenPm(pm),
                          items -> finalizeBinding(comboBox, items, selectedProperty, callback));
       }
-
     /***********************************************************************************************************************************************************
      * Event handler that calls back the default action bound to the given combobox item.
      **********************************************************************************************************************************************************/
@@ -120,7 +112,6 @@ public class ComboBoxBindings extends DelegateSupport
                   .flatMap(UserActionProvider::getOptionalDefaultAction)
                   .ifPresent(UserAction::actionPerformed);
       }
-
     /***********************************************************************************************************************************************************
      * Finalizes binding in the JavaFX thread and eventually invokes a callback.
      * @param   comboBox            the {@link ComboBox}
@@ -134,12 +125,10 @@ public class ComboBoxBindings extends DelegateSupport
                                   @Nonnull final Optional<Runnable> callback)
       {
         comboBox.setItems(items);
-
         if (!items.isEmpty())
           {
             comboBox.getSelectionModel().select(items.get(0));
           }
-
         selectedProperty.addListener(changeListener);
         callback.ifPresent(Runnable::run);
       }

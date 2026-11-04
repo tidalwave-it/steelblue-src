@@ -24,11 +24,9 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.function;
-
 import java.beans.PropertyChangeSupport;
 import it.tidalwave.ui.core.role.impl.MutableListenerSupport;
 import lombok.experimental.Delegate;
-
 /***************************************************************************************************************************************************************
  *
  * @since   2.0-ALPHA-1
@@ -40,10 +38,8 @@ public abstract class BoundFunctionSupport<T, R> implements BoundFunction<T, R>
   {
     @Delegate // FIXME: weak
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-
     @Delegate
     private final MutableListenerSupport mls = new MutableListenerSupport(pcs);
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -55,12 +51,10 @@ public abstract class BoundFunctionSupport<T, R> implements BoundFunction<T, R>
             pcs.removePropertyChangeListener(listener);
           }
       }
-
     protected void fireValueChanged (final R oldValue, final R newValue)
       {
         pcs.firePropertyChange("value", oldValue, newValue);
       }
-
     protected void fireValueChanged (final boolean oldValue, final boolean newValue)
       {
         pcs.firePropertyChange("value", oldValue, newValue);

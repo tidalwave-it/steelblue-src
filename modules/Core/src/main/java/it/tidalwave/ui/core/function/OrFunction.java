@@ -24,10 +24,8 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.function;
-
 import jakarta.annotation.Nonnull;
 import it.tidalwave.ui.core.ChangingSource;
-
 /***************************************************************************************************************************************************************
  *
  * @since   2.0-ALPHA-1
@@ -38,17 +36,15 @@ public class OrFunction extends BooleanBoundFunctionSupport
   {
     @SafeVarargs
     @Nonnull
-    public static OrFunction or (@Nonnull final ChangingSource<Boolean> ... sources)
+    public static OrFunction or (@Nonnull final ChangingSource<Boolean>... sources)
       {
         return new OrFunction(sources);
       }
-
     @SafeVarargs
     private OrFunction (@Nonnull final ChangingSource<Boolean>... sources)
       {
         super(sources);
       }
-
     @Override
     protected final boolean function()
       {
@@ -59,7 +55,6 @@ public class OrFunction extends BooleanBoundFunctionSupport
                 return true;
               }
           }
-
         return false;
       }
   }

@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.role;
-
 import jakarta.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Collections;
@@ -35,7 +34,6 @@ import it.tidalwave.util.As;
 import it.tidalwave.util.Callback;
 import it.tidalwave.util.Parameters;
 // import javafx.beans.property.BooleanProperty;
-
 /***************************************************************************************************************************************************************
  *
  * @since   2.0-ALPHA-1
@@ -46,12 +44,10 @@ public interface UserAction extends As
   {
     /** Shortcut for {@link it.tidalwave.util.As}. */
     public static final Class<UserAction> _UserAction_ = UserAction.class;
-
     /***********************************************************************************************************************************************************
      *
      **********************************************************************************************************************************************************/
     public void actionPerformed();
-
     /***********************************************************************************************************************************************************
      * Returns the property describing the enabled status of this action.
      *
@@ -59,7 +55,6 @@ public interface UserAction extends As
      **********************************************************************************************************************************************************/
     @Nonnull
     public BoundProperty<Boolean> enabled(); // TODO: rename to enabledProperty()
-
     /***********************************************************************************************************************************************************
      * Creates a new instance out of a callback and a collection of roles.
      *
@@ -74,7 +69,6 @@ public interface UserAction extends As
       {
         return new DefaultUserAction(callback, roles);
       }
-
     /***********************************************************************************************************************************************************
      * Creates a new instance out of a callback and a role (typically a {@link Displayable}).
      *
@@ -89,7 +83,6 @@ public interface UserAction extends As
         Parameters.mustNotBeArrayOrCollection(role, "role");
         return of(callback, List.of(role));
       }
-
     /***********************************************************************************************************************************************************
      * Creates a new instance out of a callback.
      *

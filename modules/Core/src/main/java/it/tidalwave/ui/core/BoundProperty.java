@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core;
-
 import jakarta.annotation.Nonnull;
 import java.beans.PropertyChangeSupport;
 import it.tidalwave.ui.core.role.Changeable;
@@ -34,7 +33,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Delegate;
-
 /***************************************************************************************************************************************************************
  *
  * @since   2.0-ALPHA-1
@@ -47,14 +45,10 @@ public class BoundProperty<T> implements ChangingSource<T>, Changeable<T>
   {
     @Delegate
     private final transient PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-
     @Delegate
     private final transient MutableListenerSupport mls = new MutableListenerSupport(pcs);
-
     public static final String PROP_VALUE = "value";
-
     private T value;
-
     /***********************************************************************************************************************************************************
      * Creates a new {@code BoundProperty} with the given initial value.
      *
@@ -68,7 +62,6 @@ public class BoundProperty<T> implements ChangingSource<T>, Changeable<T>
       {
         return new BoundProperty<>(value);
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      *  This method fires a property change event associated to {@link #PROP_VALUE}.
@@ -80,7 +73,6 @@ public class BoundProperty<T> implements ChangingSource<T>, Changeable<T>
         this.value = value;
         pcs.firePropertyChange(PROP_VALUE, oldValue, value);
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -89,7 +81,6 @@ public class BoundProperty<T> implements ChangingSource<T>, Changeable<T>
       {
         return value;
       }
-
     /***********************************************************************************************************************************************************
      * Binds this property to a {@link ChangingSource}. Every change in the value of the source will be synchronized to
      * the value of this property. If the source is a {@link Changeable} binding will be bidirectional, that is the
@@ -100,7 +91,6 @@ public class BoundProperty<T> implements ChangingSource<T>, Changeable<T>
     public void bind (@Nonnull final ChangingSource<T> source)
       {
         source.addPropertyChangeListener(event -> set((T)event.getNewValue()));
-
         if (source instanceof Changeable)
           {
             final var changeable = (Changeable<T>)source;
@@ -108,7 +98,6 @@ public class BoundProperty<T> implements ChangingSource<T>, Changeable<T>
             this.addPropertyChangeListener(event -> changeable.set((T)event.getNewValue()));
           }
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
@@ -119,7 +108,6 @@ public class BoundProperty<T> implements ChangingSource<T>, Changeable<T>
           {
             pcs.removePropertyChangeListener(listener);
           }
-
         mls.removeAllListeners();
       }
   }

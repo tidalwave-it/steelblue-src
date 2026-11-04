@@ -24,11 +24,9 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.example.model;
-
 import jakarta.annotation.Nonnull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
 /***************************************************************************************************************************************************************
  *
  * A simple datum class without DCI roles.
@@ -44,7 +42,6 @@ public class SimpleEntity
   {
     @Nonnull
     private final String name;
-
     @Override @Nonnull
     public String toString()
       {

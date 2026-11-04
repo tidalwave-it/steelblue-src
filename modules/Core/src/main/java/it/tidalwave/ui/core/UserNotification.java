@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core;
-
 import javax.annotation.concurrent.Immutable;
 import jakarta.annotation.Nonnull;
 import lombok.Getter;
@@ -32,7 +31,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import static it.tidalwave.util.BundleUtilities.getMessage;
 import static lombok.AccessLevel.PROTECTED;
-
 /***************************************************************************************************************************************************************
  *
  * This class models a notification that will be presented to a user, without a feedback.
@@ -47,10 +45,8 @@ public class UserNotification
   {
     @Nonnull
     protected final String text;
-
     @Nonnull
     protected final String caption;
-
     /***********************************************************************************************************************************************************
      * {@return a notification with empty caption and text}.
      **********************************************************************************************************************************************************/
@@ -59,7 +55,6 @@ public class UserNotification
       {
         return new UserNotification("", "");
       }
-
     /***********************************************************************************************************************************************************
      * {@return a notification with a caption}.
      * @param  caption       the caption
@@ -69,7 +64,6 @@ public class UserNotification
       {
         return new UserNotification(text, caption);
       }
-
     /***********************************************************************************************************************************************************
      * {@return a notification with a caption from a bundle}.
      * @param  bundleClass   the class where to search the resource bundle from
@@ -77,11 +71,10 @@ public class UserNotification
      * @param  params        some (optional) parameters to the resource
      **********************************************************************************************************************************************************/
     @Nonnull
-    public UserNotification withCaption (@Nonnull final Class<?> bundleClass, @Nonnull final String resourceName, @Nonnull final Object ... params)
+    public UserNotification withCaption (@Nonnull final Class<?> bundleClass, @Nonnull final String resourceName, @Nonnull final Object... params)
       {
         return new UserNotification(text, getMessage(bundleClass, resourceName, params));
       }
-
     /***********************************************************************************************************************************************************
      * {@return a notification with a text}.
      * @param  text          the text
@@ -91,7 +84,6 @@ public class UserNotification
       {
         return new UserNotification(text, caption);
       }
-
     /***********************************************************************************************************************************************************
      * {@return a notification with a text from a bundle}.
      * @param  bundleClass   the class where to search the resource bundle from
@@ -99,7 +91,7 @@ public class UserNotification
      * @param  params        some (optional) parameters to the resource
      **********************************************************************************************************************************************************/
     @Nonnull
-    public UserNotification withText (@Nonnull final Class<?> bundleClass,  @Nonnull final String resourceName, @Nonnull final Object ... params)
+    public UserNotification withText (@Nonnull final Class<?> bundleClass,  @Nonnull final String resourceName, @Nonnull final Object... params)
       {
         return new UserNotification(getMessage(bundleClass, resourceName, params), caption);
       }

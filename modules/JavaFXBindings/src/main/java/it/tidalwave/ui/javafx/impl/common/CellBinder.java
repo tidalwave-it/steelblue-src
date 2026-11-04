@@ -24,12 +24,10 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.javafx.impl.common;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import javafx.scene.control.Cell;
 import it.tidalwave.util.As;
-
 /***************************************************************************************************************************************************************
  *
  * A service that binds text, graphic, default action, context menu and css style to a {@link Cell} extracting data from

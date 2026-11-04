@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core.spi;
-
 import jakarta.annotation.Nonnull;
 import java.util.function.Supplier;
 import it.tidalwave.ui.core.PanelGroupControl.Group;
@@ -36,7 +35,6 @@ import lombok.Builder;
 import lombok.Getter;
 import static it.tidalwave.ui.core.PanelGroupControl.DefaultGroups.LEFT;
 import static org.apiguardian.api.API.Status.EXPERIMENTAL;
-
 /***************************************************************************************************************************************************************
  *
  * A support class for {@link PanelGroupProvider}. Most implementation will just need to subclass and provide the proper parameters to the constructor.
@@ -60,19 +58,15 @@ public abstract class PanelGroupProviderSupport<T> implements PanelGroupProvider
         /** The group. */
         @Nonnull @Builder.Default
         private final Group group = LEFT;
-
         /** The label. */
         @Nonnull @Builder.Default
         private final String label = "";
-
         /** The presentation object. */
         @Nonnull @Builder.Default
         private final Object presentation = new Object();
-
         /** The supplier of the UI control */
         @Nonnull @Builder.Default
         private final Supplier<T> supplier = (Supplier<T>)(Object)DUMMY_SUPPLIER;
-
         /*******************************************************************************************************************************************************
          * Customisation of the Lombok-generated builder.
          ******************************************************************************************************************************************************/
@@ -85,27 +79,21 @@ public abstract class PanelGroupProviderSupport<T> implements PanelGroupProvider
              * @param   params    the parameters (used if the string in the bundle is a {@code String} format)
              **************************************************************************************************************************************************/
             @Nonnull
-            public ParametersBuilder<T> labelFromBundle (@Nonnull final Class<?> clazz, @Nonnull final String key, @Nonnull final Object ... params)
+            public ParametersBuilder<T> labelFromBundle (@Nonnull final Class<?> clazz, @Nonnull final String key, @Nonnull final Object... params)
               {
                 return label(BundleUtilities.getMessage(clazz, key, params));
               }
           }
       }
-
     private static final Supplier<?> DUMMY_SUPPLIER = Object::new;
-
     @Getter @Nonnull
     private final Group group;
-
     @Getter @Nonnull
     private final String label;
-
     @Getter @Nonnull
     private final Object presentation;
-
     @Nonnull
     private final LazySupplier<T> lazySupplier;
-
     /***********************************************************************************************************************************************************
      * {@return a new parameter builder}
      * @param <T>   the concrete type of the UI control
@@ -117,7 +105,6 @@ public abstract class PanelGroupProviderSupport<T> implements PanelGroupProvider
       {
         return PanelGroupProviderSupport.Parameters.builder();
       }
-
     /***********************************************************************************************************************************************************
      * Creates a new instance with the given parameters.
      * @param       parametersBuilder    the parameters' builder
@@ -126,18 +113,15 @@ public abstract class PanelGroupProviderSupport<T> implements PanelGroupProvider
     protected PanelGroupProviderSupport (@Nonnull final Parameters.ParametersBuilder<T> parametersBuilder)
       {
         final var parameters = parametersBuilder.build();
-
         if (parameters.getSupplier() == DUMMY_SUPPLIER)
           {
             throw new IllegalArgumentException("You did not specify a supplier");
           }
-
         this.group = parameters.getGroup();
         this.label = parameters.getLabel();
         this.presentation = parameters.getPresentation();
         this.lazySupplier = LazySupplier.of(parameters.getSupplier());
       }
-
     /***********************************************************************************************************************************************************
      * {@inheritDoc}
      **********************************************************************************************************************************************************/

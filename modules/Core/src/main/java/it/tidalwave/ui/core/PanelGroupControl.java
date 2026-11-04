@@ -24,7 +24,6 @@
  * *************************************************************************************************************************************************************
  */
 package it.tidalwave.ui.core;
-
 import jakarta.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +35,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import static org.apiguardian.api.API.Status.EXPERIMENTAL;
 import static lombok.AccessLevel.PRIVATE;
-
 /***************************************************************************************************************************************************************
  *
  * This service looks up {@link PanelGroupProvider}s that describe portions of the User Interface and places them in the desired region of the main window.
@@ -60,7 +58,6 @@ public interface PanelGroupControl<T>
      * The group in the main window.
      **********************************************************************************************************************************************************/
     public static interface Group {}
-
     /***********************************************************************************************************************************************************
      * Standard groups.
      **********************************************************************************************************************************************************/
@@ -68,7 +65,6 @@ public interface PanelGroupControl<T>
       {
         LEFT, RIGHT, CENTER, BOTTOM
       }
-
     /***********************************************************************************************************************************************************
      * A bag of configuration settings for {@code PanelGroupProvider}.
      **********************************************************************************************************************************************************/
@@ -77,13 +73,10 @@ public interface PanelGroupControl<T>
       {
         @Nonnull
         private final Map<Group, T> topContainersByGroup;
-
         @Nonnull
         private final Map<Group, List<Options>> groupOptions;
-
         @Nonnull
         private final List<Options> options;
-
         /*******************************************************************************************************************************************************
          * Specifies the configuration for a group.
          * @see       Options
@@ -93,7 +86,7 @@ public interface PanelGroupControl<T>
          * @return                    a copy of itself in chaining invocation fashion
          ******************************************************************************************************************************************************/
         @Nonnull
-        public Configuration<T> withGroup (@Nonnull final Group group, @Nonnull final T topContainer, @Nonnull final Options ... groupOptions)
+        public Configuration<T> withGroup (@Nonnull final Group group, @Nonnull final T topContainer, @Nonnull final Options... groupOptions)
           {
             final var tcbs = new HashMap<>(topContainersByGroup);
             final var so = new HashMap<>(this.groupOptions);
@@ -101,7 +94,6 @@ public interface PanelGroupControl<T>
             so.computeIfAbsent(group, s -> new ArrayList<>()).addAll(List.of(groupOptions));
             return new Configuration<>(tcbs, so, this.options);
           }
-
         /*******************************************************************************************************************************************************
          * Specifies global configuration {@link Options} that are applied to all groups.
          * @see       Options
@@ -109,15 +101,14 @@ public interface PanelGroupControl<T>
          * @return                    a copy of itself in chaining invocation fashion
          ******************************************************************************************************************************************************/
         @Nonnull
-        public final Configuration<T> withOptions (@Nonnull final Options ... options)
+        public final Configuration<T> withOptions (@Nonnull final Options... options)
           {
             return new Configuration<>(topContainersByGroup, groupOptions, List.of(options));
           }
       }
-
     /***********************************************************************************************************************************************************
      * Options for the {@link #setup(Configuration)} method.
-     * @see   Configuration#withGroup(Group, Object, Options...) 
+     * @see   Configuration#withGroup(Group, Object, Options...)
      * @see   Configuration#withOptions(Options...)
      **********************************************************************************************************************************************************/
     public enum Options
@@ -129,19 +120,16 @@ public interface PanelGroupControl<T>
         /** Disable animation when expanding/collapsing the Accordion. */
         DISABLE_ACCORDION_ANIMATION
       }
-
     /***********************************************************************************************************************************************************
      * Sets up panel groups according to the given {@link Configuration}.
      * @param   configuration   the configuration
      **********************************************************************************************************************************************************/
     public void setup (@Nonnull final Configuration<T> configuration);
-
     /***********************************************************************************************************************************************************
      * Sets the shown object in a group.
      * @param   object    the object to show
      **********************************************************************************************************************************************************/
     public void show (@Nonnull Object object);
-
     /***********************************************************************************************************************************************************
      * {@return an empty {@link Configuration}}.
      **********************************************************************************************************************************************************/
