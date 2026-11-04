@@ -4,7 +4,7 @@
  * SteelBlue: DCI User Interfaces
  * http://tidalwave.it/projects/steelblue
  *
- * Copyright (C) 2015 - 2025 by Tidalwave s.a.s. (http://tidalwave.it)
+ * Copyright (C) 2015 - 2026 by Tidalwave s.a.s. (http://tidalwave.it)
  *
  * *************************************************************************************************************************************************************
  *

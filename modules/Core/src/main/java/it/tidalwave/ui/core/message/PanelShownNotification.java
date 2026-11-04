@@ -4,7 +4,7 @@
  * blueMarine III: Semantic DAM
  * http://tidalwave.it/projects/bluemarine3
  *
- * Copyright (C) 2024 - 2025 by Tidalwave s.a.s. (http://tidalwave.it)
+ * Copyright (C) 2024 - 2026 by Tidalwave s.a.s. (http://tidalwave.it)
  *
  * *************************************************************************************************************************************************************
  *
