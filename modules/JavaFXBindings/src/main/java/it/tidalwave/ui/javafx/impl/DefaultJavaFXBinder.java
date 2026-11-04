@@ -30,6 +30,7 @@ import java.util.concurrent.Executor;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import javafx.beans.property.Property;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
 import javafx.application.Platform;
@@ -106,7 +107,7 @@ public class DefaultJavaFXBinder implements JavaFXBinder
      * {@inheritDoc}
      **********************************************************************************************************************************************************/
     @Override
-    public <T, S> void bind (@Nonnull final BoundProperty<? super T> target, @Nonnull final Property<? extends S> source, @Nonnull final Function<S, T> adapter)
+    public <T, S> void bind (@Nonnull final BoundProperty<? super T> target, @Nonnull final ObservableValue<? extends S> source, @Nonnull final Function<S, T> adapter)
       {
         enforceFxApplicationThread();
         source.addListener((_1, _2, newValue) -> executor.execute(() -> target.set(adapter.apply(newValue))));

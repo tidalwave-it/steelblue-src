@@ -35,6 +35,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.LongProperty;
 import javafx.beans.property.Property;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.control.ButtonBase;
 import javafx.scene.control.ComboBox;
@@ -343,24 +344,26 @@ public interface JavaFXBinder
     public void bindButtonsInPane (@Nonnull GridPane gridPane, @Nonnull Collection<UserAction> actions);
 
     /***********************************************************************************************************************************************************
-     * Binds two properties of different types.
+     * Binds a property to an observable value of a different type. The source can be any {@link ObservableValue}, including read-only properties and
+     * bindings.
      * @param   <T>             the target property type
-     * @param   <S>             the source property type
+     * @param   <S>             the source value type
      * @param   target          the target property
-     * @param   source          the source property
+     * @param   source          the source observable value
      * @param   adapter         an adapter from one source to the target
-     * @since   2.0-ALPHA-1
+     * @since   2.0-ALPHA-1 (since 3.0-ALPHA-6 accepts an {@code ObservableValue} source)
      **********************************************************************************************************************************************************/
-    public <T, S> void bind (@Nonnull final BoundProperty<? super T> target, @Nonnull final Property<? extends S> source, @Nonnull final Function<S, T> adapter);
+    public <T, S> void bind (@Nonnull final BoundProperty<? super T> target, @Nonnull final ObservableValue<? extends S> source, @Nonnull final Function<S, T> adapter);
 
     /***********************************************************************************************************************************************************
-     * Binds two properties of the same type.
+     * Binds a property to an observable value of the same type. The source can be any {@link ObservableValue}, including read-only properties and
+     * bindings.
      * @param   <T>             the property type
      * @param   target          the target property
-     * @param   source          the source property
-     * @since   2.0-ALPHA-1
+     * @param   source          the source observable value
+     * @since   2.0-ALPHA-1 (since 3.0-ALPHA-6 accepts an {@code ObservableValue} source)
      **********************************************************************************************************************************************************/
-    public default <T> void bind (@Nonnull final BoundProperty<? super T> target, @Nonnull final Property<T> source)
+    public default <T> void bind (@Nonnull final BoundProperty<? super T> target, @Nonnull final ObservableValue<T> source)
       {
         bind(target, source, Function.identity());
       }
