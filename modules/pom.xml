@@ -21,11 +21,11 @@
     <parent>
         <groupId>it.tidalwave.steelblue</groupId>
         <artifactId>steelblue</artifactId>
-        <version>3.0-ALPHA-6-SNAPSHOT</version>
+        <version>3.0-ALPHA-6</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>it-tidalwave-ui-modules</artifactId>
-    <version>3.0-ALPHA-6-SNAPSHOT</version>
+    <version>3.0-ALPHA-6</version>
     <packaging>pom</packaging>
     <name>SteelBlue (modules)</name>
     <description>SteelBlue (modules)</description>
