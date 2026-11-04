@@ -33,7 +33,7 @@
         <tft.javac.source>11</tft.javac.source>
         <tft.javac.target>11</tft.javac.target>
         <tft.javac.release>11</tft.javac.release>
-        <thesefoolishthings.version>5.0-ALPHA-3</thesefoolishthings.version>
+        <thesefoolishthings.version>5.0-ALPHA-4</thesefoolishthings.version>
         <tft.javafx.version>11.0.1</tft.javafx.version>
         <tft.openjfx-monocle.version>11.0.2</tft.openjfx-monocle.version>
         <jmetro.version>11.6.14</jmetro.version>
