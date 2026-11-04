@@ -26,7 +26,7 @@
     </parent>
     <groupId>it.tidalwave.steelblue</groupId>
     <artifactId>steelblue</artifactId>
-    <version>3.0-ALPHA-6</version>
+    <version>3.0-ALPHA-7-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>SteelBlue</name>
     <url>https://tidalwave.bitbucket.io/steelblue</url>
@@ -40,7 +40,7 @@ that is mostly independent of the UI technology; so testing is easier, and it is
         <connection>scm:git:${scm.repo.readonly.url}</connection>
         <developerConnection>scm:git:${scm.repo.effective.url}</developerConnection>
         <url>${scm.repo.browse.url}</url>
-        <tag>3.0-ALPHA-6</tag>
+        <tag>HEAD</tag>
     </scm>
     <distributionManagement>
         <site>
@@ -70,43 +70,43 @@ that is mostly independent of the UI technology; so testing is easier, and it is
             <dependency>
                 <groupId>it.tidalwave.steelblue</groupId>
                 <artifactId>it-tidalwave-ui-core</artifactId>
-                <version>3.0-ALPHA-6</version>
+                <version>3.0-ALPHA-7-SNAPSHOT</version>
             </dependency>
             <!-- END SNIPPET: core -->
             <dependency>
                 <groupId>it.tidalwave.steelblue</groupId>
                 <artifactId>it-tidalwave-ui-core</artifactId>
                 <classifier>tests</classifier>
-                <version>3.0-ALPHA-6</version>
+                <version>3.0-ALPHA-7-SNAPSHOT</version>
             </dependency>
             <!-- START SNIPPET: test -->
             <dependency>
                 <groupId>it.tidalwave.steelblue</groupId>
                 <artifactId>it-tidalwave-ui-test</artifactId>
-                <version>3.0-ALPHA-6</version>
+                <version>3.0-ALPHA-7-SNAPSHOT</version>
             </dependency>
             <!-- END SNIPPET: test -->
             <!-- START SNIPPET: javafx -->
             <dependency>
                 <groupId>it.tidalwave.steelblue</groupId>
                 <artifactId>it-tidalwave-ui-javafx</artifactId>
-                <version>3.0-ALPHA-6</version>
+                <version>3.0-ALPHA-7-SNAPSHOT</version>
             </dependency>
             <!-- END SNIPPET: javafx -->
             <dependency>
                 <groupId>it.tidalwave.steelblue</groupId>
                 <artifactId>it-tidalwave-ui-example-model</artifactId>
-                <version>3.0-ALPHA-6</version>
+                <version>3.0-ALPHA-7-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>it.tidalwave.steelblue</groupId>
                 <artifactId>it-tidalwave-ui-example-presentation</artifactId>
-                <version>3.0-ALPHA-6</version>
+                <version>3.0-ALPHA-7-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>it.tidalwave.steelblue</groupId>
                 <artifactId>it-tidalwave-ui-example-presentation-javafx</artifactId>
-                <version>3.0-ALPHA-6</version>
+                <version>3.0-ALPHA-7-SNAPSHOT</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
